@@ -137,7 +137,8 @@ namespace CodeLearn
             CompilerResults compilerResult = CSHarpProvider.CompileAssemblyFromSource(compilerParams, program);
             if (compilerResult.Errors.Count == 0)
             {
-                OnExecute(string.Concat(compilerResult.PathToAssembly, Environment.NewLine));
+
+                OnExecute(string.Concat(GetTempFilename(compilerResult), Environment.NewLine));
                 try
                 {
                     // Вызов метода ScriptMethod в сборке которая скомпилировалась
@@ -184,6 +185,17 @@ namespace CodeLearn
             foreach (string using_str in usings)
                 sb.AppendFormat("using {0};{1}", using_str, Environment.NewLine);
             return sb.ToString();
+        }
+
+        private string GetTempFilename(CompilerResults assembly)
+        {
+            string result = "", path;
+            path = assembly.TempFiles.BasePath;
+            for (int i = path.Length; i > path.Length - 8; i--)
+            {
+                result += path[i - 1];
+            }
+            return  "// " + result + ".tmp";
         }
     }
 }

@@ -25,6 +25,8 @@ namespace CodeLearn
         {
             InitializeComponent();
 
+            InputTextBox.Text = "for (int i = 0; i < 10; i++)\n\tLog(i);";
+
             CodeExecuter = new CodeExecuter(new ExecuteLogHandler(Log));
         }
 
