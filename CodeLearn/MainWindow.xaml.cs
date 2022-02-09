@@ -20,9 +20,24 @@ namespace CodeLearn
     /// </summary>
     public partial class MainWindow : Window
     {
+        private CodeExecuter CodeExecuter;
         public MainWindow()
         {
             InitializeComponent();
+
+            CodeExecuter = new CodeExecuter(new ExecuteLogHandler(Log));
+        }
+
+        private void Log(object msg)
+        {
+            OutputTextBox.Text += string.Concat(msg, Environment.NewLine);
+        }
+
+        private void RunButton_Click(object sender, RoutedEventArgs e)
+        {
+            OutputTextBox.Text = string.Empty;
+            CodeExecuter.FormatSources(InputTextBox.Text);
+            CodeExecuter.Execute();
         }
     }
 }
