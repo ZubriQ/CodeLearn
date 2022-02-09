@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeLearn"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="CodeLearn" Height="500" Width="650">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>  <!-- Text -->
+            <RowDefinition/>                <!-- Input -->
+            <RowDefinition Height="auto"/>  <!-- Buttons -->
+            <RowDefinition Height="auto"/>  <!-- Text -->
+            <RowDefinition Height="150"/>   <!-- Output -->
+        </Grid.RowDefinitions>
+
+        <!-- Main.cs? -->
+        <TextBlock Grid.Row="0" Margin="4" Text="Your code:"/>
+
+        <TextBox x:Name="InputTextBox"
+            Grid.Row="1" Margin="4" TextWrapping="Wrap" AcceptsReturn="True" 
+                 BorderBrush="Green" BorderThickness="2"/>
+
+        <DockPanel Grid.Row="2" HorizontalAlignment="Left">
+            <Button x:Name="RunButton" 
+                    Content="Run" Height="25" Width="60" Margin="4"/>
+        </DockPanel>
+
+        <TextBlock Grid.Row="3" Margin="4" Text="Output:"/>
         
+        <!-- Error output in another Tab? -->
+        <TextBox x:Name="OutputTextBox"
+            Grid.Row="4" Margin="4" TextWrapping="Wrap" AcceptsReturn="True" 
+                 BorderBrush="Green" BorderThickness="2"/>
     </Grid>
 </Window>
