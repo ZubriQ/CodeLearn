@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace CodeLearn
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Main CodeLearn Window.
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -27,10 +27,10 @@ namespace CodeLearn
 
             InputTextBox.Text = "for (int i = 0; i < 10; i++)\n\tLog(i);";
 
-            CodeExecuter = new CodeExecuter(new ExecuteLogHandler(Log));
+            CodeExecuter = new CodeExecuter(new ExecuteLogHandler(PrintResult));
         }
 
-        private void Log(object msg)
+        private void PrintResult(object msg)
         {
             OutputTextBox.Text += string.Concat(msg, Environment.NewLine);
         }

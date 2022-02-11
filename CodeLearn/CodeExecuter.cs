@@ -2,51 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.CSharp;
 using System.CodeDom.Compiler;
 using System.Reflection;
 
 namespace CodeLearn
 {
-    // Определения делегата для организации вывода результатов выполнения частей кода 
+    // WPF's Output.
     public delegate void ExecuteLogHandler(object message);
 
     public class CodeExecuter
     {
-        // Код готовый к выполнению
-        string formatedProgramText;
+        // User's entered code.
+        public string FormattedCode { get; private set; }
 
-        public string LastProgramText
-        {
-            get { return formatedProgramText; }
-        }
-
-        // Поле делегата объявлено статическим для того, чтобы можно было
-        // вызывать из программы, которая будет компилироваться
+        // Declared static so that it can be called from a compiled program.
         public static ExecuteLogHandler OnExecute;
 
-        // Список сборок, которые будут подключаться при компиляции
-        private List<string> refferences = new List<string>();
+        // Needed DLLs & Usings.
+        public List<string> Refferences { get; set; } = new List<string>();
+        public List<string> Usings { get; set; } = new List<string>();
 
-        public List<string> Refferences
-        {
-            get { return refferences; }
-            set { refferences = value; }
-        }
-
-        // Список using определений, которые будут добавлены начало кода
-        private List<string> usings = new List<string>();
-
-        public List<string> Usings
-        {
-            get { return usings; }
-            set { usings = value; }
-        }
-
-        // Предопределенные части программы. Добавляется публичный статический
-        // метод ScriptMethod, который будет вызываться из основного приложения
-        // внутри используется Stopwatch для вычисления времени выполнения программы
-        // Также объявлен метод Log, который вызывает OnExecute во внешней сборке (см. ниже)
+        // Method ***ScriptMethod*** is used from the main application.
+        // Method ***Log*** calls OnExecute delegate in the external assembly.
         readonly string header = @"
             namespace CScript
             {
@@ -57,9 +34,10 @@ namespace CodeLearn
                         Stopwatch sw = new Stopwatch();
                         sw.Start();  
             ";
-
-        readonly string footer =
-                    @" sw.Stop();Log(sw.Elapsed.ToString());
+        //              Entered program text by a user ...
+        readonly string footer = @"
+                        sw.Stop();
+                        Log(sw.Elapsed.ToString());
                     }
                     static void Log(object message)
                     {
@@ -69,26 +47,25 @@ namespace CodeLearn
                 }
             }";
 
+        // Delegate, DLLs, Usings initialization. 
+        // TODO: Determine which DLLs and Usings the program needs
         public CodeExecuter(ExecuteLogHandler onExecute)
         {
             OnExecute += onExecute;
 
-            // Инициализация сборок, которые будут добавлены по умолчанию
-            refferences.AddRange(new string[]
+            Refferences.AddRange(new string[]
                  {
                     "System.dll",
                     "System.Core.dll",
                     "System.Net.dll",
                     "System.Data.dll",
                     "System.Drawing.dll",
-                    "System.Windows.Forms.dll",
 
-                    // Необходимо добавить свою сборку, чтобы можно было вызывать OnExecute
-                    Assembly.GetAssembly(typeof(CodeExecuter)).Location,
+                    // It's necessary to add our Assembly to be able to call OnExecute.
+                    Assembly.GetAssembly(typeof(CodeExecuter)).Location
                  });
 
-            // Инициализация using которые будут добавлены по умолчанию
-            usings.AddRange(new string[]
+            Usings.AddRange(new string[]
              {
                     "System",
                     "System.IO",
@@ -101,50 +78,51 @@ namespace CodeLearn
                     "System.Data",
                     "System.Drawing",
                     "System.Diagnostics",
-                    "System.Linq",
-                    "System.Windows.Forms"
+                    "System.Linq"
              });
-        }
-
-        // Выполнение кода
-        public void Execute(List<string> code)
-        {
-            // Форматирование сырого кода (добавление предопределенный частей)
-            FormatSources(code);
-            // Выполнение
-            Execute();
         }
 
         public void Execute()
         {
-            Execute(formatedProgramText);
+            Compile(FormattedCode);
         }
 
-        public void Execute(string program)
+        public void Compile(string formattedCode)
         {
-            // Создание класса CSHarpProvider с указанием того, что сборка генерируется в памяти
-            var CSHarpProvider = CSharpCodeProvider.CreateProvider("CSharp");
+            // Declaring parameters; generating an Assembly into memory.
             CompilerParameters compilerParams = new CompilerParameters()
             {
                 GenerateExecutable = false,
-                GenerateInMemory = true,
+                GenerateInMemory = false
             };
+            compilerParams.ReferencedAssemblies.AddRange(Refferences.ToArray());
 
-            // Добавление сборок для компиляции
-            compilerParams.ReferencedAssemblies.AddRange(refferences.ToArray());
+            // Compilation.
+            CodeDomProvider codeDomProvider = CodeDomProvider.CreateProvider("CSharp");
+            var compilerResult = codeDomProvider.CompileAssemblyFromSource(compilerParams, formattedCode);
 
-            // Компиляция
-            CompilerResults compilerResult = CSHarpProvider.CompileAssemblyFromSource(compilerParams, program);
+            // Run the main method.
+            RunCompilerResults(compilerResult);
+        }
+
+        private void RunCompilerResults(CompilerResults compilerResult)
+        {
             if (compilerResult.Errors.Count == 0)
             {
-
                 OnExecute(string.Concat(GetTempFilename(compilerResult), Environment.NewLine));
                 try
                 {
-                    // Вызов метода ScriptMethod в сборке которая скомпилировалась
+                    // Call ScriptMethod in the compiled Assembly (to execute the user's entered code).
                     compilerResult.CompiledAssembly.GetType("CScript.Script").GetMethod("ScriptMethod").Invoke(null, null);
+
+
+                    // some new test code 
+                    //Assembly a = Assembly.LoadFile(compilerResult.PathToAssembly);
+                    //MethodInfo[] mi = a.GetType("CScript.Script").GetMethods();
+                    //
+
                     OnExecute(string.Empty);
-                    OnExecute("Компиляция кода прошла успешно.");
+                    OnExecute("The code has successfully been compiled.");
                 }
                 catch (Exception e)
                 {
@@ -158,35 +136,37 @@ namespace CodeLearn
             }
         }
 
-        // Форматирование кода (добавление предопределенных частей)
-        public string FormatSources(string text)
+        // Concatenation of code parts.
+        public void FormatSources(string text)
         {
             string usings = FormatUsings();
-            formatedProgramText = string.Concat(usings, header, text, footer);
-            return formatedProgramText;
+            FormattedCode = string.Concat(usings, header, text, footer);
         }
 
-        public string FormatSources(List<string> code)
-        {
-            StringBuilder sb = new StringBuilder(header);
-            foreach (var sc in code)
-            {
-                sb.AppendLine(sc);
-            }
-            sb.AppendLine(footer);
-            formatedProgramText = sb.ToString();
-            return formatedProgramText;
-        }
-
-        // Форматирование определений using
         private string FormatUsings()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (string using_str in usings)
+            foreach (string using_str in Usings)
                 sb.AppendFormat("using {0};{1}", using_str, Environment.NewLine);
             return sb.ToString();
         }
 
+
+        //public void Execute(List<string> code)
+        //{
+        //    FormatSources(code);
+        //    Execute();
+        //}
+        //public void FormatSources(List<string> code)
+        //{
+        //    StringBuilder sb = new StringBuilder(header);
+        //    foreach (var sc in code)
+        //    {
+        //        sb.AppendLine(sc);
+        //    }
+        //    sb.AppendLine(footer);
+        //    ProgramText = sb.ToString();
+        //}
         private string GetTempFilename(CompilerResults assembly)
         {
             string result = "", path;
