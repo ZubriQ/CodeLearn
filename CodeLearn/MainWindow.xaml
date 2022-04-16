@@ -18,20 +18,20 @@
         <!-- Main.cs? -->
         <TextBlock Grid.Row="0" Margin="4" Text="Your code:"/>
 
-        <TextBox x:Name="InputTextBox"
-            Grid.Row="1" Margin="4" TextWrapping="Wrap" AcceptsReturn="True" 
+        <TextBox x:Name="txtInput" 
+                 Grid.Row="1" Margin="4" TextWrapping="Wrap" AcceptsReturn="True" 
                  BorderBrush="Green" BorderThickness="2" FontFamily="Consolas" FontSize="14"/>
 
         <DockPanel Grid.Row="2" HorizontalAlignment="Left">
-            <Button x:Name="RunButton" 
+            <Button x:Name="btnRun" 
                     Content="Run" Height="25" Width="60" Margin="4" Click="RunButton_Click"/>
         </DockPanel>
 
         <TextBlock Grid.Row="3" Margin="4" Text="Output:"/>
         
         <!-- TODO: Error output in another Tab? -->
-        <TextBox x:Name="OutputTextBox"
-            Grid.Row="4" Margin="4" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True"
+        <TextBox x:Name="txtOutput"
+                 Grid.Row="4" Margin="4" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True"
                  BorderBrush="Green" BorderThickness="2" FontFamily="Consolas" FontSize="14" />
     </Grid>
 </Window>

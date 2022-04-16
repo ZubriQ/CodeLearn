@@ -25,20 +25,20 @@ namespace CodeLearn
         {
             InitializeComponent();
 
-            InputTextBox.Text = "for (int i = 0; i < 10; i++)\n\tLog(i);";
+            txtInput.Text = "for (int i = 0; i < 10; i++)\n\tLog(i);";
 
             CodeExecuter = new CodeExecuter(new ExecuteLogHandler(PrintResult));
         }
 
         private void PrintResult(object msg)
         {
-            OutputTextBox.Text += string.Concat(msg, Environment.NewLine);
+            txtOutput.Text += string.Concat(msg, Environment.NewLine);
         }
 
         private void RunButton_Click(object sender, RoutedEventArgs e)
         {
-            OutputTextBox.Text = string.Empty;
-            CodeExecuter.FormatSources(InputTextBox.Text);
+            txtOutput.Text = string.Empty;
+            CodeExecuter.FormatSources(txtInput.Text);
             CodeExecuter.Execute();
         }
     }

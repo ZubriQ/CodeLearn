@@ -1,0 +1,176 @@
+﻿<Window x:Class="CodeLearn.Windows.CreateExerciseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CodeLearn.Windows"
+        mc:Ignorable="d"
+        Title="Create Exercise" Height="650" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/> <!-- Exercise Description -->
+            <RowDefinition Height="auto"/> <!-- Exercise Type -->
+            <RowDefinition Height="140"/> <!-- Exercise Context -->
+            <RowDefinition Height="80"/> <!-- Exercise Context description -->
+            <RowDefinition Height="auto"/> <!-- Class & Method names, Method return type-->
+            <RowDefinition/> <!-- Adding method parameters -->
+            <RowDefinition/> <!-- Test cases -->
+            <RowDefinition Height="auto"/> <!-- Finalize -->
+        </Grid.RowDefinitions>
+
+        <!-- Exercise Description -->
+        <DockPanel Grid.Row="0">
+            <TextBlock Grid.Row="0" Margin="4,4,4,1" Text="Description:" DockPanel.Dock="Top" 
+                       FontSize="10"/>
+            <TextBox x:Name="txtExerciseDescription" 
+                     Grid.Row="1" Margin="4,0,4,4" TextWrapping="Wrap" AcceptsReturn="True" 
+                     BorderBrush="Green" BorderThickness="2" FontFamily="Times New Roman" FontSize="12"/>
+        </DockPanel>
+        <!-- Exercise Type -->
+        <DockPanel Grid.Row="1">
+            <TextBlock Grid.Row="0" Margin="4,4,4,1" Text="Exercise type:" DockPanel.Dock="Top" 
+                       FontSize="10"/>
+            <ComboBox x:Name="cbExerciseType" 
+                      Grid.Row="1" Margin="4,0,4,4" Width="120" HorizontalAlignment="Left"
+                      BorderBrush="Green" BorderThickness="2" FontFamily="Consolas" FontSize="12"
+                      DisplayMemberPath="name"/>
+        </DockPanel>
+        
+        <!-- Exercise Context -->
+        <DockPanel Grid.Row="2">
+            <TextBlock Grid.Row="0" Margin="4,4,4,1" Text="Context:" DockPanel.Dock="Top" 
+                       FontSize="10"/>
+            <TextBox x:Name="txtExerciseContext" 
+                     Grid.Row="1" Margin="4,0,4,4" TextWrapping="Wrap" AcceptsReturn="True" 
+                     BorderBrush="Green" BorderThickness="2" FontFamily="Consolas" FontSize="13"/>
+        </DockPanel>
+        <!-- Exercise Context description -->
+        <DockPanel Grid.Row="3">
+            <TextBlock Grid.Row="0" Margin="4,4,4,1" Text="Context description:" DockPanel.Dock="Top" 
+                       FontSize="10"/>
+            <TextBox x:Name="txtExerciseContextDescription" 
+                     Grid.Row="1" Margin="4,0,4,4" TextWrapping="Wrap" AcceptsReturn="True" 
+                     BorderBrush="Green" BorderThickness="2" FontFamily="Consolas" FontSize="12"/>
+        </DockPanel>
+
+        <DockPanel Grid.Row="4">
+            <StackPanel>
+                <!-- Class name -->
+                <TextBlock Grid.Row="0" Margin="4,4,4,1" Text="Class name:" DockPanel.Dock="Top" 
+                           FontSize="10"/>
+                <TextBox x:Name="txtClassName" 
+                         Grid.Row="1" Margin="4,0,4,4" TextWrapping="Wrap" AcceptsReturn="True" 
+                         BorderThickness="2" FontSize="12" 
+                         Width="120" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <StackPanel>
+                <!-- Method name -->
+                <TextBlock Grid.Row="0" Margin="4,4,4,1" Text="Method name:" DockPanel.Dock="Top" 
+                       FontSize="10"/>
+                <TextBox x:Name="txtMethodName" 
+                         Grid.Row="1" Margin="4,0,4,4" TextWrapping="Wrap" AcceptsReturn="True" 
+                         BorderThickness="2" FontSize="12"
+                         Width="120" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <StackPanel>
+                <!-- Method return type -->
+                <TextBlock Grid.Row="0" Margin="4,4,4,1" Text="Return type:" DockPanel.Dock="Top" 
+                       FontSize="10"/>
+                <ComboBox x:Name="cbMethodReturnType" 
+                          Grid.Row="1" Margin="4,0,4,4" DisplayMemberPath="name"
+                          BorderThickness="2" FontSize="12"
+                          Width="120" HorizontalAlignment="Left"/>
+            </StackPanel>
+            
+        </DockPanel>
+
+        <!-- Adding Method parameters -->
+        <DockPanel Grid.Row="5">
+            <DockPanel DockPanel.Dock="Top">
+                <TextBlock Grid.Row="0" Text="Method parameters:" Margin="4,0,4,0" 
+                       FontSize="10" VerticalAlignment="Center"/>
+                <Button x:Name="btn_AddMethodParameter" 
+                        Grid.Row="1" Margin="4" Content="Add" HorizontalAlignment="Left" 
+                        BorderBrush="Green" BorderThickness="2" FontFamily="Consolas"
+                        Background="Green" Foreground="White" Click="btn_AddMethodParameter_Click" />
+                <Button x:Name="btn_RemoveMethodParameter" 
+                        Grid.Row="1" Margin="4" Content="Remove" HorizontalAlignment="Left" 
+                        BorderBrush="Green" BorderThickness="2" FontFamily="Consolas"
+                        Background="Green" Foreground="White" Click="btn_RemoveMethodParameter_Click" />
+            </DockPanel>
+            <Border BorderBrush="Gray" BorderThickness="1" Margin="4,0,4,4">
+                <ItemsControl ItemsSource="{Binding MethodParameters}" >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" IsItemsHost="True"/>
+
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Source={x:Static local:CreateExerciseWindow.ParameterDataTypes}}" 
+                                      SelectedItem ="{Binding data_type}" Margin="3"
+                                      DisplayMemberPath="name"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+        </DockPanel>
+        
+        <!-- Test cases -->
+        <DockPanel Grid.Row="6" >
+            <DockPanel DockPanel.Dock="Top">
+                <TextBlock Grid.Row="0" Text="Test cases:" Margin="4,0,4,0" 
+                       FontSize="10" VerticalAlignment="Center"/>
+                <Button x:Name="btn_AddTestMethodParameter" 
+                        Grid.Row="1" Margin="4" Content="Add" HorizontalAlignment="Left" 
+                        BorderBrush="Green" BorderThickness="2" FontFamily="Consolas"
+                        Background="Green" Foreground="White" Click="btn_AddTestMethodParameter_Click"/>
+                <Button x:Name="btn_RemoveTestMethodParameter" 
+                        Grid.Row="1" Margin="4" Content="Remove" HorizontalAlignment="Left" 
+                        BorderBrush="Green" BorderThickness="2" FontFamily="Consolas"
+                        Background="Green" Foreground="White" Click="btn_RemoveTestMethodParameter_Click"/>
+            </DockPanel>
+            
+
+            <Border BorderBrush="Gray" BorderThickness="1" Margin="4,0,4,4">
+                <ItemsControl ItemsSource="{Binding TestCases}" >                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <ItemsControl ItemsSource="{Binding test_case_parameter}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" IsItemsHost="True"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBox MinWidth="30"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <TextBox Background="Blue" DockPanel.Dock="Right" MinWidth="40"/>
+                                <Button Click="btn_RemoveTestCase">
+                                    <TextBlock Text=" - " FontWeight="Bold" FontSize="14" MinWidth="20"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+        </DockPanel>
+
+        <!-- Add exercise -->
+        <DockPanel Grid.Row="7">
+            <Button x:Name="btn_Submit" 
+                        Grid.Row="1" Margin="4" Content="Submit" HorizontalAlignment="Left" 
+                        BorderBrush="Green" BorderThickness="2" FontFamily="Consolas"
+                        Background="Green" Foreground="White" Click="btn_AddTestMethodParameter_Click"/>
+            <Button x:Name="btn_Cancel" 
+                        Grid.Row="1" Margin="4" Content="Cancel" HorizontalAlignment="Left" 
+                        BorderBrush="Green" BorderThickness="2" FontFamily="Consolas"
+                        Background="Green" Foreground="White" Click="btn_RemoveTestMethodParameter_Click"/>
+        </DockPanel>
+    </Grid>
+</Window>

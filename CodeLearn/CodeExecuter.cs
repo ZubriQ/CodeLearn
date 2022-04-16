@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.CodeDom.Compiler;
 using System.Reflection;
+using System.IO;
+using TypeLoader;
 
 namespace CodeLearn
 {
@@ -27,6 +29,7 @@ namespace CodeLearn
         readonly string header = @"
             namespace CScript
             {
+                [Serializable]
                 public class Script
                 {
                     public static void ScriptMethod()
@@ -59,7 +62,7 @@ namespace CodeLearn
                     "System.Core.dll",
                     "System.Net.dll",
                     "System.Data.dll",
-                    "System.Drawing.dll",
+                    //"System.Drawing.dll",
 
                     // It's necessary to add our Assembly to be able to call OnExecute.
                     Assembly.GetAssembly(typeof(CodeExecuter)).Location
@@ -101,7 +104,30 @@ namespace CodeLearn
             CodeDomProvider codeDomProvider = CodeDomProvider.CreateProvider("CSharp");
             var compilerResult = codeDomProvider.CompileAssemblyFromSource(compilerParams, formattedCode);
 
-            // Run the main method.
+
+            byte[] bytedAssembly = File.ReadAllBytes(compilerResult.PathToAssembly);
+
+            string pathToDll = Assembly.GetExecutingAssembly().CodeBase;
+            AppDomainSetup domainSetup = new AppDomainSetup { PrivateBinPath = pathToDll };
+            var newDomain = AppDomain.CreateDomain("Another Domain", null, domainSetup);
+            var loaderInstance = newDomain.CreateInstanceAndUnwrap("TypeLoader", typeof(Loader).FullName) as Loader;
+            loaderInstance.Load(bytedAssembly);
+            var exported = loaderInstance.GetExportedTypes();
+
+            var local = new Loader();
+            var exp2 = local.GetExportedTypes();
+
+            foreach (var name in exported)
+            {
+                Console.WriteLine(name);
+            }
+            //  ProxyClass c = (ProxyClass)newDomain.CreateInstanceFromAndUnwrap(pathToDll, typeof(ProxyClass).FullName);
+
+
+            //   newDomain.Load(bytedAssembly);
+            //  var obj = newDomain.CreateInstanceAndUnwrap(type.Assembly.FullName, type.Name);
+
+            // Run Script.ScriptMethod().
             RunCompilerResults(compilerResult);
         }
 
@@ -122,7 +148,7 @@ namespace CodeLearn
                     //
 
                     OnExecute(string.Empty);
-                    OnExecute("The code has successfully been compiled.");
+                    OnExecute("The code has been successfully compiled.");
                 }
                 catch (Exception e)
                 {
@@ -151,22 +177,6 @@ namespace CodeLearn
             return sb.ToString();
         }
 
-
-        //public void Execute(List<string> code)
-        //{
-        //    FormatSources(code);
-        //    Execute();
-        //}
-        //public void FormatSources(List<string> code)
-        //{
-        //    StringBuilder sb = new StringBuilder(header);
-        //    foreach (var sc in code)
-        //    {
-        //        sb.AppendLine(sc);
-        //    }
-        //    sb.AppendLine(footer);
-        //    ProgramText = sb.ToString();
-        //}
         private string GetTempFilename(CompilerResults assembly)
         {
             string result = "", path;
