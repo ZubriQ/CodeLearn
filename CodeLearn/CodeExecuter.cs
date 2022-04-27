@@ -185,7 +185,7 @@ namespace CodeLearn
             {
                 result += path[i - 1];
             }
-            return  "// " + result + ".tmp";
+            return "// " + result + ".tmp";
         }
     }
 }

@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Database\DatabaseExtensions.cs" />
     <Compile Include="Database\data_type.cs">
       <DependentUpon>CLModel.tt</DependentUpon>
     </Compile>
@@ -85,8 +86,8 @@
     <Compile Include="Database\test_method_parameters.cs">
       <DependentUpon>CLModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Windows\CreateExerciseWindow.xaml.cs">
-      <DependentUpon>CreateExerciseWindow.xaml</DependentUpon>
+    <Compile Include="Windows\CreateExercise_Window.xaml.cs">
+      <DependentUpon>CreateExercise_Window.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -116,7 +117,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Windows\CreateExerciseWindow.xaml">
+    <Page Include="Templates\Button_Theme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CreateExercise_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,9 +166,7 @@
       <Name>TypeLoader</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Templates\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Database\CLModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
