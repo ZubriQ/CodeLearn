@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:CodeLearn.Windows"
         mc:Ignorable="d"
         Title="Create Exercise"
-        Height="650"
-        Width="420">
+        Height="520"
+        Width="417"
+        MinWidth="417"
+        MinHeight="340">
     <ScrollViewer>
         <StackPanel>
             <!-- Exercise Description -->
@@ -186,6 +188,7 @@
                                 <ComboBox ItemsSource="{Binding Source={x:Static local:CreateExercise_Window.ParameterDataTypes}}"
                                           SelectedItem="{Binding data_type}"
                                           Margin="3"
+                                          MinWidth="42"
                                           DisplayMemberPath="name" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -204,7 +207,7 @@
                     <Button x:Name="btn_AddTestMethodParameter"
                             Template="{StaticResource Button}"
                             Grid.Row="1"
-                            Content="Add Test"
+                            Content="Add"
                             HorizontalAlignment="Left"
                             Click="btn_AddTestMethodParameter_Click" />
                 </DockPanel>
@@ -213,12 +216,13 @@
                         BorderThickness="1"
                         Margin="4,0,4,4">
                     <ItemsControl x:Name="ic_TestCases"
-                                  MinHeight="30"
-                                  ItemsSource="{Binding TestMethodInfo.test_case}">
+                                  MinHeight="80"
+                                  MaxHeight="240"
+                                  ItemsSource="{Binding TestMethodInfo.test_cases}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <ItemsControl ItemsSource="{Binding test_case_parameter}"
+                                    <ItemsControl ItemsSource="{Binding test_case_parameters}"
                                                   VerticalAlignment="Center">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
@@ -228,33 +232,40 @@
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBox MinWidth="30"
-                                                         Margin="2" />
+                                                <TextBox MinWidth="28"
+                                                         Height="22"
+                                                         Margin="2"
+                                                         VerticalContentAlignment="Center"
+                                                         Text="{Binding value}"/>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
+                                    <!-- Result. -->
                                     <Grid>
                                         <TextBox x:Name="txt_TestCaseResult"
                                                  Background="#DDFFBC"
                                                  DockPanel.Dock="Right"
-                                                 MinWidth="40"
-                                                 Height="24"
+                                                 MinWidth="38"
+                                                 Height="22"
+                                                 Margin="2"
                                                  VerticalContentAlignment="Center"
-                                                 TextChanged="txt_TestCaseResult_TextChanged" />
+                                                 Text="{Binding result, TargetNullValue=result}" 
+                                                 GotFocus="txt_TestCaseResult_GotFocus"
+                                                 LostFocus="txt_TestCaseResult_LostFocus"
+                                                 />
                                         <!-- Placeholder. -->
-                                        <TextBlock x:Name="txt_TestCaseResult_Placeholder"
-                                                   VerticalAlignment="Bottom"
+                                        <!--<TextBlock x:Name="txt_TestCaseResult_Placeholder"
+                                                   VerticalAlignment="Center"
                                                    IsHitTestVisible="False"
-                                                   MinWidth="40"
-                                                   Height="24"
-                                                   Text=" result"
-                                                   Foreground="Gray" />
+                                                   Text="result"
+                                                   Margin="6,0,0,0"
+                                                   Foreground="Gray">
+                                        </TextBlock>-->
                                     </Grid>
+                                    <!-- Remove Button. -->
                                     <Button Click="btn_RemoveTestCase"
                                             Template="{StaticResource Button}">
                                         <TextBlock Text="Remove"
-                                                   FontSize="14"
-                                                   MinWidth="20"
                                                    Foreground="White" />
                                     </Button>
                                 </StackPanel>
@@ -266,12 +277,15 @@
 
             <!-- Add exercise -->
             <DockPanel Grid.Row="7"
-                       HorizontalAlignment="Center">
+                       HorizontalAlignment="Center"
+                       Margin="15">
                 <Button x:Name="btn_Submit"
                         Template="{StaticResource Button}"
                         Grid.Row="1"
-                        Content="Submit"
-                        HorizontalAlignment="Left" />
+                        Content="Save Exercise" 
+                        Padding="10,2,10,2"
+                        HorizontalAlignment="Left"
+                        Click="btn_Submit_Click" />
             </DockPanel>
         </StackPanel>
     </ScrollViewer>

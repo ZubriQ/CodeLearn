@@ -4,14 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7ac53f7154004aa798cd6e58e41a01a2" Name="Diagram1" ZoomLevel="97">
+      <Diagram DiagramId="7ac53f7154004aa798cd6e58e41a01a2" Name="Diagram1" ZoomLevel="93">
         <EntityTypeShape EntityType="CodeLearnModel.data_type" Width="1.5" PointX="0.75" PointY="3" />
-        <EntityTypeShape EntityType="CodeLearnModel.exercise" Width="1.875" PointX="0.75" PointY="7.375" />
+        <EntityTypeShape EntityType="CodeLearnModel.exercise" Width="1.5" PointX="0.75" PointY="7.375" />
         <EntityTypeShape EntityType="CodeLearnModel.exercise_type" Width="1.5" PointX="1.5" PointY="12" />
-        <EntityTypeShape EntityType="CodeLearnModel.test_case" Width="1.5" PointX="5.375" PointY="6.125" />
-        <EntityTypeShape EntityType="CodeLearnModel.test_case_parameter" Width="1.5" PointX="7.5" PointY="5.875" />
+        <EntityTypeShape EntityType="CodeLearnModel.test_case_parameters" Width="1.5" PointX="7.5" PointY="5.875" />
+        <EntityTypeShape EntityType="CodeLearnModel.test_cases" Width="1.5" PointX="5.25" PointY="5.875" />
         <EntityTypeShape EntityType="CodeLearnModel.test_method_info" Width="1.5" PointX="3" PointY="2.5" />
-        <EntityTypeShape EntityType="CodeLearnModel.test_method_parameters" Width="1.5" PointX="7.375" PointY="2.625" />
+        <EntityTypeShape EntityType="CodeLearnModel.test_method_parameters" Width="1.5" PointX="5.25" PointY="2.75" />
         <AssociationConnector Association="CodeLearnModel.FK_ParametersTestMethods_DataTypes" />
         <AssociationConnector Association="CodeLearnModel.FK_TestMethodsInfo_DataTypes" />
         <AssociationConnector Association="CodeLearnModel.FK_Exercises_ExerciseTypes" />

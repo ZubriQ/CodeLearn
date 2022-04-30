@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
     using System.Runtime.CompilerServices;
 
     // Exercise type combobox updating.
@@ -59,6 +60,37 @@
         public void OnPropertyChanged([CallerMemberName] string propName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
+        //public test_method_parameters this[int index] 
+        //{
+        //    get
+        //    {
+        //        return Enumerable.ElementAt(test_method_parameters, index);
+        //    }
+        //}
+    }
+
+    public partial class test_cases
+    {
+        public test_case_parameters this[int index]
+        {
+            get => Enumerable.ElementAt(this.test_case_parameters, index);
+            set
+            {
+                if (this.test_case_parameters is List<test_case_parameters> list)
+                {
+                    list[index] = value;
+                }
+                else if (this.test_case_parameters is test_case_parameters[] array)
+                {
+                    array[index] = value;
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
         }
     }
 }

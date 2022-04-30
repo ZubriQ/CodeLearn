@@ -5,16 +5,16 @@
         <Border x:Name="btnDefault"
                 Background="#008000"
                 BorderThickness="0"
-                CornerRadius="4"
+                CornerRadius="6"
                 Margin="2"
-                Padding="2">
+                Padding="6,2,6,2">
             <ContentControl Margin="{TemplateBinding Padding}"
                             Content="{TemplateBinding Content}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             Foreground="White"
                             FontFamily="Calibri"
-                            FontSize="16"
+                            FontSize="14"
                             VerticalContentAlignment="Center" />
         </Border>
         

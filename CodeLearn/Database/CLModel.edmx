@@ -32,15 +32,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="test_case">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="result" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="test_method_id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="test_case_parameter">
+        <EntityType Name="test_case_parameters">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -48,6 +40,14 @@
           <Property Name="test_case_id" Type="int" Nullable="false" />
           <Property Name="value" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="position" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="test_cases">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="result" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="test_method_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="test_method_info">
           <Key>
@@ -62,7 +62,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="data_type_id" Type="int" Nullable="false" />
           <Property Name="test_method_info_id" Type="int" Nullable="false" />
           <Property Name="position" Type="int" Nullable="false" />
@@ -80,13 +80,13 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Parameters_TestCases">
-          <End Role="test_case" Type="Self.test_case" Multiplicity="1" />
-          <End Role="test_case_parameter" Type="Self.test_case_parameter" Multiplicity="*" />
+          <End Role="test_cases" Type="Self.test_cases" Multiplicity="1" />
+          <End Role="test_case_parameters" Type="Self.test_case_parameters" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="test_case">
+            <Principal Role="test_cases">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="test_case_parameter">
+            <Dependent Role="test_case_parameters">
               <PropertyRef Name="test_case_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -117,12 +117,12 @@
         </Association>
         <Association Name="FK_test_case_test_method_info">
           <End Role="test_method_info" Type="Self.test_method_info" Multiplicity="1" />
-          <End Role="test_case" Type="Self.test_case" Multiplicity="*" />
+          <End Role="test_cases" Type="Self.test_cases" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="test_method_info">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="test_case">
+            <Dependent Role="test_cases">
               <PropertyRef Name="test_method_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -155,8 +155,8 @@
           <EntitySet Name="data_type" EntityType="Self.data_type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="exercise" EntityType="Self.exercise" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="exercise_type" EntityType="Self.exercise_type" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="test_case" EntityType="Self.test_case" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="test_case_parameter" EntityType="Self.test_case_parameter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="test_case_parameters" EntityType="Self.test_case_parameters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="test_cases" EntityType="Self.test_cases" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="test_method_info" EntityType="Self.test_method_info" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="test_method_parameters" EntityType="Self.test_method_parameters" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Exercises_ExerciseTypes" Association="Self.FK_Exercises_ExerciseTypes">
@@ -164,8 +164,8 @@
             <End Role="exercise" EntitySet="exercise" />
           </AssociationSet>
           <AssociationSet Name="FK_Parameters_TestCases" Association="Self.FK_Parameters_TestCases">
-            <End Role="test_case" EntitySet="test_case" />
-            <End Role="test_case_parameter" EntitySet="test_case_parameter" />
+            <End Role="test_cases" EntitySet="test_cases" />
+            <End Role="test_case_parameters" EntitySet="test_case_parameters" />
           </AssociationSet>
           <AssociationSet Name="FK_ParametersTestMethods_DataTypes" Association="Self.FK_ParametersTestMethods_DataTypes">
             <End Role="data_type" EntitySet="data_type" />
@@ -177,7 +177,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_test_case_test_method_info" Association="Self.FK_test_case_test_method_info">
             <End Role="test_method_info" EntitySet="test_method_info" />
-            <End Role="test_case" EntitySet="test_case" />
+            <End Role="test_cases" EntitySet="test_cases" />
           </AssociationSet>
           <AssociationSet Name="FK_test_method_info_exercise1" Association="Self.FK_test_method_info_exercise1">
             <End Role="exercise" EntitySet="exercise" />
@@ -196,8 +196,8 @@
           <EntitySet Name="data_type" EntityType="CodeLearnModel.data_type" />
           <EntitySet Name="exercises" EntityType="CodeLearnModel.exercise" />
           <EntitySet Name="exercise_type" EntityType="CodeLearnModel.exercise_type" />
-          <EntitySet Name="test_case" EntityType="CodeLearnModel.test_case" />
-          <EntitySet Name="test_case_parameter" EntityType="CodeLearnModel.test_case_parameter" />
+          <EntitySet Name="test_case_parameters" EntityType="CodeLearnModel.test_case_parameters" />
+          <EntitySet Name="test_cases" EntityType="CodeLearnModel.test_cases" />
           <EntitySet Name="test_method_info" EntityType="CodeLearnModel.test_method_info" />
           <EntitySet Name="test_method_parameters" EntityType="CodeLearnModel.test_method_parameters" />
           <AssociationSet Name="FK_ParametersTestMethods_DataTypes" Association="CodeLearnModel.FK_ParametersTestMethods_DataTypes">
@@ -217,12 +217,12 @@
             <End Role="test_method_info" EntitySet="test_method_info" />
           </AssociationSet>
           <AssociationSet Name="FK_Parameters_TestCases" Association="CodeLearnModel.FK_Parameters_TestCases">
-            <End Role="test_case" EntitySet="test_case" />
-            <End Role="test_case_parameter" EntitySet="test_case_parameter" />
+            <End Role="test_cases" EntitySet="test_cases" />
+            <End Role="test_case_parameters" EntitySet="test_case_parameters" />
           </AssociationSet>
           <AssociationSet Name="FK_test_case_test_method_info" Association="CodeLearnModel.FK_test_case_test_method_info">
             <End Role="test_method_info" EntitySet="test_method_info" />
-            <End Role="test_case" EntitySet="test_case" />
+            <End Role="test_cases" EntitySet="test_cases" />
           </AssociationSet>
           <AssociationSet Name="FK_ParametersTestMethods_TestMethodsInfo" Association="CodeLearnModel.FK_ParametersTestMethods_TestMethodsInfo">
             <End Role="test_method_info" EntitySet="test_method_info" />
@@ -261,17 +261,7 @@
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="exercises" Relationship="CodeLearnModel.FK_Exercises_ExerciseTypes" FromRole="exercise_type" ToRole="exercise" />
         </EntityType>
-        <EntityType Name="test_case">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="result" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="test_method_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="test_case_parameter" Relationship="CodeLearnModel.FK_Parameters_TestCases" FromRole="test_case" ToRole="test_case_parameter" />
-          <NavigationProperty Name="test_method_info" Relationship="CodeLearnModel.FK_test_case_test_method_info" FromRole="test_case" ToRole="test_method_info" />
-        </EntityType>
-        <EntityType Name="test_case_parameter">
+        <EntityType Name="test_case_parameters">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -279,7 +269,17 @@
           <Property Name="test_case_id" Type="Int32" Nullable="false" />
           <Property Name="value" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="position" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="test_case" Relationship="CodeLearnModel.FK_Parameters_TestCases" FromRole="test_case_parameter" ToRole="test_case" />
+          <NavigationProperty Name="test_cases" Relationship="CodeLearnModel.FK_Parameters_TestCases" FromRole="test_case_parameters" ToRole="test_cases" />
+        </EntityType>
+        <EntityType Name="test_cases">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="result" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="test_method_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="test_case_parameters" Relationship="CodeLearnModel.FK_Parameters_TestCases" FromRole="test_cases" ToRole="test_case_parameters" />
+          <NavigationProperty Name="test_method_info" Relationship="CodeLearnModel.FK_test_case_test_method_info" FromRole="test_cases" ToRole="test_method_info" />
         </EntityType>
         <EntityType Name="test_method_info">
           <Key>
@@ -291,14 +291,14 @@
           <Property Name="exercise_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="data_type" Relationship="CodeLearnModel.FK_TestMethodsInfo_DataTypes" FromRole="test_method_info" ToRole="data_type" />
           <NavigationProperty Name="exercise" Relationship="CodeLearnModel.FK_test_method_info_exercise1" FromRole="test_method_info" ToRole="exercise" />
-          <NavigationProperty Name="test_case" Relationship="CodeLearnModel.FK_test_case_test_method_info" FromRole="test_method_info" ToRole="test_case" />
+          <NavigationProperty Name="test_cases" Relationship="CodeLearnModel.FK_test_case_test_method_info" FromRole="test_method_info" ToRole="test_cases" />
           <NavigationProperty Name="test_method_parameters" Relationship="CodeLearnModel.FK_ParametersTestMethods_TestMethodsInfo" FromRole="test_method_info" ToRole="test_method_parameters" />
         </EntityType>
         <EntityType Name="test_method_parameters">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="data_type_id" Type="Int32" Nullable="false" />
           <Property Name="test_method_info_id" Type="Int32" Nullable="false" />
           <Property Name="position" Type="Int32" Nullable="false" />
@@ -354,25 +354,25 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Parameters_TestCases">
-          <End Type="CodeLearnModel.test_case" Role="test_case" Multiplicity="1" />
-          <End Type="CodeLearnModel.test_case_parameter" Role="test_case_parameter" Multiplicity="*" />
+          <End Type="CodeLearnModel.test_cases" Role="test_cases" Multiplicity="1" />
+          <End Type="CodeLearnModel.test_case_parameters" Role="test_case_parameters" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="test_case">
+            <Principal Role="test_cases">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="test_case_parameter">
+            <Dependent Role="test_case_parameters">
               <PropertyRef Name="test_case_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_test_case_test_method_info">
           <End Type="CodeLearnModel.test_method_info" Role="test_method_info" Multiplicity="1" />
-          <End Type="CodeLearnModel.test_case" Role="test_case" Multiplicity="*" />
+          <End Type="CodeLearnModel.test_cases" Role="test_cases" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="test_method_info">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="test_case">
+            <Dependent Role="test_cases">
               <PropertyRef Name="test_method_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -425,21 +425,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="test_case">
-            <EntityTypeMapping TypeName="CodeLearnModel.test_case">
-              <MappingFragment StoreEntitySet="test_case">
-                <ScalarProperty Name="test_method_id" ColumnName="test_method_id" />
-                <ScalarProperty Name="result" ColumnName="result" />
+          <EntitySetMapping Name="test_case_parameters">
+            <EntityTypeMapping TypeName="CodeLearnModel.test_case_parameters">
+              <MappingFragment StoreEntitySet="test_case_parameters">
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="test_case_id" ColumnName="test_case_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="test_case_parameter">
-            <EntityTypeMapping TypeName="CodeLearnModel.test_case_parameter">
-              <MappingFragment StoreEntitySet="test_case_parameter">
-                <ScalarProperty Name="position" ColumnName="position" />
-                <ScalarProperty Name="value" ColumnName="value" />
-                <ScalarProperty Name="test_case_id" ColumnName="test_case_id" />
+          <EntitySetMapping Name="test_cases">
+            <EntityTypeMapping TypeName="CodeLearnModel.test_cases">
+              <MappingFragment StoreEntitySet="test_cases">
+                <ScalarProperty Name="test_method_id" ColumnName="test_method_id" />
+                <ScalarProperty Name="result" ColumnName="result" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

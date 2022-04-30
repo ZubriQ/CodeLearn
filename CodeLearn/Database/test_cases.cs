@@ -12,13 +12,20 @@ namespace CodeLearn.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class test_case_parameter
+    public partial class test_cases
     {
-        public int id { get; set; }
-        public int test_case_id { get; set; }
-        public string value { get; set; }
-        public int position { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public test_cases()
+        {
+            this.test_case_parameters = new HashSet<test_case_parameters>();
+        }
     
-        public virtual test_case test_case { get; set; }
+        public int id { get; set; }
+        public string result { get; set; }
+        public int test_method_id { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<test_case_parameters> test_case_parameters { get; set; }
+        public virtual test_method_info test_method_info { get; set; }
     }
 }

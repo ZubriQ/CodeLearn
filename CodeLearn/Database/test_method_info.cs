@@ -17,7 +17,7 @@ namespace CodeLearn.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public test_method_info()
         {
-            this.test_case = new HashSet<test_case>();
+            this.test_cases = new HashSet<test_cases>();
             this.test_method_parameters = new HashSet<test_method_parameters>();
         }
     
@@ -29,7 +29,7 @@ namespace CodeLearn.Database
         public virtual data_type data_type { get; set; }
         public virtual exercise exercise { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<test_case> test_case { get; set; }
+        public virtual ICollection<test_cases> test_cases { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<test_method_parameters> test_method_parameters { get; set; }
     }

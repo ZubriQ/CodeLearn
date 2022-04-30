@@ -36,27 +36,20 @@ namespace CodeLearn.Windows
             DataContext = this;
         }
 
+        #region Initialization
         void InitializeExercise()
         {
-            Exercise = new exercise();
-            // Test data.
-            Exercise.exercise_description = "Test description.";
+            Exercise = new exercise(); // Exercise.
             Exercise.exercise_type_id = 1;
-            Exercise.exercise_type = App.DB.exercise_type.First( et => et.name == "Method coding");
-            Exercise.context = "context info";
-            Exercise.context_description = "test context description";
+            Exercise.exercise_type = App.DB.exercise_type.First(et => et.name == "Method coding");
             Exercise.class_name = "TestClass";
-            // Test data.
-            TestMethodInfo = new test_method_info();
+            TestMethodInfo = new test_method_info(); // Method & method parameters.
             TestMethodInfo.name = "TestMethod";
             TestMethodInfo.test_method_parameters = new ObservableCollection<test_method_parameters>();
-            TestMethodInfo.data_type = App.DB.data_type.First( d => d.name == "Void");
             TestMethodInfo.return_type_id = 2;
-
-            TestMethodInfo.test_case = new ObservableCollection<test_case>();
+            TestMethodInfo.data_type = App.DB.data_type.First(d => d.name == "Void");
+            TestMethodInfo.test_cases = new ObservableCollection<test_cases>(); // Method's Test cases.
             Exercise.test_method_info.Add(TestMethodInfo);
-
-
         }
 
         void InitializeComboBoxes()
@@ -73,20 +66,41 @@ namespace CodeLearn.Windows
             for (int i = 0; i < types.Length; i++)
                 ParameterDataTypes.Add(types[i]);
         }
+        #endregion
 
         // Method parameters.
         private void btn_AddMethodParameter_Click(object sender, RoutedEventArgs e)
         {
-            if (TestMethodInfo.test_method_parameters.Count < 5)
+            if (TestMethodInfo.test_cases.Count > 0)
+            {
+                if (MessageBox.Show("This action will remove the Test cases.\nContinue?",
+                    "Parameter adding", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                {
+                    TestMethodInfo.test_cases.Clear();
+                    TestMethodInfo.test_method_parameters.Add(new test_method_parameters());
+                }
+            }
+            else if (TestMethodInfo.test_method_parameters.Count < 5)
                 TestMethodInfo.test_method_parameters.Add(new test_method_parameters());
         }
 
         private void btn_RemoveMethodParameter_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: are you sure? because it'll affect the params.
-            if (TestMethodInfo.test_method_parameters.Count > 0)
+            if (TestMethodInfo.test_cases.Count > 0)
+            {
+                if (MessageBox.Show("This action will remove the Test cases.\nContinue?",
+                    "Parameter removing", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                {
+                    TestMethodInfo.test_cases.Clear();
+                    TestMethodInfo.test_method_parameters.Remove(
+                        TestMethodInfo.test_method_parameters.LastOrDefault());
+                }
+            }
+            else if (TestMethodInfo.test_method_parameters.Count > 0)
+            {
                 TestMethodInfo.test_method_parameters.Remove(
-                    TestMethodInfo.test_method_parameters.LastOrDefault());
+                            TestMethodInfo.test_method_parameters.LastOrDefault());
+            }    
         }
 
         // Test Cases.
@@ -94,9 +108,14 @@ namespace CodeLearn.Windows
         {
             if (TestMethodInfo.test_method_parameters.Count > 0)
             {
-                var tc = new test_case();
-                tc.test_case_parameter = new test_case_parameter[TestMethodInfo.test_method_parameters.Count];
-                TestMethodInfo.test_case.Add(tc);
+                var tc = new test_cases();
+                tc.test_case_parameters = new test_case_parameters[TestMethodInfo.test_method_parameters.Count];
+                for (int i = 0; i < tc.test_case_parameters.Count; i++)
+                {
+                    tc[i] = new test_case_parameters();
+                    tc[i].position = i;
+                }
+                TestMethodInfo.test_cases.Add(tc);
             }
         }
 
@@ -104,17 +123,81 @@ namespace CodeLearn.Windows
         {
             var s = sender as Button;
             var contex = s.DataContext;
-            if (contex is test_case)
-                TestMethodInfo.test_case.Remove(contex as test_case);
+            if (contex is test_cases)
+                TestMethodInfo.test_cases.Remove(contex as test_cases);
         }
 
-        private void txt_TestCaseResult_TextChanged(object sender, TextChangedEventArgs e)
+        //private void txt_TestCaseResult_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    // TODO: placeholders
+        //    //var s = sender as TextBox;
+        //    //if (!string.IsNullOrWhiteSpace(s.Text))
+        //    //{
+        //    //    //MessageBox.Show(s.);
+        //    //}
+        //}
+
+        #region Add an exercise into the db.
+        private void btn_Submit_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: placeholders
-            var s = sender as TextBox;
-            if (!string.IsNullOrWhiteSpace(s.Text))
+            AddExercise();
+        }
+
+        void AddExercise()
+        {
+            InitializeParametersPositions();
+            //InitializeTestParametersPositions();
+            App.DB.exercises.Add(Exercise);
+            App.DB.SaveChanges();
+            MessageBox.Show("Exercise has been successfully added and saved.");
+        }
+
+        void InitializeParametersPositions()
+        {
+            int i = 0;
+            foreach (var parameter in TestMethodInfo.test_method_parameters)
+                parameter.position = i++;
+        }
+
+        //void InitializeTestParametersPositions()
+        //{
+        //    foreach (var tc in TestMethodInfo.test_case)
+        //    {
+        //        int i = 0;
+        //        foreach (var parameter in tc.test_case_parameter)
+        //        {
+        //            //parameter.position = i++;
+        //        }
+        //    }
+        //}
+        #endregion
+
+
+        // Result Placeholders.
+        private void txt_TestCaseResult_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            var bindExpresion = textBox.GetBindingExpression(TextBox.TextProperty);
+            var source = bindExpresion.ResolvedSource;
+            var propValue = source.GetType().GetProperty(bindExpresion.ResolvedSourcePropertyName).GetValue(source);
+            if (propValue == null)
             {
-                //MessageBox.Show(s.);
+                textBox.Text = String.Empty;
+            }
+        }
+
+        private void txt_TestCaseResult_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            var bindExpresion = textBox.GetBindingExpression(TextBox.TextProperty);
+            var source = bindExpresion.ResolvedSource;
+
+           
+            if (String.IsNullOrEmpty(textBox.Text))
+            {
+
+                source.GetType().GetProperty(bindExpresion.ResolvedSourcePropertyName).SetValue(source, null);
+                bindExpresion.UpdateTarget();
             }
         }
     }

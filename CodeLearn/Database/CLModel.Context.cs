@@ -28,8 +28,8 @@ namespace CodeLearn.Database
         public virtual DbSet<data_type> data_type { get; set; }
         public virtual DbSet<exercise> exercises { get; set; }
         public virtual DbSet<exercise_type> exercise_type { get; set; }
-        public virtual DbSet<test_case> test_case { get; set; }
-        public virtual DbSet<test_case_parameter> test_case_parameter { get; set; }
+        public virtual DbSet<test_case_parameters> test_case_parameters { get; set; }
+        public virtual DbSet<test_cases> test_cases { get; set; }
         public virtual DbSet<test_method_info> test_method_info { get; set; }
         public virtual DbSet<test_method_parameters> test_method_parameters { get; set; }
     }

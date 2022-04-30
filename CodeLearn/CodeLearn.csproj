@@ -74,10 +74,10 @@
     <Compile Include="Database\exercise_type.cs">
       <DependentUpon>CLModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\test_case.cs">
+    <Compile Include="Database\test_cases.cs">
       <DependentUpon>CLModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\test_case_parameter.cs">
+    <Compile Include="Database\test_case_parameters.cs">
       <DependentUpon>CLModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\test_method_info.cs">
@@ -118,6 +118,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Templates\Button_Theme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\Description_Theme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\ThemeColours.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
