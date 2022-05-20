@@ -24,50 +24,42 @@ namespace CodeLearn
         public List<string> Refferences { get; set; } = new List<string>();
         public List<string> Usings { get; set; } = new List<string>();
 
+        public string ClassName { get; set; }
+
+        public string MethodName { get; set; } // TODO: or methodS in the future?
+
         // Method ***ScriptMethod*** is used from the main application.
         // Method ***Log*** calls OnExecute delegate in the external assembly.
-        readonly string header = @"
-            namespace CScript
-            {
-                [Serializable]
-                public class Script
-                {
-                    public static void ScriptMethod()
-                    {
-                        Stopwatch sw = new Stopwatch();
-                        sw.Start();  
-            ";
-        //              Entered program text by a user ...
-        readonly string footer = @"
-                        sw.Stop();
-                        Log(sw.Elapsed.ToString());
-                    }
-                    static void Log(object message)
-                    {
-                        if(CodeLearn.CodeExecuter.OnExecute != null)
-                            CodeLearn.CodeExecuter.OnExecute(message);
-                    }
-                }
-            }";
+        private string _header;
+        // Then entered program text by a user ...
+        private string _footer;
 
         // Delegate, DLLs, Usings initialization. 
         // TODO: Determine which DLLs and Usings the program needs
-        public CodeExecuter(ExecuteLogHandler onExecute)
+        public CodeExecuter(ExecuteLogHandler onExecute, string className, string methodName)
         {
             OnExecute += onExecute;
+            ClassName = className;
+            MethodName = methodName;
+            InitializeCodeParts();
+            InitializeDlls();
+            InitializeUsings();
+        }
 
+        void InitializeDlls()
+        {
             Refferences.AddRange(new string[]
                  {
                     "System.dll",
                     "System.Core.dll",
                     "System.Net.dll",
                     "System.Data.dll",
-                    //"System.Drawing.dll",
-
                     // It's necessary to add our Assembly to be able to call OnExecute.
                     Assembly.GetAssembly(typeof(CodeExecuter)).Location
                  });
-
+        }
+        void InitializeUsings()
+        {
             Usings.AddRange(new string[]
              {
                     "System",
@@ -83,6 +75,27 @@ namespace CodeLearn
                     "System.Diagnostics",
                     "System.Linq"
              });
+        }
+        void InitializeCodeParts()
+        {
+            //StringBuilder sb = new StringBuilder();
+            //sb.Append()
+            _header = @"
+            namespace CScript
+            {
+                [Serializable]
+                public class " + ClassName + @"
+                {
+            ";
+            // User's code.
+            _footer = @"
+                static void Log(object message)
+                {
+                    if (CodeLearn.CodeExecuter.OnExecute != null)
+                     CodeLearn.CodeExecuter.OnExecute(message);
+                }
+            }
+        }";
         }
 
         public void Execute()
@@ -114,15 +127,15 @@ namespace CodeLearn
             loaderInstance.Load(bytedAssembly);
             var exported = loaderInstance.GetExportedTypes();
 
-            var local = new Loader();
-            var exp2 = local.GetExportedTypes();
+            // TODO: Fix error
+            //var local = new Loader();
+            //var exp2 = local.GetExportedTypes(); 
 
             foreach (var name in exported)
             {
                 Console.WriteLine(name);
             }
-            //  ProxyClass c = (ProxyClass)newDomain.CreateInstanceFromAndUnwrap(pathToDll, typeof(ProxyClass).FullName);
-
+            //ProxyClass c = (ProxyClass)newDomain.CreateInstanceFromAndUnwrap(pathToDll, typeof(ProxyClass).FullName);
 
             //   newDomain.Load(bytedAssembly);
             //  var obj = newDomain.CreateInstanceAndUnwrap(type.Assembly.FullName, type.Name);
@@ -139,14 +152,8 @@ namespace CodeLearn
                 try
                 {
                     // Call ScriptMethod in the compiled Assembly (to execute the user's entered code).
-                    compilerResult.CompiledAssembly.GetType("CScript.Script").GetMethod("ScriptMethod").Invoke(null, null);
-
-
-                    // some new test code 
-                    //Assembly a = Assembly.LoadFile(compilerResult.PathToAssembly);
-                    //MethodInfo[] mi = a.GetType("CScript.Script").GetMethods();
-                    //
-
+                    MethodInfo method = compilerResult.CompiledAssembly.GetType("CScript." + ClassName).GetMethod(MethodName);
+                    object d = method.Invoke(null, new object[] { 5, 5 });
                     OnExecute(string.Empty);
                     OnExecute("The code has been successfully compiled.");
                 }
@@ -166,7 +173,7 @@ namespace CodeLearn
         public void FormatSources(string text)
         {
             string usings = FormatUsings();
-            FormattedCode = string.Concat(usings, header, text, footer);
+            FormattedCode = string.Concat(usings, _header, text, _footer);
         }
 
         private string FormatUsings()

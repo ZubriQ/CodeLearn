@@ -19,7 +19,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="exercise_description" Type="nvarchar" MaxLength="2000" Nullable="false" />
           <Property Name="context" Type="text" Nullable="false" />
-          <Property Name="context_description" Type="nvarchar" MaxLength="2000" />
+          <Property Name="coding_area" Type="nvarchar" MaxLength="2000" />
           <Property Name="exercise_type_id" Type="int" Nullable="false" />
           <Property Name="optional_usings" Type="nvarchar" MaxLength="200" />
           <Property Name="optional_dlls" Type="nvarchar" MaxLength="200" />
@@ -245,7 +245,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="exercise_description" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="context" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="context_description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="coding_area" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="exercise_type_id" Type="Int32" Nullable="false" />
           <Property Name="optional_usings" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="optional_dlls" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -410,7 +410,7 @@
                 <ScalarProperty Name="optional_dlls" ColumnName="optional_dlls" />
                 <ScalarProperty Name="optional_usings" ColumnName="optional_usings" />
                 <ScalarProperty Name="exercise_type_id" ColumnName="exercise_type_id" />
-                <ScalarProperty Name="context_description" ColumnName="context_description" />
+                <ScalarProperty Name="coding_area" ColumnName="coding_area" />
                 <ScalarProperty Name="context" ColumnName="context" />
                 <ScalarProperty Name="exercise_description" ColumnName="exercise_description" />
                 <ScalarProperty Name="id" ColumnName="id" />

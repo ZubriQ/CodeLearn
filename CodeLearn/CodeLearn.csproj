@@ -89,7 +89,10 @@
     <Compile Include="Windows\CreateExercise_Window.xaml.cs">
       <DependentUpon>CreateExercise_Window.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Compile Include="Windows\Menu_Window.xaml.cs">
+      <DependentUpon>Menu_Window.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Windows\DoExercise_Window.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -113,8 +116,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CLModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Windows\DoExercise_Window.xaml.cs">
+      <DependentUpon>DoExercise_Window.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Templates\Button_Theme.xaml">
@@ -130,6 +133,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\CreateExercise_Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Menu_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

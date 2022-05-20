@@ -127,16 +127,6 @@ namespace CodeLearn.Windows
                 TestMethodInfo.test_cases.Remove(contex as test_cases);
         }
 
-        //private void txt_TestCaseResult_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    // TODO: placeholders
-        //    //var s = sender as TextBox;
-        //    //if (!string.IsNullOrWhiteSpace(s.Text))
-        //    //{
-        //    //    //MessageBox.Show(s.);
-        //    //}
-        //}
-
         #region Add an exercise into the db.
         private void btn_Submit_Click(object sender, RoutedEventArgs e)
         {
@@ -146,10 +136,9 @@ namespace CodeLearn.Windows
         void AddExercise()
         {
             InitializeParametersPositions();
-            //InitializeTestParametersPositions();
             App.DB.exercises.Add(Exercise);
             App.DB.SaveChanges();
-            MessageBox.Show("Exercise has been successfully added and saved.");
+            MessageBox.Show("Exercise has been successfully saved.");
         }
 
         void InitializeParametersPositions()
@@ -158,18 +147,6 @@ namespace CodeLearn.Windows
             foreach (var parameter in TestMethodInfo.test_method_parameters)
                 parameter.position = i++;
         }
-
-        //void InitializeTestParametersPositions()
-        //{
-        //    foreach (var tc in TestMethodInfo.test_case)
-        //    {
-        //        int i = 0;
-        //        foreach (var parameter in tc.test_case_parameter)
-        //        {
-        //            //parameter.position = i++;
-        //        }
-        //    }
-        //}
         #endregion
 
 
@@ -185,19 +162,32 @@ namespace CodeLearn.Windows
                 textBox.Text = String.Empty;
             }
         }
-
+        // Result Placeholders.
         private void txt_TestCaseResult_LostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
             var bindExpresion = textBox.GetBindingExpression(TextBox.TextProperty);
             var source = bindExpresion.ResolvedSource;
 
-           
             if (String.IsNullOrEmpty(textBox.Text))
             {
-
                 source.GetType().GetProperty(bindExpresion.ResolvedSourcePropertyName).SetValue(source, null);
                 bindExpresion.UpdateTarget();
+            }
+        }
+
+        private void cbExerciseType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = cbExerciseType.SelectedItem as exercise_type;
+            
+            if (item.name.ToLower() == "class coding")
+            {
+                txtClassName.IsEnabled = true;
+            }
+            else
+            {
+                txtClassName.Text = "TestClass";
+                txtClassName.IsEnabled = false;
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeLearn.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,21 +14,28 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CodeLearn
+namespace CodeLearn.Windows
 {
-    /// <summary>
-    /// Main CodeLearn Window.
-    /// </summary>
-    public partial class MainWindow : Window
+    public partial class DoExercise_Window : Window
     {
         private CodeExecuter CodeExecuter;
-        public MainWindow()
+
+        public exercise Exercise { get; set; }
+
+        public DoExercise_Window()
         {
             InitializeComponent();
+            InitializeTestExercise();
+            DataContext = this;
 
-            txtInput.Text = "for (int i = 0; i < 10; i++)\n\tLog(i);";
+            //txtInput.Text = "for (int i = 0; i < 10; i++)\n\tLog(i);";
+            CodeExecuter = new CodeExecuter(new ExecuteLogHandler(PrintResult), 
+                Exercise.class_name, Exercise.test_method_info.First().name);
+        }
 
-            CodeExecuter = new CodeExecuter(new ExecuteLogHandler(PrintResult));
+        void InitializeTestExercise()
+        {
+            Exercise = App.DB.exercises.FirstOrDefault(s => s.id == 1002);
         }
 
         private void PrintResult(object msg)

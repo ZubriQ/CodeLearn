@@ -49,7 +49,8 @@
                           FontFamily="Consolas"
                           FontSize="12"
                           DisplayMemberPath="name"
-                          SelectedItem="{Binding Path=Exercise.ExerciseTypeNotifable}" />
+                          SelectedItem="{Binding Path=Exercise.ExerciseTypeNotifable}" 
+                          SelectionChanged="cbExerciseType_SelectionChanged"/>
             </DockPanel>
 
             <!-- Exercise Context -->
@@ -67,8 +68,8 @@
                          BorderBrush="Green"
                          BorderThickness="2"
                          FontFamily="Consolas"
-                         FontSize="12"
-                         MaxHeight="300"
+                         FontSize="13"
+                         MaxHeight="310"
                          ScrollViewer.VerticalScrollBarVisibility="Auto"
                          Text="{Binding Exercise.context}" />
             </DockPanel>
@@ -76,7 +77,7 @@
             <DockPanel Grid.Row="3">
                 <TextBlock Grid.Row="0"
                            Margin="4,4,4,1"
-                           Text="Context description:"
+                           Text="Student coding area:"
                            DockPanel.Dock="Top"
                            FontSize="14" />
                 <TextBox x:Name="txtExerciseContextDescription"
@@ -86,11 +87,11 @@
                          AcceptsReturn="True"
                          BorderBrush="Green"
                          BorderThickness="2"
-                         FontFamily="Calibri"
-                         FontSize="14"
-                         MaxHeight="125"
+                         FontFamily="Consolas"
+                         FontSize="13"
+                         MaxHeight="310"
                          ScrollViewer.VerticalScrollBarVisibility="Auto"
-                         Text="{Binding Exercise.context_description}" />
+                         Text="{Binding Exercise.coding_area}" />
             </DockPanel>
 
             <!-- Class, method & return type info. -->

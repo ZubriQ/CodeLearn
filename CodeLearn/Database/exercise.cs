@@ -23,7 +23,7 @@ namespace CodeLearn.Database
         public int id { get; set; }
         public string exercise_description { get; set; }
         public string context { get; set; }
-        public string context_description { get; set; }
+        public string coding_area { get; set; }
         public int exercise_type_id { get; set; }
         public string optional_usings { get; set; }
         public string optional_dlls { get; set; }
