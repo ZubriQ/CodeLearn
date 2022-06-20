@@ -11,25 +11,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CodeLearn.Windows
+namespace CodeLearn.WPF.Windows
 {
-    public partial class DoExercise_Window : Window
+    public partial class DoExerciseWindow : Window
     {
-        private CodeExecuter CodeExecuter;
+        private CodeLearn.Lib.CodeExecuter CodeExecuter;
 
         public exercise Exercise { get; set; }
 
-        public DoExercise_Window()
+        public DoExerciseWindow()
         {
             InitializeComponent();
             InitializeTestExercise();
             DataContext = this;
 
             //txtInput.Text = "for (int i = 0; i < 10; i++)\n\tLog(i);";
-            CodeExecuter = new CodeExecuter(new ExecuteLogHandler(PrintResult), Exercise);
+            CodeExecuter = new CodeLearn.Lib.CodeExecuter(new CodeLearn.Lib.ExecuteLogHandler(PrintResult), Exercise);
         }
 
         void InitializeTestExercise()
@@ -47,6 +46,7 @@ namespace CodeLearn.Windows
             txtOutput.Text = string.Empty;
             CodeExecuter.FormatSources(txtInput.Text);
             CodeExecuter.Execute();
+            // interactions with other testcode class instead of execute.
         }
     }
 }

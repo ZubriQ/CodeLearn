@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CodeTester.cs" />
     <Compile Include="Database\DatabaseExtensions.cs" />
     <Compile Include="Database\data_type.cs">
       <DependentUpon>CLModel.tt</DependentUpon>

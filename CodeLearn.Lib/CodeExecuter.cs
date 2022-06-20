@@ -7,8 +7,9 @@ using System.Reflection;
 using System.IO;
 using TypeLoader;
 using CodeLearn.Database;
+using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
 
-namespace CodeLearn
+namespace CodeLearn.Lib
 {
     // WPF's Output.
     public delegate void ExecuteLogHandler(object message);
@@ -128,13 +129,18 @@ namespace CodeLearn
             compilerParams.ReferencedAssemblies.AddRange(Refferences.ToArray());
 
             // Compilation.
-            CodeDomProvider codeDomProvider = CodeDomProvider.CreateProvider("CSharp");
-            var compilerResult = codeDomProvider.CompileAssemblyFromSource(compilerParams, formattedCode);
+            //CodeDomProvider codeDomProvider = CodeDomProvider.CreateProvider("CSharp");
+            var provider = new Microsoft.CSharp.CSharpCodeProvider();
+            var compiler = provider.CreateCompiler();
+            var compilerResult = compiler.CompileAssemblyFromSource(compilerParams, formattedCode);
 
             byte[] bytedAssembly = File.ReadAllBytes(compilerResult.PathToAssembly);
 
             string pathToDll = Assembly.GetExecutingAssembly().CodeBase;
+            AppDomainSetup appDomain = new AppDomainSetup { ApplicationBase = pathToDll }; // ??
             AppDomainSetup domainSetup = new AppDomainSetup { PrivateBinPath = pathToDll };
+            domainSetup.ApplicationBase = pathToDll;
+
             var newDomain = AppDomain.CreateDomain("Another Domain", null, domainSetup);
             var loaderInstance = newDomain.CreateInstanceAndUnwrap("TypeLoader", typeof(Loader).FullName) as Loader;
             loaderInstance.Load(bytedAssembly);
