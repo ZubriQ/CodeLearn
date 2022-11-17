@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace CodeLearn.WPF.Windows
 {
-    /// <summary>
-    /// Логика взаимодействия для MenuWindow.xaml
-    /// </summary>
     public partial class MenuWindow : Window
     {
         public MenuWindow()
@@ -27,6 +24,12 @@ namespace CodeLearn.WPF.Windows
         private void btn_DoExercise_Click(object sender, RoutedEventArgs e)
         {
             DoExerciseWindow w = new DoExerciseWindow();
+            w.ShowDialog();
+        }
+
+        private void btn_CreateExercise_Click(object sender, RoutedEventArgs e)
+        {
+            CreateExerciseWindow w = new CreateExerciseWindow();
             w.ShowDialog();
         }
     }

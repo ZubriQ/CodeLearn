@@ -8,8 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CodeLearn\CodeLearn.csproj" />
-    <ProjectReference Include="..\TypeLoader\TypeLoader.csproj" />
+    <ProjectReference Include="..\CodeLearn.WPF\CodeLearn.WPF.csproj" />
   </ItemGroup>
 
 </Project>

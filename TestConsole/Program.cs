@@ -10,8 +10,8 @@
 
         static void Log(object message)
         {
-            if (CodeLearn.CodeExecuter.OnExecute != null)
-                CodeLearn.CodeExecuter.OnExecute(message);
+            if (CodeLearn.WPF.CodeBuilder.CodeExecuter.OnExecute != null)
+                CodeLearn.WPF.CodeBuilder.CodeExecuter.OnExecute(message);
         }
 
         static void Main()

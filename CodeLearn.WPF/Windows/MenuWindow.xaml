@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeLearn.WPF.Windows"
         mc:Ignorable="d"
-        Title="MenuWindow" Height="150" Width="240">
+        Title="MenuWindow" Height="200" Width="400">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -15,12 +15,15 @@
         <Button x:Name="btn_CreateExercise"
                 Content="Create Exercise"
                 VerticalAlignment="Center"
-                HorizontalAlignment="Center"/>
+                HorizontalAlignment="Center"
+                Template="{StaticResource Button}"
+                Click="btn_CreateExercise_Click" />
         <Button x:Name="btn_DoExercise"
                 Grid.Column="1"
                 Content="Do Exercise"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
+                Template="{StaticResource Button}"
                 Click="btn_DoExercise_Click" />
     </Grid>
 </Window>

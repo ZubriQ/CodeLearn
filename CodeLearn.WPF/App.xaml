@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:CodeLearn.WPF"
              StartupUri="Windows/MenuWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Templates/Button_Theme.xaml" />
+                <ResourceDictionary Source="Templates/Description_Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

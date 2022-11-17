@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeLearn", "CodeLearn\CodeLearn.csproj", "{3AB88556-E614-4915-8B75-6D2766B7A4F7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypeLoader", "TypeLoader\TypeLoader.csproj", "{0EFCB823-50B8-4257-B7D1-E6579AD98E76}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsole", "TestConsole\TestConsole.csproj", "{4A2CACC8-0909-4FF8-A496-2882A5DF2DEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeLearn.WPF", "CodeLearn.WPF\CodeLearn.WPF.csproj", "{672DC344-25C2-4D73-B086-6BA6668F6730}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeLearn.WPF", "CodeLearn.WPF\CodeLearn.WPF.csproj", "{672DC344-25C2-4D73-B086-6BA6668F6730}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FF5DC1AB-E517-4ED7-ABD0-98394C99FEC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeLearn.Lib", "CodeLearn.Lib\CodeLearn.Lib.csproj", "{429F08F9-70A3-4469-9858-94A004BF9661}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeLearn.Lib", "CodeLearn.Lib\CodeLearn.Lib.csproj", "{B6A36880-59FA-4627-B618-728DF2B47609}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeLearn.Db", "CodeLearn.Db\CodeLearn.Db.csproj", "{FFE4376D-7CBB-4013-B5FF-C481F14DCDD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,26 +19,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3AB88556-E614-4915-8B75-6D2766B7A4F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3AB88556-E614-4915-8B75-6D2766B7A4F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3AB88556-E614-4915-8B75-6D2766B7A4F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3AB88556-E614-4915-8B75-6D2766B7A4F7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0EFCB823-50B8-4257-B7D1-E6579AD98E76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0EFCB823-50B8-4257-B7D1-E6579AD98E76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EFCB823-50B8-4257-B7D1-E6579AD98E76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EFCB823-50B8-4257-B7D1-E6579AD98E76}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A2CACC8-0909-4FF8-A496-2882A5DF2DEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A2CACC8-0909-4FF8-A496-2882A5DF2DEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A2CACC8-0909-4FF8-A496-2882A5DF2DEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A2CACC8-0909-4FF8-A496-2882A5DF2DEF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{672DC344-25C2-4D73-B086-6BA6668F6730}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{672DC344-25C2-4D73-B086-6BA6668F6730}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{672DC344-25C2-4D73-B086-6BA6668F6730}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{672DC344-25C2-4D73-B086-6BA6668F6730}.Release|Any CPU.Build.0 = Release|Any CPU
-		{429F08F9-70A3-4469-9858-94A004BF9661}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{429F08F9-70A3-4469-9858-94A004BF9661}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{429F08F9-70A3-4469-9858-94A004BF9661}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{429F08F9-70A3-4469-9858-94A004BF9661}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6A36880-59FA-4627-B618-728DF2B47609}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6A36880-59FA-4627-B618-728DF2B47609}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6A36880-59FA-4627-B618-728DF2B47609}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6A36880-59FA-4627-B618-728DF2B47609}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFE4376D-7CBB-4013-B5FF-C481F14DCDD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFE4376D-7CBB-4013-B5FF-C481F14DCDD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFE4376D-7CBB-4013-B5FF-C481F14DCDD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFE4376D-7CBB-4013-B5FF-C481F14DCDD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

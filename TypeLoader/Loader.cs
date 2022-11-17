@@ -20,10 +20,10 @@ namespace TypeLoader
         public string[] GetExportedTypes()
         {
             var typeNames = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(asm => asm.GetExportedTypes())
-                .Select(t => t.FullName)
-                .Where(t => t.Contains("Script"))
-                .ToArray();
+                                                   .SelectMany(asm => asm.GetExportedTypes())
+                                                   .Select(t => t.FullName)
+                                                   .Where(t => t.Contains("Script"))
+                                                   .ToArray();
             return typeNames;
         }
     }

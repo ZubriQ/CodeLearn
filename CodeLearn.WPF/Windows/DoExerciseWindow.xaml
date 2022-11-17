@@ -5,27 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeLearn.WPF.Windows"
         mc:Ignorable="d"
-        Title="DoExerciseWindow" Height="450" Width="800">
+        Title="Do Exercise"
+        Height="600"
+        Width="500">
     <ScrollViewer>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="150" />
             </Grid.RowDefinitions>
             <!-- Exercise description. -->
             <TextBlock Grid.Row="0"
-                       Text="{Binding Exercise.exercise_description}"
+                       Text="{Binding Exercise.ExerciseDescription}"
                        Margin="4,4,4,10"
                        DockPanel.Dock="Top"
                        FontSize="14"
                        TextWrapping="Wrap" />
 
             <DockPanel Grid.Row="1">
-                <TextBox Text="{Binding Exercise.context}"
+                <TextBox Text="{Binding Exercise.Context}" 
                          Grid.Row="2"
                          Margin="4,1,4,4"
                          TextWrapping="Wrap"
@@ -49,7 +51,7 @@
                            FontSize="14" />
 
                 <TextBox x:Name="txtInput"
-                         Text="{Binding Exercise.coding_area}"
+                         Text="{Binding Exercise.CodingArea}"
                          Grid.Row="2"
                          Margin="4,1,4,4"
                          TextWrapping="Wrap"
@@ -64,11 +66,12 @@
 
             <DockPanel Grid.Row="3"
                        HorizontalAlignment="Left">
-                <Button x:Name="btnRun"
+                <Button x:Name="btn_Run"
                         Content="Run"
                         Height="25"
                         Width="60"
-                        Margin="4"/>
+                        Margin="4"
+                        Click="RunButton_Click"/>
             </DockPanel>
 
             <TextBlock Grid.Row="4"

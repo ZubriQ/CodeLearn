@@ -1,5 +1,4 @@
-﻿using CodeLearn.Database;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,41 +11,54 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CodeLearn.Lib;
+using CodeLearn.Db;
 
 namespace CodeLearn.WPF.Windows
 {
     public partial class DoExerciseWindow : Window
     {
-        private CodeLearn.Lib.CodeExecuter CodeExecuter;
+        private CodeManager codeManager { get; set; } = new();
 
-        public exercise Exercise { get; set; }
+        public Exercise Exercise { get; set; }
 
         public DoExerciseWindow()
         {
             InitializeComponent();
             InitializeTestExercise();
             DataContext = this;
-
-            //txtInput.Text = "for (int i = 0; i < 10; i++)\n\tLog(i);";
-            CodeExecuter = new CodeLearn.Lib.CodeExecuter(new CodeLearn.Lib.ExecuteLogHandler(PrintResult), Exercise);
         }
 
         void InitializeTestExercise()
         {
-            Exercise = App.DB.exercises.FirstOrDefault(s => s.id == 1002);
-        }
-
-        private void PrintResult(object msg)
-        {
-            txtOutput.Text += string.Concat(msg, Environment.NewLine);
+            Exercise = App.DB.GetTestExercise();
+            Exercise.CodingArea = @"public static double GetArea(double a, double b)
+{
+    return a*b;
+}";
         }
 
         private void RunButton_Click(object sender, RoutedEventArgs e)
         {
-            txtOutput.Text = string.Empty;
-            CodeExecuter.FormatSources(txtInput.Text);
-            CodeExecuter.Execute();
-            // interactions with other testcode class instead of execute.
+            try
+            {
+                txtOutput.Text = string.Empty;
+                CheckMethod();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void CheckMethod()
+        {
+            string? code = txtInput.Text;
+            if (!string.IsNullOrEmpty(code))
+            {
+                codeManager.CompileAndTestMethod(code, Exercise);
+            }
+            //return true;
         }
     }
 }

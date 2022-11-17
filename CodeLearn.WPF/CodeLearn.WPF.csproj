@@ -8,14 +8,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4-beta1.22518.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.4.0-4.final" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CodeLearn.Db\CodeLearn.Db.csproj" />
     <ProjectReference Include="..\CodeLearn.Lib\CodeLearn.Lib.csproj" />
-    <ProjectReference Include="..\CodeLearn\CodeLearn.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Templates\Button_Theme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Templates\Description_Theme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Templates\ThemeColours.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>
