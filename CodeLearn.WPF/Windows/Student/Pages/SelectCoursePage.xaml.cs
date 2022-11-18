@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeLearn.Db;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,19 @@ namespace CodeLearn.WPF.Windows.Student.Pages
         public SelectCoursePage()
         {
             InitializeComponent();
+            ic_Courses.ItemsSource = App.DB.GetCourses();
+
+        }
+
+        private void btn_Start_Click(object sender, RoutedEventArgs e)
+        {
+            var s = sender as Button;
+            var contex = s?.DataContext;
+            if (contex is Testing)
+            {
+                TestingPage testing = new TestingPage((Testing)contex);
+                NavigationService.Navigate(testing);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeLearn.WPF.Windows.Student;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,8 +27,8 @@ namespace CodeLearn.WPF.Windows
 
         private void btn_Login_Click(object sender, RoutedEventArgs e)
         {
-            //StudentWindow window = new();
-            //window.Show();
+            HomeWindow window = new();
+            window.Show();
             Close();
         }
     }

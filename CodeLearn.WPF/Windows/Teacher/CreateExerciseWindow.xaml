@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CodeLearn.WPF.Windows"
         mc:Ignorable="d"
         Title="Create Exercise"
-        Height="560"
+        Height="610"
         Width="417"
         MinWidth="417"
         MinHeight="340">
@@ -151,6 +151,27 @@
                 </StackPanel>
             </DockPanel>
 
+            <!-- Score. -->
+            <DockPanel Grid.Row="4">
+                <StackPanel>
+                    <TextBlock Grid.Row="0"
+                               Margin="4,4,4,1"
+                               Text="Score (1-5):"
+                               DockPanel.Dock="Top"
+                               FontSize="14" />
+                    <TextBox x:Name="txtScore"
+                             Grid.Row="1"
+                             Margin="4,0,4,4"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             BorderThickness="2"
+                             FontSize="12"
+                             Width="120"
+                             HorizontalAlignment="Left"
+                             Text="{Binding Exercise.Score}" />
+                </StackPanel>
+            </DockPanel>
+
             <!-- Adding Method parameters -->
             <DockPanel Grid.Row="5">
                 <DockPanel DockPanel.Dock="Top">
@@ -244,7 +265,7 @@
                                     <!-- Result. -->
                                     <Grid>
                                         <TextBox x:Name="txt_TestCaseResult"
-                                                 Background="{DynamicResource TintedPrimaryBrush}"
+                                                 Background="#ddd"
                                                  DockPanel.Dock="Right"
                                                  MinWidth="38"
                                                  Height="22"

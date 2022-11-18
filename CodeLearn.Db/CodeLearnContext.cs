@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace CodeLearn.Db
 {
@@ -255,13 +252,13 @@ namespace CodeLearn.Db
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Description)
-                    .HasMaxLength(500)
+                    .HasMaxLength(400)
                     .HasColumnName("description");
 
                 entity.Property(e => e.DurationInMinutes).HasColumnName("duration_in_minutes");
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(200)
+                    .HasMaxLength(100)
                     .HasColumnName("name");
 
                 entity.HasMany(d => d.Exercises)

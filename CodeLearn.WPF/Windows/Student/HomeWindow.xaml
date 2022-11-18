@@ -5,76 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeLearn.WPF.Windows.Student"
         mc:Ignorable="d"
-        Title="HomeWindow" Height="450" Width="800"
-        MinWidth="400">
-    <ScrollViewer>
-        <Grid>
+        Title="HomeWindow" Height="450" Width="1020"
+        MinWidth="490"
+        WindowState="Maximized"
+        ResizeMode="NoResize"
+        >
+    <ScrollViewer Background="#f5f5f7">
+        <Grid x:Name="MainHomeWindowGrid">
             <Grid.RowDefinitions>
-                <RowDefinition Height="150"
-                               MinHeight="100" />
+                <RowDefinition Height="auto"
+                               MinHeight="100"
+                               />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
             <Border>
                 <Image Source="/Images/CodeLearn.png"
-                       Margin="15" />
+                       Margin="0,30,0,60"
+                       MaxHeight="142"
+                       MinWidth="980"/>
             </Border>
 
-            <Grid Grid.Row="1">
-                <Rectangle>
-                    <Rectangle.Fill>
-                        <LinearGradientBrush StartPoint="0,1"
-                                             EndPoint="1,0">
-                            <GradientStop Color="#328f8a"
-                                          Offset="0" />
-                            <GradientStop Color="#08ac4b"
-                                          Offset="1" />
-                        </LinearGradientBrush>
-                    </Rectangle.Fill>
-                </Rectangle>
+            <Frame x:Name="HomeWindowFrame"
+                   Source="Pages/SelectCoursePage.xaml"
+                   Grid.Row="1">
 
-                <ItemsControl Background="Transparent"
-                              d:ItemsSource="{d:SampleData ItemCount=4}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Background="White" 
-                                    Margin="20" 
-                                    CornerRadius="25"
-                                    Padding="10">
-                                <StackPanel Margin="5">
-                                    <TextBlock FontSize="30"
-                                               Text="{Binding Path=Name}"
-                                               TextWrapping="Wrap" 
-                                               Margin="5"/>
-                                    <DockPanel Margin="5">
-                                        <TextBlock FontSize="16"
-                                                   Text="Duration of the course: "
-                                                   TextWrapping="Wrap" />
-                                        <TextBlock FontSize="16"
-                                                   Text="{Binding Path=DurationInMinutes}"
-                                                   TextWrapping="Wrap" />
-                                    </DockPanel>
-                                    <TextBlock FontSize="16"
-                                               Text="{Binding Path=Description}"
-                                               TextWrapping="Wrap"
-                                               Margin="5"/>
-                                    <Button x:Name="btn_Start"
-                                            Template="{StaticResource Button}"
-                                            Content="Start" 
-                                            HorizontalAlignment="Left"
-                                            Margin="5"/>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </Grid>
+            </Frame>
         </Grid>
     </ScrollViewer>
 </Window>

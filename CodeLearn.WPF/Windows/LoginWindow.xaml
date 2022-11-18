@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeLearn.WPF.Windows"
         mc:Ignorable="d"
-        Title="CodeLearn - Login" Height="420" Width="380"
+        Title="CodeLearn - Login" Height="640" Width="980"
         ResizeMode="NoResize">
     <Grid>
         <Rectangle>
             <Rectangle.Fill>
                 <LinearGradientBrush StartPoint="0,1"
                                      EndPoint="1,0">
-                    <GradientStop Color="#328f8a"
+                    <GradientStop Color="#a1c4fd"
                                   Offset="0" />
-                    <GradientStop Color="#08ac4b"
+                    <GradientStop Color="#c2e9fb"
                                   Offset="1" />
                 </LinearGradientBrush>
             </Rectangle.Fill>
@@ -22,7 +22,9 @@
         <Border CornerRadius="25" Padding="10"
                 Background="White"
                 Margin="40"
-                BorderThickness="2,2,2,2">
+                BorderThickness="2,2,2,2"
+                Height="340"
+                Width="300">
             <StackPanel>
                 <Label Margin="30"
                        HorizontalAlignment="Center"
@@ -30,16 +32,20 @@
                        FontWeight="DemiBold"
                        FontFamily="Poppins"
                        Content="Login"
-                       Foreground="{StaticResource SecondaryBrush}"/>
+                       Foreground="{StaticResource PrimaryBrush}"/>
 
                 <StackPanel>
                     <Label FontFamily="Consolas"
                            Foreground="DimGray"
                            Content="Username" />
                     <TextBox Height="26"
-                             Margin="5,0,5,5"
+                             Margin="5,0,5,0"
                              VerticalContentAlignment="Center" 
-                             FontFamily="Consolas"/>
+                             FontFamily="Consolas"
+                             BorderThickness="0"/>
+                    <Border BorderBrush="#d3d3d3"
+                            BorderThickness="0.2"
+                            Margin="5,0,5,0" />
                 </StackPanel>
 
                 <StackPanel>
@@ -47,18 +53,20 @@
                            Foreground="DimGray" 
                            Content="Password"/>
                     <PasswordBox Height="26"
-                                 Margin="5,0,5,5"
+                                 Margin="5,0,5,0"
                                  VerticalContentAlignment="Center"
-                                 FontFamily="Consolas"/>
+                                 FontFamily="Consolas"
+                                 BorderThickness="0"/>
+                    <Border BorderBrush="#d3d3d3"
+                            BorderThickness="0.2"
+                            Margin="5,0,5,0" />
                 </StackPanel>
 
                 <Button x:Name="btn_Login"
                         Template="{StaticResource Button}"
-                        Content="Login"
+                        Content="LOGIN"
                         HorizontalAlignment="Stretch"
-                        Margin="5"
-                        FontWeight="Medium"
-                        FontFamily="Poppins"
+                        Margin="5,30,5,5"
                         Click="btn_Login_Click" />
             </StackPanel>
         </Border>

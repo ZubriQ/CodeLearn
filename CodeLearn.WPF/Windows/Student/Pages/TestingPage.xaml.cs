@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeLearn.Db;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,7 @@ namespace CodeLearn.WPF.Windows.Student.Pages
     /// </summary>
     public partial class TestingPage : Page
     {
-        public TestingPage()
+        public TestingPage(Testing testing)
         {
             InitializeComponent();
         }

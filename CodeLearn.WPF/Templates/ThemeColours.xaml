@@ -4,7 +4,7 @@
     <!-- Colours -->
     <SolidColorBrush x:Key="PrimaryBrush"
                      Color="{DynamicResource PrimaryColor}" />
-    <Color x:Key="PrimaryColor">#328f8a</Color>
+    <Color x:Key="PrimaryColor">#07c</Color>
 
     <SolidColorBrush x:Key="SecondaryBrush"
                      Color="{DynamicResource SecondaryColor}" />
@@ -16,13 +16,13 @@
 
     <SolidColorBrush x:Key="IsMouseOverBrush"
                      Color="{DynamicResource IsMouseOverColor}" />
-    <Color x:Key="IsMouseOverColor">#2D807C</Color>
+    <Color x:Key="IsMouseOverColor">#07c</Color>
 
     <SolidColorBrush x:Key="IsPressedBrush"
                      Color="{DynamicResource IsPressedColor}" />
-    <Color x:Key="IsPressedColor">#469A95</Color> 
+    <Color x:Key="IsPressedColor">#1984D1</Color> 
 
     <SolidColorBrush x:Key="TintedPrimaryBrush"
                      Color="{DynamicResource TintedPrimaryColor}" />
-    <Color x:Key="TintedPrimaryColor">#acd2cf</Color>
+    <Color x:Key="TintedPrimaryColor">#ddd</Color>
 </ResourceDictionary>
