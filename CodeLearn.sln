@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypeLoader", "TypeLoader\Ty
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeLearn.WPF", "CodeLearn.WPF\CodeLearn.WPF.csproj", "{672DC344-25C2-4D73-B086-6BA6668F6730}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FF5DC1AB-E517-4ED7-ABD0-98394C99FEC2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeLearn.Lib", "CodeLearn.Lib\CodeLearn.Lib.csproj", "{B6A36880-59FA-4627-B618-728DF2B47609}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeLearn.Db", "CodeLearn.Db\CodeLearn.Db.csproj", "{FFE4376D-7CBB-4013-B5FF-C481F14DCDD4}"
