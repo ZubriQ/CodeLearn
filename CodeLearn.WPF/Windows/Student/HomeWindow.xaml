@@ -34,7 +34,13 @@
                 </Rectangle>
 
                 <ItemsControl Background="Transparent"
-                              d:ItemsSource="{d:SampleData ItemCount=3}">
+                              d:ItemsSource="{d:SampleData ItemCount=4}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Background="White" 
