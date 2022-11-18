@@ -1,7 +1,25 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!-- UNDONE -->
-    <!-- Primary Colour -->
-    <SolidColorBrush x:Key="PrimaryGreenColour"
-                     Color="#008000" />
+    
+    <!-- Colours -->
+    <SolidColorBrush x:Key="PrimaryBrush"
+                     Color="{DynamicResource PrimaryColor}" />
+    <Color x:Key="PrimaryColor">#328f8a</Color>
+
+    <SolidColorBrush x:Key="SecondaryBrush"
+                     Color="{DynamicResource SecondaryColor}" />
+    <Color x:Key="SecondaryColor">#08ac4b</Color>
+
+    <SolidColorBrush x:Key="DisabledBrush"
+                     Color="{DynamicResource DisabledColor}" />
+    <Color x:Key="DisabledColor">LightGray</Color>
+
+    <SolidColorBrush x:Key="IsMouseOverBrush"
+                     Color="{DynamicResource IsMouseOverColor}" />
+    <Color x:Key="IsMouseOverColor">#2D807C</Color>
+
+    <SolidColorBrush x:Key="IsPressedBrush"
+                     Color="{DynamicResource IsPressedColor}" />
+    <Color x:Key="IsPressedColor">#469A95</Color>
+
 </ResourceDictionary>

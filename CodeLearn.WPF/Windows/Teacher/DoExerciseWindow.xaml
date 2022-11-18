@@ -47,7 +47,7 @@
                            Margin="4,4,4,1"
                            Text="Code here:"
                            DockPanel.Dock="Top"
-                           Foreground="Green"
+                           Foreground="{DynamicResource PrimaryBrush}"
                            FontSize="14" />
 
                 <TextBox x:Name="txtInput"
@@ -56,7 +56,7 @@
                          Margin="4,1,4,4"
                          TextWrapping="Wrap"
                          AcceptsReturn="True"
-                         BorderBrush="Green"
+                         BorderBrush="{DynamicResource PrimaryBrush}"
                          BorderThickness="2"
                          FontFamily="Consolas"
                          FontSize="14"
@@ -67,9 +67,9 @@
             <DockPanel Grid.Row="3"
                        HorizontalAlignment="Left">
                 <Button x:Name="btn_Run"
+                        Template="{StaticResource Button}"
                         Content="Run"
-                        Height="25"
-                        Width="60"
+                        Width="65"
                         Margin="4"
                         Click="RunButton_Click"/>
             </DockPanel>
@@ -85,7 +85,7 @@
                      TextWrapping="Wrap"
                      AcceptsReturn="True"
                      IsReadOnly="True"
-                     BorderBrush="Green"
+                     BorderBrush="{DynamicResource PrimaryBrush}"
                      BorderThickness="2"
                      FontFamily="Consolas"
                      FontSize="14" />
