@@ -190,7 +190,7 @@
                                           SelectedItem="{Binding DataType}"
                                           Margin="3"
                                           MinWidth="42"
-                                          DisplayMemberPath="Name" />
+                                          DisplayMemberPath="ShortName" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -244,7 +244,7 @@
                                     <!-- Result. -->
                                     <Grid>
                                         <TextBox x:Name="txt_TestCaseResult"
-                                                 Background="#DDFFBC"
+                                                 Background="{DynamicResource TintedPrimaryBrush}"
                                                  DockPanel.Dock="Right"
                                                  MinWidth="38"
                                                  Height="22"

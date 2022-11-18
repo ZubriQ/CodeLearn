@@ -13,6 +13,7 @@ namespace CodeLearn.Db
 
         public int Id { get; set; }
         public string Name { get; set; } = null!;
+        public string ShortName { get; set; } = null!;
 
         public virtual ICollection<TestMethodInfo> TestMethodInfos { get; set; }
         public virtual ICollection<TestMethodParameter> TestMethodParameters { get; set; }

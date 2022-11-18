@@ -20,6 +20,9 @@
 
     <SolidColorBrush x:Key="IsPressedBrush"
                      Color="{DynamicResource IsPressedColor}" />
-    <Color x:Key="IsPressedColor">#469A95</Color>
+    <Color x:Key="IsPressedColor">#469A95</Color> 
 
+    <SolidColorBrush x:Key="TintedPrimaryBrush"
+                     Color="{DynamicResource TintedPrimaryColor}" />
+    <Color x:Key="TintedPrimaryColor">#acd2cf</Color>
 </ResourceDictionary>

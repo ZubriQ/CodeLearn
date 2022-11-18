@@ -25,7 +25,7 @@ namespace CodeLearn.Db.WPF
         #region Initializing default data methods for CreateExerciseWindow
         public void InitializeMethodParameterDataTypes(ObservableCollection<DataType> dataTypes)
         {
-            var items = _context.DataTypes.Where(x => x.Name != "Void").ToArray();
+            var items = _context.DataTypes.Where(x => x.ShortName != "void").ToArray();
             for (int i = 0; i < items.Length; i++)
                 dataTypes.Add(items[i]);
         }
@@ -34,7 +34,7 @@ namespace CodeLearn.Db.WPF
         {
             testMethod.Name = "TestMethod";
             testMethod.TestMethodParameters = new ObservableCollection<TestMethodParameter>();
-            testMethod.ReturnType = _context.DataTypes.First(dt => dt.Name == "Void");
+            testMethod.ReturnType = _context.DataTypes.First(dt => dt.ShortName == "void");
             testMethod.TestCases = new ObservableCollection<TestCase>();
         }
 
