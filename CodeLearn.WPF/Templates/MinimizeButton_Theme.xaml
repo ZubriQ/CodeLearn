@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate TargetType="Button"
+                     x:Key="MinimizeButton">
+        <Border x:Name="btnMinimize"
+                BorderThickness="0"
+                Background="Transparent">
+
+            <Viewbox>
+                <Canvas Width="24"
+                        Height="24">
+                    <Path Fill="White"
+                          Data="M20,14H4V10H20" />
+                </Canvas>
+            </Viewbox>
+        </Border>
+
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="true">
+                <Setter TargetName="btnMinimize"
+                        Property="Background"
+                        Value="#2A7198" />
+            </Trigger>
+
+            <Trigger Property="IsPressed"
+                     Value="true">
+                <Setter TargetName="btnMinimize"
+                        Property="Background"
+                        Value="#619BBA" />
+                <Setter TargetName="btnMinimize"
+                        Property="BorderBrush"
+                        Value="#619BBA" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+</ResourceDictionary>

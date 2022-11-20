@@ -9,11 +9,16 @@
       d:DesignWidth="980"
       Title="SelectCoursePage">
     <Grid MaxWidth="980"
-          MinWidth="980">
-
+          MinWidth="980"
+          UseLayoutRounding="True"
+          RenderOptions.BitmapScalingMode="NearestNeighbor"
+          SnapsToDevicePixels="True"
+          RenderOptions.ClearTypeHint="Enabled">
+        
         <ItemsControl x:Name="ic_Courses"
                       Background="Transparent"
-                      d:ItemsSource="{d:SampleData ItemCount=2}">
+                      Margin="0,10,0,0"
+                      d:ItemsSource="{d:SampleData ItemCount=3}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
@@ -22,39 +27,42 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid >
                         <Border Background="White"
                                 CornerRadius="15"
                                 Margin="10"
-                                BorderBrush="#e3e3e3"
-                                BorderThickness="1"
                                 Width="470">
 
-                            <Grid>
+                            <Grid >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
+                                
                                 <!-- Testing description -->
                                 <StackPanel Margin="15,20,15,15">
                                     <TextBlock FontSize="30"
                                                Text="{Binding Path=Name}"
                                                TextWrapping="Wrap"
                                                Margin="5"
+                                               Foreground="{StaticResource LogoThemeBrush2}"
                                                LineStackingStrategy="BlockLineHeight"
-                                               LineHeight="31" />
+                                               LineHeight="30"/>
                                     <DockPanel Margin="5">
-                                        <TextBlock FontSize="16"
+                                        <!--<TextBlock FontSize="16"
                                                    Text="Duration of the course: "
                                                    TextWrapping="Wrap" />
                                         <TextBlock FontSize="16"
                                                    Text="{Binding Path=DurationInMinutes}"
-                                                   TextWrapping="Wrap" />
+                                                   TextWrapping="Wrap" />-->
                                     </DockPanel>
                                     <TextBlock FontSize="16"
                                                Text="{Binding Path=Description}"
                                                TextWrapping="Wrap"
-                                               Margin="5" />
+                                               Margin="5"
+                                               RenderOptions.ClearTypeHint="Enabled"
+                                               SnapsToDevicePixels="True"
+                                               />
                                 </StackPanel>
 
                                 <Button x:Name="btn_Start"
@@ -71,9 +79,9 @@
                             <Border.BitmapEffect>
                                 <DropShadowBitmapEffect Color="Black"
                                                         Direction="270"
-                                                        ShadowDepth="3"
-                                                        Opacity="0.1"
-                                                        Softness="0" />
+                                                        ShadowDepth="5"
+                                                        Opacity="0.08"
+                                                        Softness="4" />
                             </Border.BitmapEffect>
                         </Border>
                     </Grid>

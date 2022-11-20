@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Images\CodeLearn.png" />
+    <None Remove="Images\CodeLearnLogo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,13 +29,28 @@
     <Resource Include="Images\CodeLearn.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\CodeLearnLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Templates\ExerciseButton_Theme.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Templates\Button_Theme.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Templates\MinimizeButton_Theme.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Templates\Description_Theme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Templates\CloseButton_Theme.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Templates\ThemeColours.xaml">

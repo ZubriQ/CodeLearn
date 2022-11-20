@@ -25,4 +25,12 @@
     <SolidColorBrush x:Key="TintedPrimaryBrush"
                      Color="{DynamicResource TintedPrimaryColor}" />
     <Color x:Key="TintedPrimaryColor">#ddd</Color>
+
+    <SolidColorBrush x:Key="LogoThemeBrush"
+                     Color="{DynamicResource LogoThemeColor}" />
+    <Color x:Key="LogoThemeColor">#29323c</Color>
+
+    <SolidColorBrush x:Key="LogoThemeBrush2"
+                     Color="{DynamicResource LogoThemeColor2}" />
+    <Color x:Key="LogoThemeColor2">#485563</Color>
 </ResourceDictionary>

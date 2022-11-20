@@ -5,10 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeLearn.WPF.Windows"
         mc:Ignorable="d"
-        Title="CodeLearn - Login" Height="640" Width="980"
-        ResizeMode="NoResize">
+        Title="Code Testing - Login" Height="600" Width="900"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
     <Grid>
-        <Rectangle>
+        <Rectangle x:Name="background"
+                   Stretch="UniformToFill"
+                   ClipToBounds="True"
+                   MouseDown="background_MouseDown">
             <Rectangle.Fill>
                 <LinearGradientBrush StartPoint="0,1"
                                      EndPoint="1,0">
@@ -18,7 +24,25 @@
                                   Offset="1" />
                 </LinearGradientBrush>
             </Rectangle.Fill>
+            <Rectangle.Clip>
+                <RectangleGeometry Rect="0,0,900,600"
+                                   RadiusX="20"
+                                   RadiusY="20" />
+            </Rectangle.Clip>
         </Rectangle>
+        
+        <DockPanel VerticalAlignment="Top">
+
+            <Button x:Name="btn_Close"
+                    Content="X" 
+                    Height="36" 
+                    Width="36" 
+                    HorizontalAlignment="Right"
+                    Template="{StaticResource CloseButton}"
+                    Click="btn_Close_Click" />
+
+        </DockPanel>
+
         <Border CornerRadius="25" Padding="10"
                 Background="White"
                 Margin="40"
@@ -34,12 +58,13 @@
                        Content="Login"
                        Foreground="{StaticResource PrimaryBrush}"/>
 
-                <StackPanel>
+                <StackPanel Margin="0,0,0,10">
                     <Label FontFamily="Consolas"
                            Foreground="DimGray"
                            Content="Username" />
-                    <TextBox Height="26"
-                             Margin="5,0,5,0"
+                    <TextBox x:Name="txt_Username"
+                             Height="26"
+                             Margin="5,-5,5,0"
                              VerticalContentAlignment="Center" 
                              FontFamily="Consolas"
                              BorderThickness="0"/>
@@ -51,9 +76,10 @@
                 <StackPanel>
                     <Label FontFamily="Consolas"
                            Foreground="DimGray" 
-                           Content="Password"/>
-                    <PasswordBox Height="26"
-                                 Margin="5,0,5,0"
+                           Content="Password" />
+                    <PasswordBox x:Name="pb_Password"
+                                 Height="26"
+                                 Margin="5,-5,5,0"
                                  VerticalContentAlignment="Center"
                                  FontFamily="Consolas"
                                  BorderThickness="0"/>
@@ -64,7 +90,7 @@
 
                 <Button x:Name="btn_Login"
                         Template="{StaticResource Button}"
-                        Content="LOGIN"
+                        Content="Sign in"
                         HorizontalAlignment="Stretch"
                         Margin="5,30,5,5"
                         Click="btn_Login_Click" />

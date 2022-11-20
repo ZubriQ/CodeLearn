@@ -18,6 +18,7 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="150" />
             </Grid.RowDefinitions>
+            
             <!-- Exercise description. -->
             <TextBlock Grid.Row="0"
                        Text="{Binding Exercise.ExerciseDescription}"

@@ -1,0 +1,71 @@
+﻿<Page x:Class="CodeLearn.WPF.Windows.Student.Pages.DoExercisePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CodeLearn.WPF.Windows.Student.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="640" d:DesignWidth="980"
+      Title="DoExercisePage"
+      KeepAlive="True">
+
+    <StackPanel>
+        <!-- Exercise description. -->
+        <DockPanel>
+            <TextBlock Grid.Row="1"
+                       Margin="4,4,4,1"
+                       Text="Exercise description:"
+                       FontWeight="Bold"
+                       DockPanel.Dock="Top"
+                       Foreground="{DynamicResource PrimaryBrush}"
+                       FontSize="16"
+                       FontFamily="Inter" />
+            <TextBlock Grid.Row="0"
+                       Text="{Binding Exercise.ExerciseDescription}"
+                       Margin="4,4,4,10"
+                       DockPanel.Dock="Top"
+                       FontSize="14"
+                       TextWrapping="Wrap" />
+        </DockPanel>
+        
+
+        <DockPanel Grid.Row="1">
+            <TextBox Text="{Binding Exercise.Context}"
+                     Grid.Row="2"
+                     Margin="4,1,4,4"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     BorderBrush="Gray"
+                     BorderThickness="2"
+                     FontFamily="Consolas"
+                     FontSize="14"
+                     IsReadOnly="True"
+                     IsHitTestVisible="False"
+                     MinHeight="86" />
+        </DockPanel>
+
+        <!-- User's coding area. -->
+        <DockPanel>
+            <TextBlock Grid.Row="1"
+                       Margin="4,4,4,1"
+                       Text="Code here:"
+                       FontWeight="Bold"
+                       DockPanel.Dock="Top"
+                       Foreground="{DynamicResource PrimaryBrush}"
+                       FontSize="16"
+                       FontFamily="Inter" />
+
+            <TextBox x:Name="txtInput"
+                     Text="{Binding Exercise.CodingArea}"
+                     Grid.Row="2"
+                     Margin="4,1,4,4"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     BorderBrush="{DynamicResource PrimaryBrush}"
+                     BorderThickness="2"
+                     FontFamily="Consolas"
+                     FontSize="14"
+                     MinHeight="86" />
+        </DockPanel>
+    </StackPanel>
+</Page>
