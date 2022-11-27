@@ -3,7 +3,7 @@
     <ControlTemplate TargetType="Button"
                      x:Key="FinishTestingButton">
         <Border x:Name="btnFinishTesting"
-                Background="{DynamicResource GreyFriendBrushLight}"
+                Background="{TemplateBinding Background}"
                 BorderThickness="0"
                 CornerRadius="6"
                 Height="34"
@@ -24,13 +24,13 @@
                      Value="true">
                 <Setter TargetName="btnFinishTesting"
                         Property="Background"
-                        Value="#3F4756" />
+                        Value="#BF394D" />
             </Trigger>
             <Trigger Property="IsPressed"
                      Value="true">
                 <Setter TargetName="btnFinishTesting"
                         Property="Background"
-                        Value="#515969" />
+                        Value="#CB545B" />
             </Trigger>
             <Trigger Property="IsEnabled"
                      Value="false">

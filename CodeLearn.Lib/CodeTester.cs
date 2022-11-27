@@ -70,7 +70,7 @@ namespace CodeLearn.Lib
                 method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
             }
         }
-
+        // TODO: optimize
         private bool TestMethodTestCases()
         {
             bool success = false;

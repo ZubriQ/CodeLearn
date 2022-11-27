@@ -10,13 +10,14 @@ namespace CodeLearn.Lib
 
         private CodeTester Tester { get; set; } = new();
 
-        private Exercise[] exercises;
+        public Exercise[] Exercises { get; private set; }
 
-        private string[] exerciseAnswers;
+        public string[] ExerciseAnswers { get; private set; }
 
         public CodeManager()
         {
-
+            ExerciseAnswers = new string[0];
+            Exercises = new Exercise[0];
         }
 
         public void CompileAndTestMethod(string methodCode, Exercise exercise)
@@ -32,28 +33,28 @@ namespace CodeLearn.Lib
 
         public void CompileAndTest(string[] exerciseAnswers, Exercise[] exercises)
         {
-            this.exercises = exercises;
-            this.exerciseAnswers = exerciseAnswers;
+            this.Exercises = exercises;
+            this.ExerciseAnswers = exerciseAnswers;
             FormatAnswers();
             CompileAndTestAnswers();
         }
 
         private void FormatAnswers()
         {
-            for (int i = 0; i < exerciseAnswers.Length; i++)
+            for (int i = 0; i < ExerciseAnswers.Length; i++)
             {
-                exerciseAnswers[i] = Formatter.FormatSources(exerciseAnswers[i], exercises[i].ClassName);
+                ExerciseAnswers[i] = Formatter.FormatSources(ExerciseAnswers[i], Exercises[i].ClassName);
             }
         }
 
         private void CompileAndTestAnswers()
         {
-            for (int i = 0; i < exercises.Length; i++)
+            for (int i = 0; i < Exercises.Length; i++)
             {
-                bool success = CodeCompiler.Compile(exerciseAnswers[i]);
+                bool success = CodeCompiler.Compile(ExerciseAnswers[i]);
                 if (success)
                 {
-                    Tester.LoadExerciseData(exercises[i]);
+                    Tester.LoadExerciseData(Exercises[i]);
                     Tester.Test();
                 }
             }

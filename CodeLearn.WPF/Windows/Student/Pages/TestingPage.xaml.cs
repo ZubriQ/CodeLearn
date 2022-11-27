@@ -29,6 +29,8 @@ namespace CodeLearn.WPF.Windows.Student.Pages
 
         private List<Exercise> exerciseList = new();
 
+        private Dictionary<int, bool> clickedExercises = new();
+
         private DoExercisePage[] doExercisePages;
 
         private DoExercisePage currentDoExercisePage;
@@ -47,6 +49,7 @@ namespace CodeLearn.WPF.Windows.Student.Pages
             // TODO: TestingPageInitializer
             this.Testing = testing;
             InitializeExercises();
+            InitializeExerciseMap();
             InitializeTestingExercisePages();
             InitializeDuration();
             InitializeTimer();
@@ -58,6 +61,14 @@ namespace CodeLearn.WPF.Windows.Student.Pages
         {
             exerciseList = Testing.Exercises.ToList();
             lv_TestingExercises.ItemsSource = exerciseList;
+        }
+
+        private void InitializeExerciseMap()
+        {
+            for (int i = 0; i < exerciseList.Count; i++)
+            {
+                clickedExercises[i] = false;
+            }
         }
 
         private void InitializeTestingExercisePages()
@@ -141,6 +152,8 @@ namespace CodeLearn.WPF.Windows.Student.Pages
                 SetCurrentExerciseIndex((Exercise)context);
                 TestingExerciseFrame.Navigate(currentDoExercisePage);
 
+                UpdateExerciseMap();
+                UpdateFinishButton();
                 ChangeButtonsColors(button);
                 UpdateExerciseTitle();
             }
@@ -149,6 +162,23 @@ namespace CodeLearn.WPF.Windows.Student.Pages
         private void SetCurrentExerciseIndex(Exercise context)
         {
             currentExerciseIndex = Array.FindIndex(doExercisePages, w => w.Exercise == context);
+        }
+
+        private void UpdateExerciseMap()
+        {
+            clickedExercises[currentExerciseIndex] = true;
+        }
+
+        private void UpdateFinishButton()
+        {
+            foreach(var click in clickedExercises)
+            {
+                if (click.Value == false)
+                {
+                    return;
+                }
+            }
+            PaletteController.SetFinishButtonReadyColor(btn_FinishTesting);
         }
 
         private void ChangeButtonsColors(Button button)
@@ -215,7 +245,26 @@ namespace CodeLearn.WPF.Windows.Student.Pages
         }
         #endregion
 
+        #region Finalizing testing
         private void btn_FinishTesting_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = ShowMessageBox();
+            if (result == MessageBoxResult.OK)
+            {
+                FinilizeTesting();
+            }
+        }
+
+        private MessageBoxResult ShowMessageBox()
+        {
+            string messageBoxText = "Are you sure you want to complete the test?";
+            string caption = "Submit";
+            MessageBoxButton button = MessageBoxButton.OKCancel;
+            MessageBoxImage icon = MessageBoxImage.Question;
+            return MessageBox.Show(messageBoxText, caption, button, icon);
+        }
+
+        private void FinilizeTesting()
         {
             string[] exerciseAnswers = new string[doExercisePages.Length];
             Exercise[] exercises = new Exercise[doExercisePages.Length];
@@ -232,5 +281,6 @@ namespace CodeLearn.WPF.Windows.Student.Pages
                 exerciseAnswers[i] = doExercisePages[i].Exercise.CodingArea;
             }
         }
+        #endregion
     }
 }

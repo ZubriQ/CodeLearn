@@ -143,7 +143,7 @@
                 </Border>
                 
                 <!-- Navigation -->
-                <DockPanel Grid.Row="4" 
+                <!--<DockPanel Grid.Row="4" 
                            HorizontalAlignment="Right" 
                            Margin="10,0,10,0">
                     <Button x:Name="btn_Next"
@@ -156,14 +156,15 @@
                             Content="Next"
                             Margin="5"
                             Click="btn_Next_Click" />
-                </DockPanel>
+                </DockPanel>-->
 
                 <DockPanel Grid.Row="5"
                            HorizontalAlignment="Right"
                            Margin="10,0,10,10">
                     <Button x:Name="btn_FinishTesting"
                             Template="{StaticResource FinishTestingButton}"
-                            Content="Finish testing"
+                            Content="Finish"
+                            Background="{DynamicResource GreyFriendBrushLight}"
                             Margin="5"
                             Click="btn_FinishTesting_Click" />
                 </DockPanel>
