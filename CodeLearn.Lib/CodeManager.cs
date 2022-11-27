@@ -10,6 +10,10 @@ namespace CodeLearn.Lib
 
         private CodeTester Tester { get; set; } = new();
 
+        private Exercise[] exercises;
+
+        private string[] exerciseAnswers;
+
         public CodeManager()
         {
 
@@ -26,15 +30,33 @@ namespace CodeLearn.Lib
             }
         }
 
-        public void CompileAndTestMethods(string[] methodCode, Exercise[] exercise)
+        public void CompileAndTest(string[] exerciseAnswers, Exercise[] exercises)
         {
-            //string formattedCode = Formatter.FormatSources(methodCode, exercise.ClassName);
-            //bool success = CodeCompiler.Compile(formattedCode);
-            //if (success)
-            //{
-            //    Tester.LoadExerciseData(exercise);
-            //    Tester.Test();
-            //}
+            this.exercises = exercises;
+            this.exerciseAnswers = exerciseAnswers;
+            FormatAnswers();
+            CompileAndTestAnswers();
+        }
+
+        private void FormatAnswers()
+        {
+            for (int i = 0; i < exerciseAnswers.Length; i++)
+            {
+                exerciseAnswers[i] = Formatter.FormatSources(exerciseAnswers[i], exercises[i].ClassName);
+            }
+        }
+
+        private void CompileAndTestAnswers()
+        {
+            for (int i = 0; i < exercises.Length; i++)
+            {
+                bool success = CodeCompiler.Compile(exerciseAnswers[i]);
+                if (success)
+                {
+                    Tester.LoadExerciseData(exercises[i]);
+                    Tester.Test();
+                }
+            }
         }
     }
 }

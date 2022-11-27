@@ -14,8 +14,8 @@ namespace CodeLearn.WPF.Windows.Student.Pages
         {
             ListBoxItem item = (ListBoxItem)value;
             ListBox listView = ItemsControl.ItemsControlFromItemContainer(item) as ListBox;
-            int index = listView.ItemContainerGenerator.IndexFromContainer(item) + 1;
-            return index.ToString();
+            int exerciseNumber = listView.ItemContainerGenerator.IndexFromContainer(item) + 1;
+            return exerciseNumber.ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

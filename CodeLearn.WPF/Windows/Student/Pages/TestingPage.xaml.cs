@@ -221,7 +221,7 @@ namespace CodeLearn.WPF.Windows.Student.Pages
             Exercise[] exercises = new Exercise[doExercisePages.Length];
             ObtainTestingData(exerciseAnswers, exercises);
 
-            codeManager.CompileAndTestMethods(exerciseAnswers, exercises);
+            codeManager.CompileAndTest(exerciseAnswers, exercises);
         }
 
         private void ObtainTestingData(string[] exerciseAnswers, Exercise[] exercises)

@@ -70,7 +70,6 @@
                 <Button x:Name="btn_Run"
                         Template="{StaticResource Button}"
                         Content="Run"
-                        Width="65"
                         Margin="4"
                         Click="RunButton_Click"/>
             </DockPanel>
