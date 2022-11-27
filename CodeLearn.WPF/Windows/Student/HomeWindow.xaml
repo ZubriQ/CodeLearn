@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeLearn.WPF.Windows.Student"
         mc:Ignorable="d"
-        Title="Code Testing - Student Homepage" Height="450" Width="1020"
-        MinWidth="490">
+        Title="Code Testing" Height="700" Width="1020"
+        MinWidth="1020"
+        MinHeight="400">
         <!--WindowState="Maximized"
         ResizeMode="NoResize"
         WindowStyle="None"-->

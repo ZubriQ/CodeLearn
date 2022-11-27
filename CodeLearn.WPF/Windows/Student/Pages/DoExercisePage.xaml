@@ -30,13 +30,20 @@
         
 
         <DockPanel Grid.Row="1">
+            <TextBlock Grid.Row="1"
+                       Margin="4,4,4,1"
+                       Text="Context:"
+                       FontWeight="Bold"
+                       DockPanel.Dock="Top"
+                       Foreground="{DynamicResource PrimaryBrush}"
+                       FontSize="16"
+                       FontFamily="Inter" />
             <TextBox Text="{Binding Exercise.Context}"
                      Grid.Row="2"
                      Margin="4,1,4,4"
                      TextWrapping="Wrap"
                      AcceptsReturn="True"
-                     BorderBrush="Gray"
-                     BorderThickness="2"
+                     BorderBrush="#eee"
                      FontFamily="Consolas"
                      FontSize="14"
                      IsReadOnly="True"

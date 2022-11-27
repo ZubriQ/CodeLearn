@@ -25,5 +25,16 @@ namespace CodeLearn.Lib
                 Tester.Test();
             }
         }
+
+        public void CompileAndTestMethods(string[] methodCode, Exercise[] exercise)
+        {
+            //string formattedCode = Formatter.FormatSources(methodCode, exercise.ClassName);
+            //bool success = CodeCompiler.Compile(formattedCode);
+            //if (success)
+            //{
+            //    Tester.LoadExerciseData(exercise);
+            //    Tester.Test();
+            //}
+        }
     }
 }

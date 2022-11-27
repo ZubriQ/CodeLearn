@@ -3,7 +3,7 @@
     <ControlTemplate TargetType="Button"
                      x:Key="ExerciseCircleButton">
         <Border x:Name="btnExerciseCircle"
-                Background="{DynamicResource PrimaryBrush}"
+                Background="{TemplateBinding Background}"
                 BorderThickness="0"
                 CornerRadius="20"
                 Height="34"
@@ -23,13 +23,13 @@
                      Value="true">
                 <Setter TargetName="btnExerciseCircle"
                         Property="Background"
-                        Value="#07c" />
+                        Value="#009DDF" />
             </Trigger>
             <Trigger Property="IsPressed"
                      Value="true">
                 <Setter TargetName="btnExerciseCircle"
                         Property="Background"
-                        Value="#1984D1" />
+                        Value="#00ADD9" />
             </Trigger>
             <Trigger Property="IsEnabled"
                      Value="false">

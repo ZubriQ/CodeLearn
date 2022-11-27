@@ -23,6 +23,8 @@ namespace CodeLearn.WPF.Windows.Student.Pages
     {
         public Exercise Exercise { get; set; }
 
+        //public bool IsPassed { get; set; } = false;
+
         public DoExercisePage(Exercise exercise)
         {
             InitializeComponent();

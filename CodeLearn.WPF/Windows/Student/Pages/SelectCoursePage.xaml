@@ -18,7 +18,7 @@
         <ItemsControl x:Name="ic_Courses"
                       Background="Transparent"
                       Margin="0,10,0,0"
-                      d:ItemsSource="{d:SampleData ItemCount=3}">
+                      d:ItemsSource="{d:SampleData ItemCount=5}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
@@ -45,7 +45,7 @@
                                                Text="{Binding Path=Name}"
                                                TextWrapping="Wrap"
                                                Margin="5"
-                                               Foreground="{StaticResource LogoThemeBrush2}"
+                                               Foreground="{StaticResource GreyFriendBrushDark}"
                                                LineStackingStrategy="BlockLineHeight"
                                                LineHeight="30"/>
                                     <DockPanel Margin="5">

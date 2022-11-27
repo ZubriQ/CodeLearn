@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\CodeLearn.png" />
     <None Remove="Images\CodeLearnLogo.png" />
   </ItemGroup>
 
@@ -17,7 +16,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.4.0-4.final" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,34 +24,35 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\CodeLearn.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Images\CodeLearnLogo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Templates\ExerciseButton_Theme.xaml">
+    <Page Update="Templates\Buttons\FinishTestingButton_Theme.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Templates\Button_Theme.xaml">
+    <Page Update="Templates\Buttons\ExerciseCircleButton_Theme.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Templates\MinimizeButton_Theme.xaml">
+    <Page Update="Templates\Buttons\Button_Theme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Templates\Buttons\MinimizeButton_Theme.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Templates\Description_Theme.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Templates\CloseButton_Theme.xaml">
+    <Page Update="Templates\Buttons\CloseButton_Theme.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Templates\ThemeColours.xaml">
+    <Page Update="Templates\Palette.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

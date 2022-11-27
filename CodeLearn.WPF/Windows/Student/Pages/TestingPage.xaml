@@ -44,6 +44,8 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
@@ -51,10 +53,9 @@
                 <ListView x:Name="lv_TestingExercises"
                           HorizontalAlignment="Center"
                           BorderThickness="0"
-                          d:ItemsSource="{d:SampleData ItemCount=10}"
+                          d:ItemsSource="{d:SampleData ItemCount=30}"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           Padding="5">
-
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -63,7 +64,8 @@
                                             Template="{StaticResource ExerciseCircleButton}"
                                             Width="35"
                                             Height="35"
-                                            Click="btn_TestingExercise_Click">
+                                            Click="btn_TestingExercise_Click"
+                                            Background="{DynamicResource PrimaryBrush}">
                                         <Button.Content>
                                             <!-- Indexer -->
                                             <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, 
@@ -102,37 +104,68 @@
                             <WrapPanel />
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
+
+                    <ListView.Template>
+                        <ControlTemplate>
+                            <Border CornerRadius="15"
+                                    BorderThickness="5"
+                                    BorderBrush="White">
+                                <ItemsPresenter></ItemsPresenter>
+                            </Border>
+                        </ControlTemplate>
+                    </ListView.Template>
                 </ListView>
 
                 <!-- Timer -->
                 <TextBlock x:Name="txt_Timer"
                            Grid.Row="1"
-                           Text="time"
-                           HorizontalAlignment="Center"/>
+                           Text="00:00:00"
+                           HorizontalAlignment="Center"
+                           FontSize="14"
+                           FontFamily="Inter"/>
+
+                <TextBlock x:Name="txt_ExerciseNumber" 
+                           Grid.Row="2"
+                           Text="Exercise: 1"
+                           HorizontalAlignment="Center"
+                           Margin="5"
+                           FontSize="14"
+                           FontFamily="Inter"/>
 
                 <!-- Exercise -->
-                <Border Grid.Row="2"
+                <Border Grid.Row="3"
                         Margin="10">
                     <Frame x:Name="TestingExerciseFrame"
                            NavigationUIVisibility="Hidden"
                            JournalOwnership="OwnsJournal"
                            Grid.Row="1">
-
                     </Frame>
                 </Border>
                 
                 <!-- Navigation -->
-                <DockPanel Grid.Row="3" 
+                <DockPanel Grid.Row="4" 
                            HorizontalAlignment="Right" 
-                           Margin="10">
+                           Margin="10,0,10,0">
                     <Button x:Name="btn_Next"
                             Template="{StaticResource Button}"
                             Content="Back"
-                            Margin="5" />
+                            Margin="5"
+                            Click="btn_Back_Click"/>
                     <Button x:Name="btn_Back"
                             Template="{StaticResource Button}"
                             Content="Next"
-                            Margin="5" />
+                            Margin="5"
+                            Click="btn_Next_Click" />
+                </DockPanel>
+
+                <DockPanel Grid.Row="5"
+                           HorizontalAlignment="Right"
+                           Margin="10,0,10,10">
+                    <Button x:Name="btn_FinishTesting"
+                            Template="{StaticResource FinishTestingButton}"
+                            Content="Finish testing"
+                            Margin="5"
+                            Click="btn_FinishTesting_Click" />
                 </DockPanel>
             </Grid>
 
