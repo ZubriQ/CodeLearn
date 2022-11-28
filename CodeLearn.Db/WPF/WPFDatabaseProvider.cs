@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
 
 namespace CodeLearn.Db.WPF
 {
@@ -69,6 +70,23 @@ namespace CodeLearn.Db.WPF
         public List<Testing> GetCourses()
         {
             return Courses;
+        }
+
+        public Student GetTestStudent()
+        {
+            return _context.Students.First(s => s.Id == 1);
+        }
+
+        public void SaveTestingResult(TestingResult result)
+        {
+            _context.Add(result);
+            _context.SaveChanges();
+        }
+
+        public async Task SaveTestingResultAsync(TestingResult result)
+        {
+            _context.Add(result);
+            await _context.SaveChangesAsync();
         }
         #endregion
     }

@@ -6,23 +6,27 @@ namespace CodeLearn.Lib
 {
     public class CodeTester
     {
-        private HostAssemblyLoadContext? assemblyLoader { get; set; }
+        private HostAssemblyLoadContext? _assemblyLoader;
+        private Assembly? _methodDllAssembly;
+        private Type? _type;
+        private object? _classInstance;
+        private MethodInfo? _method;
 
-        private Assembly? methodDllAssembly { get; set; }
+        private int ParametersLength
+        {
+            get
+            {
+                if (_method != null)
+                {
+                    return _method.GetParameters().Length;
+                }
+                else throw new NullReferenceException("_method variable equals null.");
+            }
+        }
 
-        private Type? type { get; set; }
-
-        private object? classInstance { get; set; }
-
-        private MethodInfo? method { get; set; }
-
-        public ExerciseData? data { get; set; }
-
-        private string? className => data?.Exercise.ClassName;
-
-        private string? methodName => data?.TestMethodInfo.Name;
-
-        private int parametersLength => method.GetParameters().Count();
+        public ExerciseData? Data { get; private set; }
+        public string? ClassName => Data?.Exercise.ClassName;
+        public string? MethodName => Data?.TestMethodInfo.Name;
 
         public CodeTester()
         {
@@ -31,7 +35,7 @@ namespace CodeLearn.Lib
 
         public void LoadExerciseData(Exercise exercise)
         {
-            data = new ExerciseData(exercise);
+            Data = new ExerciseData(exercise);
         }
 
         // It is important to mark this method as NoInlining, otherwise the JIT could decide
@@ -44,13 +48,13 @@ namespace CodeLearn.Lib
         /// </summary>
         /// <returns>Returns true if there were no exceptions.</returns>
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public bool Test()
+        public bool TestLoadedExercise()
         {
             try
             {
                 GetMethodFromAssembly();
                 TestMethodTestCases();
-                UnloadAndFinilize();
+                UnloadAndFinalize();
             }
             catch (Exception)
             {
@@ -61,13 +65,13 @@ namespace CodeLearn.Lib
 
         private void GetMethodFromAssembly()
         {
-            assemblyLoader = new HostAssemblyLoadContext(CodeCompiler.AssemblyPath);
-            methodDllAssembly = assemblyLoader.LoadFromAssemblyPath(CodeCompiler.AssemblyPath);
-            type = methodDllAssembly.GetTypes().FirstOrDefault(t => t.Name == className);
-            if (type != null && !string.IsNullOrEmpty(methodName))
+            _assemblyLoader = new HostAssemblyLoadContext(CodeCompiler.AssemblyPath);
+            _methodDllAssembly = _assemblyLoader.LoadFromAssemblyPath(CodeCompiler.AssemblyPath);
+            _type = _methodDllAssembly.GetTypes().FirstOrDefault(t => t.Name == ClassName);
+            if (_type != null && !string.IsNullOrEmpty(MethodName))
             {
-                classInstance = Activator.CreateInstance(type, null);
-                method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
+                _classInstance = Activator.CreateInstance(_type, null);
+                _method = _type.GetMethod(MethodName, BindingFlags.Public | BindingFlags.Static);
             }
         }
         // TODO: optimize
@@ -75,13 +79,13 @@ namespace CodeLearn.Lib
         {
             bool success = false;
             
-            if (method != null)
+            if (_method != null)
             {
-                object[] parametersArray = new object[parametersLength];
+                object[] parametersArray = new object[ParametersLength];
 
-                var methodParameters = data.TestMethodInfo.TestMethodParameters.ToArray();
+                var methodParameters = Data.TestMethodInfo.TestMethodParameters.ToArray();
 
-                foreach (var testCase in data.TestCases)
+                foreach (var testCase in Data.TestCases)
                 {
                     var testCaseParameters = testCase.TestCaseParameters.ToArray();
 
@@ -91,10 +95,10 @@ namespace CodeLearn.Lib
                         var convertedType = Convert.ChangeType(testCaseParameters[p].Value, paramType);
                         parametersArray[p] = convertedType;
                     }
-                    dynamic? methodResult = method.Invoke(classInstance,
-                                            parametersLength == 0 ? null : parametersArray);
+                    dynamic? methodResult = _method.Invoke(_classInstance,
+                                            ParametersLength == 0 ? null : parametersArray);
 
-                    Type? testResultType = Type.GetType(data.TestMethodInfo.ReturnType.Name);
+                    Type? testResultType = Type.GetType(Data.TestMethodInfo.ReturnType.Name);
                     dynamic testResult = Convert.ChangeType(testCase.Result, testResultType);
 
                     if (methodResult == testResult)
@@ -110,9 +114,9 @@ namespace CodeLearn.Lib
             return success;
         }
 
-        private void UnloadAndFinilize()
+        private void UnloadAndFinalize()
         {
-            assemblyLoader?.Unload();
+            _assemblyLoader?.Unload();
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }

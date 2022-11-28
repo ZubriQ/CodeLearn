@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace CodeLearn.WPF.Windows.Student
@@ -22,6 +23,11 @@ namespace CodeLearn.WPF.Windows.Student
         public HomeWindow()
         {
             InitializeComponent();
+        }
+
+        private void HomeWindowFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            HomeWindowFrame.RemoveBackEntry();
         }
     }
 }

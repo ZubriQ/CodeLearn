@@ -11,6 +11,7 @@ namespace CodeLearn.Lib
         {
             _resolver = new AssemblyDependencyResolver(pluginPath);
         }
+
         protected override Assembly? Load(AssemblyName name)
         {
             string? assemblyPath = _resolver.ResolveAssemblyToPath(name);

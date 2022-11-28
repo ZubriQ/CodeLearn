@@ -32,7 +32,9 @@
             <Frame x:Name="HomeWindowFrame"
                    Source="Pages/SelectCoursePage.xaml"
                    NavigationUIVisibility="Hidden"
-                   Grid.Row="1">
+                   Grid.Row="1"
+                   JournalOwnership="OwnsJournal"
+                   Navigated="HomeWindowFrame_Navigated">
 
             </Frame>
         </Grid>

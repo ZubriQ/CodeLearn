@@ -8,6 +8,7 @@
       d:DesignHeight="450"
       d:DesignWidth="980"
       Title="SelectCoursePage">
+    
     <Grid MaxWidth="980"
           MinWidth="980"
           UseLayoutRounding="True"

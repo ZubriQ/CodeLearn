@@ -17,29 +17,27 @@ using System.Windows.Shapes;
 using System.Timers;
 using System.Threading;
 using System.Windows.Threading;
-using CodeLearn.Lib;
 
 namespace CodeLearn.WPF.Windows.Student.Pages
 {
     public partial class TestingPage : Page
     {
-        private CodeManager codeManager { get; set; } = new();
-
-        private Testing Testing { get; set; }
+        private readonly Testing _testing;
 
         private List<Exercise> exerciseList = new();
 
+        /// <summary>
+        /// If all exercises were clicked, change the finish button colour.
+        /// </summary>
         private Dictionary<int, bool> clickedExercises = new();
 
         private DoExercisePage[] doExercisePages;
-
-        private DoExercisePage currentDoExercisePage;
+        private DoExercisePage? currentDoExercisePage;
 
         private DispatcherTimer timer = new();
-
         private TimeSpan duration;
 
-        private Button lastPressedButton;
+        private Button? lastPressedButton;
 
         private int currentExerciseIndex;
 
@@ -47,7 +45,8 @@ namespace CodeLearn.WPF.Windows.Student.Pages
         {
             InitializeComponent();
             // TODO: TestingPageInitializer
-            this.Testing = testing;
+            this._testing = testing;
+            doExercisePages = new DoExercisePage[0];
             InitializeExercises();
             InitializeExerciseMap();
             InitializeTestingExercisePages();
@@ -59,7 +58,7 @@ namespace CodeLearn.WPF.Windows.Student.Pages
         #region Initialization
         private void InitializeExercises()
         {
-            exerciseList = Testing.Exercises.ToList();
+            exerciseList = _testing.Exercises.ToList();
             lv_TestingExercises.ItemsSource = exerciseList;
         }
 
@@ -82,7 +81,7 @@ namespace CodeLearn.WPF.Windows.Student.Pages
 
         private void InitializeDuration()
         {
-            duration = TimeSpan.FromMinutes(Testing.DurationInMinutes);
+            duration = TimeSpan.FromMinutes(_testing.DurationInMinutes);
         }
 
         private void InitializeTimer()
@@ -270,7 +269,8 @@ namespace CodeLearn.WPF.Windows.Student.Pages
             Exercise[] exercises = new Exercise[doExercisePages.Length];
             ObtainTestingData(exerciseAnswers, exercises);
 
-            codeManager.CompileAndTest(exerciseAnswers, exercises);
+            var testingPage = new TestingResultPage(_testing, exercises, exerciseAnswers);
+            NavigationService.Navigate(testingPage);
         }
 
         private void ObtainTestingData(string[] exerciseAnswers, Exercise[] exercises)
@@ -282,5 +282,10 @@ namespace CodeLearn.WPF.Windows.Student.Pages
             }
         }
         #endregion
+
+        private void TestingExerciseFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            TestingExerciseFrame.RemoveBackEntry();
+        }
     }
 }

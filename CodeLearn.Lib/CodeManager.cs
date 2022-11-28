@@ -7,11 +7,10 @@ namespace CodeLearn.Lib
     public class CodeManager
     {
         private CodeFormatter Formatter { get; set; } = new();
-
         private CodeTester Tester { get; set; } = new();
 
+        public TestingResult TestingResult { get; private set; }
         public Exercise[] Exercises { get; private set; }
-
         public string[] ExerciseAnswers { get; private set; }
 
         public CodeManager()
@@ -27,16 +26,16 @@ namespace CodeLearn.Lib
             if (success)
             {
                 Tester.LoadExerciseData(exercise);
-                Tester.Test();
+                Tester.TestLoadedExercise();
             }
         }
 
-        public void CompileAndTest(string[] exerciseAnswers, Exercise[] exercises)
+        public TestingResult CompileAndTest(string[] exerciseAnswers, Exercise[] exercises)
         {
             this.Exercises = exercises;
             this.ExerciseAnswers = exerciseAnswers;
             FormatAnswers();
-            CompileAndTestAnswers();
+            return CompileAndTestAnswers();
         }
 
         private void FormatAnswers()
@@ -47,17 +46,46 @@ namespace CodeLearn.Lib
             }
         }
 
-        private void CompileAndTestAnswers()
+        private TestingResult CompileAndTestAnswers()
         {
+            TestingAnswer[] testingAnswers = TestingResult.TestingAnswers.ToArray();
+            int scoreSum = 0;
             for (int i = 0; i < Exercises.Length; i++)
             {
-                bool success = CodeCompiler.Compile(ExerciseAnswers[i]);
-                if (success)
+                if (CodeCompiler.Compile(ExerciseAnswers[i]))
                 {
                     Tester.LoadExerciseData(Exercises[i]);
-                    Tester.Test();
+                    bool isPassed = Tester.TestLoadedExercise();
+                    AssignAnswerData(testingAnswers[i], i, isPassed);
+                    scoreSum += GetScore(i, isPassed);
                 }
             }
+            TestingResult.Score = scoreSum;
+            return TestingResult;
+        }
+
+        private void AssignAnswerData(TestingAnswer testingAnswer, int index, bool isPassed)
+        {
+            testingAnswer.IsCorrect = isPassed;
+            testingAnswer.Exercise = Exercises[index];
+            testingAnswer.Answer = ExerciseAnswers[index];
+        }
+
+        private int GetScore(int index, bool isPassed)
+        {
+            if (isPassed)
+            {
+                return Exercises[index].Score;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public void SetTestingResultData(TestingResult testingResult)
+        {
+            TestingResult = testingResult;
         }
     }
 }

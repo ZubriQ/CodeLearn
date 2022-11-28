@@ -5,9 +5,7 @@ namespace CodeLearn.Lib
     public class ExerciseData
     {
         public Exercise Exercise { get; set; }
-
         public TestMethodInfo TestMethodInfo { get; set; }
-
         public List<TestCase> TestCases { get; set; }
 
         public ExerciseData(Exercise exercise)

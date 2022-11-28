@@ -21,7 +21,6 @@ namespace CodeLearn.Lib
         };
 
         public static string? DllName;
-
         public static string AssemblyPath => Path.GetDirectoryName(GetPath()) + "\\" + DllName;
 
         private static string GetPath()

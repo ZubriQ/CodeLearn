@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,30 +9,29 @@ namespace CodeLearn.Lib
 {
     internal class CodeFormatter
     {
-        private IEnumerable<string> DefaultNamespaces { get; set; }
-
-        private string? Header { get; set; }
-
-        private string Footer { get; set; }
+        private readonly IEnumerable<string> _defaultNamespaces;
+        private string _header;
+        private string _footer;
 
         public CodeFormatter()
         {
-            Footer = CodeInitializer.InitializeFooter();
-            DefaultNamespaces = CodeInitializer.InitializeDefaultNamespaces();
+            _header = "";
+            _footer = CodeInitializer.InitializeFooter();
+            _defaultNamespaces = CodeInitializer.InitializeDefaultNamespaces();
         }
 
         /// <returns>Formatted code (a complete .cs file).</returns>
         public string FormatSources(string code, string className)
         {
-            Header = CodeInitializer.InitializeHeader(className);
+            _header = CodeInitializer.InitializeHeader(className);
             string namespaces = FormatNamespaces();
-            return string.Concat(namespaces, Header, code, Footer);
+            return string.Concat(namespaces, _header, code, _footer);
         }
 
         private string FormatNamespaces()
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (string namespaceString in DefaultNamespaces)
+            StringBuilder sb = new();
+            foreach (string namespaceString in _defaultNamespaces)
                 sb.AppendFormat("using {0};{1}", namespaceString, Environment.NewLine);
             return sb.ToString();
         }
