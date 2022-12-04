@@ -7,16 +7,19 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Templates/Palette.xaml" />
-                
+
                 <ResourceDictionary Source="Templates/Description_Theme.xaml" />
-                <ResourceDictionary Source="Templates/Buttons/Button_Theme.xaml" />
-                <ResourceDictionary Source="Templates/Buttons/StartButton_Theme.xaml" />
+                
                 <ResourceDictionary Source="Templates/Buttons/CloseButton_Theme.xaml" />
-                <ResourceDictionary Source="Templates/Buttons/ExerciseCircleButton_Theme.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/MinimizeButton_Theme.xaml" />
-                <ResourceDictionary Source="Templates/Buttons/FinishTestingButton_Theme.xaml" />
-                <ResourceDictionary Source="Templates/Buttons/LoginTeacherButton_Theme.xaml" />
-                <ResourceDictionary Source="Templates/Buttons/LoginStudentButton_Theme.xaml" />
+                <ResourceDictionary Source="Templates/Buttons/Button_Theme.xaml" />
+                
+                <ResourceDictionary Source="Templates/Buttons/Student/StartButton_Theme.xaml" />
+                <ResourceDictionary Source="Templates/Buttons/Student/ExerciseCircleButton_Theme.xaml" />
+                <ResourceDictionary Source="Templates/Buttons/Student/FinishTestingButton_Theme.xaml" />
+                
+                <ResourceDictionary Source="Templates/Buttons/Login/TeacherButton_Theme.xaml" />
+                <ResourceDictionary Source="Templates/Buttons/Login/StudentButton_Theme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

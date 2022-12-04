@@ -69,6 +69,10 @@ namespace CodeLearn.WPF.Windows.Student.Pages
             {
                 clickedExercises[i] = false;
             }
+            if (clickedExercises.Count > 0)
+            {
+                clickedExercises[0] = true;
+            }
         }
 
         private void InitializeTestingExercisePages()

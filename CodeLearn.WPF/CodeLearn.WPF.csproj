@@ -30,19 +30,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Templates\Buttons\LoginTeacherButton_Theme.xaml">
+    <Page Update="Templates\Buttons\Login\TeacherButton_Theme.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Templates\Buttons\LoginStudentButton_Theme.xaml">
+    <Page Update="Templates\Buttons\Login\StudentButton_Theme.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Templates\Buttons\FinishTestingButton_Theme.xaml">
+    <Page Update="Templates\Buttons\Student\FinishTestingButton_Theme.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Templates\Buttons\ExerciseCircleButton_Theme.xaml">
+    <Page Update="Templates\Buttons\Student\ExerciseCircleButton_Theme.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
