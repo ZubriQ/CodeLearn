@@ -27,7 +27,7 @@ namespace CodeLearn.WPF.Windows.Student.Pages
         private List<Exercise> exerciseList = new();
 
         /// <summary>
-        /// If all exercises were clicked, change the finish button colour.
+        /// If all exercises are clicked, enables the finish button.
         /// </summary>
         private Dictionary<int, bool> clickedExercises = new();
 
@@ -47,6 +47,7 @@ namespace CodeLearn.WPF.Windows.Student.Pages
             // TODO: TestingPageInitializer
             this._testing = testing;
             doExercisePages = new DoExercisePage[0];
+            btn_FinishTesting.IsEnabled = false;
             InitializeExercises();
             InitializeExerciseMap();
             InitializeTestingExercisePages();
@@ -115,6 +116,12 @@ namespace CodeLearn.WPF.Windows.Student.Pages
         {
             duration = time;
             txt_Timer.Text = duration.ToString();
+
+            if (time == TimeSpan.Zero)
+            {
+                timer.Stop();
+                FinalizeTesting();
+            }
         }
 
         private void UpdateDurationColor(TimeSpan time)
@@ -177,7 +184,8 @@ namespace CodeLearn.WPF.Windows.Student.Pages
                     return;
                 }
             }
-            PaletteController.SetFinishButtonReadyColor(btn_FinishTesting);
+            btn_FinishTesting.IsEnabled = true;
+            btn_FinishTesting.ToolTip = null;
         }
 
         private void ChangeButtonsColors(Button button)
@@ -194,19 +202,19 @@ namespace CodeLearn.WPF.Windows.Student.Pages
         {
             txt_ExerciseNumber.Text = $"Exercise: {currentExerciseIndex + 1}";
         }
+        #endregion
 
+        #region Forward/Backward turned off Navigation
         private void btn_Back_Click(object sender, RoutedEventArgs e)
         {
             Navigate(isNextPage: false);
             UpdateExerciseTitle();
         }
-
         private void btn_Next_Click(object sender, RoutedEventArgs e)
         {
             Navigate(isNextPage: true);
             UpdateExerciseTitle();
         }
-
         private void Navigate(bool isNextPage)
         {
             if (isNextPage)
@@ -218,7 +226,6 @@ namespace CodeLearn.WPF.Windows.Student.Pages
                 NavigateBackward();
             }
         }
-
         private void NavigateForward()
         {
             if (currentExerciseIndex < doExercisePages.Length - 1)
@@ -227,7 +234,6 @@ namespace CodeLearn.WPF.Windows.Student.Pages
                 Navigate();
             }
         }
-
         private void NavigateBackward()
         {
             if (currentExerciseIndex > 0)
@@ -236,7 +242,6 @@ namespace CodeLearn.WPF.Windows.Student.Pages
                 Navigate();
             }
         }
-
         private void Navigate()
         {
             currentDoExercisePage = doExercisePages[currentExerciseIndex];
@@ -250,7 +255,7 @@ namespace CodeLearn.WPF.Windows.Student.Pages
             MessageBoxResult result = ShowMessageBox();
             if (result == MessageBoxResult.OK)
             {
-                FinilizeTesting();
+                FinalizeTesting();
             }
         }
 
@@ -263,7 +268,7 @@ namespace CodeLearn.WPF.Windows.Student.Pages
             return MessageBox.Show(messageBoxText, caption, button, icon);
         }
 
-        private void FinilizeTesting()
+        private void FinalizeTesting()
         {
             string[] exerciseAnswers = new string[doExercisePages.Length];
             Exercise[] exercises = new Exercise[doExercisePages.Length];

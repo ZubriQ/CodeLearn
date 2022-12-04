@@ -57,8 +57,8 @@
                                         <Button.Content>
                                             <!-- Indexer -->
                                             <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, 
-                                               AncestorType={x:Type ListBoxItem}}, Mode=OneWay, 
-                                               Converter={StaticResource IndexConv}}"
+                                                       AncestorType={x:Type ListBoxItem}}, Mode=OneWay, 
+                                                       Converter={StaticResource IndexConv}}"
                                                        Foreground="White"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
@@ -153,9 +153,10 @@
                     <Button x:Name="btn_FinishTesting"
                             Template="{StaticResource FinishTestingButton}"
                             Content="Finish"
-                            Background="{DynamicResource GreyFriendBrushLight}"
                             Margin="5"
-                            Click="btn_FinishTesting_Click" />
+                            Click="btn_FinishTesting_Click"
+                            ToolTipService.ShowOnDisabled="True"
+                            ToolTipService.ToolTip="Finish all the execises first!"/>
                 </DockPanel>
             </Grid>
 

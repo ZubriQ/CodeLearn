@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
+using System.Reflection.Metadata;
 
 namespace CodeLearn.Db.WPF
 {
@@ -85,8 +86,17 @@ namespace CodeLearn.Db.WPF
 
         public async Task SaveTestingResultAsync(TestingResult result)
         {
-            _context.Add(result);
+            _context.Attach(result);
+            LeaveExercisesUnchanged(result.TestingAnswers);
             await _context.SaveChangesAsync();
+        }
+
+        private void LeaveExercisesUnchanged(ICollection<TestingAnswer> answers)
+        {
+            foreach (var answer in answers)
+            {
+                _context.Entry(answer.Exercise).State = EntityState.Unchanged;
+            }
         }
         #endregion
     }

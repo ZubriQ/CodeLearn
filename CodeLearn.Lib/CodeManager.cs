@@ -68,7 +68,7 @@ namespace CodeLearn.Lib
         {
             testingAnswer.IsCorrect = isPassed;
             testingAnswer.Exercise = Exercises[index];
-            testingAnswer.Answer = ExerciseAnswers[index];
+            testingAnswer.Answer = Exercises[index].CodingArea;
         }
 
         private int GetScore(int index, bool isPassed)

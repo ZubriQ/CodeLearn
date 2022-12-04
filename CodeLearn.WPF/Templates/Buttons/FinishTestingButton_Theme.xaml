@@ -3,7 +3,7 @@
     <ControlTemplate TargetType="Button"
                      x:Key="FinishTestingButton">
         <Border x:Name="btnFinishTesting"
-                Background="{TemplateBinding Background}"
+                Background="{StaticResource PrimaryBrush}"
                 BorderThickness="0"
                 CornerRadius="6"
                 Height="34"
@@ -24,13 +24,13 @@
                      Value="true">
                 <Setter TargetName="btnFinishTesting"
                         Property="Background"
-                        Value="#BF394D" />
+                        Value="#009DDF" />
             </Trigger>
             <Trigger Property="IsPressed"
                      Value="true">
                 <Setter TargetName="btnFinishTesting"
                         Property="Background"
-                        Value="#CB545B" />
+                        Value="#00ADD9" />
             </Trigger>
             <Trigger Property="IsEnabled"
                      Value="false">

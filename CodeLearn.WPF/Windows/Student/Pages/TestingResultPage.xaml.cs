@@ -38,15 +38,17 @@ namespace CodeLearn.WPF.Windows.Student.Pages
             _testing = course;
             TestingAnswers = new TestingAnswer[exercises.Length];
 
+            DataContext = this;
+            
             InitializeTestData();
             Task.Run(TestAnswersAsync).Wait();
+            txt_Score.Text = $"{TestingResult.Score}/{CalculateMaxPossibleScore()}";
         }
 
         private void InitializeTestData()
         {
             InitializeTestingResult();
             InitializeAnswers();
-            TestingResult.TestingAnswers = TestingAnswers;
         }
 
         private void InitializeTestingResult()
@@ -54,7 +56,6 @@ namespace CodeLearn.WPF.Windows.Student.Pages
             // A stub.
             App.Student = App.DB.GetTestStudent();
 
-            // Updating initial data.
             TestingResult.Student = App.Student;
             TestingResult.Course = _testing;
             TestingResult.TestingAnswers = TestingAnswers;
@@ -77,9 +78,19 @@ namespace CodeLearn.WPF.Windows.Student.Pages
         private async Task TestAnswersAsync()
         {
             _codeManager.SetTestingResultData(TestingResult);
-            var result = _codeManager.CompileAndTest(_exerciseAnswers, _exercises);
+            TestingResult = _codeManager.CompileAndTest(_exerciseAnswers, _exercises);
+            
+            await App.DB.SaveTestingResultAsync(TestingResult);
+        }
 
-            await App.DB.SaveTestingResultAsync(result);
+        private int CalculateMaxPossibleScore()
+        {
+            int maxScore = 0;
+            for (int i = 0; i < _exercises.Length; i++)
+            {
+                maxScore += _exercises[i].Score;
+            }
+            return maxScore;
         }
 
         private void btn_Close_Click(object sender, RoutedEventArgs e)
