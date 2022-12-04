@@ -10,6 +10,7 @@ namespace CodeLearn.Db
         public int TestingResultId { get; set; }
         public string? Answer { get; set; }
         public bool IsCorrect { get; set; }
+        public string? FailureInfo { get; set; }
 
         public virtual Exercise Exercise { get; set; } = null!;
         public virtual TestingResult TestingResult { get; set; } = null!;

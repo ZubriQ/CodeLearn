@@ -57,7 +57,7 @@ namespace CodeLearn.WPF.Windows.Student.Pages
             App.Student = App.DB.GetTestStudent();
 
             TestingResult.Student = App.Student;
-            TestingResult.Course = _testing;
+            TestingResult.Testing = _testing;
             TestingResult.TestingAnswers = TestingAnswers;
             TestingResult.Score = 0;
             TestingResult.PassingDate = DateTime.Now;

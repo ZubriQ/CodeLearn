@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace CodeLearn.Db
 {
@@ -18,6 +21,7 @@ namespace CodeLearn.Db
         public virtual DbSet<ExerciseType> ExerciseTypes { get; set; } = null!;
         public virtual DbSet<Group> Groups { get; set; } = null!;
         public virtual DbSet<Student> Students { get; set; } = null!;
+        public virtual DbSet<Teacher> Teachers { get; set; } = null!;
         public virtual DbSet<TestCase> TestCases { get; set; } = null!;
         public virtual DbSet<TestCaseParameter> TestCaseParameters { get; set; } = null!;
         public virtual DbSet<TestMethodInfo> TestMethodInfos { get; set; } = null!;
@@ -153,6 +157,33 @@ namespace CodeLearn.Db
                     .HasConstraintName("FK_student_group");
             });
 
+            modelBuilder.Entity<Teacher>(entity =>
+            {
+                entity.ToTable("teacher");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.FirstName)
+                    .HasMaxLength(50)
+                    .HasColumnName("first_name");
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(50)
+                    .HasColumnName("last_name");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(20)
+                    .HasColumnName("password");
+
+                entity.Property(e => e.Patronymic)
+                    .HasMaxLength(50)
+                    .HasColumnName("patronymic");
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(20)
+                    .HasColumnName("username");
+            });
+
             modelBuilder.Entity<TestCase>(entity =>
             {
                 entity.ToTable("test_cases");
@@ -261,6 +292,13 @@ namespace CodeLearn.Db
                     .HasMaxLength(100)
                     .HasColumnName("name");
 
+                entity.Property(e => e.TestCreatorId).HasColumnName("test_creator_id");
+
+                entity.HasOne(d => d.TestCreator)
+                    .WithMany(p => p.Testings)
+                    .HasForeignKey(d => d.TestCreatorId)
+                    .HasConstraintName("FK_testing_teacher");
+
                 entity.HasMany(d => d.Exercises)
                     .WithMany(p => p.Courses)
                     .UsingEntity<Dictionary<string, object>>(
@@ -291,6 +329,10 @@ namespace CodeLearn.Db
 
                 entity.Property(e => e.ExerciseId).HasColumnName("exercise_id");
 
+                entity.Property(e => e.FailureInfo)
+                    .HasMaxLength(200)
+                    .HasColumnName("failure_info");
+
                 entity.Property(e => e.IsCorrect).HasColumnName("is_correct");
 
                 entity.Property(e => e.TestingResultId).HasColumnName("testing_result_id");
@@ -314,8 +356,6 @@ namespace CodeLearn.Db
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.CourseId).HasColumnName("course_id");
-
                 entity.Property(e => e.PassingDate)
                     .HasColumnType("datetime")
                     .HasColumnName("passing_date");
@@ -324,17 +364,19 @@ namespace CodeLearn.Db
 
                 entity.Property(e => e.StudentId).HasColumnName("student_id");
 
-                entity.HasOne(d => d.Course)
-                    .WithMany(p => p.TestingResults)
-                    .HasForeignKey(d => d.CourseId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_testing_result_testing");
+                entity.Property(e => e.TestingId).HasColumnName("testing_id");
 
                 entity.HasOne(d => d.Student)
                     .WithMany(p => p.TestingResults)
                     .HasForeignKey(d => d.StudentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_testing_result_student");
+
+                entity.HasOne(d => d.Testing)
+                    .WithMany(p => p.TestingResults)
+                    .HasForeignKey(d => d.TestingId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_testing_result_testing");
             });
 
             OnModelCreatingPartial(modelBuilder);
