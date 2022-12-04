@@ -98,6 +98,34 @@ namespace CodeLearn.Db.WPF
                 _context.Entry(answer.Exercise).State = EntityState.Unchanged;
             }
         }
+
+        public Teacher? SignInAsTeacher(string username, string password)
+        {
+            var user = _context.Teachers.FirstOrDefault(t => t.Username == username);
+            if (user == null)
+            {
+                return null;
+            }
+            else if (user.Password == password)
+            {
+                return user;
+            }
+            return null;
+        }
+
+        public Student? SignInAsStudent(string username, string password)
+        {
+            var user = _context.Students.FirstOrDefault(t => t.Username == username);
+            if (user == null)
+            {
+                return null;
+            }
+            else if (user.Password == password)
+            {
+                return user;
+            }
+            return null;
+        }
         #endregion
     }
 }

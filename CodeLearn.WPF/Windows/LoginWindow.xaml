@@ -47,7 +47,7 @@
                 Background="White"
                 Margin="40"
                 BorderThickness="2,2,2,2"
-                Height="340"
+                Height="395"
                 Width="300">
             <StackPanel>
                 <Label Margin="30"
@@ -57,42 +57,65 @@
                        FontFamily="Poppins"
                        Content="Login"
                        Foreground="{StaticResource PrimaryBrush}"/>
+                
+                <!-- Student/Teacher switcher -->
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btn_Student"
+                            Content="Student"
+                            Template="{StaticResource LoginStudentButton}"
+                            Click="btn_Student_Click"
+                            IsEnabled="false"/>
+                    <Button x:Name="btn_Teacher" 
+                            Content="Teacher"
+                            Grid.Column="1"
+                            Template="{StaticResource LoginTeacherButton}"
+                            Click="btn_Teacher_Click" />
+                </Grid>
 
-                <StackPanel Margin="0,0,0,10">
-                    <Label FontFamily="Consolas"
-                           Foreground="DimGray"
-                           Content="Username" />
-                    <TextBox x:Name="txt_Username"
-                             Height="26"
-                             Margin="5,-5,5,0"
-                             VerticalContentAlignment="Center" 
-                             FontFamily="Consolas"
-                             BorderThickness="0"/>
-                    <Border BorderBrush="#d3d3d3"
-                            BorderThickness="0.2"
-                            Margin="5,0,5,0" />
-                </StackPanel>
-
-                <StackPanel>
-                    <Label FontFamily="Consolas"
-                           Foreground="DimGray" 
-                           Content="Password" />
-                    <PasswordBox x:Name="pb_Password"
+                <!-- Model. -->
+                <StackPanel Margin="5,20,5,25">
+                    <StackPanel Margin="0,0,0,10">
+                        <Label FontFamily="Consolas"
+                               Foreground="DimGray"
+                               Content="Username" />
+                        <TextBox x:Name="txt_Username"
                                  Height="26"
                                  Margin="5,-5,5,0"
                                  VerticalContentAlignment="Center"
                                  FontFamily="Consolas"
-                                 BorderThickness="0"/>
-                    <Border BorderBrush="#d3d3d3"
-                            BorderThickness="0.2"
-                            Margin="5,0,5,0" />
+                                 BorderThickness="0"
+                                 MaxLength="20"/>
+                        <Border BorderBrush="#d3d3d3"
+                                BorderThickness="0.2"
+                                Margin="5,0,5,0" />
+                    </StackPanel>
+
+                    <StackPanel>
+                        <Label FontFamily="Consolas"
+                               Foreground="DimGray"
+                               Content="Password" />
+                        <PasswordBox x:Name="pb_Password"
+                                     Height="26"
+                                     Margin="5,-5,5,0"
+                                     VerticalContentAlignment="Center"
+                                     FontFamily="Consolas"
+                                     BorderThickness="0"
+                                     MaxLength="20"/>
+                        <Border BorderBrush="#d3d3d3"
+                                BorderThickness="0.2"
+                                Margin="5,0,5,0" />
+                    </StackPanel>
                 </StackPanel>
 
                 <Button x:Name="btn_Login"
                         Template="{StaticResource Button}"
                         Content="Sign in"
                         HorizontalAlignment="Stretch"
-                        Margin="5,30,5,5"
+                        Margin="5"
                         Click="btn_Login_Click" />
             </StackPanel>
         </Border>

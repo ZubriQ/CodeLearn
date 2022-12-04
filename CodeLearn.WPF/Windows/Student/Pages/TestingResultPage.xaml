@@ -64,7 +64,7 @@
                            DockPanel.Dock="Top"
                            FontSize="16"
                            FontFamily="Inter"
-                           Margin="20,10,10,10"
+                           Margin="20,10,10,5"
                            Foreground="{StaticResource PrimaryBrush}" />
 
                 <!-- Testing Answers info. -->

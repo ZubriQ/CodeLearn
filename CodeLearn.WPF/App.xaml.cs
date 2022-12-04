@@ -6,9 +6,10 @@ namespace CodeLearn.WPF
 {
     public partial class App : Application
     {
-        public static WPFDatabaseProvider DB = new WPFDatabaseProvider();
+        public static WPFDatabaseProvider DB = new();
 
-        // Logged in test user.
-        public static Student Student = new Student();
+        // A Signed-in user.
+        public static Student? Student = null;
+        public static Teacher? Teacher = null;
     }
 }
