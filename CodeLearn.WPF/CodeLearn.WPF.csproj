@@ -67,7 +67,6 @@
 
   <ItemGroup>
     <Folder Include="Fonts\" />
-    <Folder Include="Windows\Teacher\Pages\" />
   </ItemGroup>
 
 </Project>

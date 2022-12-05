@@ -1,5 +1,6 @@
 ﻿using CodeLearn.Db;
 using CodeLearn.WPF.Windows.Student;
+using CodeLearn.WPF.Windows.Teacher;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -75,7 +76,7 @@ namespace CodeLearn.WPF.Windows
             if (user != null)
             {
                 App.Teacher = user;
-                MenuWindow window = new();
+                ControlWindow window = new();
                 window.Show();
                 Close();
             }

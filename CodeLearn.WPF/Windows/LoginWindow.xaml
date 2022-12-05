@@ -30,17 +30,15 @@
                                    RadiusY="20" />
             </Rectangle.Clip>
         </Rectangle>
-        
-        <DockPanel VerticalAlignment="Top">
 
+        <DockPanel VerticalAlignment="Top">
             <Button x:Name="btn_Close"
-                    Content="X" 
-                    Height="36" 
-                    Width="36" 
+                    Content="X"
+                    Height="36"
+                    Width="36"
                     HorizontalAlignment="Right"
                     Template="{StaticResource CloseButton}"
                     Click="btn_Close_Click" />
-
         </DockPanel>
 
         <Border CornerRadius="25" Padding="10"
@@ -68,7 +66,7 @@
                             Content="Student"
                             Template="{StaticResource LoginStudentButton}"
                             Click="btn_Student_Click"
-                            IsEnabled="false"/>
+                            IsEnabled="false" />
                     <Button x:Name="btn_Teacher" 
                             Content="Teacher"
                             Grid.Column="1"

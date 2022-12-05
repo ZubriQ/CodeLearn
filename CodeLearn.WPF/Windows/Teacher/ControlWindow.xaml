@@ -1,0 +1,129 @@
+﻿<Window x:Class="CodeLearn.WPF.Windows.Teacher.ControlWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CodeLearn.WPF.Windows.Teacher"
+        mc:Ignorable="d"
+        Title="ControlWindow" Height="450" Width="800"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
+        AllowsTransparency="True"
+        Background="Transparent"
+        MinHeight="355"
+        MinWidth="600">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- Application title bar -->
+            <RowDefinition Height="auto" />
+            <!-- Control panel -->
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Border Grid.RowSpan="2"
+                CornerRadius="20"
+                Background="{StaticResource GreyFriendBrushDark}">
+        </Border>
+        
+        <!-- Title bar -->
+        <DockPanel>
+            <Border x:Name="brd_TitleBar"
+                    Background="#6F7788"
+                    CornerRadius="20,20,0,0"
+                    MouseDown="brd_TitleBar_MouseDown">
+                <DockPanel>
+                    <TextBlock Text="CodeLearn" 
+                               VerticalAlignment="Center" 
+                               Foreground="White"
+                               Margin="18,0,0,0"
+                               FontWeight="Bold"
+                               FontSize="16"/>
+                    <Button x:Name="btn_Close"
+                            Content="X"
+                            Height="36"
+                            Width="36"
+                            HorizontalAlignment="Right"
+                            Template="{StaticResource CloseButton}"
+                            Click="btn_Close_Click" />
+                </DockPanel>
+
+            </Border>
+        </DockPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <!-- Control buttons -->
+                <ColumnDefinition Width="auto"/>
+                <!-- Pages area -->
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!-- Vertical ribbon -->
+            <Border Background="#39414E"
+                    CornerRadius="0,0,0,20"
+                    Padding="5">
+                <StackPanel>
+                    <Button x:Name="btn_Dashboard"
+                            Content="Dashboard"
+                            Template="{StaticResource Button}"
+                            HorizontalAlignment="Stretch"
+                            Margin="0,0,0,5"
+                            Click="btn_Dashboard_Click" />
+                    <Button x:Name="btn_TestExercise"
+                            Content="Test Exercise"
+                            Template="{StaticResource Button}"
+                            HorizontalAlignment="Stretch"
+                            Margin="0,0,0,5"
+                            Click="btn_TestExercise_Click" />
+                    <Border Height="1"
+                            Background="#343A46"
+                            Margin="0,0,0,5" />
+
+                    <Button x:Name="btn_CreateExercise"
+                            Content="Create Exercise"
+                            Template="{StaticResource Button}"
+                            HorizontalAlignment="Stretch"
+                            Margin="0,0,0,5"
+                            Click="btn_CreateExercise_Click" />
+                    <Button x:Name="btn_CreateTesting"
+                            Content="Create Test"
+                            Template="{StaticResource Button}"
+                            HorizontalAlignment="Stretch"
+                            Margin="0,0,0,5"
+                            Click="btn_CreateTesting_Click" />
+                    <Border Height="1"
+                            Background="#343A46"
+                            Margin="0,0,0,5" />
+
+                    <Button x:Name="btn_Exercises"
+                            Content="Exercises"
+                            Template="{StaticResource Button}"
+                            HorizontalAlignment="Stretch"
+                            Margin="0,0,0,5"
+                            Click="btn_Exercises_Click" />
+                    <Button x:Name="btn_Testings"
+                            Content="Tests"
+                            Template="{StaticResource Button}"
+                            HorizontalAlignment="Stretch"
+                            Margin="0,0,0,5"
+                            Click="btn_Testings_Click" />
+                    <Button x:Name="btn_TestResults"
+                            Content="Test Results"
+                            Template="{StaticResource Button}"
+                            HorizontalAlignment="Stretch"
+                            Margin="0,0,0,5"
+                            Click="btn_TestResults_Click" />
+                </StackPanel>
+            </Border>
+
+            <!-- Pages -->
+            <Frame x:Name="ControlWindowFrame"
+                   Grid.Column="1"
+                   NavigationUIVisibility="Hidden"
+                   JournalOwnership="OwnsJournal"
+                   Navigated="ControlWindowFrame_Navigated">
+            </Frame>
+        </Grid>
+    </Grid>
+</Window>
