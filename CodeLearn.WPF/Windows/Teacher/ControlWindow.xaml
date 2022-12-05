@@ -35,7 +35,7 @@
                 <DockPanel>
                     <TextBlock Text="CodeLearn" 
                                VerticalAlignment="Center" 
-                               Foreground="White"
+                               Foreground="#eee"
                                Margin="18,0,0,0"
                                FontWeight="Bold"
                                FontSize="16"/>

@@ -126,6 +126,11 @@ namespace CodeLearn.Db.WPF
             }
             return null;
         }
+
+        public ICollection<TestingResult>? GetTestingResults()
+        {
+            return _context.TestingResults.ToArray();
+        }
         #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeLearn.Db;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,38 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages
     /// </summary>
     public partial class TestingResultsPage : Page
     {
+        private TestingResult[]? _testingResults;
+
         public TestingResultsPage()
         {
             InitializeComponent();
+            InitializeTestingResults();
+        }
+
+        private void InitializeTestingResults()
+        {
+            _testingResults = App.DB.GetTestingResults()?.ToArray();
+            dg_TestingResults.ItemsSource = _testingResults;
+        }
+
+        private void txt_LastName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txt_LastName.Text.Length > 1)
+            {
+                ObtainMatchingStudents();
+            }
+            else
+            {
+                dg_TestingResults.ItemsSource = _testingResults;
+            }
+        }
+
+        private void ObtainMatchingStudents()
+        {
+            var tests = _testingResults?.Where(t => t.Student.LastName.ToLower()
+                                        .Contains(txt_LastName.Text.ToLower()))
+                                        .ToArray();
+            dg_TestingResults.ItemsSource = tests;
         }
     }
 }
