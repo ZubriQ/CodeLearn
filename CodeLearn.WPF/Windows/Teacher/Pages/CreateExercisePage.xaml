@@ -1,0 +1,405 @@
+﻿<Page x:Class="CodeLearn.WPF.Windows.Teacher.Pages.CreateExercisePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:CodeLearn.WPF.Windows.Teacher.Pages"
+      mc:Ignorable="d"
+      d:DesignHeight="760"
+      d:DesignWidth="420"
+      Title="CreateExercisePage"
+      MinWidth="417"
+      MinHeight="340">
+    
+    <Page.Resources>
+        <!-- TextBlocks' Style -->
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground"
+                    Value="{StaticResource GreyFriendBrushLight}" />
+            <Setter Property="FontFamily"
+                    Value="Inter" />
+            <Setter Property="FontSize"
+                    Value="14" />
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <!-- Page title -->
+            <RowDefinition Height="auto" />
+            <!-- Create a new exercise -->
+            <RowDefinition  />
+            <!-- Separator -->
+            <RowDefinition Height="auto" />
+            <!-- Create and save an exercise in the db -->
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock x:Name="txt_PageHeader"
+                       Text="Create Exercise"
+                       HorizontalAlignment="Center"
+                       FontSize="20"
+                       Foreground="{StaticResource GreyFriendBrushLight}" />
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1">
+            <StackPanel>
+                <!-- Header: Exercise -->
+                <StackPanel>
+                    <TextBlock Text="Exercise"
+                               Margin="4"
+                               FontSize="20"
+                               Foreground="{StaticResource PrimaryBrush3}" />
+                </StackPanel>
+
+                <!-- Short Exercise Description / Name -->
+                <DockPanel>
+                    <TextBlock Margin="4"
+                               Text="Short description:"
+                               DockPanel.Dock="Top" />
+                    <TextBox x:Name="txt_ShortDescription"
+                             Margin="4"
+                             TextWrapping="Wrap"
+                             Text="{Binding Exercise.ShortDescription}"
+                             Template="{StaticResource DefaultTextBoxTemplate}"
+                             MaxLength="70" />
+                </DockPanel>
+                <!-- Exercise Description -->
+                <DockPanel Grid.Row="0">
+                    <TextBlock Grid.Row="0"
+                               Margin="4"
+                               Text="Description:"
+                               DockPanel.Dock="Top" />
+                    <TextBox x:Name="txt_Description"
+                             Margin="4"
+                             Text="{Binding Exercise.Description}"
+                             Template="{StaticResource DefaultTextBoxTemplate}"
+                             MaxLength="2000"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             MaxHeight="122" />
+                </DockPanel>
+                <!-- Exercise Type -->
+                <DockPanel>
+                    <TextBlock Margin="4"
+                               Text="Exercise type:"
+                               DockPanel.Dock="Top"
+                               FontSize="14" />
+                    <ComboBox x:Name="cbExerciseType"
+                              ItemContainerStyle="{DynamicResource theComboBoxItem}"
+                              Style="{DynamicResource theComboBox}"
+                              SelectedItem="{Binding Path=Exercise.ExerciseTypeNotifiable}"
+                              DisplayMemberPath="Name"
+                              SelectionChanged="cbExerciseType_SelectionChanged"
+                              Margin="4"
+                              Width="130"
+                              HorizontalAlignment="Left"
+                              VerticalContentAlignment="Center"
+                              FontFamily="Inter"
+                              FontSize="14"
+                              BorderThickness="0" />
+                </DockPanel>
+
+                <!-- Exercise Context -->
+                <DockPanel>
+                    <TextBlock Margin="4"
+                               Text="Context code:"
+                               DockPanel.Dock="Top"
+                               FontSize="14" />
+                    <TextBox x:Name="txtExerciseContext"
+                             Margin="4"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             MaxHeight="305"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             Text="{Binding Exercise.Context}"
+                             Template="{StaticResource CodeTextBoxTemplate}" />
+                </DockPanel>
+                <!-- Exercise Context description -->
+                <DockPanel>
+                    <TextBlock Margin="4"
+                               Text="Student's initial code:"
+                               DockPanel.Dock="Top" />
+                    <TextBox x:Name="txtExerciseContextDescription"
+                             Margin="4"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             MaxHeight="305"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             Text="{Binding Exercise.CodingArea}"
+                             Template="{StaticResource CodeTextBoxTemplate}" />
+                </DockPanel>
+
+                <!-- Class, method & return type info. -->
+                <DockPanel>
+                    <StackPanel>
+                        <!-- Class name -->
+                        <TextBlock Margin="4"
+                                   Text="Class name:"
+                                   DockPanel.Dock="Top" />
+                        <TextBox x:Name="txtClassName"
+                                 Margin="4"
+                                 Width="120"
+                                 HorizontalAlignment="Left"
+                                 Text="{Binding Exercise.ClassName}"
+                                 Template="{StaticResource DefaultTextBoxTemplate}"
+                                 IsEnabled="false"
+                                 MaxLength="30"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <!-- Method name -->
+                        <TextBlock Margin="4"
+                                   Text="Method name:"
+                                   DockPanel.Dock="Top"
+                                   FontSize="14" />
+                        <TextBox x:Name="txtMethodName"
+                                 Margin="4"
+                                 Width="120"
+                                 HorizontalAlignment="Left"
+                                 Text="{Binding TestMethodInfo.Name}"
+                                 Template="{StaticResource DefaultTextBoxTemplate}"
+                                 MaxLength="30" />
+                    </StackPanel>
+                    <DockPanel>
+                        <!-- Method return type -->
+                        <TextBlock Margin="4"
+                                   Text="Return type:"
+                                   DockPanel.Dock="Top" />
+                        <ComboBox  x:Name="cbMethodReturnType"
+                                   ItemContainerStyle="{DynamicResource theComboBoxItem}"
+                                   Style="{DynamicResource theComboBox}"
+                                   DisplayMemberPath="ShortName"
+                                   SelectedItem="{Binding Path=TestMethodInfo.ReturnTypeNotifiable}"
+                                   Margin="4"
+                                   MinWidth="120"
+                                   HorizontalAlignment="Left"
+                                   VerticalContentAlignment="Center"
+                                   FontFamily="Inter"
+                                   FontSize="14"
+                                   BorderThickness="0" />
+                    </DockPanel>
+                </DockPanel>
+
+                <!-- Score. -->
+                <DockPanel>
+                    <StackPanel>
+                        <TextBlock Margin="4"
+                                   Text="Score (for example, 1 or 5):"
+                                   DockPanel.Dock="Top" />
+                        <TextBox x:Name="txtScore"
+                                 Grid.Row="1"
+                                 Margin="4,0,4,4"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 BorderThickness="2"
+                                 Width="40"
+                                 MaxWidth="40"
+                                 HorizontalAlignment="Left"
+                                 Text="{Binding Exercise.Score}"
+                                 Template="{StaticResource DefaultTextBoxTemplate}"
+                                 MaxLength="2"
+                                 HorizontalContentAlignment="Center" />
+                    </StackPanel>
+                </DockPanel>
+
+                <!-- Header: Exercise -->
+                <StackPanel>
+                    <TextBlock Text="Test Cases"
+                               Margin="4,14,4,4"
+                               FontSize="20"
+                               Foreground="{StaticResource PrimaryBrush3}" />
+                </StackPanel>
+
+                <!-- Adding Method parameters -->
+                <DockPanel Grid.Row="5">
+                    <DockPanel DockPanel.Dock="Top">
+                        <TextBlock Grid.Row="0"
+                                   Text="Method parameters:"
+                                   Margin="4"
+                                   VerticalAlignment="Center" />
+                        <Button x:Name="btn_AddMethodParameter"
+                                Template="{StaticResource DefaultTeacherButton}"
+                                Grid.Row="1"
+                                Content="Add"
+                                HorizontalAlignment="Left"
+                                Click="btn_AddMethodParameter_Click" />
+                        <Button x:Name="btn_RemoveMethodParameter"
+                                Template="{StaticResource DefaultTeacherButton}"
+                                Grid.Row="1"
+                                Content="Remove"
+                                HorizontalAlignment="Left"
+                                Click="btn_RemoveMethodParameter_Click" />
+                    </DockPanel>
+                    <Border BorderThickness="0.3"
+                            CornerRadius="12"
+                            BorderBrush="{DynamicResource GreyFriendBrushLight}"
+                            Margin="5"
+                            Padding="5">
+                        <ItemsControl ItemsSource="{Binding TestMethodInfo.TestMethodParameters}"
+                                      MinHeight="28">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"
+                                               IsItemsHost="True" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ComboBox ItemsSource="{Binding Source={x:Static local:CreateExercisePage.ParameterDataTypes}}"
+                                              SelectedItem="{Binding DataType}"
+                                              ItemContainerStyle="{DynamicResource theComboBoxItem}"
+                                              Style="{DynamicResource theComboBox}"
+                                              DisplayMemberPath="ShortName"
+                                              Margin="4"
+                                              MinWidth="42"
+                                              Height="25"
+                                              HorizontalAlignment="Left"
+                                              VerticalContentAlignment="Center"
+                                              FontFamily="Inter"
+                                              FontSize="14"
+                                              BorderThickness="0" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+                </DockPanel>
+
+                <!-- Test cases -->
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top">
+                        <TextBlock Text="Test cases:"
+                                   Margin="4"
+                                   VerticalAlignment="Center" />
+                        <Button x:Name="btn_AddTestMethodParameter"
+                                Template="{StaticResource DefaultTeacherButton}"
+                                Content="Add"
+                                HorizontalAlignment="Left"
+                                Click="btn_AddTestMethodParameter_Click" />
+                    </DockPanel>
+
+                    <Border BorderThickness="0.33"
+                            CornerRadius="12"
+                            BorderBrush="{DynamicResource GreyFriendBrushLight}"
+                            Margin="5"
+                            Padding="5">
+                        <ItemsControl x:Name="ic_TestCases"
+                                      MinHeight="80"
+                                      MaxHeight="240"
+                                      ItemsSource="{Binding TestMethodInfo.TestCases}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal"
+                                                Margin="2">
+                                        <ItemsControl ItemsSource="{Binding TestCaseParameters}"
+                                                      VerticalAlignment="Center">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel Orientation="Horizontal"
+                                                               IsItemsHost="True" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <!-- Input. -->
+                                                    <Border BorderThickness="0"
+                                                            CornerRadius="6"
+                                                            Background="#343A46"
+                                                            BorderBrush="{DynamicResource GreyFriendBrushLight}"
+                                                            Margin="2"
+                                                            MinWidth="35"
+                                                            Height="29">
+                                                        <TextBox MinWidth="28"
+                                                                 Height="22"
+                                                                 Margin="2"
+                                                                 VerticalContentAlignment="Center"
+                                                                 Text="{Binding Value}"
+                                                                 BorderThickness="0"
+                                                                 Background="Transparent"
+                                                                 Foreground="#eee"
+                                                                 FontSize="14"
+                                                                 Padding="2,0,2,0">
+                                                            <TextBox.CaretBrush>
+                                                                <LinearGradientBrush StartPoint="0,0"
+                                                                                     EndPoint="1,1">
+                                                                    <LinearGradientBrush.GradientStops>
+                                                                        <GradientStop Color="{DynamicResource PrimaryColor}"
+                                                                                      Offset="0" />
+                                                                    </LinearGradientBrush.GradientStops>
+                                                                </LinearGradientBrush>
+                                                            </TextBox.CaretBrush>
+                                                        </TextBox>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                        <!-- Result. -->
+                                        <Grid>
+                                            <Border BorderThickness="0"
+                                                    CornerRadius="6"
+                                                    Background="#39414E"
+                                                    Margin="2"
+                                                    MinWidth="40"
+                                                    VerticalAlignment="Center"
+                                                    Height="26">
+                                                <TextBox x:Name="txt_TestCaseResult"
+                                                         Background="Transparent"
+                                                         BorderThickness="0"
+                                                         DockPanel.Dock="Right"
+                                                         MinWidth="40"
+                                                         Height="22"
+                                                         Margin="2"
+                                                         FontSize="14"
+                                                         VerticalContentAlignment="Center"
+                                                         Text="{Binding Result, TargetNullValue=result}"
+                                                         Foreground="{DynamicResource PrimaryBrush2}"
+                                                         GotFocus="txt_TestCaseResult_GotFocus"
+                                                         LostFocus="txt_TestCaseResult_LostFocus" />
+                                            </Border>
+                                        </Grid>
+                                        <!-- Remove Button. -->
+                                        <Button Click="btn_RemoveTestCase"
+                                                Template="{StaticResource DefaultTeacherButton}">
+                                            <TextBlock Text="Remove"
+                                                       Foreground="White"
+                                                       FontSize="14" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+
+                            <ItemsControl.Template>
+                                <ControlTemplate TargetType="ItemsControl">
+                                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                                  VerticalScrollBarVisibility="Hidden">
+                                        <ItemsPresenter />
+                                    </ScrollViewer>
+                                </ControlTemplate>
+                            </ItemsControl.Template>
+                        </ItemsControl>
+                    </Border>
+                </DockPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Separator -->
+        <Border Grid.Row="2"
+                Height="1"
+                Background="#343A46"
+                Margin="0,0,0,5"
+                HorizontalAlignment="Stretch" />
+
+        <!-- Submit the exercise -->
+        <StackPanel Grid.Row="3"
+                    HorizontalAlignment="Stretch">
+            <Button x:Name="btn_Submit"
+                    Template="{StaticResource Button}"
+                    Grid.Row="1"
+                    Content="Save"
+                    HorizontalAlignment="Center"
+                    Click="btn_Submit_Click" />
+        </StackPanel>
+    </Grid>
+</Page>

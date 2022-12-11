@@ -12,7 +12,7 @@
         Background="Transparent"
         MinHeight="355"
         MinWidth="600">
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <!-- Application title bar -->
@@ -21,13 +21,22 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
+        <!-- Control Window's border -->
+        <Border Background="White"
+                Grid.RowSpan="2"
+                Opacity="0.25"
+                CornerRadius="20">
+        </Border>
+        
+        <!-- Control Window's background-->
         <Border Grid.RowSpan="2"
                 CornerRadius="20"
-                Background="{StaticResource GreyFriendBrushDark}">
+                Background="{StaticResource GreyFriendBrushDark}"
+                Margin="1">
         </Border>
         
         <!-- Title bar -->
-        <DockPanel>
+        <DockPanel Margin="1,1,1,0">
             <Border x:Name="brd_TitleBar"
                     Background="#6F7788"
                     CornerRadius="20,20,0,0"
@@ -62,20 +71,22 @@
             <!-- Vertical ribbon -->
             <Border Background="#39414E"
                     CornerRadius="0,0,0,20"
-                    Padding="5">
+                    Padding="5"
+                    Margin="1,0,0,1">
                 <StackPanel>
-                    <Button x:Name="btn_Dashboard"
-                            Content="Dashboard"
+                    <Button x:Name="btn_Home"
+                            Content="Home"
                             Template="{StaticResource Button}"
                             HorizontalAlignment="Stretch"
                             Margin="0,0,0,5"
-                            Click="btn_Dashboard_Click" />
+                            Click="btn_Home_Click" />
                     <Button x:Name="btn_TestExercise"
                             Content="Test Exercise"
                             Template="{StaticResource Button}"
                             HorizontalAlignment="Stretch"
                             Margin="0,0,0,5"
                             Click="btn_TestExercise_Click" />
+                    <!-- Separator -->
                     <Border Height="1"
                             Background="#343A46"
                             Margin="0,0,0,5" />
@@ -92,6 +103,7 @@
                             HorizontalAlignment="Stretch"
                             Margin="0,0,0,5"
                             Click="btn_CreateTesting_Click" />
+                    <!-- Separator -->
                     <Border Height="1"
                             Background="#343A46"
                             Margin="0,0,0,5" />

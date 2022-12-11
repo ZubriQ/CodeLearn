@@ -19,15 +19,17 @@ namespace CodeLearn.Lib
             Exercises = new Exercise[0];
         }
 
-        public void CompileAndTestMethod(string methodCode, Exercise exercise)
+        public bool CompileAndTestMethod(string methodCode, Exercise exercise)
         {
+            bool success = false;
             string formattedCode = Formatter.FormatSources(methodCode, exercise.ClassName);
-            bool success = CodeCompiler.Compile(formattedCode);
-            if (success)
+            bool isCompiled = CodeCompiler.Compile(formattedCode);
+            if (isCompiled)
             {
                 Tester.LoadExerciseData(exercise);
-                Tester.TestLoadedExercise();
+                success = Tester.TestLoadedExercise();
             }
+            return success;
         }
 
         public TestingResult CompileAndTest(string[] exerciseAnswers, Exercise[] exercises)

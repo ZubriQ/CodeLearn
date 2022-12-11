@@ -13,7 +13,7 @@ namespace CodeLearn.Db
         }
 
         public int Id { get; set; }
-        public string ExerciseDescription { get; set; } = null!;
+        public string Description { get; set; } = null!;
         public string Context { get; set; } = null!;
         public string? CodingArea { get; set; }
         public int ExerciseTypeId { get; set; }
@@ -21,6 +21,7 @@ namespace CodeLearn.Db
         public string? OptionalDlls { get; set; }
         public string? ClassName { get; set; }
         public int Score { get; set; }
+        public string ShortDescription { get; set; } = null!;
 
         public virtual ExerciseType ExerciseType { get; set; } = null!;
         public virtual ICollection<TestMethodInfo> TestMethodInfos { get; set; }

@@ -41,7 +41,7 @@ namespace CodeLearn.Db.WPF
 
         public void InitializeTestMethodInfo(TestMethodInfo testMethod)
         {
-            testMethod.Name = "TestMethod";
+            testMethod.Name = "GetNumber";
             testMethod.TestMethodParameters = new ObservableCollection<TestMethodParameter>();
             testMethod.ReturnType = _context.DataTypes.First(dt => dt.ShortName == "void");
             testMethod.TestCases = new ObservableCollection<TestCase>();
@@ -60,7 +60,7 @@ namespace CodeLearn.Db.WPF
         public void SaveExercise(Exercise exercise)
         {
             _context.Exercises.Add(exercise);
-            _context.SaveChanges();
+            _context.SaveChanges(); 
         }
 
         public Exercise GetTestExercise()
@@ -130,6 +130,11 @@ namespace CodeLearn.Db.WPF
         public ICollection<TestingResult>? GetTestingResults()
         {
             return _context.TestingResults.ToArray();
+        }
+
+        public ICollection<Exercise>? GetExercises()
+        {
+            return _context.Exercises.ToArray();
         }
         #endregion
     }

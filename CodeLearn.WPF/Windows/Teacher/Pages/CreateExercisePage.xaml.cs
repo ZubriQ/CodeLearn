@@ -1,5 +1,4 @@
 ﻿using CodeLearn.Db;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,11 +12,15 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CodeLearn.WPF.Windows
+namespace CodeLearn.WPF.Windows.Teacher.Pages
 {
-    public partial class CreateExerciseWindow : Window
+    /// <summary>
+    /// Interaction logic for CreateExercisePage.xaml
+    /// </summary>
+    public partial class CreateExercisePage : Page
     {
         #region Properties
         public Exercise Exercise { get; set; } = new Exercise();
@@ -31,13 +34,14 @@ namespace CodeLearn.WPF.Windows
         #endregion
 
         #region Initialization
-        public CreateExerciseWindow()
+        public CreateExercisePage()
         {
             InitializeComponent();
             InitializeComboBoxes();
             InitializeMethodParameterDataTypes();
             InitializeExerciseAndTestMethod();
             DataContext = this;
+            InitializeExerciseExampleData();
         }
 
         void InitializeComboBoxes()
@@ -55,6 +59,19 @@ namespace CodeLearn.WPF.Windows
         {
             App.DB.InitializeTestMethodInfo(TestMethodInfo);
             App.DB.InitializeExercise(Exercise, TestMethodInfo);
+        }
+
+        void InitializeExerciseExampleData()
+        {
+            Exercise.Context = @"// example
+GetNumber(50);
+GetNumber(75.4);
+GetNumber(1.333);";
+            Exercise.CodingArea = @"// example
+public static double GetNumber(double a)
+{
+    // return a;
+}";
         }
         #endregion
 
@@ -98,7 +115,7 @@ namespace CodeLearn.WPF.Windows
             if (TestMethodInfo.TestMethodParameters.Count > 0)
             {
                 var testCase = new TestCase();
-                testCase.TestCaseParameters = 
+                testCase.TestCaseParameters =
                     new TestCaseParameter[TestMethodInfo.TestMethodParameters.Count];
                 for (int i = 0; i < testCase.TestCaseParameters.Count; i++)
                 {
@@ -118,11 +135,11 @@ namespace CodeLearn.WPF.Windows
         }
         #endregion
 
-        #region Save an exercise
+        #region Save the exercise
         private void btn_Submit_Click(object sender, RoutedEventArgs e)
         {
             InitializeParametersPositions();
-            App.DB.SaveExercise(Exercise);
+            App.DB.SaveExercise(Exercise); // TODO: check entered data
             MessageBox.Show("Exercise has been successfully saved.");
         }
 
@@ -155,7 +172,7 @@ namespace CodeLearn.WPF.Windows
             var bindExpresion = textBox.GetBindingExpression(TextBox.TextProperty);
             var source = bindExpresion.ResolvedSource;
 
-            if (String.IsNullOrEmpty(textBox.Text))
+            if (String.IsNullOrEmpty(textBox.Text) && source != null)
             {
                 source.GetType()
                       .GetProperty(bindExpresion.ResolvedSourcePropertyName)

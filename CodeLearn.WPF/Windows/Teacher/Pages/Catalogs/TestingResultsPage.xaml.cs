@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CodeLearn.WPF.Windows.Teacher.Pages
+namespace CodeLearn.WPF.Windows.Teacher.Pages.Catalogs
 {
     /// <summary>
     /// Interaction logic for TestingResultsPage.xaml

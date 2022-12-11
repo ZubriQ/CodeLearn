@@ -1,4 +1,5 @@
 ﻿using CodeLearn.WPF.Windows.Teacher.Pages;
+using CodeLearn.WPF.Windows.Teacher.Pages.Catalogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,9 +35,49 @@ namespace CodeLearn.WPF.Windows.Teacher
         {
             pages.Add("TestingResults", new TestingResultsPage());
             pages.Add("TestExercise", new TestExercisePage());
+            pages.Add("CreateExercise", new CreateExercisePage());
+
         }
 
         private void InitializeHomePage()
+        {
+            ControlWindowFrame.Navigate(pages["TestingResults"]);
+        }
+        #endregion
+
+        #region Verticical ribbon
+        // TODO: make a dashboard that shows recent info.
+        private void btn_Home_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_TestExercise_Click(object sender, RoutedEventArgs e)
+        {
+            ControlWindowFrame.Navigate(pages["TestExercise"]);
+        }
+
+        private void btn_CreateExercise_Click(object sender, RoutedEventArgs e)
+        {
+            ControlWindowFrame.Navigate(pages["CreateExercise"]);
+        }
+
+        private void btn_CreateTesting_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_Exercises_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_Testings_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_TestResults_Click(object sender, RoutedEventArgs e)
         {
             ControlWindowFrame.Navigate(pages["TestingResults"]);
         }
@@ -60,42 +101,6 @@ namespace CodeLearn.WPF.Windows.Teacher
         }
         #endregion
 
-        #region Verticical ribbon
-        private void btn_Dashboard_Click(object sender, RoutedEventArgs e)
-        {
-            ControlWindowFrame.Navigate(pages["TestingResults"]);
-        }
 
-        private void btn_TestExercise_Click(object sender, RoutedEventArgs e)
-        {
-            ControlWindowFrame.Navigate(pages["TestExercise"]);
-
-        }
-
-        private void btn_CreateExercise_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btn_CreateTesting_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btn_Exercises_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btn_Testings_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btn_TestResults_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        #endregion
     }
 }

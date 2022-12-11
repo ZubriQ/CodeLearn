@@ -53,10 +53,11 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Templates\Description_Theme.xaml">
+    <Page Update="Templates\Buttons\CloseButton_Theme.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Templates\Buttons\CloseButton_Theme.xaml">
+    <Page Update="Templates\Buttons\Teacher\DefaultTeacherButton_Theme.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

@@ -53,14 +53,14 @@ namespace CodeLearn.Lib
             try
             {
                 GetMethodFromAssembly();
-                TestMethodTestCases();
+                bool passedTestCases = TestMethodTestCases();
                 UnloadAndFinalize();
+                return passedTestCases;
             }
             catch (Exception)
             {
                 return false;
             }
-            return true;
         }
 
         private void GetMethodFromAssembly()

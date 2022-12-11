@@ -8,8 +8,12 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Templates/Palette.xaml" />
 
-                <ResourceDictionary Source="Templates/Description_Theme.xaml" />
-                
+                <ResourceDictionary Source="Templates/TextBoxes/TextBox_Theme.xaml" />
+                <ResourceDictionary Source="Templates/TextBoxes/CodeTextBox_Theme.xaml" />
+
+                <ResourceDictionary Source="Templates/ComboBox_Theme.xaml" />
+                <ResourceDictionary Source="Templates/ScrollBar_Theme.xaml" />
+
                 <ResourceDictionary Source="Templates/Buttons/CloseButton_Theme.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/MinimizeButton_Theme.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/Button_Theme.xaml" />
@@ -17,6 +21,8 @@
                 <ResourceDictionary Source="Templates/Buttons/Student/StartButton_Theme.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/Student/ExerciseCircleButton_Theme.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/Student/FinishTestingButton_Theme.xaml" />
+
+                <ResourceDictionary Source="Templates/Buttons/Teacher/DefaultTeacherButton_Theme.xaml" />
                 
                 <ResourceDictionary Source="Templates/Buttons/Login/TeacherButton_Theme.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/Login/StudentButton_Theme.xaml" />

@@ -1,0 +1,44 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTemplate TargetType="Button"
+                     x:Key="DefaultTeacherButton">
+        <Border x:Name="btn_DefaultTeacher"
+                Background="{StaticResource PrimaryBrush}"
+                BorderThickness="0"
+                CornerRadius="6"
+                Margin="2"
+                Padding="10,2,10,2">
+            <ContentControl Margin="{TemplateBinding Padding}"
+                            Content="{TemplateBinding Content}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Foreground="White"
+                            FontFamily="Calibri"
+                            FontSize="14"
+                            VerticalContentAlignment="Center" />
+        </Border>
+
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="true">
+                <Setter TargetName="btn_DefaultTeacher"
+                        Property="Background"
+                        Value="{DynamicResource PrimaryBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed"
+                     Value="true">
+                <Setter TargetName="btn_DefaultTeacher"
+                        Property="Background"
+                        Value="#1984D1" />
+            </Trigger>
+            <Trigger Property="IsEnabled"
+                     Value="false">
+                <Setter Property="Foreground"
+                        Value="Gray" />
+                <Setter TargetName="btn_DefaultTeacher"
+                        Property="Background"
+                        Value="LightGray" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+</ResourceDictionary>

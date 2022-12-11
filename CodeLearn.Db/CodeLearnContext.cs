@@ -75,9 +75,9 @@ namespace CodeLearn.Db
                     .HasColumnType("text")
                     .HasColumnName("context");
 
-                entity.Property(e => e.ExerciseDescription)
+                entity.Property(e => e.Description)
                     .HasMaxLength(2000)
-                    .HasColumnName("exercise_description");
+                    .HasColumnName("description");
 
                 entity.Property(e => e.ExerciseTypeId).HasColumnName("exercise_type_id");
 
@@ -90,6 +90,10 @@ namespace CodeLearn.Db
                     .HasColumnName("optional_usings");
 
                 entity.Property(e => e.Score).HasColumnName("score");
+
+                entity.Property(e => e.ShortDescription)
+                    .HasMaxLength(70)
+                    .HasColumnName("short_description");
 
                 entity.HasOne(d => d.ExerciseType)
                     .WithMany(p => p.Exercises)
