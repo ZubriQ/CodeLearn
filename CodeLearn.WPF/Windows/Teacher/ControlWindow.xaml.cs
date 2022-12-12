@@ -33,15 +33,16 @@ namespace CodeLearn.WPF.Windows.Teacher
         #region Initialization
         private void InitializePages()
         {
-            pages.Add("TestingResults", new TestingResultsPage());
+            pages.Add("Home", new HomePage());
             pages.Add("TestExercise", new TestExercisePage());
             pages.Add("CreateExercise", new CreateExercisePage());
-
+            pages.Add("CreateTesting", new CreateTestingPage());
+            pages.Add("TestingResults", new TestingResultsPage());
         }
 
         private void InitializeHomePage()
         {
-            ControlWindowFrame.Navigate(pages["TestingResults"]);
+            ControlWindowFrame.Navigate(pages["Home"]);
         }
         #endregion
 
@@ -49,7 +50,7 @@ namespace CodeLearn.WPF.Windows.Teacher
         // TODO: make a dashboard that shows recent info.
         private void btn_Home_Click(object sender, RoutedEventArgs e)
         {
-
+            ControlWindowFrame.Navigate(pages["Home"]);
         }
 
         private void btn_TestExercise_Click(object sender, RoutedEventArgs e)
@@ -64,7 +65,7 @@ namespace CodeLearn.WPF.Windows.Teacher
 
         private void btn_CreateTesting_Click(object sender, RoutedEventArgs e)
         {
-
+            ControlWindowFrame.Navigate(pages["CreateTesting"]);
         }
 
         private void btn_Exercises_Click(object sender, RoutedEventArgs e)
@@ -100,7 +101,5 @@ namespace CodeLearn.WPF.Windows.Teacher
             ControlWindowFrame.RemoveBackEntry();
         }
         #endregion
-
-
     }
 }

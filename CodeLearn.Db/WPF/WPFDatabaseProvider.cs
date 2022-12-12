@@ -54,6 +54,15 @@ namespace CodeLearn.Db.WPF
             exercise.Score = 1;
             exercise.TestMethodInfos.Add(testMethod);
         }
+
+        public void InitializeTestingExercises(ObservableCollection<Exercise> exercises)
+        {
+            var items = _context.Exercises.ToArray();
+            for (int i = 0; i < items.Length; i++)
+            {
+                exercises.Add(items[i]);
+            }
+        }
         #endregion
 
         #region Access methods
@@ -61,6 +70,12 @@ namespace CodeLearn.Db.WPF
         {
             _context.Exercises.Add(exercise);
             _context.SaveChanges(); 
+        }
+
+        public void SaveTesting(Testing testing)
+        {
+            _context.Testings.Add(testing);
+            _context.SaveChanges();
         }
 
         public Exercise GetTestExercise()

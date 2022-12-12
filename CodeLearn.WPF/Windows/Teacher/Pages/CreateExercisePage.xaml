@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:CodeLearn.WPF.Windows.Teacher.Pages"
       mc:Ignorable="d"
-      d:DesignHeight="760"
+      d:DesignHeight="900"
       d:DesignWidth="420"
       Title="CreateExercisePage"
       MinWidth="417"
@@ -29,7 +29,7 @@
             <RowDefinition Height="auto" />
             <!-- Create a new exercise -->
             <RowDefinition  />
-            <!-- Separator -->
+            <!-- 1 Pixel Height Separator -->
             <RowDefinition Height="auto" />
             <!-- Create and save an exercise in the db -->
             <RowDefinition Height="auto"/>
@@ -63,7 +63,7 @@
                              TextWrapping="Wrap"
                              Text="{Binding Exercise.ShortDescription}"
                              Template="{StaticResource DefaultTextBoxTemplate}"
-                             MaxLength="70" />
+                             MaxLength="70"/>
                 </DockPanel>
                 <!-- Exercise Description -->
                 <DockPanel Grid.Row="0">
@@ -183,26 +183,21 @@
                 </DockPanel>
 
                 <!-- Score. -->
-                <DockPanel>
-                    <StackPanel>
-                        <TextBlock Margin="4"
-                                   Text="Score (for example, 1 or 5):"
-                                   DockPanel.Dock="Top" />
-                        <TextBox x:Name="txtScore"
-                                 Grid.Row="1"
-                                 Margin="4,0,4,4"
-                                 TextWrapping="Wrap"
-                                 AcceptsReturn="True"
-                                 BorderThickness="2"
-                                 Width="40"
-                                 MaxWidth="40"
-                                 HorizontalAlignment="Left"
-                                 Text="{Binding Exercise.Score}"
-                                 Template="{StaticResource DefaultTextBoxTemplate}"
-                                 MaxLength="2"
-                                 HorizontalContentAlignment="Center" />
-                    </StackPanel>
-                </DockPanel>
+                <StackPanel>
+                    <TextBlock Margin="4"
+                               Text="Score:"
+                               DockPanel.Dock="Top" />
+                    <ComboBox x:Name="cb_Score"
+                              ItemContainerStyle="{DynamicResource theComboBoxItem}"
+                              Style="{DynamicResource theComboBox}"
+                              Margin="4"
+                              MinWidth="60"
+                              HorizontalAlignment="Left"
+                              VerticalContentAlignment="Center"
+                              FontFamily="Inter"
+                              FontSize="14"
+                              BorderThickness="0" />
+                </StackPanel>
 
                 <!-- Header: Exercise -->
                 <StackPanel>
@@ -320,7 +315,10 @@
                                                                  Background="Transparent"
                                                                  Foreground="#eee"
                                                                  FontSize="14"
-                                                                 Padding="2,0,2,0">
+                                                                 Padding="2,0,2,0"
+                                                                 SelectionBrush="{DynamicResource PrimaryBrush3}"
+                                                                 SelectionOpacity="0.4"
+                                                                 MaxLength="500">
                                                             <TextBox.CaretBrush>
                                                                 <LinearGradientBrush StartPoint="0,0"
                                                                                      EndPoint="1,1">
@@ -337,13 +335,14 @@
                                         </ItemsControl>
                                         <!-- Result. -->
                                         <Grid>
-                                            <Border BorderThickness="0"
-                                                    CornerRadius="6"
+                                            <Border CornerRadius="6"
                                                     Background="#39414E"
                                                     Margin="2"
                                                     MinWidth="40"
                                                     VerticalAlignment="Center"
-                                                    Height="26">
+                                                    Height="26"
+                                                    BorderBrush="{DynamicResource PrimaryBrush2}"
+                                                    BorderThickness="1" >
                                                 <TextBox x:Name="txt_TestCaseResult"
                                                          Background="Transparent"
                                                          BorderThickness="0"
@@ -352,11 +351,13 @@
                                                          Height="22"
                                                          Margin="2"
                                                          FontSize="14"
-                                                         VerticalContentAlignment="Center"
+                                                         VerticalContentAlignment="Top"
                                                          Text="{Binding Result, TargetNullValue=result}"
                                                          Foreground="{DynamicResource PrimaryBrush2}"
                                                          GotFocus="txt_TestCaseResult_GotFocus"
-                                                         LostFocus="txt_TestCaseResult_LostFocus" />
+                                                         LostFocus="txt_TestCaseResult_LostFocus" 
+                                                         SelectionBrush="{StaticResource GreyFriendBrushLight}"
+                                                         SelectionOpacity="0.3"/>
                                             </Border>
                                         </Grid>
                                         <!-- Remove Button. -->
@@ -397,7 +398,7 @@
             <Button x:Name="btn_Submit"
                     Template="{StaticResource Button}"
                     Grid.Row="1"
-                    Content="Save"
+                    Content="Insert"
                     HorizontalAlignment="Center"
                     Click="btn_Submit_Click" />
         </StackPanel>

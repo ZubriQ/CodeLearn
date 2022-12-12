@@ -25,23 +25,45 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages
         #region Properties
         public Exercise Exercise { get; set; } = new Exercise();
         public TestMethodInfo TestMethodInfo { get; set; } = new TestMethodInfo();
-
         /// <summary>
         /// Method parameters' data types.
         /// </summary>
-        public static ObservableCollection<DataType> ParameterDataTypes { get; set; }
-            = new ObservableCollection<DataType>();
+        public static ObservableCollection<DataType> ParameterDataTypes { get; set; } = new();
+        public List<int> Scores { get; set; } = new List<int>();
+        public int SelectedScore
+        {
+            get
+            {
+                return (int)cb_Score.SelectedValue;
+            }
+        }
         #endregion
 
         #region Initialization
         public CreateExercisePage()
         {
             InitializeComponent();
+            InitializeInitialData();
+            DataContext = this;
+        }
+
+        private void InitializeInitialData()
+        {
             InitializeComboBoxes();
             InitializeMethodParameterDataTypes();
             InitializeExerciseAndTestMethod();
-            DataContext = this;
             InitializeExerciseExampleData();
+            InitializeScores();
+        }
+
+        private void InitializeScores()
+        {
+            for (int i = 1; i <= 5; i++)
+            {
+                Scores.Add(i);
+            }
+            cb_Score.ItemsSource = Scores;
+            cb_Score.SelectedValue = 1;
         }
 
         void InitializeComboBoxes()
@@ -112,7 +134,7 @@ public static double GetNumber(double a)
         #region Test Cases
         private void btn_AddTestMethodParameter_Click(object sender, RoutedEventArgs e)
         {
-            if (TestMethodInfo.TestMethodParameters.Count > 0)
+            if (IsTestCaseAddable())
             {
                 var testCase = new TestCase();
                 testCase.TestCaseParameters =
@@ -126,6 +148,12 @@ public static double GetNumber(double a)
             }
         }
 
+        private bool IsTestCaseAddable()
+        {
+            return TestMethodInfo.TestMethodParameters.Count > 0 &&
+                   TestMethodInfo.TestCases.Count < 5;
+        }
+
         private void btn_RemoveTestCase(object sender, RoutedEventArgs e)
         {
             var s = sender as Button;
@@ -135,10 +163,11 @@ public static double GetNumber(double a)
         }
         #endregion
 
-        #region Save the exercise
+        #region Insert and save the exercise into the db
         private void btn_Submit_Click(object sender, RoutedEventArgs e)
         {
             InitializeParametersPositions();
+            Exercise.Score = SelectedScore;
             App.DB.SaveExercise(Exercise); // TODO: check entered data
             MessageBox.Show("Exercise has been successfully saved.");
         }

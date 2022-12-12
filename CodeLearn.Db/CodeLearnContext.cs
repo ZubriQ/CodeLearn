@@ -195,7 +195,7 @@ namespace CodeLearn.Db
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Result)
-                    .HasMaxLength(200)
+                    .HasMaxLength(2000)
                     .HasColumnName("result");
 
                 entity.Property(e => e.TestMethodId).HasColumnName("test_method_id");
@@ -218,7 +218,7 @@ namespace CodeLearn.Db
                 entity.Property(e => e.TestCaseId).HasColumnName("test_case_id");
 
                 entity.Property(e => e.Value)
-                    .HasMaxLength(200)
+                    .HasMaxLength(500)
                     .HasColumnName("value");
 
                 entity.HasOne(d => d.TestCase)

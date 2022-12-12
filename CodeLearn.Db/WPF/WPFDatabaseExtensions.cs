@@ -8,6 +8,7 @@ using System.Text;
 
 namespace CodeLearn.Db
 {
+    #region WPF Create Exercise
     /// <summary>
     /// Exercise type combobox updating.
     /// </summary>
@@ -90,7 +91,9 @@ namespace CodeLearn.Db
             }
         }
     }
+    #endregion
 
+    #region DataGrid WPF output
     public partial class TestingResult
     {
         public int AnswersCount
@@ -160,4 +163,37 @@ namespace CodeLearn.Db
             }
         }
     }
+    #endregion
+
+    #region WPF Create Testing
+    /// <summary>
+    /// Exercise type combobox updating.
+    /// </summary>
+    public partial class Testing : INotifyPropertyChanged
+    {
+        [NotMapped]
+        public ICollection<Exercise> ExercisesNotifiable
+        {
+            get
+            {
+                return Exercises;
+            }
+            set
+            {
+                if (value != Exercises)
+                {
+                    Exercises = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged([CallerMemberName] string propName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+    }
+    #endregion
 }

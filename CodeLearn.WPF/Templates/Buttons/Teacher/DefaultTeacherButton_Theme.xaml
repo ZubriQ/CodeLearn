@@ -7,15 +7,17 @@
                 BorderThickness="0"
                 CornerRadius="6"
                 Margin="2"
-                Padding="10,2,10,2">
+                Padding="10,2,10,2"
+                Height="29"
+                HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
             <ContentControl Margin="{TemplateBinding Padding}"
                             Content="{TemplateBinding Content}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             Foreground="White"
-                            FontFamily="Calibri"
+                            FontFamily="Inter"
                             FontSize="14"
-                            VerticalContentAlignment="Center" />
+                            VerticalContentAlignment="Center"/>
         </Border>
 
         <ControlTemplate.Triggers>

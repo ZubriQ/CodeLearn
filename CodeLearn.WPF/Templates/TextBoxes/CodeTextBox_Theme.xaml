@@ -29,6 +29,10 @@
                         Value="14" />
                 <Setter Property="FontFamily"
                         Value="Consolas" />
+                <Setter Property="SelectionOpacity"
+                        Value="0.4" />
+                <Setter Property="SelectionBrush"
+                        Value="{DynamicResource PrimaryBrush3}" />
             </Trigger>
             <!-- Style When Disabled -->
             <Trigger Property="IsEnabled"
