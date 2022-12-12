@@ -79,13 +79,13 @@
                             Template="{StaticResource Button}"
                             HorizontalAlignment="Stretch"
                             Margin="0,0,0,5"
-                            Click="btn_Home_Click" />
+                            Click="Navigate" />
                     <Button x:Name="btn_TestExercise"
                             Content="Test Exercise"
                             Template="{StaticResource Button}"
                             HorizontalAlignment="Stretch"
                             Margin="0,0,0,5"
-                            Click="btn_TestExercise_Click" />
+                            Click="Navigate" />
                     <!-- Separator -->
                     <Border Height="1"
                             Background="#343A46"
@@ -96,13 +96,13 @@
                             Template="{StaticResource Button}"
                             HorizontalAlignment="Stretch"
                             Margin="0,0,0,5"
-                            Click="btn_CreateExercise_Click" />
+                            Click="Navigate" />
                     <Button x:Name="btn_CreateTesting"
                             Content="Create Test"
                             Template="{StaticResource Button}"
                             HorizontalAlignment="Stretch"
                             Margin="0,0,0,5"
-                            Click="btn_CreateTesting_Click" />
+                            Click="Navigate" />
                     <!-- Separator -->
                     <Border Height="1"
                             Background="#343A46"
@@ -113,19 +113,19 @@
                             Template="{StaticResource Button}"
                             HorizontalAlignment="Stretch"
                             Margin="0,0,0,5"
-                            Click="btn_Exercises_Click" />
+                            Click="Navigate" />
                     <Button x:Name="btn_Testings"
                             Content="Tests"
                             Template="{StaticResource Button}"
                             HorizontalAlignment="Stretch"
                             Margin="0,0,0,5"
-                            Click="btn_Testings_Click" />
-                    <Button x:Name="btn_TestResults"
+                            Click="Navigate" />
+                    <Button x:Name="btn_TestingResults"
                             Content="Test Results"
                             Template="{StaticResource Button}"
                             HorizontalAlignment="Stretch"
                             Margin="0,0,0,5"
-                            Click="btn_TestResults_Click" />
+                            Click="Navigate" />
                 </StackPanel>
             </Border>
 

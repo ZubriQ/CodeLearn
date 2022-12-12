@@ -33,54 +33,32 @@ namespace CodeLearn.WPF.Windows.Teacher
         #region Initialization
         private void InitializePages()
         {
-            pages.Add("Home", new HomePage());
-            pages.Add("TestExercise", new TestExercisePage());
-            pages.Add("CreateExercise", new CreateExercisePage());
-            pages.Add("CreateTesting", new CreateTestingPage());
-            pages.Add("TestingResults", new TestingResultsPage());
+            pages.Add("btn_Home", new HomePage());
+            pages.Add("btn_TestExercise", new TestExercisePage());
+            pages.Add("btn_CreateExercise", new CreateExercisePage());
+            pages.Add("btn_CreateTesting", new CreateTestingPage());
+            pages.Add("btn_TestingResults", new TestingResultsPage());
         }
 
         private void InitializeHomePage()
         {
-            ControlWindowFrame.Navigate(pages["Home"]);
+            ControlWindowFrame.Navigate(pages["btn_Home"]);
         }
         #endregion
 
         #region Verticical ribbon
-        // TODO: make a dashboard that shows recent info.
-        private void btn_Home_Click(object sender, RoutedEventArgs e)
+        private void Navigate(object sender, RoutedEventArgs e)
         {
-            ControlWindowFrame.Navigate(pages["Home"]);
-        }
-
-        private void btn_TestExercise_Click(object sender, RoutedEventArgs e)
-        {
-            ControlWindowFrame.Navigate(pages["TestExercise"]);
-        }
-
-        private void btn_CreateExercise_Click(object sender, RoutedEventArgs e)
-        {
-            ControlWindowFrame.Navigate(pages["CreateExercise"]);
-        }
-
-        private void btn_CreateTesting_Click(object sender, RoutedEventArgs e)
-        {
-            ControlWindowFrame.Navigate(pages["CreateTesting"]);
-        }
-
-        private void btn_Exercises_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btn_Testings_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btn_TestResults_Click(object sender, RoutedEventArgs e)
-        {
-            ControlWindowFrame.Navigate(pages["TestingResults"]);
+            try
+            {
+                var pageName = (sender as Button).Name;
+                ControlWindowFrame.Navigate(pages[pageName]);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Such page does not exist.", "Navigation error");
+            }
+            
         }
         #endregion
 
