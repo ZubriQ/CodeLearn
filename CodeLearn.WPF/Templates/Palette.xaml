@@ -43,7 +43,7 @@
                      Color="{DynamicResource SquashColorBlueGreen}" />
     <Color x:Key="SquashColorBlueGreen">#008E87</Color>
 
-    <!-- Buttons States -->
+    <!-- Button States -->
     <SolidColorBrush x:Key="DisabledBrush"
                      Color="{DynamicResource DisabledColor}" />
     <Color x:Key="DisabledColor">LightGray</Color>

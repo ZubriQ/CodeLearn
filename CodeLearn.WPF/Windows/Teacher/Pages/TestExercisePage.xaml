@@ -31,14 +31,15 @@
         </Grid.RowDefinitions>
 
         <!-- Title -->
-        <StackPanel Margin="0,10,0,0">
+        <Border Background="#343A46" />
+        <StackPanel Margin="0,10,0,10">
             <TextBlock x:Name="txt_PageHeader"
                        Text="Exercise Testing"
                        HorizontalAlignment="Center"
                        FontSize="20"
                        TextWrapping="Wrap" />
         </StackPanel>
-
+        
         <!-- Sort by method's short description -->
         <Grid Grid.Row="1"
               HorizontalAlignment="Right"
@@ -59,24 +60,22 @@
                        Text="Sort by:"
                        FontSize="14"
                        FontWeight="Bold"
-                       Margin="0,0,10,10"
-                       VerticalAlignment="Center" />
-
+                       VerticalAlignment="Center"
+                       Margin="0,0,15,0" />
+            
             <!-- Method Name -->
             <TextBlock x:Name="txt_MethodShortDescription"
                        Foreground="{StaticResource GreyFriendBrushLight}"
                        Text="Short Description"
-                       Margin="5" 
                        Grid.Column="1"
-                       Grid.Row="0"/>
-            <StackPanel Margin="0,10,10,10"
-                        Width="140"
+                       Grid.Row="0" 
+                       Margin="5,0,0,4"/>
+            <StackPanel Width="140"
                         HorizontalAlignment="Left"
                         Grid.Column="1"
-                        Grid.Row="1">
+                        Grid.Row="1"
+                        Margin="0,0,10,0">
                 <TextBox x:Name="txt_MethodName"
-                         Height="26"
-                         Margin="5,-5,5,0"
                          VerticalContentAlignment="Center"
                          FontFamily="Inter"
                          BorderThickness="0"
@@ -84,27 +83,23 @@
                          Background="Transparent"
                          Foreground="#eee"
                          FontSize="14"
-                         TextChanged="txt_MethodName_TextChanged" />
-                <Border BorderBrush="#22272F"
-                        BorderThickness="0.2"
-                        Margin="5,0,5,0"/>
+                         TextChanged="txt_MethodName_TextChanged"
+                         Template="{DynamicResource FilterTextBoxTemplate}" />
             </StackPanel>
 
             <!-- Method -->
             <TextBlock Foreground="{StaticResource GreyFriendBrushLight}"
                        Text="Method"
                        Grid.Column="2"
-                       Grid.Row="0"
-                       Margin="5"/>
+                       Grid.Row="0" />
             <ComboBox x:Name="cb_Method"
                       ItemContainerStyle="{DynamicResource theComboBoxItem}"
                       Style="{DynamicResource theComboBox}"
                       Height="26"
-                      Margin="5,-5,5,0"
                       VerticalContentAlignment="Center"
                       FontFamily="Inter"
                       BorderThickness="0"
-                      Width="140"
+                      Width="150"
                       FontSize="14"
                       DisplayMemberPath="ShortDescription"
                       SelectionChanged="cb_Method_SelectionChanged"

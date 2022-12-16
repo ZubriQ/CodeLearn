@@ -8,6 +8,18 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TestingResultsPage">
 
+    <Page.Resources>
+        <!-- TextBlocks' Style -->
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground"
+                    Value="{StaticResource GreyFriendBrushLight}" />
+            <Setter Property="FontFamily"
+                    Value="Inter" />
+            <Setter Property="FontSize"
+                    Value="14" />
+        </Style>
+    </Page.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <!-- Page Title -->
@@ -19,39 +31,38 @@
         </Grid.RowDefinitions>
 
         <!-- Title -->
-        <StackPanel Margin="0,10,0,0">
+        <Border Background="#343A46" />
+        <StackPanel Margin="0,10,0,10">
             <TextBlock x:Name="txt_PageHeader"
                        Grid.Row="0"
                        Text="Testing Results"
                        HorizontalAlignment="Center"
                        FontSize="20"
                        TextWrapping="Wrap"
-                       FontFamily="Consolas"
                        Foreground="{StaticResource GreyFriendBrushLight}" />
         </StackPanel>
 
-        <!-- Sort by ... -->
-        <DockPanel Grid.Row="1" HorizontalAlignment="Right">
-            <StackPanel Margin="0,0,0,10"
+        <!-- Sort by Last Name -->
+        <DockPanel Grid.Row="1" HorizontalAlignment="Right" Margin="10,0,10,0">
+            <StackPanel Margin="0,0,0,15"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom">
-                <Label FontFamily="Consolas"
-                       Foreground="{StaticResource GreyFriendBrushLight}"
-                       Content="Sort by" 
-                       FontSize="15"
-                       FontWeight="Bold"/>
+                <Label Foreground="{StaticResource GreyFriendBrushLight}"
+                       Content="Sort by:" 
+                       FontSize="14"
+                       FontWeight="Bold"
+                       Margin="0,0,5,0" />
             </StackPanel>
 
             <StackPanel Margin="0,10,10,10"
                         Width="150"
                         HorizontalAlignment="Left">
-                <Label FontFamily="Consolas"
-                       Foreground="{StaticResource GreyFriendBrushLight}"
-                       Content="Student's Last Name"
-                       Margin="2,0,0,0" />
+                <TextBlock FontFamily="Consolas"
+                           Foreground="{StaticResource GreyFriendBrushLight}"
+                           Text="Last Name"
+                           HorizontalAlignment="Left"
+                           Margin="5,0,0,4"/>
                 <TextBox x:Name="txt_LastName"
-                         Height="26"
-                         Margin="5,-5,5,0"
                          VerticalContentAlignment="Center"
                          FontFamily="Inter"
                          BorderThickness="0"
@@ -59,17 +70,15 @@
                          Background="Transparent"
                          Foreground="#eee"
                          FontSize="14"
-                         TextChanged="txt_LastName_TextChanged" />
-                <Border BorderBrush="#282D37"
-                        BorderThickness="0.2"
-                        Margin="5,0,5,0" />
+                         TextChanged="txt_LastName_TextChanged"
+                         Template="{StaticResource FilterTextBoxTemplate}" />
             </StackPanel>
         </DockPanel>
         <!-- TODO: Pretty datagrid UI. -->
         <!-- Testing Results -->
         <DataGrid x:Name="dg_TestingResults"
                   Grid.Row="2"
-                  Margin="10"
+                  Margin="15"
                   SelectionMode="Single"
                   Background="Transparent" 
                   AutoGenerateColumns="False"

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeLearn.WPF.Windows.Teacher.Pages
+namespace CodeLearn.WPF.Windows.Teacher.Pages.Create
 {
     internal class CreateTestingSettings
     {

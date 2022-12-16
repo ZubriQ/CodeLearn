@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CodeLearn.WPF.Windows.Teacher.Pages
+namespace CodeLearn.WPF.Windows.Teacher.Pages.Create
 {
     /// <summary>
     /// Interaction logic for CreateExercisePage.xaml

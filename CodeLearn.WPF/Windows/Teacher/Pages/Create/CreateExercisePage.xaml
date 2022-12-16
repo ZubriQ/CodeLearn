@@ -1,9 +1,9 @@
-﻿<Page x:Class="CodeLearn.WPF.Windows.Teacher.Pages.CreateExercisePage"
+﻿<Page x:Class="CodeLearn.WPF.Windows.Teacher.Pages.Create.CreateExercisePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:CodeLearn.WPF.Windows.Teacher.Pages"
+      xmlns:local="clr-namespace:CodeLearn.WPF.Windows.Teacher.Pages.Create"
       mc:Ignorable="d"
       d:DesignHeight="900"
       d:DesignWidth="420"
@@ -23,7 +23,7 @@
         </Style>
     </Page.Resources>
 
-    <Grid Margin="10">
+    <Grid >
         <Grid.RowDefinitions>
             <!-- Page title -->
             <RowDefinition Height="auto" />
@@ -34,8 +34,9 @@
             <!-- Create and save an exercise in the db -->
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-
-        <StackPanel>
+        
+        <Border Background="#343A46" />
+        <StackPanel Margin="0,10,0,10">
             <TextBlock x:Name="txt_PageHeader"
                        Text="Create Exercise"
                        HorizontalAlignment="Center"
@@ -43,7 +44,8 @@
                        Foreground="{StaticResource GreyFriendBrushLight}" />
         </StackPanel>
 
-        <ScrollViewer Grid.Row="1">
+        <ScrollViewer Grid.Row="1"
+                      Margin="10,10,10,0">
             <StackPanel>
                 <!-- Header: Exercise -->
                 <StackPanel>
@@ -389,8 +391,8 @@
         <Border Grid.Row="2"
                 Height="1"
                 Background="#343A46"
-                Margin="0,0,0,5"
-                HorizontalAlignment="Stretch" />
+                Margin="10,0,10,5"
+                HorizontalAlignment="Stretch"/>
 
         <!-- Submit the exercise -->
         <StackPanel Grid.Row="3"

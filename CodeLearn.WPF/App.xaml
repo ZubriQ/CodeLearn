@@ -10,6 +10,7 @@
 
                 <ResourceDictionary Source="Templates/TextBoxes/TextBox_Theme.xaml" />
                 <ResourceDictionary Source="Templates/TextBoxes/CodeTextBox_Theme.xaml" />
+                <ResourceDictionary Source="Templates/TextBoxes/FilterTextBox_Theme.xaml" />
 
                 <ResourceDictionary Source="Templates/ComboBox_Theme.xaml" />
                 <ResourceDictionary Source="Templates/ScrollBar_Theme.xaml" />
