@@ -3,29 +3,33 @@
 
     <ControlTemplate x:Key="DefaultTextBoxTemplate"
                      TargetType="{x:Type TextBox}">
-        <Border Background="#343A46"
+        <Border Background="{DynamicResource GreyFriendBrushDark3}"
                 x:Name="brd_TextBoxBorder"
-                BorderBrush="{TemplateBinding BorderThickness}"
+                BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="0"
                 CornerRadius="8"
-                Padding="7"
+                Padding="9"
                 MinHeight="35">
             <ScrollViewer x:Name="PART_ContentHost" />
         </Border>
 
+        
         <ControlTemplate.Triggers>
+            
+            
             <!-- Caret Colour -->
             <Trigger Property="IsKeyboardFocusWithin"
                      Value="True">
                 <Setter Property="CaretBrush"
-                        Value="{DynamicResource PrimaryBrush}" />
+                        Value="{DynamicResource PrimaryBrush2}" />
             </Trigger>
 
+            
             <!-- Style When Enabled -->
             <Trigger Property="IsEnabled"
                      Value="True">
                 <Setter Property="Foreground"
-                        Value="#eee" />
+                        Value="{DynamicResource GreyFriendBrushLight5}" />
                 <Setter Property="FontSize"
                         Value="14" />
                 <Setter Property="SelectionOpacity"
@@ -33,6 +37,8 @@
                 <Setter Property="SelectionBrush"
                         Value="{DynamicResource PrimaryBrush3}" />
             </Trigger>
+            
+            
             <!-- Style When Disabled -->
             <Trigger Property="IsEnabled"
                      Value="False">
@@ -47,6 +53,7 @@
                         Value="14" />
             </Trigger>
 
+            
             <Trigger Property="Width"
                      Value="Auto">
                 <Setter Property="MinWidth"

@@ -70,7 +70,8 @@
                          HorizontalAlignment="Left"
                          Width="140"
                          MaxWidth="140"
-                         TextChanged="txt_SearchBar_TextChanged"/>
+                         TextChanged="txt_SearchBar_TextChanged"
+                         GotFocus="txt_SearchBar_GotFocus"/>
                 
                 
                 <!-- Reset Search Button -->
@@ -85,7 +86,8 @@
                 
                 
                 <!-- Underline -->
-                <Border Grid.Row="1"
+                <Border x:Name="brd_Underline"
+                        Grid.Row="1"
                         Grid.Column="1"
                         Grid.ColumnSpan="3"
                         BorderBrush="{DynamicResource GreyFriendBrushDark3}"

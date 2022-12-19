@@ -4,118 +4,163 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeLearn.WPF.Windows"
+        xmlns:UserControl="clr-namespace:CodeLearn.WPF.UserControls"
         mc:Ignorable="d"
-        Title="Code Testing - Login" Height="600" Width="900"
+        Title="Code Testing - Login" Height="500" Width="370"
         ResizeMode="NoResize"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="Transparent">
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen">
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <!-- Background -->
         <Rectangle x:Name="background"
                    Stretch="UniformToFill"
                    ClipToBounds="True"
-                   MouseDown="background_MouseDown">
+                   MouseDown="background_MouseDown"
+                   Margin="1"
+                   Grid.RowSpan="4">
             <Rectangle.Fill>
                 <LinearGradientBrush StartPoint="0,1"
                                      EndPoint="1,0">
-                    <GradientStop Color="#a1c4fd"
+                    <GradientStop Color="{DynamicResource GreyFriendColorDark}"
                                   Offset="0" />
-                    <GradientStop Color="#c2e9fb"
+                    <GradientStop Color="{DynamicResource GreyFriendColorDark2}"
                                   Offset="1" />
                 </LinearGradientBrush>
             </Rectangle.Fill>
             <Rectangle.Clip>
-                <RectangleGeometry Rect="0,0,900,600"
-                                   RadiusX="20"
-                                   RadiusY="20" />
+                <RectangleGeometry Rect="0,0,368,498"
+                                   RadiusX="10"
+                                   RadiusY="10" />
             </Rectangle.Clip>
         </Rectangle>
 
-        <DockPanel VerticalAlignment="Top">
-            <Button x:Name="btn_Close"
-                    Content="X"
-                    Height="36"
-                    Width="36"
-                    HorizontalAlignment="Right"
-                    Template="{StaticResource CloseButton}"
-                    Click="btn_Close_Click" />
-        </DockPanel>
+        
+        <!-- Highlighting border -->
+        <Border Background="White"
+                Grid.RowSpan="4"
+                Opacity="0.4"
+                CornerRadius="10"
+                Panel.ZIndex="-1">
+        </Border>
 
-        <Border CornerRadius="25" Padding="10"
-                Background="White"
-                Margin="40"
-                BorderThickness="2,2,2,2"
-                Height="395"
-                Width="300">
-            <StackPanel>
-                <Label Margin="30"
-                       HorizontalAlignment="Center"
-                       FontSize="20"
-                       FontWeight="DemiBold"
+        
+        <!-- Window's top bar buttons -->
+        <DockPanel Margin="1">
+            <DockPanel HorizontalAlignment="Right">
+                <Button x:Name="btn_Minimize"
+                        Height="24"
+                        Width="36"
+                        Template="{StaticResource MinimizeButton}"
+                        Click="btn_Minimize_Click" />
+                <Button x:Name="btn_Close"
+                        Height="24"
+                        Width="36"
+                        Template="{StaticResource CloseButton}"
+                        Click="btn_Close_Click" />
+            </DockPanel>
+        </DockPanel>
+        
+        
+        <!-- Application Logo/Name -->
+        <Grid Grid.Row="1"
+              Margin="40,40,40,30"
+              HorizontalAlignment="Center">
+
+            <Image Source="/Images/CodeLearnLogo.png"
+                   MaxWidth="160"
+                   Margin="5"/>
+            <!--<TextBlock FontSize="32"
+                       FontWeight="Bold"
                        FontFamily="Poppins"
-                       Content="Login"
-                       Foreground="{StaticResource PrimaryBrush}"/>
-                
+                       Text="CodeLearn"
+                       Foreground="{StaticResource PrimaryBrush3}" />-->
+        </Grid>
+
+        
+        <!-- 
+        Logging logic 
+        -->
+        <Border Grid.Row="2">
+            <StackPanel>
+
+
                 <!-- Student/Teacher switcher -->
-                <Grid Margin="5">
+                <Grid Margin="{Binding WindowSettings.ElementsMargin}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="btn_Student"
+
+                    <!-- Student -->
+                    <Button x:Name="btn_PickStudentRole"
                             Content="Student"
-                            Template="{StaticResource LoginStudentButton}"
-                            Click="btn_Student_Click"
-                            IsEnabled="false" />
-                    <Button x:Name="btn_Teacher" 
+                            Template="{DynamicResource CheckedStudentButton}"
+                            Click="btn_PickStudentRole_Click" />
+                    <!-- Teacher -->
+                    <Button x:Name="btn_PickTeacherRole"
                             Content="Teacher"
                             Grid.Column="1"
-                            Template="{StaticResource LoginTeacherButton}"
-                            Click="btn_Teacher_Click" />
+                            Template="{StaticResource UncheckedTeacherButton}"
+                            Click="btn_PickTeacherRole_Click" />
                 </Grid>
 
-                <!-- Model. -->
-                <StackPanel Margin="5,20,5,25">
-                    <StackPanel Margin="0,0,0,10">
-                        <Label FontFamily="Consolas"
-                               Foreground="DimGray"
-                               Content="Username" />
-                        <TextBox x:Name="txt_Username"
-                                 Height="26"
-                                 Margin="5,-5,5,0"
-                                 VerticalContentAlignment="Center"
-                                 FontFamily="Consolas"
-                                 BorderThickness="0"
-                                 MaxLength="20"/>
-                        <Border BorderBrush="#d3d3d3"
-                                BorderThickness="0.2"
-                                Margin="5,0,5,0" />
-                    </StackPanel>
 
-                    <StackPanel>
-                        <Label FontFamily="Consolas"
-                               Foreground="DimGray"
-                               Content="Password" />
-                        <PasswordBox x:Name="pb_Password"
-                                     Height="26"
-                                     Margin="5,-5,5,0"
-                                     VerticalContentAlignment="Center"
-                                     FontFamily="Consolas"
-                                     BorderThickness="0"
-                                     MaxLength="20"/>
-                        <Border BorderBrush="#d3d3d3"
-                                BorderThickness="0.2"
-                                Margin="5,0,5,0" />
-                    </StackPanel>
+                <!-- Logging -->
+                <StackPanel Margin="{Binding WindowSettings.ElementsMargin}">
+
+                    <!-- username -->
+                    <UserControl:UsernameControl x:Name="uc_UsernameControl"
+                                                 Margin="0,0,0,6" />
+
+                    <!-- password -->
+                    <UserControl:PasswordControl x:Name="uc_PasswordControl" />
                 </StackPanel>
 
-                <Button x:Name="btn_Login"
-                        Template="{StaticResource Button}"
-                        Content="Sign in"
-                        HorizontalAlignment="Stretch"
-                        Margin="5"
-                        Click="btn_Login_Click" />
             </StackPanel>
+            
         </Border>
+
+        
+        <!-- Sign in -->
+        <StackPanel Grid.Row="3">
+            <Button x:Name="btn_LogIn"
+                    Template="{DynamicResource LogInButton}"
+                    Margin="{Binding WindowSettings.ElementsMargin}"
+                    Content="Log In"
+                    HorizontalAlignment="Stretch"
+                    Click="btn_LogIn_Click" />
+        </StackPanel>
     </Grid>
+
+
+    <!--Resources-->
+    <Window.Resources>
+        <!-- TextBlocks' Style -->
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground"
+                    Value="{StaticResource GreyFriendBrushLight}" />
+            <Setter Property="FontFamily"
+                    Value="Inter" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="FontWeight"
+                    Value="Medium" />
+        </Style>
+
+        <!-- Password Box Style-->
+        <!--<Style TargetType="PasswordBox">
+            <Setter Property="Background"
+                    Value="Wheat" />
+        </Style>-->
+    </Window.Resources>
 </Window>

@@ -12,7 +12,8 @@
         Background="Transparent"
         MinHeight="355"
         MinWidth="600"
-        SizeChanged="Window_SizeChanged">
+        SizeChanged="Window_SizeChanged"
+        WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.RowDefinitions>

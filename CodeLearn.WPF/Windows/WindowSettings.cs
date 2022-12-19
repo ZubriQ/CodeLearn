@@ -6,15 +6,16 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CodeLearn.WPF.Windows
 {
     public class WindowSettings : INotifyPropertyChanged
     {
         #region Fields and Properties
-        private int _elementsMargin;
+        private Thickness _elementsMargin;
 
-        public int ElementsMargin
+        public Thickness ElementsMargin
         {
             get { return _elementsMargin; }
             set
@@ -30,7 +31,7 @@ namespace CodeLearn.WPF.Windows
 
         public WindowSettings()
         {
-            ElementsMargin = 3;
+            ElementsMargin = new Thickness(4, 4, 4, 4);
         }
 
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null)

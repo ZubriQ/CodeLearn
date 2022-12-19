@@ -2,34 +2,46 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:CodeLearn.WPF"
-             StartupUri="Windows/Teacher/ControlWindow.xaml">
+             StartupUri="Windows/LoginWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                
+                <!-- Global Templates -->
                 <ResourceDictionary Source="Templates/Palette.xaml" />
                 <ResourceDictionary Source="Templates/DefaultComboBox.xaml" />
                 <ResourceDictionary Source="Templates/DefaultScrollBar.xaml" />
-                
+                <ResourceDictionary Source="Templates/DefaultPasswordBox.xaml" />
+
+                <!-- Login Window Templates -->
+                <ResourceDictionary Source="Templates/Buttons/Login/CheckedStudentButton.xaml" />
+                <ResourceDictionary Source="Templates/Buttons/Login/UncheckedStudentButton.xaml" />
+                <ResourceDictionary Source="Templates/Buttons/Login/CheckedTeacherButton.xaml" />
+                <ResourceDictionary Source="Templates/Buttons/Login/UncheckedTeacherButton.xaml" />
+                <ResourceDictionary Source="Templates/Buttons/Login/LogInButton.xaml" />
+
+                <!-- TextBoxes-->
                 <ResourceDictionary Source="Templates/TextBoxes/DefaultTextBox.xaml" />
                 <ResourceDictionary Source="Templates/TextBoxes/CodeTextBox.xaml" />
                 <ResourceDictionary Source="Templates/TextBoxes/FilterTextBox.xaml" />
 
+                <!-- Misc buttons -->
                 <ResourceDictionary Source="Templates/Buttons/CloseButton_Theme.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/MinimizeButton_Theme.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/MaximizeButton.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/NormalizeButton.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/Button_Theme.xaml" />
                 
+                <!-- Student templates -->
                 <ResourceDictionary Source="Templates/Buttons/Student/StartButton_Theme.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/Student/ExerciseCircleButton_Theme.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/Student/FinishTestingButton_Theme.xaml" />
 
+                <!-- Teacher Templates -->
                 <ResourceDictionary Source="Templates/Buttons/Teacher/DefaultTeacherButton_Theme.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/Teacher/MenuButton.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/Teacher/ResetSearchButton.xaml" />
                 
-                <ResourceDictionary Source="Templates/Buttons/Login/TeacherButton_Theme.xaml" />
-                <ResourceDictionary Source="Templates/Buttons/Login/StudentButton_Theme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -29,13 +29,18 @@ namespace CodeLearn.WPF
         public static void SetMenuButtonPressedColor(Button button)
         {
             button.Background = Palette.Brushes["GreyFriendDark3"];
-            button.Foreground = Palette.Brushes["Primary2"];
+            button.Foreground = Palette.Brushes["Primary3"];
         }
 
         public static void SetMenuButtonReleasedColor(Button button)
         {
             button.Background = Brushes.Transparent;
             button.Foreground = Brushes.Transparent;
+        }
+
+        public static void SetFocusedSearchBoxUnderlineColor(Border underline)
+        {
+            underline.Background = Palette.Brushes["Primary"];
         }
     }
 }

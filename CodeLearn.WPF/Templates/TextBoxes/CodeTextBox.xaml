@@ -17,7 +17,7 @@
             <Trigger Property="IsKeyboardFocusWithin"
                      Value="True">
                 <Setter Property="CaretBrush"
-                        Value="{DynamicResource PrimaryBrush}" />
+                        Value="{DynamicResource PrimaryBrush2}" />
             </Trigger>
 
             <!-- Style When Enabled -->

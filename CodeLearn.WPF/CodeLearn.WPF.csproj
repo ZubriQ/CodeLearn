@@ -5,9 +5,12 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>CodeLearnIcon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\CodeLearnIcon.ico" />
+    <None Remove="Images\CodeLearnIcon.png" />
     <None Remove="Images\CodeLearnLogo.png" />
   </ItemGroup>
 
@@ -24,17 +27,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\CodeLearnLogo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Templates\Buttons\Login\TeacherButton_Theme.xaml">
+    <Page Update="Templates\Buttons\Login\LogInButton.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Templates\Buttons\Login\StudentButton_Theme.xaml">
+    <Page Update="Templates\Buttons\Login\CheckedStudentButton.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Templates\Buttons\Login\CheckedTeacherButton.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Templates\Buttons\Login\UncheckedTeacherButton.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Templates\Buttons\Login\UncheckedStudentButton.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
@@ -88,6 +97,16 @@
 
   <ItemGroup>
     <Folder Include="Fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="CodeLearnIcon.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\CodeLearnIcon.png" />
+    <Resource Include="Images\CodeLearnLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

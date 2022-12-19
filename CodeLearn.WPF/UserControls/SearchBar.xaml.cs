@@ -61,5 +61,10 @@ namespace CodeLearn.WPF.UserControls
         {
             txt_SearchBar.Text = "";
         }
+
+        private void txt_SearchBar_GotFocus(object sender, RoutedEventArgs e)
+        {
+            PaletteController.SetFocusedSearchBoxUnderlineColor(brd_Underline);
+        }
     }
 }
