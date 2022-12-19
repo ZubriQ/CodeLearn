@@ -177,7 +177,7 @@
                                  Value="true">
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{StaticResource PrimaryBrush}" />
+                                    Value="{StaticResource PrimaryBrush5}" />
                             <Setter TargetName="Border"
                                     Property="Background"
                                     Value="{StaticResource GreyFriendBrushDark}" />

@@ -167,13 +167,14 @@
                 </DockPanel>
 
                 <!-- Output -->
+
                 <StackPanel Margin="{Binding WindowSettings.ElementsMargin}">
-                    <TextBlock Text="Output"
-                               Margin="4"
-                               FontSize="20"
-                               Foreground="{StaticResource PrimaryBrush5}" />
-                </StackPanel>
-                <StackPanel Margin="{Binding WindowSettings.ElementsMargin}">
+                    <StackPanel>
+                        <TextBlock Text="Output"
+                                   Margin="4"
+                                   FontSize="20"
+                                   Foreground="{StaticResource PrimaryBrush5}" />
+                    </StackPanel>
                     <Border BorderThickness="0.3"
                             CornerRadius="13"
                             BorderBrush="{DynamicResource GreyFriendBrushLight}"
