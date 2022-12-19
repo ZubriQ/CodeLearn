@@ -35,6 +35,7 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages.Create
                 return (int)cb_Duration.SelectedItem;
             }
         }
+        public WindowSettings WindowSettings { get; set; } = new();
         #endregion
 
         #region Initialization

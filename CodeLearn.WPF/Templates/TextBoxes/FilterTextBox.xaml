@@ -3,23 +3,25 @@
 
     <ControlTemplate x:Key="FilterTextBoxTemplate"
                      TargetType="{x:Type TextBox}">
-        <StackPanel>
-            <Border Background="Transparent"
-                    x:Name="brd_TextBoxBorder"
-                    BorderBrush="{TemplateBinding BorderThickness}"
-                    BorderThickness="0"
-                    Padding="4"
-                    MinHeight="35">
-                <ScrollViewer x:Name="PART_ContentHost" />
-            </Border>
-            <Border BorderBrush="#282D37"
-                    BorderThickness="0.2"
-                    Margin="5,-5,5,5" 
-                    HorizontalAlignment="Stretch" />
-        </StackPanel>
+        <DockPanel>
+            
+            <StackPanel>
+                <Border Background="Transparent"
+                        x:Name="brd_TextBoxBorder"
+                        BorderBrush="{TemplateBinding BorderThickness}"
+                        BorderThickness="0"
+                        Padding="4"
+                        MinHeight="35">
+                    <ScrollViewer x:Name="PART_ContentHost" />
+                </Border>
+
+            </StackPanel>
+        </DockPanel>
+
 
 
         <ControlTemplate.Triggers>
+            
             <!-- Caret Colour -->
             <Trigger Property="IsKeyboardFocusWithin"
                      Value="True">
@@ -39,6 +41,7 @@
                 <Setter Property="SelectionBrush"
                         Value="{DynamicResource PrimaryBrush3}" />
             </Trigger>
+            
             <!-- Style When Disabled -->
             <Trigger Property="IsEnabled"
                      Value="False">
@@ -53,6 +56,7 @@
                         Value="14" />
             </Trigger>
 
+            
             <Trigger Property="Width"
                      Value="Auto">
                 <Setter Property="MinWidth"
@@ -63,6 +67,8 @@
                 <Setter Property="MinHeight"
                         Value="20" />
             </Trigger>
+            
         </ControlTemplate.Triggers>
+        
     </ControlTemplate>
 </ResourceDictionary>

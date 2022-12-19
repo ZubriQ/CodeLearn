@@ -9,9 +9,10 @@
 
             <Viewbox>
                 <Canvas Width="24"
-                        Height="24">
-                    <Path Fill="White"
-                          Data="M20,14H4V10H20" />
+                        Height="24"
+                        Margin="6">
+                    <Path Fill="{DynamicResource GreyFriendBrushLight3}"
+                          Data="M19,13H5V11H19V13Z" />
                 </Canvas>
             </Viewbox>
         </Border>
@@ -21,17 +22,14 @@
                      Value="true">
                 <Setter TargetName="btnMinimize"
                         Property="Background"
-                        Value="#2A7198" />
+                        Value="{DynamicResource GreyFriendBrushDark3}" />
             </Trigger>
 
             <Trigger Property="IsPressed"
                      Value="true">
                 <Setter TargetName="btnMinimize"
                         Property="Background"
-                        Value="#619BBA" />
-                <Setter TargetName="btnMinimize"
-                        Property="BorderBrush"
-                        Value="#619BBA" />
+                        Value="{DynamicResource GreyFriendBrushDark}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>

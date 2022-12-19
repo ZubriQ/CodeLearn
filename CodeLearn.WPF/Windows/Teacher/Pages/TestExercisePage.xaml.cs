@@ -2,7 +2,9 @@
 using CodeLearn.Lib;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,41 +22,61 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages
     /// <summary>
     /// Interaction logic for TestExercisePage.xaml
     /// </summary>
-    public partial class TestExercisePage : Page
+    public partial class TestExercisePage : Page, INotifyPropertyChanged
     {
         private CodeManager _codeManager = new();
         private Exercise[]? _exercises;
+        private Exercise? _exercise = null;
 
-        public Exercise? Exercise { get; set; }
+        public static WindowSettings WindowSettings { get; set; } = new();
+        public Exercise Exercise
+        {
+            get => _exercise;
+            set
+            {
+                if (value == _exercise) return;
+                _exercise = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public TestExercisePage()
         {
             InitializeComponent();
             InitializeComboBoxData();
             sv_ExerciseTesting.Visibility = Visibility.Collapsed;
+            DataContext = this;
         }
 
         private void InitializeComboBoxData()
         {
             _exercises = App.DB.GetExercises()?.ToArray();
-            cb_Method.ItemsSource = _exercises;
+            scb_SearchComboBox.ItemsSource = _exercises;
         }
 
-        private void txt_MethodName_TextChanged(object sender, TextChangedEventArgs e)
+        private void sb_SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txt_MethodName.Text.Length > 3)
+            int k = 0;
+            if (sb_SearchBar.SearchText.Length > 3)
             {
                 var exercises = _exercises?.Where(e => e.ShortDescription.ToLower()
-                    .Contains(txt_MethodName.Text.ToLower()));
-                cb_Method.ItemsSource = exercises;
+                    .Contains(sb_SearchBar.SearchText.ToLower()));
+                scb_SearchComboBox.ItemsSource = exercises;
             }
             else
             {
-                cb_Method.ItemsSource = _exercises;
+                scb_SearchComboBox.ItemsSource = _exercises;
             }
         }
 
-        private void cb_Method_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void scb_SearchComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ChangeCurrentExercise();
             ChangeWindowState();
@@ -62,9 +84,8 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages
 
         private void ChangeCurrentExercise()
         {
-            Exercise = cb_Method.SelectedItem as Exercise;
-            DataContext = Exercise;
-            txt_Output.Text = "";
+            Exercise = scb_SearchComboBox.SelectedItem as Exercise;
+            txt_Output.Text = " . . . ";
         }
 
         private void ChangeWindowState()
@@ -116,5 +137,7 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages
                 txt_Output.Text = "The code did not pass.";
             }
         }
+
+
     }
 }

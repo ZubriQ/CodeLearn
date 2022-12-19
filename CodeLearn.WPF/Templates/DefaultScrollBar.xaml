@@ -57,9 +57,9 @@
             <GradientStopCollection>
                 <GradientStop Color="#BBB"
                               Offset="0.0" />
-                <GradientStop Color="#EEE"
+                <GradientStop Color="{StaticResource GreyFriendColorLight5}"
                               Offset="0.1" />
-                <GradientStop Color="#EEE"
+                <GradientStop Color="{StaticResource GreyFriendColorLight5}"
                               Offset="0.9" />
                 <GradientStop Color="#FFF"
                               Offset="1.0" />
@@ -145,15 +145,27 @@
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Border x:Name="brd_VerticalScrollBarBorder"
                             CornerRadius="4"
-                            Background="#505865"
+                            Background="{DynamicResource GreyFriendBrushDark4}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="0"
                             Width="8"
                             Margin="8,2,-2,2" />
+
+                    <!-- Vertical bar Triggers -->
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter TargetName="brd_VerticalScrollBarBorder"
+                                    Property="Background"
+                                    Value="{DynamicResource GreyFriendBrushDark5}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        
     </Style>
+    
     <ControlTemplate x:Key="VerticalScrollBar"
                      TargetType="{x:Type ScrollBar}">
         <Grid>
@@ -163,8 +175,9 @@
                 <RowDefinition MaxHeight="0" />
             </Grid.RowDefinitions>
             <Border Grid.RowSpan="3"
-                    CornerRadius="2"
-                    Background="Transparent" />
+                    CornerRadius="4"
+                    Margin="10,2,0,2"
+                    Background="{DynamicResource GreyFriendBrushDark2}" />
             <RepeatButton Grid.Row="0"
                           Style="{StaticResource ScrollBarLineButton}"
                           Height="18"
@@ -212,15 +225,26 @@
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Border x:Name="brd_HorizontalScrollBarBorder"
                             CornerRadius="4"
-                            Background="#505865"
+                            Background="{DynamicResource GreyFriendBrushDark4}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="0"
                             Height="8"
                             Margin="0,0,-2,0" />
+
+                    <!-- Horizontal bar Triggers -->
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter TargetName="brd_HorizontalScrollBarBorder"
+                                    Property="Background"
+                                    Value="{DynamicResource GreyFriendBrushDark5}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+    
     <ControlTemplate x:Key="HorizontalScrollBar"
                      TargetType="{x:Type ScrollBar}">
         <Grid>
@@ -229,6 +253,10 @@
                 <ColumnDefinition Width="0.00001*"/>
                 <ColumnDefinition MaxWidth="4" />
             </Grid.ColumnDefinitions>
+            <Border Grid.ColumnSpan="3"
+                    CornerRadius="4"
+                    Margin="3,5,1,5"
+                    Background="{DynamicResource GreyFriendBrushDark2}" />
             <RepeatButton Grid.Column="0"
                           Style="{StaticResource ScrollBarLineButton}"
                           Width="18"
@@ -242,7 +270,7 @@
                                   Command="ScrollBar.PageLeftCommand" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Thumb Style="{StaticResource ScrollBarThumbHor}"
+                    <Thumb Style="{DynamicResource ScrollBarThumbHor}"
                            Margin="0,1,0,1"
                            Background="{StaticResource NormalBrush}"
                            BorderBrush="{StaticResource NormalBorderBrush}" />

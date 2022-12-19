@@ -37,6 +37,7 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages.Create
                 return (int)cb_Score.SelectedValue;
             }
         }
+        public WindowSettings WindowSettings { get; set; } = new();
         #endregion
 
         #region Initialization

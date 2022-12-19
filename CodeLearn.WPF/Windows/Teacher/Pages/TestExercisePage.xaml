@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CodeLearn.WPF.Windows.Teacher.Pages"
+      xmlns:UserControl="clr-namespace:CodeLearn.WPF.UserControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TestExercisePage">
@@ -17,12 +18,16 @@
                     Value="Inter" />
             <Setter Property="FontSize"
                     Value="14" />
+            <Setter Property="FontWeight"
+                    Value="Medium" />
         </Style>
     </Page.Resources>
-    
-    <Grid>
+
+    <Grid Margin="0,0,1,0">
         <Grid.RowDefinitions>
             <!-- Page Title -->
+            <RowDefinition Height="auto" />
+            <!-- 2 Pixel Height Separator -->
             <RowDefinition Height="auto" />
             <!-- Filters -->
             <RowDefinition Height="auto" />
@@ -30,8 +35,9 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
+
         <!-- Title -->
-        <Border Background="#343A46" />
+        <Border Background="{DynamicResource GreyFriendBrushDark4}" />
         <StackPanel Margin="0,10,0,10">
             <TextBlock x:Name="txt_PageHeader"
                        Text="Exercise Testing"
@@ -39,103 +45,79 @@
                        FontSize="20"
                        TextWrapping="Wrap" />
         </StackPanel>
+
         
-        <!-- Sort by method's short description -->
-        <Grid Grid.Row="1"
-              HorizontalAlignment="Right"
-              Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <!-- Sort by: ... -->
-            <TextBlock Foreground="{StaticResource GreyFriendBrushLight}"
-                       Grid.Row="1"
-                       Grid.Column="0"
-                       Text="Sort by:"
-                       FontSize="14"
-                       FontWeight="Bold"
-                       VerticalAlignment="Center"
-                       Margin="0,0,15,0" />
-            
-            <!-- Method Name -->
-            <TextBlock x:Name="txt_MethodShortDescription"
-                       Foreground="{StaticResource GreyFriendBrushLight}"
-                       Text="Short Description"
-                       Grid.Column="1"
-                       Grid.Row="0" 
-                       Margin="5,0,0,4"/>
-            <StackPanel Width="140"
-                        HorizontalAlignment="Left"
-                        Grid.Column="1"
-                        Grid.Row="1"
-                        Margin="0,0,10,0">
-                <TextBox x:Name="txt_MethodName"
-                         VerticalContentAlignment="Center"
-                         FontFamily="Inter"
-                         BorderThickness="0"
-                         MaxLength="20"
-                         Background="Transparent"
-                         Foreground="#eee"
-                         FontSize="14"
-                         TextChanged="txt_MethodName_TextChanged"
-                         Template="{DynamicResource FilterTextBoxTemplate}" />
-            </StackPanel>
+        <!-- Separator 1-->
+        <Border Grid.Row="1"
+                Height="2"
+                Background="{DynamicResource GreyFriendBrushDark5}"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"/>
+        
+        <!-- Separator 2-->
+        <Border Grid.Row="2"
+                Background="{DynamicResource GreyFriendBrushLight}"
+                VerticalAlignment="Bottom"
+                Height="1"
+                Margin="10,0,10,0"
+                Opacity="0.35" />
+
+        
+        <!-- Filters -->
+        <DockPanel Grid.Row="2"
+                   Margin="12,6,12,12">
+
+            <!-- Method's short description -->
+            <UserControl:SearchBar x:Name="sb_SearchBar"
+                                   FilterName="Short description"
+                                   Margin="5"
+                                   TextChanged="sb_SearchBar_TextChanged" />
 
             <!-- Method -->
-            <TextBlock Foreground="{StaticResource GreyFriendBrushLight}"
-                       Text="Method"
-                       Grid.Column="2"
-                       Grid.Row="0" />
-            <ComboBox x:Name="cb_Method"
-                      ItemContainerStyle="{DynamicResource theComboBoxItem}"
-                      Style="{DynamicResource theComboBox}"
-                      Height="26"
-                      VerticalContentAlignment="Center"
-                      FontFamily="Inter"
-                      BorderThickness="0"
-                      Width="150"
-                      FontSize="14"
-                      DisplayMemberPath="ShortDescription"
-                      SelectionChanged="cb_Method_SelectionChanged"
-                      Grid.Column="2"
-                      Grid.Row="1">
-            </ComboBox>
-        </Grid>
-        
+            <UserControl:SearchComboBox x:Name="scb_SearchComboBox"
+                                        Margin="5"
+                                        FilterName="Method"
+                                        DisplayMemberPath="ShortDescription"
+                                        SelectionChanged="scb_SearchComboBox_SelectionChanged"/>
+
+        </DockPanel>
+
+
         <!-- Exercise -->
         <ScrollViewer x:Name="sv_ExerciseTesting"
-                      Grid.Row="2" 
-                      Margin="10">
+                      Grid.Row="3" 
+                      Margin="10,0,10,10">
             <StackPanel>
                 <!-- Header -->
-                <TextBlock Text="Exercise"
-                           Margin="4"
-                           FontSize="20"
-                           Foreground="{StaticResource PrimaryBrush3}" />
+                <StackPanel Margin="{Binding WindowSettings.ElementsMargin}">
+                    <TextBlock Text="Exercise"
+                               Margin="4"
+                               FontSize="20"
+                               Foreground="{StaticResource PrimaryBrush3}" />
+                </StackPanel>
 
-                <!-- Exercise description. -->
-                <TextBlock Margin="4"
-                           Text="Description:"
-                           DockPanel.Dock="Top" />
-                <TextBlock Grid.Row="0"
-                           Text="{Binding Description}"
-                           Margin="4"
-                           DockPanel.Dock="Top"
-                           FontSize="12"
-                           TextWrapping="Wrap"
-                           Foreground="#eee" />
 
-                <DockPanel>
+                <!-- Exercise's description -->
+                <StackPanel Margin="{Binding WindowSettings.ElementsMargin}">
+                    <TextBlock Margin="4"
+                               Text="Description:"
+                               DockPanel.Dock="Top" />
+                    <TextBlock Grid.Row="0"
+                               Text="{Binding Exercise.Description}"
+                               Margin="4"
+                               DockPanel.Dock="Top"
+                               FontSize="12"
+                               TextWrapping="Wrap"
+                               Foreground="{StaticResource GreyFriendBrushLight5}" />
+                </StackPanel>
+
+
+                <!-- Exercise's context -->
+                <DockPanel Margin="{Binding WindowSettings.ElementsMargin}">
                     <TextBlock Margin="4"
                                Text="Context:"
                                DockPanel.Dock="Top" />
-                    <TextBox Text="{Binding Context}"
+                    <TextBox Text="{Binding Exercise.Context}"
                              Grid.Row="2"
                              Margin="4"
                              TextWrapping="Wrap"
@@ -148,15 +130,17 @@
                              IsHitTestVisible="False"
                              MinHeight="90"
                              Padding="2"
-                             Foreground="#eee"
+                             Foreground="{StaticResource GreyFriendBrushLight5}"
                              Background="Transparent"
                              Template="{StaticResource CodeTextBoxTemplate}"
                              IsEnabled="False"/>
 
                 </DockPanel>
 
-                <!-- Code here -->
-                <DockPanel Grid.Row="2">
+                
+                <!-- Code here: -->
+                <DockPanel Grid.Row="4"
+                           Margin="{Binding WindowSettings.ElementsMargin}">
                     <TextBlock Text="Code here:"
                                Margin="4,10,4,4"
                                FontSize="20"
@@ -164,7 +148,7 @@
                                DockPanel.Dock="Top"/>
 
                     <TextBox x:Name="txt_Input"
-                             Text="{Binding CodingArea}"
+                             Text="{Binding Exercise.CodingArea}"
                              Margin="4"
                              TextWrapping="Wrap"
                              AcceptsReturn="True"
@@ -175,40 +159,41 @@
 
                 <DockPanel HorizontalAlignment="Left">
                     <Button x:Name="btn_Run"
-                            Template="{StaticResource Button}"
+                            Template="{StaticResource DefaultTeacherButton}"
                             Content="Run"
                             Margin="4"
                             Click="btn_Run_Click" />
                 </DockPanel>
 
                 <!-- Output -->
-                <TextBlock Margin="4"
-                           Text="Output:"
-                           DockPanel.Dock="Top"
-                           Foreground="{DynamicResource GreyFriendBrushLight}"
-                           FontSize="16"
-                           FontWeight="Bold" />
-                <Border BorderThickness="0.3"
-                        CornerRadius="13"
-                        BorderBrush="{DynamicResource GreyFriendBrushLight}"
-                        Margin="5"
-                        HorizontalAlignment="Left"
-                        MinWidth="70">
-                    <TextBox x:Name="txt_Output"
-                             Margin="4"
-                             TextWrapping="Wrap"
-                             AcceptsReturn="True"
-                             IsReadOnly="True"
-                             BorderBrush="{DynamicResource GreyFriendBrushLight}"
-                             BorderThickness="0"
-                             FontFamily="Consolas"
-                             FontSize="14"
-                             Padding="2"
-                             Foreground="#eee"
-                             Background="Transparent"
-                             Text=" . . . "/>
-                </Border>
-
+                <StackPanel Margin="{Binding WindowSettings.ElementsMargin}">
+                    <TextBlock Margin="4"
+                               Text="Output:"
+                               DockPanel.Dock="Top"
+                               Foreground="{DynamicResource GreyFriendBrushLight}"
+                               FontSize="16"
+                               FontWeight="Bold" />
+                    <Border BorderThickness="0.3"
+                            CornerRadius="13"
+                            BorderBrush="{DynamicResource GreyFriendBrushLight}"
+                            Margin="5"
+                            HorizontalAlignment="Left"
+                            MinWidth="70">
+                        <TextBox x:Name="txt_Output"
+                                 Margin="4"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 IsReadOnly="True"
+                                 BorderBrush="{DynamicResource GreyFriendBrushLight}"
+                                 BorderThickness="0"
+                                 FontFamily="Consolas"
+                                 FontSize="14"
+                                 Padding="2"
+                                 Foreground="{StaticResource GreyFriendBrushLight5}"
+                                 Background="Transparent"
+                                 Text=" . . . " />
+                    </Border>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>

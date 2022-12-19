@@ -1,0 +1,52 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTemplate TargetType="Button"
+                     x:Key="MenuButton">
+        <Border x:Name="brd_Button"
+                Background="{TemplateBinding Background}"
+                Height="32"
+                Padding="16,2,16,2">
+            <DockPanel VerticalAlignment="Center">
+                <Border x:Name="brd_ButtonHighlight" 
+                        VerticalAlignment="Center" 
+                        Width="6"
+                        Height="6"
+                        Margin="-5,0,8,0"
+                        CornerRadius="3"
+                        Background="{TemplateBinding Foreground}"/>
+                <ContentControl Margin="{TemplateBinding Padding}"
+                                Content="{TemplateBinding Content}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                HorizontalAlignment="Left"
+                                Foreground="White"
+                                FontFamily="Inter"
+                                FontSize="14"
+                                VerticalContentAlignment="Center" />
+            </DockPanel>
+
+        </Border>
+
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="true">
+                <Setter TargetName="brd_Button"
+                        Property="Background"
+                        Value="#343A46" />
+            </Trigger>
+            <Trigger Property="IsPressed"
+                     Value="true">
+                <Setter TargetName="brd_Button"
+                        Property="Background"
+                        Value="#2F3540" />
+            </Trigger>
+            <Trigger Property="IsEnabled"
+                     Value="false">
+                <Setter Property="Foreground"
+                        Value="Gray" />
+                <Setter TargetName="brd_Button"
+                        Property="Background"
+                        Value="LightGray" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+</ResourceDictionary>

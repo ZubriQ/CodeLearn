@@ -7,16 +7,17 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Templates/Palette.xaml" />
-
-                <ResourceDictionary Source="Templates/TextBoxes/TextBox_Theme.xaml" />
-                <ResourceDictionary Source="Templates/TextBoxes/CodeTextBox_Theme.xaml" />
-                <ResourceDictionary Source="Templates/TextBoxes/FilterTextBox_Theme.xaml" />
-
-                <ResourceDictionary Source="Templates/ComboBox_Theme.xaml" />
-                <ResourceDictionary Source="Templates/ScrollBar_Theme.xaml" />
+                <ResourceDictionary Source="Templates/DefaultComboBox.xaml" />
+                <ResourceDictionary Source="Templates/DefaultScrollBar.xaml" />
+                
+                <ResourceDictionary Source="Templates/TextBoxes/DefaultTextBox.xaml" />
+                <ResourceDictionary Source="Templates/TextBoxes/CodeTextBox.xaml" />
+                <ResourceDictionary Source="Templates/TextBoxes/FilterTextBox.xaml" />
 
                 <ResourceDictionary Source="Templates/Buttons/CloseButton_Theme.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/MinimizeButton_Theme.xaml" />
+                <ResourceDictionary Source="Templates/Buttons/MaximizeButton.xaml" />
+                <ResourceDictionary Source="Templates/Buttons/NormalizeButton.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/Button_Theme.xaml" />
                 
                 <ResourceDictionary Source="Templates/Buttons/Student/StartButton_Theme.xaml" />
@@ -24,6 +25,8 @@
                 <ResourceDictionary Source="Templates/Buttons/Student/FinishTestingButton_Theme.xaml" />
 
                 <ResourceDictionary Source="Templates/Buttons/Teacher/DefaultTeacherButton_Theme.xaml" />
+                <ResourceDictionary Source="Templates/Buttons/Teacher/MenuButton.xaml" />
+                <ResourceDictionary Source="Templates/Buttons/Teacher/ResetSearchButton.xaml" />
                 
                 <ResourceDictionary Source="Templates/Buttons/Login/TeacherButton_Theme.xaml" />
                 <ResourceDictionary Source="Templates/Buttons/Login/StudentButton_Theme.xaml" />

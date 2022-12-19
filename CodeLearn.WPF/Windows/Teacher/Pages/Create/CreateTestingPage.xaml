@@ -17,22 +17,26 @@
                     Value="Inter" />
             <Setter Property="FontSize"
                     Value="14" />
+            <Setter Property="FontWeight"
+                    Value="Medium" />
         </Style>
     </Page.Resources>
 
-    <Grid>
+    <Grid Margin="0,0,1,0">
         <Grid.RowDefinitions>
             <!-- Page title -->
             <RowDefinition Height="auto" />
+            <!-- 2 Pixel Height Separator -->
+            <RowDefinition Height="auto" />
             <!-- Create a new exercise -->
             <RowDefinition />
-            <!-- 1 Pixel Height Separator -->
+            <!-- 2 Pixel Height Separator -->
             <RowDefinition Height="auto" />
             <!-- Create and save an exercise in the db -->
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        
-        <Border Background="#343A46" />
+
+        <Border Background="{DynamicResource GreyFriendBrushDark4}" />
         <StackPanel Margin="0,10,0,10">
             <TextBlock x:Name="txt_PageHeader"
                        Text="Create Testing"
@@ -41,19 +45,29 @@
                        Foreground="{StaticResource GreyFriendBrushLight}" />
         </StackPanel>
 
-        <ScrollViewer Grid.Row="1"
-                      Margin="10">
-            <StackPanel >
+        <!-- Separator -->
+        <Border Grid.Row="1"
+                Height="2"
+                Background="{DynamicResource GreyFriendBrushDark5}"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom" />
+
+        <ScrollViewer Grid.Row="2"
+                      Margin="10,0,5,0">
+            <StackPanel Margin="0,5,0,0">
+                
+                
                 <!-- Header: Exercise -->
-                <StackPanel>
+                <StackPanel Margin="{Binding WindowSettings.ElementsMargin}">
                     <TextBlock Text="Testing"
                                Margin="4"
                                FontSize="20"
                                Foreground="{StaticResource PrimaryBrush3}" />
                 </StackPanel>
 
+                
                 <!-- Short Exercise Description / Name -->
-                <DockPanel>
+                <DockPanel Margin="{Binding WindowSettings.ElementsMargin}">
                     <TextBlock Margin="4"
                                Text="Name:"
                                DockPanel.Dock="Top" />
@@ -64,8 +78,11 @@
                              Template="{StaticResource DefaultTextBoxTemplate}"
                              MaxLength="100" />
                 </DockPanel>
+                
+                
                 <!-- Exercise Description -->
-                <DockPanel Grid.Row="0">
+                <DockPanel Grid.Row="0"
+                           Margin="{Binding WindowSettings.ElementsMargin}">
                     <TextBlock Grid.Row="0"
                                Margin="4"
                                Text="Description:"
@@ -80,9 +97,10 @@
                              AcceptsReturn="True"
                              MaxHeight="122" />
                 </DockPanel>
+                
 
                 <!-- Duration. -->
-                <DockPanel>
+                <DockPanel Margin="{Binding WindowSettings.ElementsMargin}">
                     <TextBlock Margin="4"
                                Text="Duration (minutes):"
                                DockPanel.Dock="Top" />
@@ -98,16 +116,19 @@
                               BorderThickness="0" />
                 </DockPanel>
 
+                
                 <!-- Header -->
-                <StackPanel>
+                <StackPanel Margin="{Binding WindowSettings.ElementsMargin}">
                     <TextBlock Text="Exercises"
                                Margin="4,14,4,4"
                                FontSize="20"
                                Foreground="{StaticResource PrimaryBrush3}" />
                 </StackPanel>
 
+                
                 <!-- Adding Exercises -->
-                <DockPanel Grid.Row="5">
+                <DockPanel Grid.Row="5"
+                           Margin="{Binding WindowSettings.ElementsMargin}">
                     <DockPanel DockPanel.Dock="Top">
                         <Button x:Name="btn_AddExercise"
                                 Template="{StaticResource DefaultTeacherButton}"
@@ -116,7 +137,7 @@
                                 HorizontalAlignment="Left"
                                 Click="btn_AddExercise_Click" />
                     </DockPanel>
-                    
+
                     <Border BorderThickness="0.3"
                             CornerRadius="12"
                             BorderBrush="{DynamicResource GreyFriendBrushLight}"
@@ -167,15 +188,16 @@
         </ScrollViewer>
 
         <!-- Separator -->
-        <Border Grid.Row="2"
+        <Border Grid.Row="3"
                 Height="1"
-                Background="#343A46"
-                Margin="0,0,0,5"
+                Background="{DynamicResource GreyFriendBrushDark4}"
+                Margin="10,0,5,5"
                 HorizontalAlignment="Stretch" />
 
         <!-- Submit the exercise -->
-        <StackPanel Grid.Row="3"
-                    HorizontalAlignment="Stretch">
+        <StackPanel Grid.Row="4"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,0,0,10">
             <Button x:Name="btn_Submit"
                     Template="{StaticResource Button}"
                     Grid.Row="1"

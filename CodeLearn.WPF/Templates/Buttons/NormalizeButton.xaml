@@ -2,19 +2,19 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate TargetType="Button"
-                     x:Key="CloseButton">
-        <Border x:Name="btnClose"
+                     x:Key="NormalizeButton">
+        <Border x:Name="btnNormalize"
                 BorderThickness="0"
-                Background="Transparent"
-                CornerRadius="0,10,0,0">
+                Background="Transparent">
 
             <Viewbox>
                 <Canvas Width="24"
                         Height="24"
-                        Margin="6">
+                        Margin="9">
                     <Path x:Name="vectorImage"
-                          Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"
-                          Fill="#505865" />
+                          Fill="{DynamicResource GreyFriendBrushLight2}"
+                          Data="M18 18V20H4A2 2 0 0 1 2 18V8H4V18M22 6V14A2 2 0 0 1 20 16H8A2 
+                          2 0 0 1 6 14V6A2 2 0 0 1 8 4H20A2 2 0 0 1 22 6M20 6H8V14H20Z" />
                 </Canvas>
             </Viewbox>
         </Border>
@@ -22,18 +22,19 @@
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver"
                      Value="true">
-                <Setter TargetName="btnClose"
+                <Setter TargetName="btnNormalize"
                         Property="Background"
                         Value="{DynamicResource GreyFriendBrushDark3}" />
             </Trigger>
 
             <Trigger Property="IsPressed"
                      Value="true">
-                <Setter TargetName="btnClose"
+                <Setter TargetName="btnNormalize"
                         Property="Background"
-                        Value="#FFCD3030" />
+                        Value="{DynamicResource GreyFriendBrushDark}" />
             </Trigger>
+
         </ControlTemplate.Triggers>
     </ControlTemplate>
-    
+
 </ResourceDictionary>

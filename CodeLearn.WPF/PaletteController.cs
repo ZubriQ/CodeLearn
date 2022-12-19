@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Drawing;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace CodeLearn.WPF
 {
@@ -22,6 +24,18 @@ namespace CodeLearn.WPF
         public static void SetTimerWarningColor(TextBlock timer)
         {
             timer.Foreground = Palette.Brushes["Warning"];
+        }
+
+        public static void SetMenuButtonPressedColor(Button button)
+        {
+            button.Background = Palette.Brushes["GreyFriendDark3"];
+            button.Foreground = Palette.Brushes["Primary2"];
+        }
+
+        public static void SetMenuButtonReleasedColor(Button button)
+        {
+            button.Background = Brushes.Transparent;
+            button.Foreground = Brushes.Transparent;
         }
     }
 }

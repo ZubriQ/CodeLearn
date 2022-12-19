@@ -2,11 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate TargetType="Button"
-                     x:Key="CloseButton">
-        <Border x:Name="btnClose"
+                     x:Key="ResetSearchButton">
+        <Border x:Name="btnResetSearch"
                 BorderThickness="0"
                 Background="Transparent"
-                CornerRadius="0,10,0,0">
+                CornerRadius="12">
 
             <Viewbox>
                 <Canvas Width="24"
@@ -14,7 +14,7 @@
                         Margin="6">
                     <Path x:Name="vectorImage"
                           Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"
-                          Fill="#505865" />
+                          Fill="{DynamicResource GreyFriendBrushLight}" />
                 </Canvas>
             </Viewbox>
         </Border>
@@ -22,16 +22,25 @@
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver"
                      Value="true">
-                <Setter TargetName="btnClose"
+                <Setter TargetName="btnResetSearch"
                         Property="Background"
                         Value="{DynamicResource GreyFriendBrushDark3}" />
             </Trigger>
 
             <Trigger Property="IsPressed"
                      Value="true">
-                <Setter TargetName="btnClose"
+                <Setter TargetName="btnResetSearch"
                         Property="Background"
-                        Value="#FFCD3030" />
+                        Value="{DynamicResource GreyFriendBrushDark4}" />
+            </Trigger>
+
+            <Trigger Property="IsEnabled"
+                     Value="false">
+                <Setter Property="Foreground"
+                        Value="Gray" />
+                <Setter TargetName="vectorImage"
+                        Property="Fill"
+                        Value="{DynamicResource GreyFriendBrushDark3}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>

@@ -1,12 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
-    <!-- Generic Gradient 
-    rgba(0, 119, 204, 1), 
-    rgba(0, 157, 223, 1), 
-    rgba(0, 189, 210, 1), 
-    rgba(0, 216, 174, 1), 
-    rgba(144, 237, 133, 1) -->
+    
+    <!-- Generic Gradient -->
     <SolidColorBrush x:Key="PrimaryBrush"
                      Color="{DynamicResource PrimaryColor}" />
     <Color x:Key="PrimaryColor">#07c</Color>
@@ -23,25 +19,61 @@
                      Color="{DynamicResource PrimaryColor5}" />
     <Color x:Key="PrimaryColor5">#90ED85</Color>
 
-    <!-- Grey Friends 
-    rgba(63, 71, 86, 1), 
-    rgba(163, 171, 189, 1) -->
+    
+    <!-- Grey Friends - tints and shades -->
     <SolidColorBrush x:Key="GreyFriendBrushDark"
                      Color="{DynamicResource GreyFriendColorDark}" />
     <Color x:Key="GreyFriendColorDark">#3F4756</Color>
+    
+    <SolidColorBrush x:Key="GreyFriendBrushDark2"
+                     Color="{DynamicResource GreyFriendColorDark2}" />
+    <Color x:Key="GreyFriendColorDark2">#39404d</Color>
+    
+    <SolidColorBrush x:Key="GreyFriendBrushDark3"
+                     Color="{DynamicResource GreyFriendColorDark3}" />
+    <Color x:Key="GreyFriendColorDark3">#343A46</Color>
+    
+    <SolidColorBrush x:Key="GreyFriendBrushDark4"
+                     Color="{DynamicResource GreyFriendColorDark4}" />
+    <Color x:Key="GreyFriendColorDark4">#2c323c</Color>
+    
+    <SolidColorBrush x:Key="GreyFriendBrushDark5"
+                     Color="{DynamicResource GreyFriendColorDark5}" />
+    <Color x:Key="GreyFriendColorDark5">#262b34</Color>
+    
+    <SolidColorBrush x:Key="GreyFriendBrushDark6"
+                     Color="{DynamicResource GreyFriendColorDark6}" />
+    <Color x:Key="GreyFriendColorDark6">#20242b</Color>
+    
     <SolidColorBrush x:Key="GreyFriendBrushLight"
                      Color="{DynamicResource GreyFriendColorLight}" />
     <Color x:Key="GreyFriendColorLight">#A3ABBD</Color>
 
-    <!-- Squash Palette 
-    rgba(194, 82, 17, 1)
-    rgba(0, 142, 135, 1) -->
+    <SolidColorBrush x:Key="GreyFriendBrushLight2"
+                     Color="{DynamicResource GreyFriendColorLight2}" />
+    <Color x:Key="GreyFriendColorLight2">#b5bcca</Color>
+
+    <SolidColorBrush x:Key="GreyFriendBrushLight3"
+                     Color="{DynamicResource GreyFriendColorLight3}" />
+    <Color x:Key="GreyFriendColorLight3">#c8cdd7</Color>
+
+    <SolidColorBrush x:Key="GreyFriendBrushLight4"
+                     Color="{DynamicResource GreyFriendColorLight4}" />
+    <Color x:Key="GreyFriendColorLight4">#dadde5</Color>    
+    
+    <SolidColorBrush x:Key="GreyFriendBrushLight5"
+                     Color="{DynamicResource GreyFriendColorLight5}" />
+    <Color x:Key="GreyFriendColorLight5">#edeef2</Color>
+    
+
+    <!-- Squash Palette -->
     <SolidColorBrush x:Key="SquashBrushOrange"
                      Color="{DynamicResource SquashColorOrange}" />
     <Color x:Key="SquashColorOrange">#C25211</Color>
     <SolidColorBrush x:Key="SquashBrushBlueGreen"
                      Color="{DynamicResource SquashColorBlueGreen}" />
     <Color x:Key="SquashColorBlueGreen">#008E87</Color>
+    
 
     <!-- Button States -->
     <SolidColorBrush x:Key="DisabledBrush"

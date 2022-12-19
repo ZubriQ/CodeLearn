@@ -35,9 +35,9 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages.Catalogs
             dg_TestingResults.ItemsSource = _testingResults;
         }
 
-        private void txt_LastName_TextChanged(object sender, TextChangedEventArgs e)
+        private void sb_LastName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txt_LastName.Text.Length > 1)
+            if (sb_LastName.SearchText.Length > 1)
             {
                 ObtainMatchingStudents();
             }
@@ -50,9 +50,11 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages.Catalogs
         private void ObtainMatchingStudents()
         {
             var tests = _testingResults?.Where(t => t.Student.LastName.ToLower()
-                                        .Contains(txt_LastName.Text.ToLower()))
+                                        .Contains(sb_LastName.SearchText.ToLower()))
                                         .ToArray();
             dg_TestingResults.ItemsSource = tests;
         }
+
+
     }
 }

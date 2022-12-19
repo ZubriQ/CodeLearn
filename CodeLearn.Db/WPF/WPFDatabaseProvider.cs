@@ -26,7 +26,9 @@ namespace CodeLearn.Db.WPF
 
         public WPFDatabaseProvider()
         {
-            ExerciseTypes = _context.ExerciseTypes.ToList();
+            // TODO: Class coding (only method coding allowed).
+            ExerciseTypes = _context.ExerciseTypes.Where(e => e.Name != "Question" &&
+                                                         e.Name != "Class coding").ToList();
             MethodDataTypes = _context.DataTypes.ToList();
             Courses = _context.Testings.ToList();
         }
@@ -43,7 +45,7 @@ namespace CodeLearn.Db.WPF
         {
             testMethod.Name = "GetNumber";
             testMethod.TestMethodParameters = new ObservableCollection<TestMethodParameter>();
-            testMethod.ReturnType = _context.DataTypes.First(dt => dt.ShortName == "void");
+            testMethod.ReturnType = _context.DataTypes.First(dt => dt.ShortName == "double");
             testMethod.TestCases = new ObservableCollection<TestCase>();
         }
 

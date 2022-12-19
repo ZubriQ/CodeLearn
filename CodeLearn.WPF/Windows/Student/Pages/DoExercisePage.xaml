@@ -21,7 +21,7 @@
                        FontSize="16"
                        FontFamily="Inter" />
             <TextBlock Grid.Row="0"
-                       Text="{Binding Exercise.ExerciseDescription}"
+                       Text="{Binding Exercise.Description}"
                        Margin="4,4,4,10"
                        DockPanel.Dock="Top"
                        FontSize="14"
