@@ -93,7 +93,7 @@
                             Content="Home"
                             Template="{StaticResource MenuButton}"
                             Background="{DynamicResource GreyFriendBrushDark3}"
-                            Foreground="{DynamicResource PrimaryBrush2}"
+                            Foreground="{DynamicResource PrimaryBrush5}"
                             HorizontalAlignment="Stretch"
                             Click="Navigate" />
                     <Button x:Name="btn_TestExercise"

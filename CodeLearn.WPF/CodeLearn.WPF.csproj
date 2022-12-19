@@ -47,11 +47,11 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Templates\Buttons\NormalizeButton.xaml">
+    <Page Update="Templates\Buttons\Misc\NormalizeButton.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Templates\Buttons\MaximizeButton.xaml">
+    <Page Update="Templates\Buttons\Misc\MaximizeButton.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
@@ -66,11 +66,15 @@
     <Page Update="Templates\Buttons\Button_Theme.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Templates\Buttons\MinimizeButton_Theme.xaml">
+    <Page Update="Templates\Buttons\Misc\MinimizeButton.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Templates\Buttons\CloseButton_Theme.xaml">
+    <Page Update="Templates\Buttons\Misc\CloseButton.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Templates\Buttons\Teacher\RemoveCommandButton.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
@@ -82,7 +86,7 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Templates\Buttons\Teacher\DefaultTeacherButton_Theme.xaml">
+    <Page Update="Templates\Buttons\Teacher\DefaultCommandButton.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

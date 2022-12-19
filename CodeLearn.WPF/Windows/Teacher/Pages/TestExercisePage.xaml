@@ -93,7 +93,7 @@
                     <TextBlock Text="Exercise"
                                Margin="4"
                                FontSize="20"
-                               Foreground="{StaticResource PrimaryBrush3}" />
+                               Foreground="{StaticResource PrimaryBrush5}" />
                 </StackPanel>
 
 
@@ -144,7 +144,7 @@
                     <TextBlock Text="Code here:"
                                Margin="4,10,4,4"
                                FontSize="20"
-                               Foreground="{StaticResource PrimaryBrush3}"
+                               Foreground="{StaticResource PrimaryBrush5}"
                                DockPanel.Dock="Top"/>
 
                     <TextBox x:Name="txt_Input"
@@ -157,9 +157,10 @@
                 </DockPanel>
 
 
-                <DockPanel HorizontalAlignment="Left">
+                <DockPanel HorizontalAlignment="Left"
+                           Margin="{Binding WindowSettings.ElementsMargin}">
                     <Button x:Name="btn_Run"
-                            Template="{StaticResource DefaultTeacherButton}"
+                            Template="{StaticResource DefaultCommandButton}"
                             Content="Run"
                             Margin="4"
                             Click="btn_Run_Click" />
@@ -167,12 +168,12 @@
 
                 <!-- Output -->
                 <StackPanel Margin="{Binding WindowSettings.ElementsMargin}">
-                    <TextBlock Margin="4"
-                               Text="Output:"
-                               DockPanel.Dock="Top"
-                               Foreground="{DynamicResource GreyFriendBrushLight}"
-                               FontSize="16"
-                               FontWeight="Bold" />
+                    <TextBlock Text="Output"
+                               Margin="4"
+                               FontSize="20"
+                               Foreground="{StaticResource PrimaryBrush5}" />
+                </StackPanel>
+                <StackPanel Margin="{Binding WindowSettings.ElementsMargin}">
                     <Border BorderThickness="0.3"
                             CornerRadius="13"
                             BorderBrush="{DynamicResource GreyFriendBrushLight}"
@@ -191,7 +192,8 @@
                                  Padding="2"
                                  Foreground="{StaticResource GreyFriendBrushLight5}"
                                  Background="Transparent"
-                                 Text=" . . . " />
+                                 Text=" . . . "
+                                 IsHitTestVisible="False"/>
                     </Border>
                 </StackPanel>
             </StackPanel>

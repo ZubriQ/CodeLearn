@@ -62,7 +62,7 @@
                     <TextBlock Text="Testing"
                                Margin="4"
                                FontSize="20"
-                               Foreground="{StaticResource PrimaryBrush3}" />
+                               Foreground="{StaticResource PrimaryBrush5}" />
                 </StackPanel>
 
                 
@@ -122,7 +122,7 @@
                     <TextBlock Text="Exercises"
                                Margin="4,14,4,4"
                                FontSize="20"
-                               Foreground="{StaticResource PrimaryBrush3}" />
+                               Foreground="{StaticResource PrimaryBrush5}" />
                 </StackPanel>
 
                 
@@ -131,7 +131,7 @@
                            Margin="{Binding WindowSettings.ElementsMargin}">
                     <DockPanel DockPanel.Dock="Top">
                         <Button x:Name="btn_AddExercise"
-                                Template="{StaticResource DefaultTeacherButton}"
+                                Template="{StaticResource DefaultCommandButton}"
                                 Grid.Row="1"
                                 Content="Add"
                                 HorizontalAlignment="Left"
@@ -165,7 +165,7 @@
                                         <!-- Remove Button. -->
                                         <Button x:Name="btn_RemoveExercise"
                                                 Click="btn_RemoveExercise_Click"
-                                                Template="{StaticResource DefaultTeacherButton}"
+                                                Template="{StaticResource RemoveCommandButton}"
                                                 HorizontalAlignment="Left">
                                             <TextBlock Text="Remove"
                                                        Foreground="White"

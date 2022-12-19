@@ -29,7 +29,7 @@ namespace CodeLearn.WPF
         public static void SetMenuButtonPressedColor(Button button)
         {
             button.Background = Palette.Brushes["GreyFriendDark3"];
-            button.Foreground = Palette.Brushes["Primary3"];
+            button.Foreground = Palette.Brushes["Primary5"];
         }
 
         public static void SetMenuButtonReleasedColor(Button button)

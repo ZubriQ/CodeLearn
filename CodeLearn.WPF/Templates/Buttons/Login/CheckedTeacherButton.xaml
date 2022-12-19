@@ -13,7 +13,7 @@
                             Content="{TemplateBinding Content}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            Foreground="{DynamicResource GreyFriendBrushDark3}"
+                            Foreground="{DynamicResource GreyFriendBrushDark4}"
                             FontFamily="Inter"
                             FontSize="16"
                             FontWeight="SemiBold"
