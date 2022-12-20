@@ -118,14 +118,19 @@ namespace CodeLearn.WPF.Windows
             if (user != null)
             {
                 App.Student = user;
-                HomeWindow window = new();
-                window.Show();
-                Close();
+                OpenControlWindow();
             }
             else
             {
                 MessageBox.Show(_invalidCredentials);
             }
+        }
+
+        private void OpenControlWindow()
+        {
+            ControlWindow window = new ControlWindow(_isTeacherRole);
+            window.Show();
+            Close();
         }
 
         private void SignInAsTeacher()
@@ -135,9 +140,7 @@ namespace CodeLearn.WPF.Windows
             if (user != null)
             {
                 App.Teacher = user;
-                ControlWindow window = new();
-                window.Show();
-                Close();
+                OpenControlWindow();
             }
             else
             {

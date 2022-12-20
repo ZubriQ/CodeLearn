@@ -70,16 +70,24 @@
 
     
     <!-- Command Buttons Colours -->
-    <SolidColorBrush x:Key="PrimaryBrushShade1"
-                     Color="{DynamicResource PrimaryColorShade1}" />
-    <Color x:Key="PrimaryColorShade1">#006bb8</Color>
+    <SolidColorBrush x:Key="PrimaryBrushDark1"
+                     Color="{DynamicResource PrimaryColorDark1}" />
+    <Color x:Key="PrimaryColorDark1">#006bb8</Color>
 
-    <SolidColorBrush x:Key="PrimaryBrushShade2"
-                     Color="{DynamicResource PrimaryColorShade2}" />
-    <Color x:Key="PrimaryColorShade2">#005fa3</Color>
+    <SolidColorBrush x:Key="PrimaryBrushDark2"
+                     Color="{DynamicResource PrimaryColorDark2}" />
+    <Color x:Key="PrimaryColorDark2">#005fa3</Color>
 
-    
-    
+    <SolidColorBrush x:Key="PrimaryBrushLight1"
+                     Color="{DynamicResource PrimaryColorLight1}" />
+    <Color x:Key="PrimaryColorLight1">#1a85d1</Color>
+
+    <SolidColorBrush x:Key="PrimaryBrushLight2"
+                     Color="{DynamicResource PrimaryColorLight2}" />
+    <Color x:Key="PrimaryColorLight2">#3392d6</Color>
+
+
+
     <!-- Special Colours -->
     <SolidColorBrush x:Key="RedBrush"
                      Color="{DynamicResource RedColor}" />

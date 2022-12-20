@@ -78,12 +78,7 @@
 
             <Image Source="/Images/CodeLearnLogo.png"
                    MaxWidth="160"
-                   Margin="5"/>
-            <!--<TextBlock FontSize="32"
-                       FontWeight="Bold"
-                       FontFamily="Poppins"
-                       Text="CodeLearn"
-                       Foreground="{StaticResource PrimaryBrush3}" />-->
+                   Margin="5" />
         </Grid>
 
         

@@ -391,12 +391,12 @@
                                         <!-- Result. -->
                                         <Grid>
                                             <Border CornerRadius="6"
-                                                    Background="#39414E"
+                                                    Background="{DynamicResource GreyFriendBrushDark2}"
                                                     Margin="2"
                                                     MinWidth="40"
                                                     VerticalAlignment="Center"
                                                     Height="26"
-                                                    BorderBrush="{DynamicResource PrimaryBrush2}"
+                                                    BorderBrush="{DynamicResource GreyFriendBrushDark4}"
                                                     BorderThickness="1" >
                                                 <TextBox x:Name="txt_TestCaseResult"
                                                          Background="Transparent"
@@ -408,7 +408,7 @@
                                                          FontSize="14"
                                                          VerticalContentAlignment="Top"
                                                          Text="{Binding Result, TargetNullValue=result}"
-                                                         Foreground="{DynamicResource PrimaryBrush2}"
+                                                         Foreground="{DynamicResource GreyFriendBrushLight}"
                                                          GotFocus="txt_TestCaseResult_GotFocus"
                                                          LostFocus="txt_TestCaseResult_LostFocus"
                                                          SelectionBrush="{StaticResource GreyFriendBrushLight}"
@@ -429,7 +429,8 @@
                                         
                                         <!-- Remove Button. -->
                                         <Button Click="btn_RemoveTestCase"
-                                                Template="{StaticResource RemoveCommandButton}">
+                                                Template="{StaticResource RemoveCommandButton}"
+                                                Margin="7,0,0,0">
                                             <TextBlock Text="Remove"
                                                        Foreground="White"
                                                        FontSize="14" />

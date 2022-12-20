@@ -31,7 +31,7 @@
                      Value="true">
                 <Setter TargetName="btnClose"
                         Property="Background"
-                        Value="#FFCD3030" />
+                        Value="{DynamicResource RedBrush4}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>

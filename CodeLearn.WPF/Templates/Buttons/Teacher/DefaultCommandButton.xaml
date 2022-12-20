@@ -25,13 +25,13 @@
                      Value="true">
                 <Setter TargetName="Border"
                         Property="Background"
-                        Value="{DynamicResource PrimaryBrushShade1}" />
+                        Value="{DynamicResource PrimaryBrushDark1}" />
             </Trigger>
             <Trigger Property="IsPressed"
                      Value="true">
                 <Setter TargetName="Border"
                         Property="Background"
-                        Value="{DynamicResource PrimaryBrushShade2}" />
+                        Value="{DynamicResource PrimaryBrushDark2}" />
             </Trigger>
             
         </ControlTemplate.Triggers>

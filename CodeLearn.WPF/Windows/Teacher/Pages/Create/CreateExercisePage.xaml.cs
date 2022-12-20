@@ -202,12 +202,26 @@ public static double GetNumber(double a)
             var bindExpresion = textBox.GetBindingExpression(TextBox.TextProperty);
             var source = bindExpresion.ResolvedSource;
 
+            UpdateTextBoxColor(textBox);
+
             if (String.IsNullOrEmpty(textBox.Text) && source != null)
             {
                 source.GetType()
                       .GetProperty(bindExpresion.ResolvedSourcePropertyName)
                       .SetValue(source, null);
                 bindExpresion.UpdateTarget();
+            }
+        }
+
+        private void UpdateTextBoxColor(TextBox textBox)
+        {
+            if (textBox.Text == String.Empty)
+            {
+                PaletteController.SetNullTextForegroundColor(textBox);
+            }
+            else
+            {
+                PaletteController.SetNotNullTextForegroundColor(textBox);
             }
         }
         #endregion

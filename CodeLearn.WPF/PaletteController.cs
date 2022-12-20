@@ -42,5 +42,15 @@ namespace CodeLearn.WPF
         {
             underline.Background = Palette.Brushes["Primary"];
         }
+
+        public static void SetNullTextForegroundColor(TextBox textBox)
+        {
+            textBox.Foreground = Palette.Brushes["GreyFriendLight"];
+        }
+
+        public static void SetNotNullTextForegroundColor(TextBox textBox)
+        {
+            textBox.Foreground = Palette.Brushes["Primary5"];
+        }
     }
 }

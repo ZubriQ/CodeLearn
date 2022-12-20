@@ -23,6 +23,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
+        
         <!-- Control Window's border -->
         <Border Background="White"
                 Grid.RowSpan="2"
@@ -30,12 +31,14 @@
                 CornerRadius="10">
         </Border>
         
+        
         <!-- Control Window's background-->
         <Border Grid.RowSpan="2"
                 CornerRadius="10"
                 Background="{StaticResource GreyFriendBrushDark}"
                 Margin="1">
         </Border>
+        
         
         <!-- Title bar -->
         <DockPanel Margin="1,1,1,0">
@@ -75,6 +78,7 @@
             </Border>
         </DockPanel>
 
+        
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <!-- Control buttons -->
@@ -88,71 +92,101 @@
                     CornerRadius="0,0,0,10"
                     Padding="5"
                     Margin="1,0,0,1">
+                
+                
                 <StackPanel>
+                    
+                    <!-- Dashboard, Courses, Check Exercise -->
                     <Button x:Name="btn_Home"
                             Content="Home"
                             Template="{StaticResource MenuButton}"
                             Background="{DynamicResource GreyFriendBrushDark3}"
                             Foreground="{DynamicResource PrimaryBrush5}"
                             HorizontalAlignment="Stretch"
+                            Click="Navigate"
+                            Visibility="{Binding WindowSettings.Visibility}" />
+
+                    <Button x:Name="btn_SelectCourse"
+                            Content="Testing"
+                            Template="{StaticResource MenuButton}"
+                            Background="Transparent"
+                            Foreground="Transparent"
+                            HorizontalAlignment="Stretch"
                             Click="Navigate" />
+
                     <Button x:Name="btn_TestExercise"
-                            Content="Test Exercise"
+                            Content="Check Exercise"
                             Template="{StaticResource MenuButton}"
                             Background="Transparent"
                             Foreground="Transparent"
                             HorizontalAlignment="Stretch"
                             Margin="0,0,0,5"
-                            Click="Navigate" />
-                    <!-- Separator -->
-                    <Border Height="1"
-                            Background="#343A46"
-                            Margin="0,0,0,5" />
+                            Click="Navigate"
+                            Visibility="{Binding WindowSettings.Visibility}" />
 
-                    <Button x:Name="btn_CreateExercise"
-                            Content="Create Exercise"
-                            Template="{StaticResource MenuButton}"
-                            Background="Transparent"
-                            Foreground="Transparent"
-                            HorizontalAlignment="Stretch"
-                            Click="Navigate" />
-                    <Button x:Name="btn_CreateTesting"
-                            Content="Create Test"
-                            Template="{StaticResource MenuButton}"
-                            Background="Transparent"
-                            Foreground="Transparent"
-                            HorizontalAlignment="Stretch"
-                            Margin="0,0,0,5"
-                            Click="Navigate" />
-                    <!-- Separator -->
-                    <Border Height="1"
-                            Background="#343A46"
-                            Margin="0,0,0,5" />
+                    
+                    <!-- Rights to create Exercises & Tests. -->
+                    <StackPanel Visibility="{Binding WindowSettings.Visibility}">
+                        <!-- Separator -->
+                        <Border Height="1"
+                                Background="#343A46"
+                                Margin="0,0,0,5" />
 
-                    <Button x:Name="btn_Exercises"
-                            Content="Exercises"
-                            Template="{StaticResource MenuButton}"
-                            Background="Transparent"
-                            Foreground="Transparent"
-                            HorizontalAlignment="Stretch"
-                            Click="Navigate" />
-                    <Button x:Name="btn_Testings"
-                            Content="Tests"
-                            Template="{StaticResource MenuButton}"
-                            Background="Transparent"
-                            Foreground="Transparent"
-                            HorizontalAlignment="Stretch"
-                            Click="Navigate" />
-                    <Button x:Name="btn_TestingResults"
-                            Content="Tests Results"
-                            Template="{StaticResource MenuButton}"
-                            Background="Transparent"
-                            Foreground="Transparent"
-                            HorizontalAlignment="Stretch"
-                            Click="Navigate" />
+
+                        <Button x:Name="btn_CreateExercise"
+                                Content="Create Exercise"
+                                Template="{StaticResource MenuButton}"
+                                Background="Transparent"
+                                Foreground="Transparent"
+                                HorizontalAlignment="Stretch"
+                                Click="Navigate" />
+                        <Button x:Name="btn_CreateTesting"
+                                Content="Create Test"
+                                Template="{StaticResource MenuButton}"
+                                Background="Transparent"
+                                Foreground="Transparent"
+                                HorizontalAlignment="Stretch"
+                                Margin="0,0,0,5"
+                                Click="Navigate" />
+                    </StackPanel>
+
+                    
+                    
+                    <!-- Catalogs data viewing -->
+                    <StackPanel Visibility="{Binding WindowSettings.Visibility}">
+                        <!-- Separator -->
+                        <Border Height="1"
+                                Background="#343A46"
+                                Margin="0,0,0,5" />
+
+
+                        <Button x:Name="btn_Exercises"
+                                Content="Exercises"
+                                Template="{StaticResource MenuButton}"
+                                Background="Transparent"
+                                Foreground="Transparent"
+                                HorizontalAlignment="Stretch"
+                                Click="Navigate" />
+                        <Button x:Name="btn_Testings"
+                                Content="Tests"
+                                Template="{StaticResource MenuButton}"
+                                Background="Transparent"
+                                Foreground="Transparent"
+                                HorizontalAlignment="Stretch"
+                                Click="Navigate" />
+                        <Button x:Name="btn_TestingResults"
+                                Content="Tests Results"
+                                Template="{StaticResource MenuButton}"
+                                Background="Transparent"
+                                Foreground="Transparent"
+                                HorizontalAlignment="Stretch"
+                                Click="Navigate" />
+                    </StackPanel>
+
                 </StackPanel>
             </Border>
 
+            
             <!-- Pages -->
             <Frame x:Name="ControlWindowFrame"
                    Grid.Column="1"

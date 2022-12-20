@@ -1,4 +1,5 @@
-﻿using CodeLearn.WPF.Windows.Teacher.Pages;
+﻿using CodeLearn.Db;
+using CodeLearn.WPF.Windows.Teacher.Pages;
 using CodeLearn.WPF.Windows.Teacher.Pages.Catalogs;
 using CodeLearn.WPF.Windows.Teacher.Pages.Create;
 using System;
@@ -25,19 +26,50 @@ namespace CodeLearn.WPF.Windows.Teacher
     /// </summary>
     public partial class ControlWindow : Window
     {
-        private readonly Dictionary<string, Page> pages = new();
+        #region Fields
 
+        private readonly Dictionary<string, Page> pages = new();
         private Button _lastPressedButton;
 
+        #endregion
+
+        public WindowSettings WindowSettings { get; set; } = new();
+
         #region Initialization
-        public ControlWindow()
+        public ControlWindow(bool isTeacher)
         {
+            SetVisibilitySettings(isTeacher);
+            DataContext = this;
             InitializeComponent();
             InitializePages();
             InitializeHomePage();
             _lastPressedButton = btn_Home;
         }
-        
+
+        private void SetVisibilitySettings(bool isTeacher)
+        {
+            if (isTeacher)
+            {
+                WindowSettings.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                WindowSettings.Visibility = Visibility.Collapsed;
+            }
+        }
+
+
+        // Only for testing.
+        public ControlWindow()
+        {
+            InitializeComponent();
+            SetVisibilitySettings(true);
+            InitializePages();
+            InitializeHomePage();
+            _lastPressedButton = btn_Home;
+        }
+
+
         private void InitializePages()
         {
             pages.Add("btn_Home", new HomePage());

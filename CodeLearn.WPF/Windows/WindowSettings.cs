@@ -27,11 +27,27 @@ namespace CodeLearn.WPF.Windows
                 }
             }
         }
+
+        private Visibility _visibility;
+
+        public Visibility Visibility
+        {
+            get { return _visibility; }
+            set
+            {
+                if (value != _visibility)
+                {
+                    _visibility = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         #endregion
 
         public WindowSettings()
         {
-            ElementsMargin = new Thickness(4, 4, 4, 4);
+            _elementsMargin = new Thickness(4, 4, 4, 4);
+            Visibility = Visibility.Collapsed;
         }
 
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null)

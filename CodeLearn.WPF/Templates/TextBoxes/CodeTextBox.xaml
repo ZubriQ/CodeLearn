@@ -32,7 +32,7 @@
                 <Setter Property="SelectionOpacity"
                         Value="0.4" />
                 <Setter Property="SelectionBrush"
-                        Value="{DynamicResource PrimaryBrush3}" />
+                        Value="{DynamicResource PrimaryBrush5}" />
             </Trigger>
             <!-- Style When Disabled -->
             <Trigger Property="IsEnabled"
