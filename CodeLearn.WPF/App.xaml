@@ -7,11 +7,11 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 
-                <!-- Global templates -->
-                <ResourceDictionary Source="Templates/Palette.xaml" />
-                <ResourceDictionary Source="Templates/DefaultComboBox.xaml" />
-                <ResourceDictionary Source="Templates/DefaultScrollBar.xaml" />
-                <ResourceDictionary Source="Templates/DefaultPasswordBox.xaml" />
+                <!-- Global templates and styles -->
+                <ResourceDictionary Source="Templates/Global/Palette.xaml" />
+                <ResourceDictionary Source="Templates/Global/DefaultComboBox.xaml" />
+                <ResourceDictionary Source="Templates/Global/DefaultScrollBar.xaml" />
+                <ResourceDictionary Source="Templates/Global/DefaultPasswordBox.xaml" />
 
                 <!-- Login Window templates -->
                 <ResourceDictionary Source="Templates/Buttons/Login/CheckedStudentButton.xaml" />
