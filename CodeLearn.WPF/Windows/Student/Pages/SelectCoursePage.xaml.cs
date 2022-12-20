@@ -25,13 +25,12 @@ namespace CodeLearn.WPF.Windows.Student.Pages
         {
             InitializeComponent();
             ic_Courses.ItemsSource = App.DB.GetCourses();
-
         }
 
-        private void btn_Start_Click(object sender, RoutedEventArgs e)
+        private void uc_CourseItemControl_Click(object sender, EventArgs e)
         {
-            var s = sender as Button;
-            var contex = s?.DataContext;
+            var ic = sender as UserControl;
+            var contex = ic?.DataContext;
             if (contex is Testing)
             {
                 TestingPage testing = new TestingPage((Testing)contex);

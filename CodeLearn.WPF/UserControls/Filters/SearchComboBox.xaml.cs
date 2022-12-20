@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls;
 
-namespace CodeLearn.WPF.UserControls
+namespace CodeLearn.WPF.UserControls.Filters
 {
     /// <summary>
     /// Interaction logic for SearchComboBox.xaml

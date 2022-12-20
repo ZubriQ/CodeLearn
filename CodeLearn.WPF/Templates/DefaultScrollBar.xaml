@@ -149,7 +149,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="0"
                             Width="8"
-                            Margin="8,2,-2,2" />
+                            Margin="0,2,0,2" />
 
                     <!-- Vertical bar Triggers -->
                     <ControlTemplate.Triggers>
@@ -176,7 +176,7 @@
             </Grid.RowDefinitions>
             <Border Grid.RowSpan="3"
                     CornerRadius="4"
-                    Margin="10,2,0,2"
+                    Margin="5,2,5,2"
                     Background="{DynamicResource GreyFriendBrushDark2}" />
             <RepeatButton Grid.Row="0"
                           Style="{StaticResource ScrollBarLineButton}"

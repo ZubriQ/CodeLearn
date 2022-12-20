@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeLearn.WPF.Windows"
-        xmlns:UserControl="clr-namespace:CodeLearn.WPF.UserControls"
+        xmlns:UserControl="clr-namespace:CodeLearn.WPF.UserControls.Login"
         mc:Ignorable="d"
         Title="Code Testing - Login" Height="500" Width="370"
         ResizeMode="NoResize"
@@ -140,6 +140,7 @@
 
     <!--Resources-->
     <Window.Resources>
+        
         <!-- TextBlocks' Style -->
         <Style TargetType="TextBlock">
             <Setter Property="Foreground"
@@ -151,11 +152,5 @@
             <Setter Property="FontWeight"
                     Value="Medium" />
         </Style>
-
-        <!-- Password Box Style-->
-        <!--<Style TargetType="PasswordBox">
-            <Setter Property="Background"
-                    Value="Wheat" />
-        </Style>-->
     </Window.Resources>
 </Window>

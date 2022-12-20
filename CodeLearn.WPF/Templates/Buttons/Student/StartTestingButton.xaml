@@ -2,29 +2,39 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate TargetType="Button"
-                     x:Key="StartButton">
-        <Border x:Name="btnStart"
-                Background="{DynamicResource PrimaryBrush}"
+                     x:Key="StartTestingButton">
+        <Border x:Name="Border"
+                Background="{DynamicResource PrimaryBrush3}"
                 BorderThickness="0"
-                CornerRadius="0,0,15,15"
-                Padding="16,2,16,2">
+                CornerRadius="0,0,10,10"
+                Margin="0,5,0,0">
             <ContentControl Margin="{TemplateBinding Padding}"
                             Content="{TemplateBinding Content}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            Foreground="White"
+                            Foreground="{DynamicResource GreyFriendBrushDark4}"
                             FontFamily="Calibri"
-                            FontSize="16"
+                            FontSize="18"
+                            FontWeight="Medium"
                             VerticalContentAlignment="Center" />
         </Border>
 
         <ControlTemplate.Triggers>
+            
+            <Trigger Property="IsMouseOver"
+                     Value="true">
+                <Setter TargetName="Border"
+                        Property="Background"
+                        Value="{DynamicResource PrimaryBrush4}" />
+            </Trigger>
+
             <Trigger Property="IsPressed"
                      Value="true">
-                <Setter TargetName="btnStart"
+                <Setter TargetName="Border"
                         Property="Background"
-                        Value="#1984D1" />
+                        Value="{DynamicResource PrimaryBrush5}" />
             </Trigger>
+            
         </ControlTemplate.Triggers>
     </ControlTemplate>
 </ResourceDictionary>

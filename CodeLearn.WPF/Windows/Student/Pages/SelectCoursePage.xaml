@@ -4,90 +4,101 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:CodeLearn.WPF.Windows.Student.Pages"
+      xmlns:UserControl="clr-namespace:CodeLearn.WPF.UserControls"
       mc:Ignorable="d"
       d:DesignHeight="450"
       d:DesignWidth="980"
       Title="SelectCoursePage">
     
-    <Grid MaxWidth="980"
-          MinWidth="980"
-          UseLayoutRounding="True"
+    <!-- These properties fix blurry texts and whatnot of its children elements. -->
+    <Grid UseLayoutRounding="True"
           RenderOptions.BitmapScalingMode="NearestNeighbor"
           SnapsToDevicePixels="True"
-          RenderOptions.ClearTypeHint="Enabled">
+          RenderOptions.ClearTypeHint="Enabled"
+          Margin="0,0,1,0">
+        <Grid.RowDefinitions>
+            <!-- Page Title -->
+            <RowDefinition Height="46"/>
+            <!-- 2 Pixel Height Separator -->
+            <RowDefinition Height="auto" />
+            <!-- Courses ItemsControl -->
+            <RowDefinition />
+            <!-- 2 Pixel Height Separator -->
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+
+        <!-- Page Header -->
+        <Grid>
+            <Border Background="{DynamicResource GreyFriendBrushDark4}" />
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock x:Name="txt_PageHeader"
+                           Text="Tests"
+                           HorizontalAlignment="Center"
+                           FontSize="20"
+                           Foreground="{StaticResource GreyFriendBrushLight}" />
+            </StackPanel>
+        </Grid>
+
         
-        <ItemsControl x:Name="ic_Courses"
-                      Background="Transparent"
-                      Margin="0,10,0,0"
-                      d:ItemsSource="{d:SampleData ItemCount=5}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+        <!-- Separator -->
+        <Border Grid.Row="1"
+                Height="2"
+                Background="{DynamicResource GreyFriendBrushDark5}"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom" />
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid >
-                        <Border Background="White"
-                                CornerRadius="15"
-                                Margin="10"
-                                Width="470">
+        
+        <!-- Courses -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      Grid.Row="2"
+                      Margin="10,0,5,0">
+            <ItemsControl x:Name="ic_Courses"
+                          
+                          Background="Transparent"
+                          d:ItemsSource="{d:SampleData ItemCount=3}"
+                          HorizontalAlignment="Center">
 
-                            <Grid >
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                
-                                <!-- Testing description -->
-                                <StackPanel Margin="15,20,15,15">
-                                    <TextBlock FontSize="30"
-                                               Text="{Binding Path=Name}"
-                                               TextWrapping="Wrap"
-                                               Margin="5"
-                                               Foreground="{StaticResource GreyFriendBrushDark}"
-                                               LineStackingStrategy="BlockLineHeight"
-                                               LineHeight="30"/>
-                                    <DockPanel Margin="5">
-                                        <!--<TextBlock FontSize="16"
-                                                   Text="Duration of the course: "
-                                                   TextWrapping="Wrap" />
-                                        <TextBlock FontSize="16"
-                                                   Text="{Binding Path=DurationInMinutes}"
-                                                   TextWrapping="Wrap" />-->
-                                    </DockPanel>
-                                    <TextBlock FontSize="16"
-                                               Text="{Binding Path=Description}"
-                                               TextWrapping="Wrap"
-                                               Margin="5"
-                                               RenderOptions.ClearTypeHint="Enabled"
-                                               SnapsToDevicePixels="True"
-                                               />
-                                </StackPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <UserControl:CourseItemControl x:Name="uc_CourseItemControl"
+                                                       Click="uc_CourseItemControl_Click" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
 
-                                <Button x:Name="btn_Start"
-                                        Template="{StaticResource StartButton}"
-                                        Content="START"
-                                        Height="40"
-                                        HorizontalAlignment="Stretch"
-                                        Grid.Row="1"
-                                        Click="btn_Start_Click">
-                                    
-                                </Button>
-                            </Grid>
-                            
-                            <Border.BitmapEffect>
-                                <DropShadowBitmapEffect Color="Black"
-                                                        Direction="270"
-                                                        ShadowDepth="5"
-                                                        Opacity="0.08"
-                                                        Softness="4" />
-                            </Border.BitmapEffect>
-                        </Border>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+
+
+        <!-- Separator -->
+        <Border Grid.Row="3"
+                Height="1"
+                Background="{DynamicResource GreyFriendBrushDark4}"
+                Margin="10,0,10,15"
+                HorizontalAlignment="Stretch" />
+
     </Grid>
+
+
+    <!-- Resources -->
+    <Page.Resources>
+        
+        <!-- TextBlocks' Style -->
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground"
+                    Value="{StaticResource GreyFriendBrushLight}" />
+            <Setter Property="FontFamily"
+                    Value="Inter" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="FontWeight"
+                    Value="Medium" />
+        </Style>
+    </Page.Resources>
 </Page>

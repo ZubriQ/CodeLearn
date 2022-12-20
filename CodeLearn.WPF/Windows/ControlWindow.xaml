@@ -1,9 +1,9 @@
-﻿<Window x:Class="CodeLearn.WPF.Windows.Teacher.ControlWindow"
+﻿<Window x:Class="CodeLearn.WPF.Windows.ControlWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CodeLearn.WPF.Windows.Teacher"
+        xmlns:local="clr-namespace:CodeLearn.WPF.Windows"
         mc:Ignorable="d"
         Title="ControlWindow" Height="620" Width="700"
         WindowStyle="None"
@@ -96,9 +96,10 @@
                 
                 <StackPanel>
                     
+                    
                     <!-- Dashboard, Courses, Check Exercise -->
-                    <Button x:Name="btn_Home"
-                            Content="Home"
+                    <Button x:Name="btn_Dashboard"
+                            Content="Dashboard"
                             Template="{StaticResource MenuButton}"
                             Background="{DynamicResource GreyFriendBrushDark3}"
                             Foreground="{DynamicResource PrimaryBrush5}"
@@ -127,11 +128,12 @@
                     
                     <!-- Rights to create Exercises & Tests. -->
                     <StackPanel Visibility="{Binding WindowSettings.Visibility}">
+                        
                         <!-- Separator -->
                         <Border Height="1"
-                                Background="#343A46"
+                                Background="{DynamicResource GreyFriendBrushDark3}"
                                 Margin="0,0,0,5" />
-
+                        
 
                         <Button x:Name="btn_CreateExercise"
                                 Content="Create Exercise"
@@ -154,9 +156,10 @@
                     
                     <!-- Catalogs data viewing -->
                     <StackPanel Visibility="{Binding WindowSettings.Visibility}">
+                        
                         <!-- Separator -->
                         <Border Height="1"
-                                Background="#343A46"
+                                Background="{DynamicResource GreyFriendBrushDark3}"
                                 Margin="0,0,0,5" />
 
 
@@ -196,4 +199,17 @@
             </Frame>
         </Grid>
     </Grid>
+
+
+    <Window.Resources>
+        <!-- TextBlocks' Style -->
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground"
+                    Value="{StaticResource GreyFriendBrushLight}" />
+            <Setter Property="FontFamily"
+                    Value="Inter" />
+            <Setter Property="FontSize"
+                    Value="14" />
+        </Style>
+    </Window.Resources>
 </Window>

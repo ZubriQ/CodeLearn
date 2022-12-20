@@ -3,7 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace CodeLearn.WPF.UserControls
+namespace CodeLearn.WPF.UserControls.Filters
 {
     /// <summary>
     /// Interaction logic for FilterBox.xaml

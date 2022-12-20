@@ -1,4 +1,5 @@
 ﻿using CodeLearn.Db;
+using CodeLearn.WPF.Windows.Student.Pages;
 using CodeLearn.WPF.Windows.Teacher.Pages;
 using CodeLearn.WPF.Windows.Teacher.Pages.Catalogs;
 using CodeLearn.WPF.Windows.Teacher.Pages.Create;
@@ -19,7 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace CodeLearn.WPF.Windows.Teacher
+namespace CodeLearn.WPF.Windows
 {
     /// <summary>
     /// Interaction logic for ControlWindow.xaml
@@ -43,7 +44,7 @@ namespace CodeLearn.WPF.Windows.Teacher
             InitializeComponent();
             InitializePages();
             InitializeHomePage();
-            _lastPressedButton = btn_Home;
+            _lastPressedButton = btn_Dashboard;
         }
 
         private void SetVisibilitySettings(bool isTeacher)
@@ -66,16 +67,19 @@ namespace CodeLearn.WPF.Windows.Teacher
             SetVisibilitySettings(true);
             InitializePages();
             InitializeHomePage();
-            _lastPressedButton = btn_Home;
+            _lastPressedButton = btn_Dashboard;
         }
 
 
         private void InitializePages()
         {
-            pages.Add("btn_Home", new HomePage());
+            pages.Add("btn_Dashboard", new DashboardPage());
+            pages.Add("btn_SelectCourse", new SelectCoursePage());
             pages.Add("btn_TestExercise", new TestExercisePage());
+
             pages.Add("btn_CreateExercise", new CreateExercisePage());
             pages.Add("btn_CreateTesting", new CreateTestingPage());
+
             pages.Add("btn_Exercises", new ExercisesPage());
             pages.Add("btn_Testings", new TestingsPage());
             pages.Add("btn_TestingResults", new TestingResultsPage());
@@ -83,7 +87,7 @@ namespace CodeLearn.WPF.Windows.Teacher
 
         private void InitializeHomePage()
         {
-            ControlWindowFrame.Navigate(pages["btn_Home"]);
+            ControlWindowFrame.Navigate(pages["btn_Dashboard"]);
         }
         #endregion
 

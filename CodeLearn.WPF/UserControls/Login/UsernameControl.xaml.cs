@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CodeLearn.WPF.UserControls
+namespace CodeLearn.WPF.UserControls.Login
 {
     /// <summary>
     /// Interaction logic for UsernameControl.xaml

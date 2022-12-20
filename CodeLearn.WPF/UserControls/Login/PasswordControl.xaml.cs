@@ -13,14 +13,26 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CodeLearn.WPF.Windows.Teacher.Pages
+namespace CodeLearn.WPF.UserControls.Login
 {
     /// <summary>
-    /// Interaction logic for HomePage.xaml
+    /// Interaction logic for PasswordControl.xaml
     /// </summary>
-    public partial class HomePage : Page
+    public partial class PasswordControl : UserControl
     {
-        public HomePage()
+        public string Password
+        {
+            get
+            {
+                return pb_Password.Password;
+            }
+            set
+            {
+                pb_Password.Password = value;
+            }
+        }
+
+        public PasswordControl()
         {
             InitializeComponent();
         }
