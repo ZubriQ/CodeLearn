@@ -1,12 +1,23 @@
 ﻿using CodeLearn.Db;
 using CodeLearn.Db.WPF;
+using System;
 using System.Windows;
 
 namespace CodeLearn.WPF
 {
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+#if DEBUG         
+            StartupUri = new Uri( "Windows/ControlWindow.xaml", UriKind.RelativeOrAbsolute);
+#else
+            StartupUri = new Uri("Windows/LoginWindow.xaml", UriKind.RelativeOrAbsolute);
+#endif            
+        }
+
         public static WPFDatabaseProvider DB = new();
+
 
         // A Signed-in user.
         public static Student? Student = null;
