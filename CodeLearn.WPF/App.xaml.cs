@@ -16,7 +16,17 @@ namespace CodeLearn.WPF
 #endif            
         }
 
-        public static WPFDatabaseProvider DB = new();
+        private static WPFDatabaseProvider _db;
+        public static WPFDatabaseProvider DB
+        {
+            get
+            {
+                if( _db == null) {
+                    _db = new WPFDatabaseProvider();
+                }
+                return _db;
+            }
+        }
 
 
         // A Signed-in user.
