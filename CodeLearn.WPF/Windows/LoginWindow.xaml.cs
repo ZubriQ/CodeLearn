@@ -4,6 +4,7 @@ using CodeLearn.WPF.Windows.Student;
 using CodeLearn.WPF.Windows.Teacher;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,12 +12,51 @@ using System.Windows.Input;
 
 namespace CodeLearn.WPF.Windows
 {
-    public partial class LoginWindow : Window
+    public partial class LoginWindow : Window, INotifyPropertyChanged
     {
-        private bool _isStudentRole = true;
-        private bool _isTeacherRole = false;
+        public enum LoginMode { Teacher, Student }
+
+        LoginMode _selectedMode = LoginMode.Student;
+        public LoginMode SelectedMode
+        {
+            get
+            {
+                return _selectedMode;
+            }
+            set
+            {
+                if (_selectedMode != value && PropertyChanged!=null) {
+                    _selectedMode = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs("StudentButtonTemplate"));
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs("TeacherButtonTemplate"));
+                }
+            }
+        }
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         private string _invalidCredentials = "Invalid username or password.";
-        private Dictionary<string, ControlTemplate> _buttonTemplates = new();
+
+
+        public ControlTemplate StudentButtonTemplate
+        {
+            get
+            {
+                if (SelectedMode == LoginMode.Student) {
+                    return FindResource("CheckedStudentButton") as ControlTemplate;
+                }
+                return FindResource("UncheckedStudentButton") as ControlTemplate;
+            }
+        }
+        public ControlTemplate TeacherButtonTemplate
+        {
+            get
+            {
+                if (SelectedMode == LoginMode.Teacher) {
+                    return FindResource("CheckedTeacherButton") as ControlTemplate;
+                }
+                return FindResource("UncheckedTeacherButton") as ControlTemplate;
+            }
+        }
 
         public WindowSettings WindowSettings { get; set; }
 
@@ -25,16 +65,7 @@ namespace CodeLearn.WPF.Windows
         {
             InitializeComponent();
             InitializeMarkupSettings();
-            GetRoleButtonsTemplates();
             DataContext = this;
-        }
-
-        private void GetRoleButtonsTemplates()
-        {
-            _buttonTemplates.Add("Check Student", FindResource("CheckedStudentButton") as ControlTemplate);
-            _buttonTemplates.Add("Uncheck Student", FindResource("UncheckedStudentButton") as ControlTemplate);
-            _buttonTemplates.Add("Check Teacher", FindResource("CheckedTeacherButton") as ControlTemplate);
-            _buttonTemplates.Add("Uncheck Teacher", FindResource("UncheckedTeacherButton") as ControlTemplate);
         }
 
         private void InitializeMarkupSettings()
@@ -67,41 +98,20 @@ namespace CodeLearn.WPF.Windows
         #region Role Buttons
         private void btn_PickStudentRole_Click(object sender, RoutedEventArgs e)
         {
-            if (_isStudentRole == false)
-            {
-                SwitchRoleToStudent();
-            }
-        }
-
-        private void SwitchRoleToStudent()
-        {
-            _isTeacherRole = false;
-            _isStudentRole = true;
-            btn_PickTeacherRole.Template = _buttonTemplates["Uncheck Teacher"];
-            btn_PickStudentRole.Template = _buttonTemplates["Check Student"];
+            SelectedMode = LoginMode.Student;
         }
 
         private void btn_PickTeacherRole_Click(object sender, RoutedEventArgs e)
         {
-            if (_isTeacherRole == false)
-            {
-                SwitchRoleToTeacher();
-            }
+            SelectedMode = LoginMode.Teacher;
         }
 
-        private void SwitchRoleToTeacher()
-        {
-            _isTeacherRole = true;
-            _isStudentRole = false;
-            btn_PickStudentRole.Template = _buttonTemplates["Uncheck Student"];
-            btn_PickTeacherRole.Template = _buttonTemplates["Check Teacher"];
-        }
         #endregion
 
         #region Log In
         private void btn_LogIn_Click(object sender, RoutedEventArgs e)
         {
-            if (_isStudentRole)
+            if (SelectedMode == LoginMode.Student)
             {
                 SignInAsStudent();
             }
@@ -128,7 +138,7 @@ namespace CodeLearn.WPF.Windows
 
         private void OpenControlWindow()
         {
-            ControlWindow window = new ControlWindow(_isTeacherRole);
+            ControlWindow window = new ControlWindow(SelectedMode == LoginMode.Teacher);
             window.Show();
             Close();
         }
