@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace CodeLearn.WPF
