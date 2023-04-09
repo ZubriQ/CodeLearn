@@ -11,43 +11,70 @@
 
     <Page.Resources>
         <local:ExerciseIndexConverter x:Key="IndexConv" />
+
+        <!-- TextBlocks' Style -->
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground"
+                    Value="{StaticResource GreyFriendBrushLight}" />
+            <Setter Property="FontFamily"
+                    Value="Inter" />
+            <Setter Property="FontSize"
+                    Value="14" />
+        </Style>
     </Page.Resources>
 
-    <Grid Margin="0,10,0,0"
+    <Grid 
           VerticalAlignment="Top"
           UseLayoutRounding="True"
           RenderOptions.BitmapScalingMode="NearestNeighbor"
           SnapsToDevicePixels="True"
           RenderOptions.ClearTypeHint="Enabled">
 
-        <Border Background="White"
-                CornerRadius="15"
-                Margin="10,10,10,20"
-                BorderBrush="White"
-                BorderThickness="1"
-                Width="960">
-            
+        <Grid.RowDefinitions>
+            <!-- Header -->
+            <RowDefinition Height="46"/>
+            <!-- Separator -->
+            <RowDefinition Height="auto"/>
+            <!-- Testing Results -->
+            <RowDefinition />
+            <!-- Separator -->
+            <RowDefinition Height="2" />
+            <!-- Score and Close button -->
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        
+        <!-- Testing Result information -->
+        <Border Background="{DynamicResource GreyFriendBrushDark4}" />
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock x:Name="txt_PageHeader"
+                       Text="Testing Result"
+                       HorizontalAlignment="Center"
+                       FontSize="20"
+                       Foreground="{DynamicResource GreyFriendBrushLight}" />
+        </StackPanel>
+
+        <!-- Separator -->
+        <Border Grid.Row="1"
+                Height="2"
+                Background="{DynamicResource GreyFriendBrushDark5}"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom" />
+
+        <!-- MAIN CONTENT -->
+        <Border Background="Transparent"
+                Margin="10,-2,10,0"
+                BorderBrush="Transparent"
+                Grid.Row="2">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <!-- Testing Result info. -->
-
-                <TextBlock Text="Answers: "
-                           Grid.Row="0"
-                           FontWeight="Bold"
-                           DockPanel.Dock="Top"
-                           FontSize="16"
-                           FontFamily="Inter"
-                           Margin="20,15,10,5"
-                           Foreground="{StaticResource PrimaryBrush}" />
 
                 <!-- Testing Answers info. -->
-                <StackPanel Grid.Row="1"
+                <StackPanel Grid.Row="0"
                             Margin="10,0,10,0">
                     <!-- Exercises and answers -->
                     <ListView x:Name="ic_ExercisesAndAnswers"
@@ -56,8 +83,10 @@
                               ItemsSource="{Binding TestingAnswers}"
                               d:ItemsSource="{d:SampleData ItemCount=4}"
                               BorderBrush="Transparent"
+                              Background="Transparent"
                               ScrollViewer.CanContentScroll="False"
-                              MaxHeight="660">
+                              Padding="0,0,-5,0"
+                              MaxHeight="600">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="5">
@@ -66,7 +95,7 @@
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto" />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <!-- Number. -->
@@ -78,29 +107,31 @@
                                                FontWeight="Bold"
                                                FontSize="18"
                                                FontFamily="Inter"
-                                               Foreground="{StaticResource PrimaryBrush}"
-                                               Margin="10"
-                                               DockPanel.Dock="Left"/>
+                                               Foreground="{StaticResource PrimaryBrush2}"
+                                               Margin="8"
+                                               DockPanel.Dock="Left" />
                                     <Border Margin="5"
                                             Grid.Column="1"
                                             BorderThickness="2"
-                                            BorderBrush="{StaticResource PrimaryBrush}"
+                                            BorderBrush="{StaticResource PrimaryBrush2}"
                                             CornerRadius="10"
                                             Padding="5"
                                             DockPanel.Dock="Top">
-                                        
+
                                         <StackPanel>
                                             <!-- Exercise Score. -->
                                             <StackPanel Orientation="Horizontal"
                                                         Margin="5,5,5,0">
                                                 <TextBlock Text="Score: "
                                                            FontSize="14"
-                                                           FontFamily="Inter" />
+                                                           FontFamily="Inter"
+                                                           Foreground="{DynamicResource GreyFriendBrushLight5}" />
                                                 <TextBlock Text="{Binding Exercise.Score}"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Top"
                                                            FontFamily="Inter"
-                                                           FontSize="14" />
+                                                           FontSize="14"
+                                                           Foreground="{DynamicResource GreyFriendBrushLight5}" />
                                             </StackPanel>
 
                                             <!-- Is Passed. -->
@@ -108,12 +139,14 @@
                                                         Margin="5,5,5,0">
                                                 <TextBlock Text="Passed: "
                                                            FontSize="14"
-                                                           FontFamily="Inter" />
+                                                           FontFamily="Inter"
+                                                           Foreground="{DynamicResource GreyFriendBrushLight5}" />
                                                 <TextBlock Text="{Binding IsCorrect}"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Top"
                                                            FontFamily="Inter"
-                                                           FontSize="14" />
+                                                           FontSize="14"
+                                                           Foreground="{DynamicResource GreyFriendBrushLight5}" />
                                             </StackPanel>
 
                                             <!-- Entered Code. -->
@@ -121,27 +154,35 @@
                                                         Margin="5,5,5,0">
                                                 <TextBlock Text="Answer: "
                                                            FontSize="14"
-                                                           FontFamily="Inter" />
+                                                           FontFamily="Inter"
+                                                           Foreground="{DynamicResource GreyFriendBrushLight5}" />
                                                 <Border Margin="5"
                                                         BorderThickness="1"
-                                                        BorderBrush="#eee"
+                                                        BorderBrush="{DynamicResource GreyFriendBrushLight}"
                                                         CornerRadius="10"
-                                                        Padding="5">
+                                                        Padding="5"
+                                                        MaxWidth="800">
                                                     <TextBlock Text="{Binding Answer}"
                                                                FontFamily="Consolas"
-                                                               FontSize="14" />
+                                                               FontSize="14"
+                                                               Padding="2"
+                                                               Foreground="{DynamicResource GreyFriendBrushLight5}"
+                                                               MaxWidth="800"
+                                                               TextAlignment="Left" />
                                                 </Border>
                                             </StackPanel>
-                                            
+
                                         </StackPanel>
                                     </Border>
+
                                     <!-- ListItem Separator -->
-                                    <Border Height="1"
-                                            Grid.Row="1"
+                                    <Border Grid.Row="1"
+                                            Height="1"
                                             Grid.ColumnSpan="2"
-                                            Background="#ccc"
-                                            DockPanel.Dock="Bottom"
-                                            Margin="5,10,5,0"/>
+                                            Background="{DynamicResource GreyFriendBrushDark4}"
+                                            Margin="5,10,5,0"
+                                            HorizontalAlignment="Stretch"
+                                            DockPanel.Dock="Bottom" />
                                 </Grid>
 
                             </DataTemplate>
@@ -163,59 +204,48 @@
                         </ListView.ItemContainerStyle>
                     </ListView>
                 </StackPanel>
-
-                <!-- The Testing has been finished. -->
-                <StackPanel Margin="15,0,0,0"
-                            Grid.Row="2">
-                    <StackPanel Margin="5">
-                        <TextBlock x:Name="txt_PageHeader"
-                                   Grid.Row="0"
-                                   Text="The Testing has been finished"
-                                   HorizontalAlignment="Left"
-                                   FontSize="20"
-                                   TextWrapping="Wrap"
-                                   FontFamily="Inter"
-                                   Foreground="{StaticResource GreyFriendBrushDark}"
-                                   LineStackingStrategy="BlockLineHeight"
-                                   LineHeight="30" />
-                    </StackPanel>
-                </StackPanel>
-
-                <!-- Score. -->
-                <DockPanel HorizontalAlignment="Left"
-                           Grid.Row="3"
-                           Margin="20,5,10,0">
-                    <TextBlock Text="Your score: "
-                               FontWeight="Bold"
-                               FontSize="16"
-                               FontFamily="Inter"
-                               Foreground="{StaticResource PrimaryBrush}" />
-                    <TextBlock x:Name="txt_Score"
-                               FontWeight="Bold"
-                               FontSize="16"
-                               FontFamily="Inter"
-                               Foreground="{StaticResource PrimaryBrush}" />
-                </DockPanel>
-
-                <!-- Close. -->
-                <DockPanel Grid.Row="4"
-                           HorizontalAlignment="Right"
-                           Margin="20,0,20,20">
-                    <Button x:Name="btn_Close"
-                            Template="{StaticResource Button}"
-                            Content="Close"
-                            Margin="5"
-                            Click="btn_Close_Click" />
-                </DockPanel>
             </Grid>
-            
-            <Border.BitmapEffect>
-                <DropShadowBitmapEffect Color="Black"
-                                        Direction="270"
-                                        ShadowDepth="5"
-                                        Opacity="0.08"
-                                        Softness="4" />
-            </Border.BitmapEffect>
         </Border>
+
+        <!-- Separator -->
+        <Border Grid.Row="3"
+                Background="{DynamicResource GreyFriendBrushDark5}"
+                HorizontalAlignment="Stretch" 
+                Margin="25,0,25,0"/>
+
+        <Grid Grid.Row="4"
+              Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Score. -->
+            <DockPanel Grid.Column="0"
+                       Margin="20,15,0,0">
+                <TextBlock Text="Your score: "
+                           FontWeight="Bold"
+                           FontSize="16"
+                           FontFamily="Inter"
+                           Foreground="{StaticResource GreyFriendBrushLight5}" />
+                <TextBlock x:Name="txt_Score"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           FontFamily="Inter"
+                           Foreground="{StaticResource GreyFriendBrushLight5}" />
+            </DockPanel>
+
+            <!-- Close. -->
+            <DockPanel Grid.Column="2"
+                       Margin="20,0,20,20"
+                       HorizontalAlignment="Right">
+                <Button x:Name="btn_Close"
+                        Template="{StaticResource Button}"
+                        Content="Finish"
+                        Margin="5"
+                        Click="btn_Close_Click" />
+            </DockPanel>
+        </Grid>
     </Grid>
 </Page>

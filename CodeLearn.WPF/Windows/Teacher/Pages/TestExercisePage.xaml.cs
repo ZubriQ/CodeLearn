@@ -34,7 +34,10 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages
             get => _exercise;
             set
             {
-                if (value == _exercise) return;
+                if (value == _exercise)
+                {
+                    return;
+                }
                 _exercise = value;
                 OnPropertyChanged();
             }
@@ -130,11 +133,11 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages
         {
             if (success)
             {
-                txt_Output.Text = "All tests have been passed successfully.";
+                txt_Output.Text = "All tests passed successfully.";
             }
             else
             {
-                txt_Output.Text = "The code did not pass.";
+                txt_Output.Text = "Tests failed.";
             }
         }
 
