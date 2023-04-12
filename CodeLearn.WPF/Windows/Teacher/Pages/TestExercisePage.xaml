@@ -75,11 +75,10 @@
 
             <!-- Method -->
             <Filter:SearchComboBox x:Name="scb_SearchComboBox"
-                                        Margin="5"
-                                        FilterName="Method"
-                                        DisplayMemberPath="ShortDescription"
-                                        SelectionChanged="scb_SearchComboBox_SelectionChanged"/>
-
+                                   Margin="5"
+                                   FilterName="Method"
+                                   DisplayMemberPath="ShortDescription"
+                                   SelectionChanged="scb_SearchComboBox_SelectionChanged" />
         </DockPanel>
 
 

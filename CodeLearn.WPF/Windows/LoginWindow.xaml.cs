@@ -109,32 +109,68 @@ namespace CodeLearn.WPF.Windows
         #endregion
 
         #region Log In
-        private void btn_LogIn_Click(object sender, RoutedEventArgs e)
+        private async void btn_LogIn_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedMode == LoginMode.Student)
             {
-                SignInAsStudent();
+                await SignInAsStudent();
             }
             else
             {
-                SignInAsTeacher();
+                await SignInAsTeacher();
             }
         }
 
-        private void SignInAsStudent()
+        private async Task SignInAsStudent()
         {
-            var user = App.DB.SignInAsStudent(uc_UsernameControl.Username, 
-                                              uc_PasswordControl.Password);
-            if (user != null)
+            var user = await App.UserManager.FindByNameAsync(uc_UsernameControl.Username);
+            if (user != null && await App.UserManager.CheckPasswordAsync(user, uc_PasswordControl.Password))
             {
-                App.Student = user;
-                OpenControlWindow();
+                var student = await App.DB.GetStudentByUserId(user.Id);
+                if (student != null)
+                {
+                    App.Student = student;
+                    OpenControlWindow();
+                }
             }
             else
             {
                 MessageBox.Show(_invalidCredentials);
             }
         }
+
+        private async Task SignInAsTeacher()
+        {
+            var user = await App.UserManager.FindByNameAsync(uc_UsernameControl.Username);
+            if (user != null && await App.UserManager.CheckPasswordAsync(user, uc_PasswordControl.Password))
+            {
+                var teacher = await App.DB.GetTeacherByUserId(user.Id);
+                if (teacher != null)
+                {
+                    App.Teacher = teacher;
+                    OpenControlWindow();
+                }
+            }
+            else
+            {
+                MessageBox.Show(_invalidCredentials);
+            }
+        }
+
+        //private void SignInAsStudent()
+        //{
+        //    var user = App.DB.SignInAsStudent(uc_UsernameControl.Username, 
+        //                                      uc_PasswordControl.Password);
+        //    if (user != null)
+        //    {
+        //        App.Student = user;
+        //        OpenControlWindow();
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show(_invalidCredentials);
+        //    }
+        //}
 
         private void OpenControlWindow()
         {
@@ -143,20 +179,20 @@ namespace CodeLearn.WPF.Windows
             Close();
         }
 
-        private void SignInAsTeacher()
-        {
-            var user = App.DB.SignInAsTeacher(uc_UsernameControl.Username,
-                                              uc_PasswordControl.Password);
-            if (user != null)
-            {
-                App.Teacher = user;
-                OpenControlWindow();
-            }
-            else
-            {
-                MessageBox.Show(_invalidCredentials);
-            }
-        }
+        //private void SignInAsTeacher()
+        //{
+        //    var user = App.DB.SignInAsTeacher(uc_UsernameControl.Username,
+        //                                      uc_PasswordControl.Password);
+        //    if (user != null)
+        //    {
+        //        App.Teacher = user;
+        //        OpenControlWindow();
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show(_invalidCredentials);
+        //    }
+        //}
         #endregion
     }
 }

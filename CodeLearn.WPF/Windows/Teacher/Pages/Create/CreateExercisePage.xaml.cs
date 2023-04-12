@@ -23,8 +23,10 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages.Create
     public partial class CreateExercisePage : Page
     {
         #region Properties
+
         public Exercise Exercise { get; set; } = new Exercise();
-        public TestMethodInfo TestMethodInfo { get; set; } = new TestMethodInfo();
+        public TestMethodInfo TestMethodInfo { get; set; } = new();
+
         /// <summary>
         /// Method parameters' data types.
         /// </summary>
@@ -38,9 +40,11 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages.Create
             }
         }
         public WindowSettings WindowSettings { get; set; } = new();
+
         #endregion
 
         #region Initialization
+
         public CreateExercisePage()
         {
             InitializeComponent();
@@ -96,9 +100,11 @@ public static double GetNumber(double a)
     // return a;
 }";
         }
+
         #endregion
 
         #region Method parameters
+
         private void btn_AddMethodParameter_Click(object sender, RoutedEventArgs e)
         {
             if (TestMethodInfo.TestCases.Count > 0)
@@ -130,9 +136,11 @@ public static double GetNumber(double a)
                 TestMethodInfo.TestMethodParameters.Remove(TestMethodInfo.TestMethodParameters.Last());
             }
         }
+
         #endregion
 
         #region Test Cases
+
         private void btn_AddTestMethodParameter_Click(object sender, RoutedEventArgs e)
         {
             if (IsTestCaseAddable())
@@ -162,9 +170,11 @@ public static double GetNumber(double a)
             if (contex is TestCase)
                 TestMethodInfo.TestCases.Remove(contex as TestCase);
         }
+
         #endregion
 
         #region Insert and save the exercise into the db
+
         private void btn_Submit_Click(object sender, RoutedEventArgs e)
         {
             InitializeParametersPositions();
@@ -179,6 +189,7 @@ public static double GetNumber(double a)
             foreach (var parameter in TestMethodInfo.TestMethodParameters)
                 parameter.Position = i++;
         }
+
         #endregion
 
         #region Result placeholders

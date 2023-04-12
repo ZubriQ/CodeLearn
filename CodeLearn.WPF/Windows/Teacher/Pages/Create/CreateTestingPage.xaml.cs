@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,9 +27,17 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages.Create
         private CreateTestingSettings _settings;
 
         #region Properties
-        public Testing Testing { get; set; } = new Testing();
+
+        public Testing Testing { get; set; } = new();
+
         public static ObservableCollection<Exercise> AvailableExercises { get; set; } = new();
-        public List<int> Duration { get; set; } = new List<int>();
+
+        public ObservableCollection<ExerciseViewModel> SelectedExerciseViewModels { get; set; } = new();
+
+        // TODO: Update DB when adding new elements in all windows
+
+        public List<int> Duration { get; set; } = new();
+
         public int SelectedDuration
         {
             get
@@ -35,10 +45,13 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages.Create
                 return (int)cb_Duration.SelectedItem;
             }
         }
+
         public WindowSettings WindowSettings { get; set; } = new();
+
         #endregion
 
         #region Initialization
+
         public CreateTestingPage()
         {
             InitializeComponent();
@@ -79,26 +92,34 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages.Create
             App.DB.InitializeTestingExercises(AvailableExercises);
         }
 
-
         public void InitializeTestingExercises()
         {
             Testing.Exercises = new ObservableCollection<Exercise>();
         }
+
         #endregion
 
         #region Exercise, Testing buttons
+
         private void btn_AddExercise_Click(object sender, RoutedEventArgs e)
         {
-            Testing.Exercises.Add(new Exercise());
+            if (AvailableExercises.Count > 0 && SelectedExerciseViewModels.Count < AvailableExercises.Count)
+            {
+                SelectedExerciseViewModels.Add(
+                    new ExerciseViewModel { SelectedExercise = AvailableExercises.First() });
+            }
         }
 
-        private void btn_RemoveExercise_Click(object sender, RoutedEventArgs e)
-        {
-            var s = sender as Button;
-            var contex = s.DataContext;
-            if (contex is Exercise)
-                Testing.Exercises.Remove(contex as Exercise);
-        }
+        //private void btn_RemoveExercise_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (sender is Button button)
+        //    {
+        //        if (button.DataContext is Exercise exercise)
+        //        {
+        //            SelectedExercises.Remove(exercise);
+        //        }
+        //    }
+        //}
 
         private void btn_Submit_Click(object sender, RoutedEventArgs e)
         {
@@ -111,11 +132,21 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages.Create
         private void ObtainTestingData()
         {
             Testing.DurationInMinutes = SelectedDuration;
+            Testing.Exercises = new ObservableCollection<Exercise>(SelectedExerciseViewModels.Select(x => x.SelectedExercise));
             if (App.Teacher != null)
             {
                 Testing.TestCreator = App.Teacher;
             }
         }
+
         #endregion
+
+        private void btn_RemoveExercise_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (SelectedExerciseViewModels.Count > 0)
+            {
+                SelectedExerciseViewModels.Remove(SelectedExerciseViewModels.First());
+            }
+        }
     }
 }

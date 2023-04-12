@@ -15,11 +15,11 @@ namespace CodeLearn.Db
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         public int DurationInMinutes { get; set; }
-        public int? TestCreatorId { get; set; }
 
+        public string? TestCreatorId { get; set; }
         public virtual Teacher? TestCreator { get; set; }
-        public virtual ICollection<TestingResult> TestingResults { get; set; }
 
+        public virtual ICollection<TestingResult> TestingResults { get; set; }
         public virtual ICollection<Exercise> Exercises { get; set; }
     }
 }

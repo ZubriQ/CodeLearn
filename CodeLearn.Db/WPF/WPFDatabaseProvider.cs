@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Reflection.Metadata;
 
@@ -7,6 +8,8 @@ namespace CodeLearn.Db.WPF
     public class WPFDatabaseProvider
     {
         public CodeLearnContext _context = new();
+        private readonly UserManager<ApplicationUser> _userManager;
+
 
         #region Teacher windows' properties
         /// <summary>
@@ -24,13 +27,16 @@ namespace CodeLearn.Db.WPF
         public List<Testing> Courses { get; set; }
         #endregion
 
-        public WPFDatabaseProvider()
+        public WPFDatabaseProvider(UserManager<ApplicationUser> userManager)
         {
             // TODO: Class coding (only method coding allowed).
             ExerciseTypes = _context.ExerciseTypes.Where(e => e.Name != "Question" &&
                                                          e.Name != "Class coding").ToList();
             MethodDataTypes = _context.DataTypes.ToList();
             Courses = _context.Testings.ToList();
+
+            // User Identity usage
+            _userManager = userManager;
         }
 
         #region Initializing default data methods for CreateExerciseWindow
@@ -82,7 +88,7 @@ namespace CodeLearn.Db.WPF
 
         public Exercise GetTestExercise()
         {
-            return _context.Exercises.First(s => s.Id == 1002);
+            return _context.Exercises.First();
         }
 
         public List<Testing> GetCourses()
@@ -92,7 +98,7 @@ namespace CodeLearn.Db.WPF
 
         public Student GetTestStudent()
         {
-            return _context.Students.First(s => s.Id == 1);
+            return _context.Students.First();
         }
 
         public void SaveTestingResult(TestingResult result)
@@ -116,33 +122,72 @@ namespace CodeLearn.Db.WPF
             }
         }
 
-        public Teacher? SignInAsTeacher(string username, string password)
+        //public Teacher? SignInAsTeacher(string username, string password)
+        //{
+        //    var user = _context.Teachers.FirstOrDefault(t => t.Email == username);
+        //    if (user == null)
+        //    {
+        //        return null;
+        //    }
+        //    else if (user.Password == password)
+        //    {
+        //        return user;
+        //    }
+        //    return null;
+        //}
+
+        //public Student? SignInAsStudent(string username, string password)
+        //{
+        //    var user = _context.Students.FirstOrDefault(t => t.Username == username);
+        //    if (user == null)
+        //    {
+        //        return null;
+        //    }
+        //    else if (user.Password == password)
+        //    {
+        //        return user;
+        //    }
+        //    return null;
+        //}
+
+        public async Task<Teacher?> SignInAsTeacherAsync(string username, string password)
         {
-            var user = _context.Teachers.FirstOrDefault(t => t.Username == username);
+            var user = _context.Teachers.FirstOrDefault(t => t.Email == username);
             if (user == null)
             {
                 return null;
             }
-            else if (user.Password == password)
+            else if (await _userManager.CheckPasswordAsync(user, password))
             {
                 return user;
             }
             return null;
         }
 
-        public Student? SignInAsStudent(string username, string password)
+        public async Task<Student?> SignInAsStudentAsync(string username, string password)
         {
-            var user = _context.Students.FirstOrDefault(t => t.Username == username);
+            var user = _context.Students.FirstOrDefault(t => t.UserName == username);
             if (user == null)
             {
                 return null;
             }
-            else if (user.Password == password)
+            else if (await _userManager.CheckPasswordAsync(user, password))
             {
                 return user;
             }
             return null;
         }
+
+        public async Task<Student?> GetStudentByUserId(string userId)
+        {
+            return await _context.Students.FirstOrDefaultAsync(s => s.Id == userId);
+        }
+
+        public async Task<Teacher?> GetTeacherByUserId(string userId)
+        {
+            return await _context.Teachers.FirstOrDefaultAsync(t => t.Id == userId);
+        }
+
 
         public ICollection<TestingResult>? GetTestingResults()
         {

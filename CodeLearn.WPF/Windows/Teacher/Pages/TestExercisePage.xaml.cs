@@ -66,7 +66,6 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages
 
         private void sb_SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int k = 0;
             if (sb_SearchBar.SearchText.Length > 3)
             {
                 var exercises = _exercises?.Where(e => e.ShortDescription.ToLower()
@@ -140,7 +139,5 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages
                 txt_Output.Text = "Tests failed.";
             }
         }
-
-
     }
 }

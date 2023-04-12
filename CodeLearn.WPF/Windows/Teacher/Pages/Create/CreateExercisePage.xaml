@@ -288,9 +288,10 @@
                                 <DataTemplate>
                                     <ComboBox ItemsSource="{Binding Source={x:Static local:CreateExercisePage.ParameterDataTypes}}"
                                               SelectedItem="{Binding DataType}"
+                                              DisplayMemberPath="ShortName"
+                                              
                                               ItemContainerStyle="{DynamicResource theComboBoxItem}"
                                               Style="{DynamicResource theComboBox}"
-                                              DisplayMemberPath="ShortName"
                                               Margin="4"
                                               MinWidth="42"
                                               Height="25"

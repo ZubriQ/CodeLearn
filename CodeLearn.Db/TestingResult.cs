@@ -12,7 +12,7 @@ namespace CodeLearn.Db
 
         public int Id { get; set; }
         public int TestingId { get; set; }
-        public int StudentId { get; set; }
+        public string StudentId { get; set; }
         public int Score { get; set; }
         public DateTime PassingDate { get; set; }
 

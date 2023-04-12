@@ -18,6 +18,7 @@ namespace CodeLearn.Db
 
         public virtual Exercise Exercise { get; set; } = null!;
         public virtual DataType ReturnType { get; set; } = null!;
+
         public virtual ICollection<TestCase> TestCases { get; set; }
         public virtual ICollection<TestMethodParameter> TestMethodParameters { get; set; }
     }

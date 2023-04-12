@@ -171,18 +171,25 @@ namespace CodeLearn.Db
     /// </summary>
     public partial class Testing : INotifyPropertyChanged
     {
+        private ICollection<Exercise> _exercisesNotifiable;
+
         [NotMapped]
         public ICollection<Exercise> ExercisesNotifiable
         {
             get
             {
-                return Exercises;
+                return _exercisesNotifiable;
             }
             set
             {
-                if (value != Exercises)
+                if (value != _exercisesNotifiable)
                 {
-                    Exercises = value;
+                    _exercisesNotifiable = value;
+                    Exercises.Clear();
+                    foreach (var exercise in _exercisesNotifiable)
+                    {
+                        Exercises.Add(exercise);
+                    }
                     OnPropertyChanged();
                 }
             }
@@ -193,6 +200,30 @@ namespace CodeLearn.Db
         public void OnPropertyChanged([CallerMemberName] string propName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+    }
+
+    public class ExerciseViewModel : INotifyPropertyChanged
+    {
+        private Exercise _selectedExercise;
+        public Exercise SelectedExercise
+        {
+            get { return _selectedExercise; }
+            set
+            {
+                if (_selectedExercise != value)
+                {
+                    _selectedExercise = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
     #endregion

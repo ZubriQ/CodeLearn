@@ -135,7 +135,18 @@
                                 Grid.Row="1"
                                 Content="Add"
                                 HorizontalAlignment="Left"
-                                Click="btn_AddExercise_Click" />
+                                Click="btn_AddExercise_Click"
+                                Margin="5,0,0,0" />
+
+                        <Button x:Name="btn_RemoveExercise"
+                                Template="{StaticResource RemoveCommandButton}"
+                                HorizontalAlignment="Left"
+                                Margin="5,0,0,0"
+                                Click="btn_RemoveExercise_Click_1">
+                            <TextBlock Text="Remove"
+                                       Foreground="White"
+                                       FontSize="14" />
+                        </Button>
                     </DockPanel>
 
                     <Border BorderThickness="0.3"
@@ -147,19 +158,18 @@
 
                         <!-- Exercise List -->
                         <ItemsControl x:Name="ic_Exercises"
-                                      ItemsSource="{Binding Path=Testing.Exercises}"
+                                      ItemsSource="{Binding SelectedExerciseViewModels}"
                                       MinHeight="44">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <DockPanel>
 
-
                                         <!-- Exercise -->
                                         <ComboBox ItemsSource="{Binding Source={x:Static local:CreateTestingPage.AvailableExercises}}"
-                                                  SelectedItem="{Binding Exercise}"
+                                                  SelectedItem="{Binding SelectedExercise}"
+                                                  DisplayMemberPath="ShortDescription"
                                                   ItemContainerStyle="{DynamicResource theComboBoxItem}"
                                                   Style="{DynamicResource theComboBox}"
-                                                  DisplayMemberPath="ShortDescription"
                                                   Margin="4"
                                                   MinWidth="140"
                                                   MaxWidth="288"
@@ -169,8 +179,7 @@
                                                   FontSize="14"
                                                   BorderThickness="0" />
 
-
-                                        <!-- Remove Button. -->
+                                        <!-- Remove Button. --><!--
                                         <Button x:Name="btn_RemoveExercise"
                                                 Click="btn_RemoveExercise_Click"
                                                 Template="{StaticResource RemoveCommandButton}"
@@ -178,7 +187,7 @@
                                             <TextBlock Text="Remove"
                                                        Foreground="White"
                                                        FontSize="14" />
-                                        </Button>
+                                        </Button>-->
                                     </DockPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
