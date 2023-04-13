@@ -54,7 +54,6 @@
                       Grid.Row="2"
                       Margin="10,0,5,0">
             <ItemsControl x:Name="ic_Courses"
-                          
                           Background="Transparent"
                           d:ItemsSource="{d:SampleData ItemCount=3}"
                           HorizontalAlignment="Center">

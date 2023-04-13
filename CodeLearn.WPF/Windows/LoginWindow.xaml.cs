@@ -109,6 +109,7 @@ namespace CodeLearn.WPF.Windows
         #endregion
 
         #region Log In
+
         private async void btn_LogIn_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedMode == LoginMode.Student)
@@ -157,21 +158,6 @@ namespace CodeLearn.WPF.Windows
             }
         }
 
-        //private void SignInAsStudent()
-        //{
-        //    var user = App.DB.SignInAsStudent(uc_UsernameControl.Username, 
-        //                                      uc_PasswordControl.Password);
-        //    if (user != null)
-        //    {
-        //        App.Student = user;
-        //        OpenControlWindow();
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show(_invalidCredentials);
-        //    }
-        //}
-
         private void OpenControlWindow()
         {
             ControlWindow window = new ControlWindow(SelectedMode == LoginMode.Teacher);
@@ -179,20 +165,15 @@ namespace CodeLearn.WPF.Windows
             Close();
         }
 
-        //private void SignInAsTeacher()
-        //{
-        //    var user = App.DB.SignInAsTeacher(uc_UsernameControl.Username,
-        //                                      uc_PasswordControl.Password);
-        //    if (user != null)
-        //    {
-        //        App.Teacher = user;
-        //        OpenControlWindow();
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show(_invalidCredentials);
-        //    }
-        //}
         #endregion
+
+        private void uc_PasswordControl_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                // Call your desired method when the Enter key is pressed
+                btn_LogIn_Click(sender, e);
+            }
+        }
     }
 }

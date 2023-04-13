@@ -37,6 +37,7 @@ namespace CodeLearn.WPF.Windows
         public WindowSettings WindowSettings { get; set; } = new();
 
         #region Initialization
+
         public ControlWindow(bool isTeacher)
         {
             SetVisibilitySettings(isTeacher);
@@ -59,7 +60,6 @@ namespace CodeLearn.WPF.Windows
             }
         }
 
-
         // Only for testing.
         public ControlWindow()
         {
@@ -70,7 +70,6 @@ namespace CodeLearn.WPF.Windows
             _lastPressedButton = btn_Dashboard;
         }
 
-
         private void InitializePages()
         {
             pages.Add("btn_Dashboard", new DashboardPage());
@@ -80,18 +79,20 @@ namespace CodeLearn.WPF.Windows
             pages.Add("btn_CreateExercise", new CreateExercisePage());
             pages.Add("btn_CreateTesting", new CreateTestingPage());
 
-            pages.Add("btn_Exercises", new ExercisesPage());
-            pages.Add("btn_Testings", new TestingsPage());
-            pages.Add("btn_TestingResults", new TestingResultsPage());
+            //pages.Add("btn_Exercises", new ExercisesPage());
+            //pages.Add("btn_Testings", new TestingsPage());
+            //pages.Add("btn_TestingResults", new TestingResultsPage());
         }
 
         private void InitializeHomePage()
         {
             ControlWindowFrame.Navigate(pages["btn_Dashboard"]);
         }
+
         #endregion
 
         #region Verticical ribbon navigation
+
         private void Navigate(object sender, RoutedEventArgs e)
         {
             try
@@ -122,6 +123,7 @@ namespace CodeLearn.WPF.Windows
             _lastPressedButton = button;
             PaletteController.SetMenuButtonPressedColor(_lastPressedButton);
         }
+
         #endregion
 
         #region Basic UI methods

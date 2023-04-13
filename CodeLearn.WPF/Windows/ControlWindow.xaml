@@ -155,9 +155,11 @@
                     
                     
                     <!-- Catalogs data viewing -->
-                    <StackPanel Visibility="{Binding WindowSettings.Visibility}">
+                    <!--
+                    <StackPanel Visibility="{Binding WindowSettings.Visibility}">-->
                         
                         <!-- Separator -->
+                    <!--
                         <Border Height="1"
                                 Background="{DynamicResource GreyFriendBrushDark3}"
                                 Margin="0,0,0,5" />
@@ -184,7 +186,7 @@
                                 Foreground="Transparent"
                                 HorizontalAlignment="Stretch"
                                 Click="Navigate" />
-                    </StackPanel>
+                    </StackPanel> -->
 
                 </StackPanel>
             </Border>

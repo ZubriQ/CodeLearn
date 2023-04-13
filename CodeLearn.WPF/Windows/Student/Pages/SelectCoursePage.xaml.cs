@@ -24,6 +24,7 @@ namespace CodeLearn.WPF.Windows.Student.Pages
         public SelectCoursePage()
         {
             InitializeComponent();
+
             ic_Courses.ItemsSource = App.DB.GetCourses();
         }
 

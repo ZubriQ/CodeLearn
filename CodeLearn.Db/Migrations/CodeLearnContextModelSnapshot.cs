@@ -3,8 +3,8 @@ using System;
 using CodeLearn.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -17,88 +17,83 @@ namespace CodeLearn.Db.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.11")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("ProductVersion", "6.0.16")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("CodeLearn.Db.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("id");
+                        .HasColumnType("text");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("first_name");
+                        .HasColumnType("text");
 
                     b.Property<int?>("GroupId")
-                        .IsRequired()
-                        .HasColumnType("int")
-                        .HasColumnName("group_id");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsTeacher")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("last_name");
+                        .HasColumnType("text");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Patronymic")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("patronymic");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -107,36 +102,32 @@ namespace CodeLearn.Db.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("CodeLearn.Db.DataType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.Property<string>("ShortName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("short_name");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("data_type", (string)null);
+                    b.ToTable("DataTypes");
 
                     b.HasData(
                         new
@@ -253,61 +244,45 @@ namespace CodeLearn.Db.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClassName")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("class_name");
+                        .HasColumnType("text");
 
                     b.Property<string>("CodingArea")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)")
-                        .HasColumnName("coding_area");
+                        .HasColumnType("text");
 
                     b.Property<string>("Context")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("context");
+                        .HasColumnType("text");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)")
-                        .HasColumnName("description");
+                        .HasColumnType("text");
 
                     b.Property<int>("ExerciseTypeId")
-                        .HasColumnType("int")
-                        .HasColumnName("exercise_type_id");
+                        .HasColumnType("integer");
 
                     b.Property<string>("OptionalDlls")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("optional_dlls");
+                        .HasColumnType("text");
 
                     b.Property<string>("OptionalUsings")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("optional_usings");
+                        .HasColumnType("text");
 
                     b.Property<int>("Score")
-                        .HasColumnType("int")
-                        .HasColumnName("score");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)")
-                        .HasColumnName("short_description");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ExerciseTypeId");
 
-                    b.ToTable("exercise", (string)null);
+                    b.ToTable("Exercises");
 
                     b.HasData(
                         new
@@ -338,20 +313,17 @@ namespace CodeLearn.Db.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("exercise_type", (string)null);
+                    b.ToTable("ExerciseTypes");
 
                     b.HasData(
                         new
@@ -375,24 +347,20 @@ namespace CodeLearn.Db.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.Property<int>("Year")
-                        .HasColumnType("int")
-                        .HasColumnName("year");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("group", (string)null);
+                    b.ToTable("Groups");
 
                     b.HasData(
                         new
@@ -407,26 +375,22 @@ namespace CodeLearn.Db.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Result")
                         .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)")
-                        .HasColumnName("result");
+                        .HasColumnType("text");
 
                     b.Property<int>("TestMethodId")
-                        .HasColumnType("int")
-                        .HasColumnName("test_method_id");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TestMethodId");
 
-                    b.ToTable("test_cases", (string)null);
+                    b.ToTable("TestCases");
 
                     b.HasData(
                         new
@@ -459,30 +423,25 @@ namespace CodeLearn.Db.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Position")
-                        .HasColumnType("int")
-                        .HasColumnName("position");
+                        .HasColumnType("integer");
 
                     b.Property<int>("TestCaseId")
-                        .HasColumnType("int")
-                        .HasColumnName("test_case_id");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)")
-                        .HasColumnName("value");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TestCaseId");
 
-                    b.ToTable("test_case_parameters", (string)null);
+                    b.ToTable("TestCaseParameters");
 
                     b.HasData(
                         new
@@ -533,67 +492,63 @@ namespace CodeLearn.Db.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)")
-                        .HasColumnName("description");
+                        .HasColumnType("text");
 
                     b.Property<int>("DurationInMinutes")
-                        .HasColumnType("int")
-                        .HasColumnName("duration_in_minutes");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.Property<string>("TestCreatorId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("test_creator_id");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TestCreatorId");
 
-                    b.ToTable("testing", (string)null);
+                    b.ToTable("Testings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Простой пример теста по программированию на языке C#",
+                            DurationInMinutes = 50,
+                            Name = "Тест",
+                            TestCreatorId = "6d7b1efe-cd56-48c3-9ab6-7e4d0205851a"
+                        });
                 });
 
             modelBuilder.Entity("CodeLearn.Db.TestingAnswer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Answer")
-                        .HasColumnType("text")
-                        .HasColumnName("answer");
+                        .HasColumnType("text");
 
                     b.Property<int>("ExerciseId")
-                        .HasColumnType("int")
-                        .HasColumnName("exercise_id");
+                        .HasColumnType("integer");
 
                     b.Property<string>("FailureInfo")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("failure_info");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsCorrect")
-                        .HasColumnType("bit")
-                        .HasColumnName("is_correct");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("TestingResultId")
-                        .HasColumnType("int")
-                        .HasColumnName("testing_result_id");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -601,34 +556,29 @@ namespace CodeLearn.Db.Migrations
 
                     b.HasIndex("TestingResultId");
 
-                    b.ToTable("testing_answer", (string)null);
+                    b.ToTable("TestingAnswers");
                 });
 
             modelBuilder.Entity("CodeLearn.Db.TestingResult", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("PassingDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("passing_date");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Score")
-                        .HasColumnType("int")
-                        .HasColumnName("score");
+                        .HasColumnType("integer");
 
                     b.Property<string>("StudentId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("student_id");
+                        .HasColumnType("text");
 
                     b.Property<int>("TestingId")
-                        .HasColumnType("int")
-                        .HasColumnName("testing_id");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -636,31 +586,26 @@ namespace CodeLearn.Db.Migrations
 
                     b.HasIndex("TestingId");
 
-                    b.ToTable("testing_result", (string)null);
+                    b.ToTable("TestingResults");
                 });
 
             modelBuilder.Entity("CodeLearn.Db.TestMethodInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ExerciseId")
-                        .HasColumnType("int")
-                        .HasColumnName("exercise_id");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.Property<int>("ReturnTypeId")
-                        .HasColumnType("int")
-                        .HasColumnName("return_type_id");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -668,7 +613,7 @@ namespace CodeLearn.Db.Migrations
 
                     b.HasIndex("ReturnTypeId");
 
-                    b.ToTable("test_method_info", (string)null);
+                    b.ToTable("TestMethodInfos");
 
                     b.HasData(
                         new
@@ -691,22 +636,18 @@ namespace CodeLearn.Db.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DataTypeId")
-                        .HasColumnType("int")
-                        .HasColumnName("data_type_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Position")
-                        .HasColumnType("int")
-                        .HasColumnName("position");
+                        .HasColumnType("integer");
 
                     b.Property<int>("TestMethodInfoId")
-                        .HasColumnType("int")
-                        .HasColumnName("test_method_info_id");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -714,7 +655,7 @@ namespace CodeLearn.Db.Migrations
 
                     b.HasIndex("TestMethodInfoId");
 
-                    b.ToTable("test_method_parameters", (string)null);
+                    b.ToTable("TestMethodParameters");
 
                     b.HasData(
                         new
@@ -740,29 +681,55 @@ namespace CodeLearn.Db.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ExerciseTesting", b =>
+                {
+                    b.Property<int>("CoursesId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ExercisesId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("CoursesId", "ExercisesId");
+
+                    b.HasIndex("ExercisesId");
+
+                    b.ToTable("ExerciseTesting");
+
+                    b.HasData(
+                        new
+                        {
+                            CoursesId = 1,
+                            ExercisesId = 1
+                        },
+                        new
+                        {
+                            CoursesId = 1,
+                            ExercisesId = 2
+                        });
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -771,19 +738,19 @@ namespace CodeLearn.Db.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -796,19 +763,19 @@ namespace CodeLearn.Db.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -820,17 +787,17 @@ namespace CodeLearn.Db.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -842,10 +809,10 @@ namespace CodeLearn.Db.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -857,37 +824,20 @@ namespace CodeLearn.Db.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("TestingExercise", b =>
-                {
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int")
-                        .HasColumnName("course_id");
-
-                    b.Property<int>("ExerciseId")
-                        .HasColumnType("int")
-                        .HasColumnName("exercise_id");
-
-                    b.HasKey("CourseId", "ExerciseId");
-
-                    b.HasIndex("ExerciseId");
-
-                    b.ToTable("testing_exercise", (string)null);
                 });
 
             modelBuilder.Entity("CodeLearn.Db.Student", b =>
@@ -896,14 +846,14 @@ namespace CodeLearn.Db.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("student", (string)null);
+                    b.HasDiscriminator().HasValue("Student");
 
                     b.HasData(
                         new
                         {
-                            Id = "a3b34355-c2e0-402d-99e0-7c3d37dcc959",
+                            Id = "06fb23b5-d1b7-4b1a-88ce-de8b3d07b590",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "063920bb-eaa9-4f30-bcc2-d881c90dc354",
+                            ConcurrencyStamp = "6da48604-7c2e-4524-aeb1-8c69809ab409",
                             Email = "student@example.com",
                             EmailConfirmed = true,
                             FirstName = "studentFirstName",
@@ -913,9 +863,9 @@ namespace CodeLearn.Db.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "STUDENT@EXAMPLE.COM",
                             NormalizedUserName = "STUDENT",
-                            PasswordHash = "AQAAAAEAACcQAAAAEL7eUCPFYJbI+JuDj5dCq+dt+S7ncZ2i54iPWDB61i3siAN+YgDZ/VFOs1iPdxxGpg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG43UdrAxe8NZABigo5Y1obxYM5ofLd0is5whEfpudxLM4RVsFDgO4JqnKHcqhdW0w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ad967813-9c21-4e78-96b4-484289e305cd",
+                            SecurityStamp = "5bb2d5a8-9d8f-498e-b9aa-f99d940ce3a0",
                             TwoFactorEnabled = false,
                             UserName = "student"
                         });
@@ -925,26 +875,25 @@ namespace CodeLearn.Db.Migrations
                 {
                     b.HasBaseType("CodeLearn.Db.ApplicationUser");
 
-                    b.ToTable("teacher", (string)null);
+                    b.HasDiscriminator().HasValue("Teacher");
 
                     b.HasData(
                         new
                         {
-                            Id = "0f3ee92e-c737-4f35-adff-b13c32f8897b",
+                            Id = "6d7b1efe-cd56-48c3-9ab6-7e4d0205851a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5a03f73a-6a32-434b-8233-24fd507b4dd4",
+                            ConcurrencyStamp = "e3e73baa-cc33-46c5-840f-767227db1984",
                             Email = "teacher@example.com",
                             EmailConfirmed = true,
                             FirstName = "teacherFirstName",
-                            GroupId = 0,
                             IsTeacher = true,
                             LastName = "teacherLastName",
                             LockoutEnabled = true,
                             NormalizedEmail = "TEACHER@EXAMPLE.COM",
                             NormalizedUserName = "TEACHER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN2w22vIqSGLHwd2vUsJaoo4l4j09ZfN6Ia6dT870LwfBSZGdJF3ZNddnnF3NMB0Dw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELwTchSiLt+9YIun7zirkEREX+EwQRpplg7sjj+GYYZfYMTd5S56zKbuXIe5i/zzTQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8a74d66d-ec81-4301-b11a-ea77a4a5dc62",
+                            SecurityStamp = "d06ed00a-83dd-4b5d-9257-4804c6638c0f",
                             TwoFactorEnabled = false,
                             UserName = "teacher"
                         });
@@ -955,8 +904,8 @@ namespace CodeLearn.Db.Migrations
                     b.HasOne("CodeLearn.Db.ExerciseType", "ExerciseType")
                         .WithMany("Exercises")
                         .HasForeignKey("ExerciseTypeId")
-                        .IsRequired()
-                        .HasConstraintName("FK_Exercises_ExerciseTypes");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ExerciseType");
                 });
@@ -966,8 +915,8 @@ namespace CodeLearn.Db.Migrations
                     b.HasOne("CodeLearn.Db.TestMethodInfo", "TestMethod")
                         .WithMany("TestCases")
                         .HasForeignKey("TestMethodId")
-                        .IsRequired()
-                        .HasConstraintName("FK_test_case_test_method_info");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TestMethod");
                 });
@@ -977,8 +926,8 @@ namespace CodeLearn.Db.Migrations
                     b.HasOne("CodeLearn.Db.TestCase", "TestCase")
                         .WithMany("TestCaseParameters")
                         .HasForeignKey("TestCaseId")
-                        .IsRequired()
-                        .HasConstraintName("FK_Parameters_TestCases");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TestCase");
                 });
@@ -987,8 +936,7 @@ namespace CodeLearn.Db.Migrations
                 {
                     b.HasOne("CodeLearn.Db.Teacher", "TestCreator")
                         .WithMany("Testings")
-                        .HasForeignKey("TestCreatorId")
-                        .HasConstraintName("FK_testing_teacher");
+                        .HasForeignKey("TestCreatorId");
 
                     b.Navigation("TestCreator");
                 });
@@ -998,14 +946,14 @@ namespace CodeLearn.Db.Migrations
                     b.HasOne("CodeLearn.Db.Exercise", "Exercise")
                         .WithMany("TestingAnswers")
                         .HasForeignKey("ExerciseId")
-                        .IsRequired()
-                        .HasConstraintName("FK_testing_answer_exercise");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CodeLearn.Db.TestingResult", "TestingResult")
                         .WithMany("TestingAnswers")
                         .HasForeignKey("TestingResultId")
-                        .IsRequired()
-                        .HasConstraintName("FK_testing_answer_testing_result");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Exercise");
 
@@ -1017,14 +965,14 @@ namespace CodeLearn.Db.Migrations
                     b.HasOne("CodeLearn.Db.Student", "Student")
                         .WithMany("TestingResults")
                         .HasForeignKey("StudentId")
-                        .IsRequired()
-                        .HasConstraintName("FK_testing_result_student");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CodeLearn.Db.Testing", "Testing")
                         .WithMany("TestingResults")
                         .HasForeignKey("TestingId")
-                        .IsRequired()
-                        .HasConstraintName("FK_testing_result_testing");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Student");
 
@@ -1036,14 +984,14 @@ namespace CodeLearn.Db.Migrations
                     b.HasOne("CodeLearn.Db.Exercise", "Exercise")
                         .WithMany("TestMethodInfos")
                         .HasForeignKey("ExerciseId")
-                        .IsRequired()
-                        .HasConstraintName("FK_test_method_info_exercise1");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CodeLearn.Db.DataType", "ReturnType")
                         .WithMany("TestMethodInfos")
                         .HasForeignKey("ReturnTypeId")
-                        .IsRequired()
-                        .HasConstraintName("FK_TestMethodsInfo_DataTypes");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Exercise");
 
@@ -1055,18 +1003,33 @@ namespace CodeLearn.Db.Migrations
                     b.HasOne("CodeLearn.Db.DataType", "DataType")
                         .WithMany("TestMethodParameters")
                         .HasForeignKey("DataTypeId")
-                        .IsRequired()
-                        .HasConstraintName("FK_ParametersTestMethods_DataTypes");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CodeLearn.Db.TestMethodInfo", "TestMethodInfo")
                         .WithMany("TestMethodParameters")
                         .HasForeignKey("TestMethodInfoId")
-                        .IsRequired()
-                        .HasConstraintName("FK_ParametersTestMethods_TestMethodsInfo");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("DataType");
 
                     b.Navigation("TestMethodInfo");
+                });
+
+            modelBuilder.Entity("ExerciseTesting", b =>
+                {
+                    b.HasOne("CodeLearn.Db.Testing", null)
+                        .WithMany()
+                        .HasForeignKey("CoursesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CodeLearn.Db.Exercise", null)
+                        .WithMany()
+                        .HasForeignKey("ExercisesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1120,45 +1083,13 @@ namespace CodeLearn.Db.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TestingExercise", b =>
-                {
-                    b.HasOne("CodeLearn.Db.Testing", null)
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .IsRequired()
-                        .HasConstraintName("FK_testing_exercise_testing");
-
-                    b.HasOne("CodeLearn.Db.Exercise", null)
-                        .WithMany()
-                        .HasForeignKey("ExerciseId")
-                        .IsRequired()
-                        .HasConstraintName("FK_testing_exercise_exercise");
-                });
-
             modelBuilder.Entity("CodeLearn.Db.Student", b =>
                 {
                     b.HasOne("CodeLearn.Db.Group", "Group")
                         .WithMany("Students")
-                        .HasForeignKey("GroupId")
-                        .IsRequired()
-                        .HasConstraintName("FK_student_group");
-
-                    b.HasOne("CodeLearn.Db.ApplicationUser", null)
-                        .WithOne()
-                        .HasForeignKey("CodeLearn.Db.Student", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupId");
 
                     b.Navigation("Group");
-                });
-
-            modelBuilder.Entity("CodeLearn.Db.Teacher", b =>
-                {
-                    b.HasOne("CodeLearn.Db.ApplicationUser", null)
-                        .WithOne()
-                        .HasForeignKey("CodeLearn.Db.Teacher", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CodeLearn.Db.DataType", b =>

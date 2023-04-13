@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Windows;
 
@@ -25,13 +26,16 @@ namespace CodeLearn.WPF
 
             base.OnStartup(e);
 
-            // Read the connection string from App.config
-            string connectionString = ConfigurationManager.ConnectionStrings["CodeLearnDatabase"].ConnectionString;
+            // Read the connection string from SharedSettings project
+            var config = new System.Xml.XmlDocument();
+            config.Load(AppDomain.CurrentDomain.BaseDirectory + "ConnectionStrings.config");
+            string connectionString = config.SelectSingleNode("/connectionStrings/add[@name='CodeLearnDatabase']")!
+                .Attributes!["connectionString"]!.Value;
 
             // Configure the DbContext and Identity services
             var services = new ServiceCollection();
             services.AddDbContext<CodeLearnContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseNpgsql(connectionString));
 
             // Configure the UserManager and RoleManager services
             services.AddScoped<UserManager<ApplicationUser>>();
@@ -46,6 +50,7 @@ namespace CodeLearn.WPF
             // Set the DbContext, UserManager, and RoleManager properties
             UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
             _db = new WPFDatabaseProvider(UserManager);
         }
 
