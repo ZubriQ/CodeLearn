@@ -155,17 +155,15 @@
                     
                     
                     <!-- Catalogs data viewing -->
-                    <!--
-                    <StackPanel Visibility="{Binding WindowSettings.Visibility}">-->
-                        
+                    <StackPanel Visibility="{Binding WindowSettings.Visibility}">
+
                         <!-- Separator -->
-                    <!--
                         <Border Height="1"
                                 Background="{DynamicResource GreyFriendBrushDark3}"
                                 Margin="0,0,0,5" />
 
 
-                        <Button x:Name="btn_Exercises"
+                        <!--<Button x:Name="btn_Exercises"
                                 Content="Exercises"
                                 Template="{StaticResource MenuButton}"
                                 Background="Transparent"
@@ -178,7 +176,7 @@
                                 Background="Transparent"
                                 Foreground="Transparent"
                                 HorizontalAlignment="Stretch"
-                                Click="Navigate" />
+                                Click="Navigate" />-->
                         <Button x:Name="btn_TestingResults"
                                 Content="Tests Results"
                                 Template="{StaticResource MenuButton}"
@@ -186,7 +184,7 @@
                                 Foreground="Transparent"
                                 HorizontalAlignment="Stretch"
                                 Click="Navigate" />
-                    </StackPanel> -->
+                    </StackPanel>
 
                 </StackPanel>
             </Border>

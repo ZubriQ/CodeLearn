@@ -81,7 +81,7 @@ namespace CodeLearn.WPF.Windows
 
             //pages.Add("btn_Exercises", new ExercisesPage());
             //pages.Add("btn_Testings", new TestingsPage());
-            //pages.Add("btn_TestingResults", new TestingResultsPage());
+            pages.Add("btn_TestingResults", new TestingResultsPage());
         }
 
         private void InitializeHomePage()

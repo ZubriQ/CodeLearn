@@ -87,29 +87,87 @@
                   Grid.Row="3"
                   Margin="15"
                   SelectionMode="Single"
-                  Background="Transparent" 
+                  Background="{DynamicResource GreyFriendBrushDark2}"
+                  BorderBrush="{DynamicResource GreyFriendBrushDark4}"
+                  RowBackground="{DynamicResource GreyFriendBrushDark}"
+                  AlternatingRowBackground="{DynamicResource GreyFriendBrushDark3}"
+                  BorderThickness="1"
                   AutoGenerateColumns="False"
                   IsReadOnly="True">
 
+            <DataGrid.Resources>
+
+
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background"
+                            Value="{DynamicResource GreyFriendBrushDark3}" />
+                    <Setter Property="Foreground"
+                            Value="White" />
+                    <Setter Property="BorderThickness"
+                            Value="0.8" />
+                    <Setter Property="BorderBrush"
+                            Value="{DynamicResource GreyFriendBrushDark4}" />
+                    <Setter Property="Padding"
+                            Value="4,2,2,4" />
+
+                    <Setter Property="FontWeight"
+                            Value="DemiBold" />
+                    <Setter Property="FontSize"
+                            Value="15" />
+                </Style>
+
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="Foreground"
+                            Value="{DynamicResource GreyFriendBrushLight5}" />
+                    <Setter Property="BorderBrush"
+                            Value="{DynamicResource GreyFriendBrushLight5}" />
+                    <Setter Property="FontSize"
+                            Value="13" />
+                </Style>
+
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="Background"
+                            Value="Transparent" />
+                    <Setter Property="BorderThickness"
+                            Value="4" />
+                    <Setter Property="BorderBrush"
+                            Value="Transparent" />
+                    <Setter Property="VerticalContentAlignment"
+                            Value="Center" />
+                </Style>
+
+                <Style TargetType="{x:Type ScrollBar}">
+                    <Setter Property="Background"
+                            Value="{DynamicResource GreyFriendBrushDark4}" />
+                    <Setter Property="Foreground"
+                            Value="{DynamicResource GreyFriendBrushDark4}" />
+                    <Setter Property="BorderThickness"
+                            Value="0" />
+                    
+                </Style>
+            </DataGrid.Resources>
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Testing Name"
-                                    Binding="{Binding Path=Testing.Name}" />
-                <DataGridTextColumn Header="Full Name"
+                                    Binding="{Binding Path=Testing.Name}"
+                                    Width="110" />
+                <DataGridTextColumn Header="Student's Full Name"
                                     Binding="{Binding Path=Student.Initials}"
-                                    Width="90" />
-                <DataGridTextColumn Header="Passing Date"
-                                    Binding="{Binding Path=PassingDate, StringFormat=dd.MM.yy}" />
+                                    Width="155"/>
+                <DataGridTextColumn Header="Date"
+                                    Binding="{Binding Path=PassingDate, StringFormat=dd.MM.yy}"
+                                    Width="65" />
                 <DataGridTextColumn Header="Time"
                                     Binding="{Binding Path=PassingDate, StringFormat=HH:mm}"
                                     Width="50" />
                 <DataGridTextColumn Header="Score"
                                     Binding="{Binding Path=Score}"
-                                    Width="*"/>
+                                    Width="*" />
             </DataGrid.Columns>
 
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="5" HorizontalAlignment="Left">
+                    <StackPanel Margin="8" HorizontalAlignment="Left">
                         <DockPanel>
                             <TextBlock Text="Full name: " />
                             <TextBlock Text="{Binding Path=Student.FullName}" />
