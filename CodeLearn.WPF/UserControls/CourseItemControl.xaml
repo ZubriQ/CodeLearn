@@ -67,7 +67,7 @@
                 <!-- Start -->
                 <Button x:Name="btn_StartTesting"
                         Template="{StaticResource StartTestingButton}"
-                        Content="START"
+                        Content="НАЧАТЬ"
                         Height="40"
                         HorizontalAlignment="Stretch"
                         Grid.Row="1"

@@ -1,4 +1,5 @@
 ﻿using CodeLearn.Db;
+using CodeLearn.WPF.Windows.Student.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,14 @@ namespace CodeLearn.WPF.Windows.Teacher.Pages.Catalogs
             dg_TestingResults.ItemsSource = tests;
         }
 
+        private void dg_TestingResults_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //string[] exerciseAnswers = new string[doExercisePages.Length];
+            //Exercise[] exercises = new Exercise[doExercisePages.Length];
+            //ObtainTestingData(exerciseAnswers, exercises);
 
+            //var testingPage = new TestingResultPage(_testing, exercises, exerciseAnswers);
+            //NavigationService.Navigate(testingPage);
+        }
     }
 }

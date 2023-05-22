@@ -19,7 +19,7 @@ namespace CodeLearn.WPF
         protected override void OnStartup(StartupEventArgs e)
         {
 #if DEBUG         
-            StartupUri = new Uri("Windows/ControlWindow.xaml", UriKind.RelativeOrAbsolute);
+            StartupUri = new Uri("Windows/LoginWindow.xaml", UriKind.RelativeOrAbsolute);
 #else
             StartupUri = new Uri("Windows/LoginWindow.xaml", UriKind.RelativeOrAbsolute);
 #endif
@@ -29,7 +29,7 @@ namespace CodeLearn.WPF
             // Read the connection string from SharedSettings project
             var config = new System.Xml.XmlDocument();
             config.Load(AppDomain.CurrentDomain.BaseDirectory + "ConnectionStrings.config");
-            string connectionString = config.SelectSingleNode("/connectionStrings/add[@name='CodeLearnDatabase']")!
+            string connectionString = config.SelectSingleNode("/connectionStrings/add[@name='Supabase']")!
                 .Attributes!["connectionString"]!.Value;
 
             // Configure the DbContext and Identity services

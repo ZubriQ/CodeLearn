@@ -204,7 +204,7 @@ namespace CodeLearn.WPF.Windows.Student.Pages
 
         private void UpdateExerciseTitle()
         {
-            txt_ExerciseNumber.Text = $"Exercise: {currentExerciseIndex + 1}";
+            txt_ExerciseNumber.Text = $"Задание: {currentExerciseIndex + 1}";
         }
         #endregion
 
@@ -265,8 +265,8 @@ namespace CodeLearn.WPF.Windows.Student.Pages
 
         private MessageBoxResult ShowMessageBox()
         {
-            string messageBoxText = "Are you sure you want to complete the test?";
-            string caption = "Submit";
+            string messageBoxText = "Вы уверены, что хотите завершить тестирование?";
+            string caption = "Отправить решение";
             MessageBoxButton button = MessageBoxButton.OKCancel;
             MessageBoxImage icon = MessageBoxImage.Question;
             return MessageBox.Show(messageBoxText, caption, button, icon);

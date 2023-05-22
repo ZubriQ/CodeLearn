@@ -35,7 +35,7 @@
             </Border>
 
             <!-- Header -->
-            <TextBlock Text="Username" 
+            <TextBlock Text="Имя пользователя" 
                        VerticalAlignment="Center"/>
         </DockPanel>
         

@@ -43,7 +43,7 @@
         <StackPanel VerticalAlignment="Center">
             <TextBlock x:Name="txt_PageHeader"
                        Grid.Row="0"
-                       Text="Testing Results"
+                       Text="Результаты тестов"
                        HorizontalAlignment="Center"
                        FontSize="20"
                        TextWrapping="Wrap"
@@ -74,7 +74,7 @@
             
             <!-- Last Name -->
             <Filter:SearchBar x:Name="sb_LastName"
-                              FilterName="Last Name"
+                              FilterName="Фамилия"
                               Margin="5"
                               TextChanged="sb_LastName_TextChanged" />
 
@@ -93,7 +93,8 @@
                   AlternatingRowBackground="{DynamicResource GreyFriendBrushDark3}"
                   BorderThickness="1"
                   AutoGenerateColumns="False"
-                  IsReadOnly="True">
+                  IsReadOnly="True"
+                  MouseDoubleClick="dg_TestingResults_MouseDoubleClick">
 
             <DataGrid.Resources>
 
@@ -148,19 +149,19 @@
             </DataGrid.Resources>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Testing Name"
+                <DataGridTextColumn Header="Тест"
                                     Binding="{Binding Path=Testing.Name}"
-                                    Width="110" />
-                <DataGridTextColumn Header="Student's Full Name"
+                                    Width="100" />
+                <DataGridTextColumn Header="Обучающийся"
                                     Binding="{Binding Path=Student.Initials}"
-                                    Width="155"/>
-                <DataGridTextColumn Header="Date"
+                                    Width="165"/>
+                <DataGridTextColumn Header="Дата"
                                     Binding="{Binding Path=PassingDate, StringFormat=dd.MM.yy}"
                                     Width="65" />
-                <DataGridTextColumn Header="Time"
+                <DataGridTextColumn Header="Время"
                                     Binding="{Binding Path=PassingDate, StringFormat=HH:mm}"
-                                    Width="50" />
-                <DataGridTextColumn Header="Score"
+                                    Width="60" />
+                <DataGridTextColumn Header="Баллы"
                                     Binding="{Binding Path=Score}"
                                     Width="*" />
             </DataGrid.Columns>
@@ -169,22 +170,22 @@
                 <DataTemplate>
                     <StackPanel Margin="8" HorizontalAlignment="Left">
                         <DockPanel>
-                            <TextBlock Text="Full name: " />
+                            <TextBlock Text="Полное ФИО: " />
                             <TextBlock Text="{Binding Path=Student.FullName}" />
                         </DockPanel>
 
                         <DockPanel>
-                            <TextBlock Text="Total exercises: " />
+                            <TextBlock Text="Всего заданий в тесте: " />
                             <TextBlock Text="{Binding Path=AnswersCount}" />
                         </DockPanel>
 
                         <DockPanel>
-                            <TextBlock Text="Total correct answers: " />
+                            <TextBlock Text="Правильно решенных: " />
                             <TextBlock Text="{Binding Path=CorrectAnswersCount}" />
                         </DockPanel>
 
                         <DockPanel>
-                            <TextBlock Text="Testing info: " />
+                            <TextBlock Text="Описание: " />
                             <TextBlock Text="{Binding Path=Testing.Description}"
                                        TextWrapping="Wrap"
                                        MaxWidth="450"/>

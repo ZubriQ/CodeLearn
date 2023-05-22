@@ -26,7 +26,7 @@
         <DockPanel>
             <TextBlock Grid.Row="1"
                        Margin="4,4,4,1"
-                       Text="Exercise description:"
+                       Text="Описание задания:"
                        FontWeight="Bold"
                        DockPanel.Dock="Top"
                        Foreground="{DynamicResource PrimaryBrush5}"
@@ -46,7 +46,7 @@
         <DockPanel Grid.Row="1">
             <TextBlock Grid.Row="1"
                        Margin="4,4,4,1"
-                       Text="Context:"
+                       Text="Контекст:"
                        FontWeight="Bold"
                        DockPanel.Dock="Top"
                        Foreground="{DynamicResource PrimaryBrush5}"
@@ -79,7 +79,7 @@
         <DockPanel>
             <TextBlock Grid.Row="1"
                        Margin="4,4,4,1"
-                       Text="Code here:"
+                       Text="Финальный ответ:"
                        FontWeight="Bold"
                        DockPanel.Dock="Top"
                        Foreground="{DynamicResource PrimaryBrush5}"

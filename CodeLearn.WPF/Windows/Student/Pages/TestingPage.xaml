@@ -119,7 +119,7 @@
 
                 <TextBlock x:Name="txt_ExerciseNumber"
                            Grid.Row="2"
-                           Text="Exercise: 1"
+                           Text="Задание: 1"
                            HorizontalAlignment="Center"
                            Margin="5"
                            FontSize="14"
@@ -158,7 +158,7 @@
                            Margin="10,0,10,10">
                     <Button x:Name="btn_FinishTesting"
                             Template="{StaticResource FinishTestingButton}"
-                            Content="Finish"
+                            Content="Завершить"
                             Margin="5"
                             Click="btn_FinishTesting_Click"
                             ToolTipService.ShowOnDisabled="True"

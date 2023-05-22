@@ -42,7 +42,7 @@
         <Border Background="{DynamicResource GreyFriendBrushDark4}" />
         <StackPanel VerticalAlignment="Center">
             <TextBlock x:Name="txt_PageHeader"
-                       Text="Create Exercise"
+                       Text="Создание задания"
                        HorizontalAlignment="Center"
                        FontSize="20"
                        Foreground="{StaticResource GreyFriendBrushLight}" />
@@ -60,7 +60,7 @@
                 <!-- Header: Exercise -->
                 <StackPanel x:Name="sp_ExerciseHeader"
                             Margin="{Binding WindowSettings.ElementsMargin}">
-                    <TextBlock Text="Exercise"
+                    <TextBlock Text="Задание"
                                Margin="4"
                                FontSize="20"
                                Foreground="{StaticResource PrimaryBrush5}" />
@@ -70,7 +70,7 @@
                 <!-- Short Exercise Description / Name -->
                 <DockPanel Margin="{Binding WindowSettings.ElementsMargin}">
                     <TextBlock Margin="4"
-                               Text="Short description:"
+                               Text="Краткое описание:"
                                DockPanel.Dock="Top" />
                     <TextBox x:Name="txt_ShortDescription"
                              Margin="4"
@@ -86,7 +86,7 @@
                            Margin="{Binding WindowSettings.ElementsMargin}">
                     <TextBlock Grid.Row="0"
                                Margin="4"
-                               Text="Description:"
+                               Text="Описание:"
                                DockPanel.Dock="Top" />
                     <TextBox x:Name="txt_Description"
                              Margin="4"
@@ -103,7 +103,7 @@
                 <!-- Exercise Type -->
                 <DockPanel Margin="{Binding WindowSettings.ElementsMargin}">
                     <TextBlock Margin="4"
-                               Text="Exercise type:"
+                               Text="Тип задания:"
                                DockPanel.Dock="Top"
                                FontSize="14" />
                     <ComboBox x:Name="cbExerciseType"
@@ -125,7 +125,7 @@
                 <!-- Exercise Context -->
                 <DockPanel Margin="{Binding WindowSettings.ElementsMargin}">
                     <TextBlock Margin="4"
-                               Text="Context code:"
+                               Text="Контекст задания:"
                                DockPanel.Dock="Top"
                                FontSize="14" />
                     <TextBox x:Name="txtExerciseContext"
@@ -142,7 +142,7 @@
                 <!-- Exercise Context description -->
                 <DockPanel Margin="{Binding WindowSettings.ElementsMargin}">
                     <TextBlock Margin="4"
-                               Text="Student's initial code:"
+                               Text="Начальный код обучающегося:"
                                DockPanel.Dock="Top" />
                     <TextBox x:Name="txtExerciseContextDescription"
                              Margin="4"
@@ -161,7 +161,7 @@
                     <StackPanel>
                         <!-- Class name -->
                         <TextBlock Margin="4"
-                                   Text="Class name:"
+                                   Text="Имя класса:"
                                    DockPanel.Dock="Top" />
                         <TextBox x:Name="txtClassName"
                                  Margin="4"
@@ -177,7 +177,7 @@
                     <StackPanel>
                         <!-- Method name -->
                         <TextBlock Margin="4"
-                                   Text="Method name:"
+                                   Text="Имя метода:"
                                    DockPanel.Dock="Top"
                                    FontSize="14" />
                         <TextBox x:Name="txtMethodName"
@@ -193,7 +193,7 @@
                     <DockPanel>
                         <!-- Method return type -->
                         <TextBlock Margin="4"
-                                   Text="Return type:"
+                                   Text="Возвращаемый тип:"
                                    DockPanel.Dock="Top" />
                         <ComboBox  x:Name="cbMethodReturnType"
                                    ItemContainerStyle="{DynamicResource theComboBoxItem}"
@@ -214,7 +214,7 @@
                 <!-- Score. -->
                 <StackPanel Margin="{Binding WindowSettings.ElementsMargin}">
                     <TextBlock Margin="4"
-                               Text="Score:"
+                               Text="Баллы:"
                                DockPanel.Dock="Top" />
                     <ComboBox x:Name="cb_Score"
                               ItemContainerStyle="{DynamicResource theComboBoxItem}"
@@ -231,7 +231,7 @@
                 
                 <!-- Header: Test Cases -->
                 <StackPanel Margin="{Binding WindowSettings.ElementsMargin}">
-                    <TextBlock Text="Test Cases"
+                    <TextBlock Text="Тесты"
                                Margin="4,14,4,4"
                                FontSize="20"
                                Foreground="{StaticResource PrimaryBrush5}" />
@@ -244,7 +244,7 @@
 
                     <DockPanel DockPanel.Dock="Top">
                         <TextBlock Grid.Row="0"
-                                   Text="Method's parameters:"
+                                   Text="Параметры метода:"
                                    Margin="4"
                                    VerticalAlignment="Center" />
                         
@@ -252,7 +252,7 @@
                         <Button x:Name="btn_AddMethodParameter"
                                 Template="{DynamicResource DefaultCommandButton}"
                                 Grid.Row="1"
-                                Content="Add"
+                                Content="Добавить"
                                 HorizontalAlignment="Left"
                                 Click="btn_AddMethodParameter_Click" 
                                 Margin="5,0,0,0" />
@@ -261,7 +261,7 @@
                         <Button x:Name="btn_RemoveMethodParameter"
                                 Template="{DynamicResource RemoveCommandButton}"
                                 Grid.Row="1"
-                                Content="Remove"
+                                Content="Убрать"
                                 HorizontalAlignment="Left"
                                 Click="btn_RemoveMethodParameter_Click"
                                 Margin="5,0,0,0"/>
@@ -311,12 +311,12 @@
                 <DockPanel Margin="{Binding Path=WindowSettings.ElementsMargin}">
                     <DockPanel DockPanel.Dock="Top">
                         
-                        <TextBlock Text="Method's test cases:"
+                        <TextBlock Text="Тесты метода:"
                                    Margin="4"
                                    VerticalAlignment="Center" />
                         <Button x:Name="btn_AddTestMethodParameter"
                                 Template="{StaticResource DefaultCommandButton}"
-                                Content="Add"
+                                Content="Добавить"
                                 HorizontalAlignment="Left"
                                 Click="btn_AddTestMethodParameter_Click"
                                 Margin="5,0,0,0"/>
@@ -408,7 +408,7 @@
                                                          Margin="2"
                                                          FontSize="14"
                                                          VerticalContentAlignment="Top"
-                                                         Text="{Binding Result, TargetNullValue=result}"
+                                                         Text="{Binding Result, TargetNullValue=результат}"
                                                          Foreground="{DynamicResource GreyFriendBrushLight}"
                                                          GotFocus="txt_TestCaseResult_GotFocus"
                                                          LostFocus="txt_TestCaseResult_LostFocus"
@@ -432,7 +432,7 @@
                                         <Button Click="btn_RemoveTestCase"
                                                 Template="{StaticResource RemoveCommandButton}"
                                                 Margin="7,0,0,0">
-                                            <TextBlock Text="Remove"
+                                            <TextBlock Text="Убрать"
                                                        Foreground="White"
                                                        FontSize="14" />
                                         </Button>
@@ -469,7 +469,7 @@
             <Button x:Name="btn_Submit"
                     Template="{StaticResource Button}"
                     Grid.Row="1"
-                    Content="Insert"
+                    Content="Создать"
                     HorizontalAlignment="Center"
                     Click="btn_Submit_Click" />
         </StackPanel>

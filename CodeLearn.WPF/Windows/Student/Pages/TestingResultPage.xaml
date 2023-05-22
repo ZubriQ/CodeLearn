@@ -47,7 +47,7 @@
         <Border Background="{DynamicResource GreyFriendBrushDark4}" />
         <StackPanel VerticalAlignment="Center">
             <TextBlock x:Name="txt_PageHeader"
-                       Text="Testing Result"
+                       Text="Результаты тестирования"
                        HorizontalAlignment="Center"
                        FontSize="20"
                        Foreground="{DynamicResource GreyFriendBrushLight}" />
@@ -61,151 +61,153 @@
                 VerticalAlignment="Bottom" />
 
         <!-- MAIN CONTENT -->
-        <Border Background="Transparent"
-                Margin="10,-2,10,0"
-                BorderBrush="Transparent"
-                Grid.Row="2">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="2">
+            <Border Background="Transparent"
+                    Margin="10,-2,10,0"
+                    BorderBrush="Transparent"
+                    Grid.Row="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
-                <!-- Testing Answers info. -->
-                <StackPanel Grid.Row="0"
-                            Margin="10,0,10,0">
-                    <!-- Exercises and answers -->
-                    <ListView x:Name="ic_ExercisesAndAnswers"
-                              ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                              ScrollViewer.VerticalScrollBarVisibility="Auto"
-                              ItemsSource="{Binding TestingAnswers}"
-                              d:ItemsSource="{d:SampleData ItemCount=4}"
-                              BorderBrush="Transparent"
-                              Background="Transparent"
-                              ScrollViewer.CanContentScroll="False"
-                              Padding="0,0,-5,0"
-                              MaxHeight="600">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="5">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto" />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Number. -->
-                                    <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, 
+                    <!-- Testing Answers info. -->
+                    <StackPanel Grid.Row="0"
+                                Margin="10,0,10,0">
+                        <!-- Exercises and answers -->
+                        <ListView x:Name="ic_ExercisesAndAnswers"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                  ItemsSource="{Binding TestingAnswers}"
+                                  d:ItemsSource="{d:SampleData ItemCount=4}"
+                                  BorderBrush="Transparent"
+                                  Background="Transparent"
+                                  ScrollViewer.CanContentScroll="False"
+                                  Padding="0,0,-5,0"
+                                  MaxHeight="600">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="5">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <!-- Number. -->
+                                        <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, 
                                                AncestorType={x:Type ListBoxItem}}, Mode=OneWay, 
                                                Converter={StaticResource IndexConv}}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               FontWeight="Bold"
-                                               FontSize="18"
-                                               FontFamily="Inter"
-                                               Foreground="{StaticResource PrimaryBrush2}"
-                                               Margin="8"
-                                               DockPanel.Dock="Left" />
-                                    <Border Margin="5"
-                                            Grid.Column="1"
-                                            BorderThickness="2"
-                                            BorderBrush="{StaticResource PrimaryBrush2}"
-                                            CornerRadius="10"
-                                            Padding="5"
-                                            DockPanel.Dock="Top">
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontWeight="Bold"
+                                                   FontSize="18"
+                                                   FontFamily="Inter"
+                                                   Foreground="{StaticResource PrimaryBrush2}"
+                                                   Margin="8"
+                                                   DockPanel.Dock="Left" />
+                                        <Border Margin="5"
+                                                Grid.Column="1"
+                                                BorderThickness="2"
+                                                BorderBrush="{StaticResource PrimaryBrush2}"
+                                                CornerRadius="10"
+                                                Padding="5"
+                                                DockPanel.Dock="Top">
 
-                                        <StackPanel>
-                                            <!-- Exercise Score. -->
-                                            <StackPanel Orientation="Horizontal"
-                                                        Margin="5,5,5,0">
-                                                <TextBlock Text="Score: "
-                                                           FontSize="14"
-                                                           FontFamily="Inter"
-                                                           Foreground="{DynamicResource GreyFriendBrushLight5}" />
-                                                <TextBlock Text="{Binding Exercise.Score}"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Top"
-                                                           FontFamily="Inter"
-                                                           FontSize="14"
-                                                           Foreground="{DynamicResource GreyFriendBrushLight5}" />
-                                            </StackPanel>
-
-                                            <!-- Is Passed. -->
-                                            <StackPanel Orientation="Horizontal"
-                                                        Margin="5,5,5,0">
-                                                <TextBlock Text="Passed: "
-                                                           FontSize="14"
-                                                           FontFamily="Inter"
-                                                           Foreground="{DynamicResource GreyFriendBrushLight5}" />
-                                                <TextBlock Text="{Binding IsCorrect}"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Top"
-                                                           FontFamily="Inter"
-                                                           FontSize="14"
-                                                           Foreground="{DynamicResource GreyFriendBrushLight5}" />
-                                            </StackPanel>
-
-                                            <!-- Entered Code. -->
-                                            <StackPanel Orientation="Vertical"
-                                                        Margin="5,5,5,0">
-                                                <TextBlock Text="Answer: "
-                                                           FontSize="14"
-                                                           FontFamily="Inter"
-                                                           Foreground="{DynamicResource GreyFriendBrushLight5}" />
-                                                <Border Margin="5"
-                                                        BorderThickness="1"
-                                                        BorderBrush="{DynamicResource GreyFriendBrushLight}"
-                                                        CornerRadius="10"
-                                                        Padding="5"
-                                                        MaxWidth="800">
-                                                    <TextBlock Text="{Binding Answer}"
-                                                               FontFamily="Consolas"
+                                            <StackPanel>
+                                                <!-- Exercise Score. -->
+                                                <StackPanel Orientation="Horizontal"
+                                                            Margin="5,5,5,0">
+                                                    <TextBlock Text="Баллы: "
                                                                FontSize="14"
-                                                               Padding="2"
-                                                               Foreground="{DynamicResource GreyFriendBrushLight5}"
-                                                               MaxWidth="800"
-                                                               TextAlignment="Left" />
-                                                </Border>
+                                                               FontFamily="Inter"
+                                                               Foreground="{DynamicResource GreyFriendBrushLight5}" />
+                                                    <TextBlock Text="{Binding Exercise.Score}"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Top"
+                                                               FontFamily="Inter"
+                                                               FontSize="14"
+                                                               Foreground="{DynamicResource GreyFriendBrushLight5}" />
+                                                </StackPanel>
+
+                                                <!-- Is Passed. -->
+                                                <StackPanel Orientation="Horizontal"
+                                                            Margin="5,5,5,0">
+                                                    <TextBlock Text="Пройдено: "
+                                                               FontSize="14"
+                                                               FontFamily="Inter"
+                                                               Foreground="{DynamicResource GreyFriendBrushLight5}" />
+                                                    <TextBlock Text="{Binding IsCorrect}"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Top"
+                                                               FontFamily="Inter"
+                                                               FontSize="14"
+                                                               Foreground="{DynamicResource GreyFriendBrushLight5}" />
+                                                </StackPanel>
+
+                                                <!-- Entered Code. -->
+                                                <StackPanel Orientation="Vertical"
+                                                            Margin="5,5,5,0">
+                                                    <TextBlock Text="Ответ: "
+                                                               FontSize="14"
+                                                               FontFamily="Inter"
+                                                               Foreground="{DynamicResource GreyFriendBrushLight5}" />
+                                                    <Border Margin="5"
+                                                            BorderThickness="1"
+                                                            BorderBrush="{DynamicResource GreyFriendBrushLight}"
+                                                            CornerRadius="10"
+                                                            Padding="5"
+                                                            MaxWidth="800">
+                                                        <TextBlock Text="{Binding Answer}"
+                                                                   FontFamily="Consolas"
+                                                                   FontSize="14"
+                                                                   Padding="2"
+                                                                   Foreground="{DynamicResource GreyFriendBrushLight5}"
+                                                                   MaxWidth="800"
+                                                                   TextAlignment="Left" />
+                                                    </Border>
+                                                </StackPanel>
+
                                             </StackPanel>
+                                        </Border>
 
-                                        </StackPanel>
-                                    </Border>
+                                        <!-- ListItem Separator -->
+                                        <Border Grid.Row="1"
+                                                Height="1"
+                                                Grid.ColumnSpan="2"
+                                                Background="{DynamicResource GreyFriendBrushDark4}"
+                                                Margin="5,10,5,0"
+                                                HorizontalAlignment="Stretch"
+                                                DockPanel.Dock="Bottom" />
+                                    </Grid>
 
-                                    <!-- ListItem Separator -->
-                                    <Border Grid.Row="1"
-                                            Height="1"
-                                            Grid.ColumnSpan="2"
-                                            Background="{DynamicResource GreyFriendBrushDark4}"
-                                            Margin="5,10,5,0"
-                                            HorizontalAlignment="Stretch"
-                                            DockPanel.Dock="Bottom" />
-                                </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
 
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-
-                        <!-- Turns off the highlights. -->
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}">
-                                <Setter Property="Background"
-                                        Value="Transparent" />
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                            <ContentPresenter />
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                    </ListView>
-                </StackPanel>
-            </Grid>
-        </Border>
+                            <!-- Turns off the highlights. -->
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="Background"
+                                            Value="Transparent" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                <ContentPresenter />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </ScrollViewer>
 
         <!-- Separator -->
         <Border Grid.Row="3"
@@ -224,7 +226,7 @@
             <!-- Score. -->
             <DockPanel Grid.Column="0"
                        Margin="20,15,0,0">
-                <TextBlock Text="Your score: "
+                <TextBlock Text="Финальная оценка: "
                            FontWeight="Bold"
                            FontSize="16"
                            FontFamily="Inter"
@@ -242,7 +244,7 @@
                        HorizontalAlignment="Right">
                 <Button x:Name="btn_Close"
                         Template="{StaticResource Button}"
-                        Content="Finish"
+                        Content="Закрыть"
                         Margin="5"
                         Click="btn_Close_Click" />
             </DockPanel>

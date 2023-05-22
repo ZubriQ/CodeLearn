@@ -33,7 +33,7 @@
             <Border Background="{DynamicResource GreyFriendBrushDark4}" />
             <StackPanel VerticalAlignment="Center">
                 <TextBlock x:Name="txt_PageHeader"
-                           Text="Tests"
+                           Text="Тесты"
                            HorizontalAlignment="Center"
                            FontSize="20"
                            Foreground="{StaticResource GreyFriendBrushLight}" />

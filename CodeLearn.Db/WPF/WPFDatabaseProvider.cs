@@ -191,7 +191,8 @@ namespace CodeLearn.Db.WPF
 
         public ICollection<TestingResult>? GetTestingResults()
         {
-            return _context.TestingResults.ToArray();
+            return _context.TestingResults
+                .ToArray();
         }
 
         public ICollection<Exercise>? GetExercises()

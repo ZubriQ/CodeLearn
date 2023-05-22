@@ -1,16 +1,12 @@
-﻿using System.Configuration;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace CodeLearn.Db
 {
     public partial class CodeLearnContext : IdentityDbContext<ApplicationUser>
     {
-        public CodeLearnContext()
-        {
-        }
+        public CodeLearnContext() { }
 
         public CodeLearnContext(DbContextOptions<CodeLearnContext> options)
             : base(options)
@@ -41,7 +37,7 @@ namespace CodeLearn.Db
 
                 var config = new System.Xml.XmlDocument();
                 config.Load(AppDomain.CurrentDomain.BaseDirectory + "ConnectionStrings.config");
-                string connectionString = config.SelectSingleNode("/connectionStrings/add[@name='CodeLearnDatabase']")!
+                string connectionString = config.SelectSingleNode("/connectionStrings/add[@name='Supabase']")!
                     .Attributes!["connectionString"]!.Value;
 
                 optionsBuilder.UseNpgsql(connectionString);
@@ -145,7 +141,7 @@ namespace CodeLearn.Db
                 PhoneNumberConfirmed = false,
                 TwoFactorEnabled = false,
                 LockoutEnabled = true,
-                IsTeacher = true,
+                IsTeacher = false,
                 GroupId = 1
             });
 

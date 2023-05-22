@@ -40,7 +40,7 @@
         <Border Background="{DynamicResource GreyFriendBrushDark4}" />
         <StackPanel VerticalAlignment="Center">
             <TextBlock x:Name="txt_PageHeader"
-                       Text="Exercise Testing"
+                       Text="Тестирование метода"
                        HorizontalAlignment="Center"
                        FontSize="20"
                        TextWrapping="Wrap" />
@@ -69,14 +69,14 @@
 
             <!-- Method's short description -->
             <Filter:SearchBar x:Name="sb_SearchBar"
-                                   FilterName="Short description"
+                                   FilterName="Описание"
                                    Margin="5"
                                    TextChanged="sb_SearchBar_TextChanged" />
 
             <!-- Method -->
             <Filter:SearchComboBox x:Name="scb_SearchComboBox"
                                    Margin="5"
-                                   FilterName="Method"
+                                   FilterName="Метод"
                                    DisplayMemberPath="ShortDescription"
                                    SelectionChanged="scb_SearchComboBox_SelectionChanged" />
         </DockPanel>

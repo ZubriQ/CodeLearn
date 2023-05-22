@@ -99,7 +99,7 @@
                     
                     <!-- Dashboard, Courses, Check Exercise -->
                     <Button x:Name="btn_Dashboard"
-                            Content="Dashboard"
+                            Content="Панель"
                             Template="{StaticResource MenuButton}"
                             Background="{DynamicResource GreyFriendBrushDark3}"
                             Foreground="{DynamicResource PrimaryBrush5}"
@@ -108,7 +108,7 @@
                             Visibility="{Binding WindowSettings.Visibility}" />
 
                     <Button x:Name="btn_SelectCourse"
-                            Content="Testing"
+                            Content="Тестирование"
                             Template="{StaticResource MenuButton}"
                             Background="Transparent"
                             Foreground="Transparent"
@@ -116,7 +116,7 @@
                             Click="Navigate" />
 
                     <Button x:Name="btn_TestExercise"
-                            Content="Check Exercise"
+                            Content="Проверка"
                             Template="{StaticResource MenuButton}"
                             Background="Transparent"
                             Foreground="Transparent"
@@ -136,14 +136,14 @@
                         
 
                         <Button x:Name="btn_CreateExercise"
-                                Content="Create Exercise"
+                                Content="Создать задание"
                                 Template="{StaticResource MenuButton}"
                                 Background="Transparent"
                                 Foreground="Transparent"
                                 HorizontalAlignment="Stretch"
                                 Click="Navigate" />
                         <Button x:Name="btn_CreateTesting"
-                                Content="Create Test"
+                                Content="Создать тест"
                                 Template="{StaticResource MenuButton}"
                                 Background="Transparent"
                                 Foreground="Transparent"
@@ -178,7 +178,7 @@
                                 HorizontalAlignment="Stretch"
                                 Click="Navigate" />-->
                         <Button x:Name="btn_TestingResults"
-                                Content="Tests Results"
+                                Content="Результаты тестов"
                                 Template="{StaticResource MenuButton}"
                                 Background="Transparent"
                                 Foreground="Transparent"

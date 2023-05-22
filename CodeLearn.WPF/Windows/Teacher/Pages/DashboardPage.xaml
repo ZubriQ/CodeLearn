@@ -21,10 +21,10 @@
     </Page.Resources>
     
     <StackPanel VerticalAlignment="Center">
-        <TextBlock Text="Dashboard"
+        <TextBlock Text="Панель управления"
                    HorizontalAlignment="Center"
                    FontSize="20"/>
-        <TextBlock Text="Recent data about tests should be placed here."
+        <TextBlock Text="Недавние данные о тестировании будут размещены здесь."
                    HorizontalAlignment="Center"/>
     </StackPanel>
 </Page>

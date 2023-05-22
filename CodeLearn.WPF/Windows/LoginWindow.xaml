@@ -98,12 +98,12 @@
 
                     <!-- Student -->
                     <Button x:Name="btn_PickStudentRole"
-                            Content="Student"
+                            Content="Обучающийся"
                             Template="{Binding StudentButtonTemplate}"
                             Click="btn_PickStudentRole_Click" />
                     <!-- Teacher -->
                     <Button x:Name="btn_PickTeacherRole"
-                            Content="Teacher"
+                            Content="Преподаватель"
                             Grid.Column="1"
                             Template="{Binding TeacherButtonTemplate}"
                             Click="btn_PickTeacherRole_Click" />
@@ -132,7 +132,7 @@
             <Button x:Name="btn_LogIn"
                     Template="{DynamicResource LogInButton}"
                     Margin="{Binding WindowSettings.ElementsMargin}"
-                    Content="Log In"
+                    Content="Войти"
                     HorizontalAlignment="Stretch"
                     Click="btn_LogIn_Click" />
         </StackPanel>
