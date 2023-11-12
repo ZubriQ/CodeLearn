@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeLearn.WPF", "CodeLearn.WPF\CodeLearn.WPF.csproj", "{672DC344-25C2-4D73-B086-6BA6668F6730}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeLearn.WPF", "src\CodeLearn.WPF\CodeLearn.WPF.csproj", "{672DC344-25C2-4D73-B086-6BA6668F6730}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeLearn.Lib", "CodeLearn.Lib\CodeLearn.Lib.csproj", "{B6A36880-59FA-4627-B618-728DF2B47609}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeLearn.Lib", "src\CodeLearn.Lib\CodeLearn.Lib.csproj", "{B6A36880-59FA-4627-B618-728DF2B47609}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeLearn.Db", "CodeLearn.Db\CodeLearn.Db.csproj", "{FFE4376D-7CBB-4013-B5FF-C481F14DCDD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeLearn.Db", "src\CodeLearn.Db\CodeLearn.Db.csproj", "{FFE4376D-7CBB-4013-B5FF-C481F14DCDD4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CC75D709-8712-43C9-A710-F9082743A9FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,5 +35,10 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA4ED9C0-B6A1-4202-B6BA-9DC1589FA4E8}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FFE4376D-7CBB-4013-B5FF-C481F14DCDD4} = {CC75D709-8712-43C9-A710-F9082743A9FD}
+		{B6A36880-59FA-4627-B618-728DF2B47609} = {CC75D709-8712-43C9-A710-F9082743A9FD}
+		{672DC344-25C2-4D73-B086-6BA6668F6730} = {CC75D709-8712-43C9-A710-F9082743A9FD}
 	EndGlobalSection
 EndGlobal
