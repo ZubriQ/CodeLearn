@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeLearn.Domain", "CodeLea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeLearn.Application", "CodeLearn.Application\CodeLearn.Application.csproj", "{1E47D939-582B-4210-A53E-DED6F9639880}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeLearn.Api", "CodeLearn.Api\CodeLearn.Api.csproj", "{3248F084-94B3-437F-BD56-5BC0B97B4310}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{1E47D939-582B-4210-A53E-DED6F9639880}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E47D939-582B-4210-A53E-DED6F9639880}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E47D939-582B-4210-A53E-DED6F9639880}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3248F084-94B3-437F-BD56-5BC0B97B4310}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3248F084-94B3-437F-BD56-5BC0B97B4310}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3248F084-94B3-437F-BD56-5BC0B97B4310}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3248F084-94B3-437F-BD56-5BC0B97B4310}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{36F1FCBD-CD20-4FB7-9E9E-393C681B687C} = {CC75D709-8712-43C9-A710-F9082743A9FD}
 		{6C4C8339-D5D5-41AE-BDB1-CC180E698CB6} = {CC75D709-8712-43C9-A710-F9082743A9FD}
 		{1E47D939-582B-4210-A53E-DED6F9639880} = {CC75D709-8712-43C9-A710-F9082743A9FD}
+		{3248F084-94B3-437F-BD56-5BC0B97B4310} = {CC75D709-8712-43C9-A710-F9082743A9FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA4ED9C0-B6A1-4202-B6BA-9DC1589FA4E8}
