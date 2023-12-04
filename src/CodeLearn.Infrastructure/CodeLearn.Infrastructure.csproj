@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CodeLearn.Application\CodeLearn.Application.csproj" />
-    <ProjectReference Include="..\CodeLearn.Domain\CodeLearn.Domain.csproj" />
   </ItemGroup>
 
 </Project>

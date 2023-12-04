@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CodeLearn.Application\CodeLearn.Application.csproj" />
-    <ProjectReference Include="..\CodeLearn.Domain\CodeLearn.Domain.csproj" />
     <ProjectReference Include="..\CodeLearn.Infrastructure\CodeLearn.Infrastructure.csproj" />
   </ItemGroup>
 
