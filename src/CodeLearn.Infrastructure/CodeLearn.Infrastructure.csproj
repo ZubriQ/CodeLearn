@@ -10,4 +10,8 @@
     <ProjectReference Include="..\CodeLearn.Application\CodeLearn.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Configurations\" />
+  </ItemGroup>
+
 </Project>
