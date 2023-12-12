@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CodeLearn.Domain.Common;
+namespace CodeLearn.Domain.SeedWork;
 
 public abstract class BaseEntity<TId>
 {
@@ -34,12 +34,11 @@ public abstract class BaseEntity<TId>
         {
             return true;
         }
-            
+
         if (first is null || second is null)
         {
             return false;
         }
-            
 
         return first.Equals(second);
     }
@@ -55,7 +54,7 @@ public abstract class BaseEntity<TId>
         {
             return false;
         }
-            
+
         if (ReferenceEquals(this, other))
         {
             return true;

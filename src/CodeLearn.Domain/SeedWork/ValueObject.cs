@@ -1,4 +1,4 @@
-﻿namespace CodeLearn.Domain.Common;
+﻿namespace CodeLearn.Domain.SeedWork;
 
 public abstract class ValueObject : IEquatable<ValueObject>
 {
