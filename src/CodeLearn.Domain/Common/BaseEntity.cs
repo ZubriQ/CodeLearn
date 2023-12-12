@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CodeLearn.Domain.SeedWork;
+namespace CodeLearn.Domain.Common;
 
 public abstract class BaseEntity<TId>
 {

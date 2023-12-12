@@ -1,4 +1,4 @@
-﻿namespace CodeLearn.Domain.SeedWork;
+﻿namespace CodeLearn.Domain.Common;
 
 public interface IUnitOfWork : IDisposable
 {

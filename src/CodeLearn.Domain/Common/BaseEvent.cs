@@ -1,5 +1,5 @@
 ﻿using MediatR;
 
-namespace CodeLearn.Domain.SeedWork;
+namespace CodeLearn.Domain.Common;
 
 public abstract class BaseEvent : INotification { }

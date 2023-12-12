@@ -1,4 +1,4 @@
-﻿namespace CodeLearn.Domain.SeedWork;
+﻿namespace CodeLearn.Domain.Common;
 
 public interface IRepository<T> where T : IAggregateRoot
 {

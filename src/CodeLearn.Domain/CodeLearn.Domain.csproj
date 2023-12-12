@@ -15,4 +15,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Exercises\" />
+    <Folder Include="Testings\" />
+  </ItemGroup>
+
 </Project>
