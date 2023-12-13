@@ -8,28 +8,26 @@ public sealed class Teacher : BaseEntity<TeacherId>, IAggregateRoot
 
     public string? Patronymic { get; private set; }
 
-    public string? Username { get; private set; }
-
     private Teacher() { }
 
     private Teacher(
         string firstName, 
         string lastName, 
-        string? patronymic = null, 
-        string? username = null)
+        string? patronymic = null)
     {
         FirstName = firstName;
         LastName = lastName;
         Patronymic = patronymic;
-        Username = username;
     }
 
     public static Teacher Create(
         string firstName, 
-        string lastName, string? 
-        patronymic = null, string? 
-        username = null)
+        string lastName, 
+        string? patronymic = null)
     {
-        return new(firstName, lastName, patronymic, username);
+        return new(
+            firstName, 
+            lastName, 
+            patronymic);
     }
 }

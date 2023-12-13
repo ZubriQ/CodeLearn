@@ -1,7 +1,9 @@
 ﻿namespace CodeLearn.Domain.Exercises;
 
-public sealed class Exercise : BaseEntity<ExerciseId>, IAggregateRoot
+public abstract class Exercise : BaseEntity<ExerciseId>, IAggregateRoot
 {
+    private readonly IList<ExerciseNote> _exerciseNotes = [];
+
     public TestingId TestingId { get; private set; } = null!;
 
     public string Title { get; private set; } = null!;
@@ -9,4 +11,18 @@ public sealed class Exercise : BaseEntity<ExerciseId>, IAggregateRoot
     public string Description { get; private set; } = null!;
 
     public ExerciseDifficulty Difficulty { get; private set; }
+
+    public IReadOnlyList<ExerciseNote> ExerciseNotes => _exerciseNotes.AsReadOnly();
+
+    protected Exercise(
+        TestingId testingId,
+        string title,
+        string description,
+        ExerciseDifficulty difficulty)
+    {
+        TestingId = testingId;
+        Title = title;
+        Description = description;
+        Difficulty = difficulty;
+    }
 }

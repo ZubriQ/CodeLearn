@@ -36,7 +36,11 @@ public sealed class Testing : BaseEntity<TestingId>, IAggregateRoot
         ModifiedDateTime = modifiedDateTime;
     }
 
-    public static Testing Create(TeacherId teacherId, string title, string description, int durationInMinutes)
+    public static Testing Create(
+        TeacherId teacherId, 
+        string title, 
+        string description, 
+        int durationInMinutes)
     {
         return new(
             teacherId,
@@ -48,7 +52,11 @@ public sealed class Testing : BaseEntity<TestingId>, IAggregateRoot
             DateTime.UtcNow);
     }
 
-    public void Update(string title, string description, int durationInMinutes, bool isPublic)
+    public void UpdateFields(
+        string title, 
+        string description, 
+        int durationInMinutes, 
+        bool isPublic)
     {
         Title = title;
         Description = description;

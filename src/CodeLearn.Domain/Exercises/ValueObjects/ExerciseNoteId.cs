@@ -1,6 +1,6 @@
-﻿namespace CodeLearn.Domain.Testings.ValueObjects;
+﻿namespace CodeLearn.Domain.Exercises.ValueObjects;
 
-public sealed class TestingId(int value) : ValueObject
+public sealed class ExerciseNoteId(int value) : ValueObject
 {
     public int Value { get; private set; } = value;
 

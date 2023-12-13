@@ -2,7 +2,7 @@
 
 public enum NoteDecoration
 {
-    None = 1,
-    BoldText = 2,
-    Bordered = 3,
+    None = 0,
+    BoldText = 1,
+    Bordered = 2,
 }
