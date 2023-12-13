@@ -16,8 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Exercises\" />
-    <Folder Include="Testings\" />
+    <Folder Include="Exercises\Entities\" />
   </ItemGroup>
 
 </Project>

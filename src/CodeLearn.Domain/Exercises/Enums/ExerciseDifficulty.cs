@@ -1,4 +1,4 @@
-﻿namespace CodeLearn.Domain.Enums;
+﻿namespace CodeLearn.Domain.Exercises.Enums;
 
 public enum ExerciseDifficulty
 {
