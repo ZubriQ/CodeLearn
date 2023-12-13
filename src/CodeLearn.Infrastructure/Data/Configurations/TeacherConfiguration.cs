@@ -9,25 +9,29 @@ public sealed class TeacherConfiguration : IEntityTypeConfiguration<Teacher>
 {
     public void Configure(EntityTypeBuilder<Teacher> builder)
     {
+        builder.ToTable("Teacher", DatabaseSchemes.Person);
+
         builder.HasKey(t => t.Id);
 
-        builder.Property(t => t.Id)
+        builder
+            .Property(t => t.Id)
             .HasConversion(
                 teacher => teacher.Value,
                 id => new TeacherId(id))
             .ValueGeneratedOnAdd();
 
-        builder.Property(t => t.FirstName)
+        builder
+            .Property(t => t.FirstName)
             .HasMaxLength(50)
             .IsRequired();
 
-        builder.Property(t => t.LastName)
+        builder
+            .Property(t => t.LastName)
             .HasMaxLength(50)
             .IsRequired();
 
-        builder.Property(t => t.Patronymic)
+        builder
+            .Property(t => t.Patronymic)
             .HasMaxLength(50);
-
-        builder.ToTable("Teacher", DatabaseSchemes.Person);
     }
 }
