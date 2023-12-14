@@ -58,6 +58,10 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
             .HasConversion(
                 difficulty => difficulty.ToString(),
                 value => (ExerciseDifficulty)Enum.Parse(typeof(ExerciseDifficulty), value));
+
+        builder
+            .HasDiscriminator<string>("ExerciseType")
+            .HasValue<MethodCodingExercise>("MethodCoding");
     }
 
     private static void ConfigureExerciseNoteTable(EntityTypeBuilder<Exercise> builder)

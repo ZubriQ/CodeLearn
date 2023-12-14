@@ -25,7 +25,7 @@ public sealed class ExerciseNote : BaseEntity<ExerciseNoteId>
     public static ExerciseNote Create(
         ExerciseId exerciseId,
         string entry,
-        ExerciseNoteDecoration noteDecoration = ExerciseNoteDecoration.None)
+        ExerciseNoteDecoration noteDecoration = ExerciseNoteDecoration.Plain)
     {
         return new(
             ExerciseNoteId.CreateUnique(),

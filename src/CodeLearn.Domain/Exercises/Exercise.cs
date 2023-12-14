@@ -1,6 +1,6 @@
 ﻿namespace CodeLearn.Domain.Exercises;
 
-public class Exercise : BaseEntity<ExerciseId>, IAggregateRoot
+public abstract class Exercise : BaseEntity<ExerciseId>, IAggregateRoot
 {
     private readonly List<ExerciseNote> _exerciseNotes = [];
 

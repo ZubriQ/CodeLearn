@@ -2,7 +2,7 @@
 
 public enum ExerciseNoteDecoration
 {
-    None = 0,
-    BoldText = 1,
-    Bordered = 2,
+    Plain = 1,
+    Bold = 2,
+    Bordered = 3,
 }
