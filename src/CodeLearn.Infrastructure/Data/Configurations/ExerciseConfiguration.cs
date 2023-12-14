@@ -3,8 +3,6 @@ using CodeLearn.Domain.Exercises.Enums;
 using CodeLearn.Domain.Exercises.ValueObjects;
 using CodeLearn.Domain.Testings;
 using CodeLearn.Domain.Testings.ValueObjects;
-using CodeLearn.Infrastructure.Data.Constants;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CodeLearn.Infrastructure.Data.Configurations;
 
@@ -34,8 +32,7 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
             .IsRequired()
             .HasConversion(
                 v => v.Value,
-                v => new TestingId(v))
-            .HasColumnType("int");
+                v => new TestingId(v));
 
         builder
             .HasOne<Testing>()
@@ -77,7 +74,7 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
 
             noteBuilder
                 .Property(n => n.Id)
-                .ValueGeneratedOnAdd()
+                .ValueGeneratedNever()
                 .HasConversion(
                     id => id.Value,
                     value => ExerciseNoteId.Create(value));

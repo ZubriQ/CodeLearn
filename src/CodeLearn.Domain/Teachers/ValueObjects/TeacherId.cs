@@ -1,12 +1,17 @@
 ﻿namespace CodeLearn.Domain.Teachers.ValueObjects;
 
-public sealed class TeacherId(int value) : ValueObject
+public sealed class TeacherId(Guid value) : ValueObject
 {
-    public int Value { get; private set; } = value;
+    public Guid Value { get; private set; } = value;
 
-    public static TeacherId Create(int value)
+    public static TeacherId Create(Guid value)
     {
         return new(value);
+    }
+
+    public static TeacherId CreateUnique()
+    {
+        return new(Guid.NewGuid());
     }
 
     public override IEnumerable<object> GetEqualityComponents()

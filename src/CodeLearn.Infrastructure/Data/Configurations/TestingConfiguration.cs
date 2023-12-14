@@ -1,8 +1,6 @@
 ﻿using CodeLearn.Domain.Teachers;
 using CodeLearn.Domain.Testings;
 using CodeLearn.Domain.Testings.ValueObjects;
-using CodeLearn.Infrastructure.Data.Constants;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CodeLearn.Infrastructure.Data.Configurations;
 
@@ -10,16 +8,21 @@ public sealed class TestingConfiguration : IEntityTypeConfiguration<Testing>
 {
     public void Configure(EntityTypeBuilder<Testing> builder)
     {
+        ConfigureTestingTable(builder);
+    }
+
+    private static void ConfigureTestingTable(EntityTypeBuilder<Testing> builder)
+    {
         builder.ToTable("Testing", DatabaseSchemes.Test);
 
         builder.HasKey(t => t.Id);
 
         builder
             .Property(t => t.Id)
+            .ValueGeneratedNever()
             .HasConversion(
                 testing => testing.Value,
-                id => new TestingId(id))
-            .ValueGeneratedOnAdd();
+                id => new TestingId(id));
 
         builder
             .HasOne<Teacher>()
@@ -47,7 +50,7 @@ public sealed class TestingConfiguration : IEntityTypeConfiguration<Testing>
 
         builder
             .Property(t => t.CreatedDateTime)
-           .IsRequired();
+            .IsRequired();
 
         builder
             .Property(t => t.ModifiedDateTime)

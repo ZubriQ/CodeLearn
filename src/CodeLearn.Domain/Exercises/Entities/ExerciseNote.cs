@@ -11,9 +11,9 @@ public sealed class ExerciseNote : BaseEntity<ExerciseNoteId>
     private ExerciseNote() { }
 
     private ExerciseNote(
-        ExerciseId exerciseId, 
-        string entry, 
-        NoteDecoration noteDecoration = NoteDecoration.None)
+        ExerciseId exerciseId,
+        string entry,
+        NoteDecoration noteDecoration)
     {
         ExerciseId = exerciseId;
         Entry = entry;
@@ -23,11 +23,11 @@ public sealed class ExerciseNote : BaseEntity<ExerciseNoteId>
     public static ExerciseNote Create(
         ExerciseId exerciseId,
         string entry,
-        NoteDecoration noteDecoration)
+        NoteDecoration noteDecoration = NoteDecoration.None)
     {
         return new(
-            exerciseId, 
-            entry, 
+            exerciseId,
+            entry,
             noteDecoration);
     }
 }

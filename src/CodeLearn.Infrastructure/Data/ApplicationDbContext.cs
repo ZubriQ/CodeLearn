@@ -10,9 +10,7 @@ public sealed class ApplicationDbContext : DbContext
     private static Assembly ContextAssembly => typeof(ApplicationDbContext).Assembly;
 
     public DbSet<Testing> Testings => Set<Testing>();
-
     public DbSet<Exercise> Exercises => Set<Exercise>();
-
     public DbSet<Teacher> Teachers => Set<Teacher>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

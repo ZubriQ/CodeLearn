@@ -1,12 +1,17 @@
 ﻿namespace CodeLearn.Domain.Exercises.ValueObjects;
 
-public sealed class ExerciseNoteId(int value) : ValueObject
+public sealed class ExerciseNoteId(Guid value) : ValueObject
 {
-    public int Value { get; private set; } = value;
+    public Guid Value { get; private set; } = value;
 
-    public static ExerciseNoteId Create(int value)
+    public static ExerciseNoteId Create(Guid value)
     {
         return new(value);
+    }
+
+    public static ExerciseNoteId CreateUnique()
+    {
+        return new(Guid.NewGuid());
     }
 
     public override IEnumerable<object> GetEqualityComponents()

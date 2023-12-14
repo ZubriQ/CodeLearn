@@ -11,6 +11,11 @@ public abstract class BaseEntity<TId>
     [NotMapped]
     public IReadOnlyCollection<BaseEvent> DomainEvents => _domainEvents.AsReadOnly();
 
+    protected BaseEntity(TId id)
+    {
+        Id = id;
+    }
+
     public void AddDomainEvent(BaseEvent domainEvent)
     {
         _domainEvents.Add(domainEvent);
@@ -79,4 +84,8 @@ public abstract class BaseEntity<TId>
     }
 
     #endregion
+
+#pragma warning disable CS8618
+    protected BaseEntity() { }
+#pragma warning restore CS8618 
 }

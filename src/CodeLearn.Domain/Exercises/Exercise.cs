@@ -2,14 +2,11 @@
 
 public class Exercise : BaseEntity<ExerciseId>, IAggregateRoot
 {
-    private readonly IList<ExerciseNote> _exerciseNotes = [];
+    private readonly List<ExerciseNote> _exerciseNotes = [];
 
     public TestingId TestingId { get; private set; } = null!;
-
     public string Title { get; private set; } = null!;
-
     public string Description { get; private set; } = null!;
-
     public ExerciseDifficulty Difficulty { get; private set; }
 
     public IReadOnlyList<ExerciseNote> ExerciseNotes => _exerciseNotes.AsReadOnly();
