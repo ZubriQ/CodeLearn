@@ -1,6 +1,6 @@
 ﻿namespace CodeLearn.Domain.Exercises.Enums;
 
-public enum NoteDecoration
+public enum ExerciseNoteDecoration
 {
     None = 0,
     BoldText = 1,

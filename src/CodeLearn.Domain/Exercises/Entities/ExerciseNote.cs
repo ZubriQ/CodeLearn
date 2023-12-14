@@ -6,14 +6,14 @@ public sealed class ExerciseNote : BaseEntity<ExerciseNoteId>
 
     public string Entry { get; private set; } = null!;
 
-    public NoteDecoration NoteDecoration { get; private set; }
+    public ExerciseNoteDecoration NoteDecoration { get; private set; }
 
     private ExerciseNote() { }
 
     private ExerciseNote(
         ExerciseId exerciseId,
         string entry,
-        NoteDecoration noteDecoration)
+        ExerciseNoteDecoration noteDecoration)
     {
         ExerciseId = exerciseId;
         Entry = entry;
@@ -23,7 +23,7 @@ public sealed class ExerciseNote : BaseEntity<ExerciseNoteId>
     public static ExerciseNote Create(
         ExerciseId exerciseId,
         string entry,
-        NoteDecoration noteDecoration = NoteDecoration.None)
+        ExerciseNoteDecoration noteDecoration = ExerciseNoteDecoration.None)
     {
         return new(
             exerciseId,

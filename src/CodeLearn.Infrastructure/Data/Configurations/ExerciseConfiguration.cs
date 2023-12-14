@@ -87,7 +87,7 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
                 .Property(n => n.NoteDecoration)
                 .HasConversion(
                     decoration => decoration.ToString(),
-                    value => (NoteDecoration)Enum.Parse(typeof(NoteDecoration), value));
+                    value => (ExerciseNoteDecoration)Enum.Parse(typeof(ExerciseNoteDecoration), value));
         });
 
         // Tells EF Core to populate.
