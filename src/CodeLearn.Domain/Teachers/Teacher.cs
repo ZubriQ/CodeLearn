@@ -9,9 +9,11 @@ public sealed class Teacher : BaseEntity<TeacherId>, IAggregateRoot
     private Teacher() { }
 
     private Teacher(
+        TeacherId teacherId,
         string firstName,
         string lastName,
         string? patronymic = null)
+        : base(teacherId)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -24,6 +26,7 @@ public sealed class Teacher : BaseEntity<TeacherId>, IAggregateRoot
         string? patronymic = null)
     {
         return new(
+            TeacherId.CreateUnique(),
             firstName,
             lastName,
             patronymic);
