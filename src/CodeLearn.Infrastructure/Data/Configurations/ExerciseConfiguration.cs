@@ -22,10 +22,10 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
 
         builder
             .Property(e => e.Id)
+            .ValueGeneratedNever()
             .HasConversion(
                 exercise => exercise.Value,
-                id => new ExerciseId(id))
-            .ValueGeneratedOnAdd();
+                id => new ExerciseId(id));
 
         builder
             .Property(e => e.TestingId)
