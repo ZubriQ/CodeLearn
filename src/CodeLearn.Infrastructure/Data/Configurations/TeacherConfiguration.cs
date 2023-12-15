@@ -21,7 +21,7 @@ public sealed class TeacherConfiguration : IEntityTypeConfiguration<Teacher>
             .ValueGeneratedNever()
             .HasConversion(
                 teacher => teacher.Value,
-                id => new TeacherId(id));
+                id => TeacherId.Create(id));
 
         builder
             .Property(t => t.FirstName)

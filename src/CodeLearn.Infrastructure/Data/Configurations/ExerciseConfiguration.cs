@@ -26,14 +26,14 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
             .ValueGeneratedNever()
             .HasConversion(
                 exercise => exercise.Value,
-                id => new ExerciseId(id));
+                id => ExerciseId.Create(id));
 
         builder
             .Property(e => e.TestingId)
             .IsRequired()
             .HasConversion(
                 v => v.Value,
-                v => new TestingId(v));
+                v => TestingId.Create(v));
 
         builder
             .HasOne<Testing>()

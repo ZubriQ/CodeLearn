@@ -22,7 +22,7 @@ public sealed class TestingConfiguration : IEntityTypeConfiguration<Testing>
             .ValueGeneratedNever()
             .HasConversion(
                 testing => testing.Value,
-                id => new TestingId(id));
+                id => TestingId.Create(id));
 
         builder
             .HasOne<Teacher>()

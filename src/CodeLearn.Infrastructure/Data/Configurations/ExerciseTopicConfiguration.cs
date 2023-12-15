@@ -21,6 +21,6 @@ public sealed class ExerciseTopicConfiguration : IEntityTypeConfiguration<Exerci
             .ValueGeneratedNever()
             .HasConversion(
                 exerciseId => exerciseId.Value,
-                idValue => new ExerciseTopicId(idValue));
+                idValue => ExerciseTopicId.Create(idValue));
     }
 }
