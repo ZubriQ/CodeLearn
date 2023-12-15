@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace CodeLearn.Domain.Exercises;
+﻿namespace CodeLearn.Domain.Exercises;
 
 public abstract class Exercise(
     ExerciseId id,

@@ -22,5 +22,10 @@ public sealed class ExerciseTopicConfiguration : IEntityTypeConfiguration<Exerci
             .HasConversion(
                 exerciseId => exerciseId.Value,
                 idValue => ExerciseTopicId.Create(idValue));
+
+        builder
+            .Property(et => et.Name)
+            .HasMaxLength(30)
+            .IsRequired();
     }
 }

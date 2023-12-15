@@ -70,12 +70,7 @@ public abstract class BaseEntity<TId>
             return true;
         }
 
-        if (other.GetType() != GetType())
-        {
-            return false;
-        }
-
-        return EqualityComparer<TId>.Default.Equals(other.Id, Id);
+        return other.GetType() == GetType() && EqualityComparer<TId>.Default.Equals(other.Id, Id);
     }
 
     public override int GetHashCode()

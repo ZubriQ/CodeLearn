@@ -63,8 +63,8 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
 
         builder
             .Property(e => e.Difficulty)
-            .IsRequired()
             .HasMaxLength(6)
+            .IsRequired()
             .HasConversion(
                 difficulty => difficulty.ToString(),
                 value => (ExerciseDifficulty)Enum.Parse(typeof(ExerciseDifficulty), value));
@@ -95,10 +95,12 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
 
             noteBuilder
                 .Property(n => n.Entry)
-                .HasMaxLength(100);
+                .HasMaxLength(100)
+                .IsRequired();
 
             noteBuilder
                 .Property(n => n.Decoration)
+                .IsRequired()
                 .HasConversion(
                     decoration => decoration.ToString(),
                     value => (ExerciseNoteDecoration)Enum.Parse(typeof(ExerciseNoteDecoration), value));
