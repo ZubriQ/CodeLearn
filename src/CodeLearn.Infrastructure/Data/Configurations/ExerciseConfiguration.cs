@@ -100,6 +100,7 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
 
             noteBuilder
                 .Property(n => n.Decoration)
+                .HasMaxLength(30)
                 .IsRequired()
                 .HasConversion(
                     decoration => decoration.ToString(),
