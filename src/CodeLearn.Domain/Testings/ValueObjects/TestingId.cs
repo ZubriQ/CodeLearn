@@ -2,19 +2,19 @@
 
 public sealed class TestingId(Guid value) : ValueObject
 {
-    public Guid Value { get; private set; } = value;
+    public Guid Value { get; } = value;
 
     public static TestingId Create(Guid value)
     {
-        return new(value);
+        return new TestingId(value);
     }
 
     public static TestingId CreateUnique()
     {
-        return new(Guid.NewGuid());
+        return new TestingId(Guid.NewGuid());
     }
 
-    public override IEnumerable<object> GetEqualityComponents()
+    protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;
     }

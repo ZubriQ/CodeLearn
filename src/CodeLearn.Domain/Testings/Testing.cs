@@ -38,7 +38,7 @@ public sealed class Testing : BaseEntity<TestingId>, IAggregateRoot
         string description,
         int durationInMinutes)
     {
-        return new(
+        return new Testing(
             TestingId.CreateUnique(),
             teacherId,
             title,

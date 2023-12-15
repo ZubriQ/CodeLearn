@@ -7,10 +7,10 @@ public sealed class TeacherConfiguration : IEntityTypeConfiguration<Teacher>
 {
     public void Configure(EntityTypeBuilder<Teacher> builder)
     {
-        ConfigurateTeacherTable(builder);
+        ConfigureTeacherTable(builder);
     }
 
-    private static void ConfigurateTeacherTable(EntityTypeBuilder<Teacher> builder)
+    private static void ConfigureTeacherTable(EntityTypeBuilder<Teacher> builder)
     {
         builder.ToTable("Teacher", DatabaseSchemes.Person);
 

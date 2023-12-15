@@ -4,7 +4,7 @@ namespace CodeLearn.Domain.Common;
 
 public abstract class BaseEntity<TId>
 {
-    public TId Id { get; private set; }
+    public TId Id { get; }
 
     private readonly List<BaseEvent> _domainEvents = [];
 
@@ -53,7 +53,12 @@ public abstract class BaseEntity<TId>
         return !(first == second);
     }
 
-    public bool Equals(BaseEntity<TId>? other)
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as BaseEntity<TId>);
+    }
+
+    private bool Equals(BaseEntity<TId>? other)
     {
         if (other is null)
         {
@@ -71,11 +76,6 @@ public abstract class BaseEntity<TId>
         }
 
         return EqualityComparer<TId>.Default.Equals(other.Id, Id);
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as BaseEntity<TId>);
     }
 
     public override int GetHashCode()

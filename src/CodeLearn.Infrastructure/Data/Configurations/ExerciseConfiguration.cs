@@ -1,4 +1,5 @@
 ﻿using CodeLearn.Domain.Exercises;
+using CodeLearn.Domain.Exercises.Entities;
 using CodeLearn.Domain.Exercises.Enums;
 using CodeLearn.Domain.Exercises.ValueObjects;
 using CodeLearn.Domain.Testings;
@@ -40,6 +41,15 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
             .HasForeignKey(e => e.TestingId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder
+            .HasMany(e => e.ExerciseTopics)
+            .WithMany(e => e.Exercises)
+            // Instead of UsingEntity("Exercise2ExerciseTopic); for renaming foreign keys.
+            .UsingEntity<Dictionary<string, object>>(
+                "Exercise2ExerciseTopic",
+                et => et.HasOne<ExerciseTopic>().WithMany().HasForeignKey("ExerciseTopicId"),
+                e => e.HasOne<Exercise>().WithMany().HasForeignKey("ExerciseId"));
 
         builder
             .Property(e => e.Title)
@@ -88,13 +98,12 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
                 .HasMaxLength(100);
 
             noteBuilder
-                .Property(n => n.NoteDecoration)
+                .Property(n => n.Decoration)
                 .HasConversion(
                     decoration => decoration.ToString(),
                     value => (ExerciseNoteDecoration)Enum.Parse(typeof(ExerciseNoteDecoration), value));
         });
 
-        // Tells EF Core to populate.
         builder.Metadata
             .FindNavigation(nameof(Exercise.ExerciseNotes))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);

@@ -3,10 +3,8 @@
 public sealed class ExerciseNote : BaseEntity<ExerciseNoteId>
 {
     public ExerciseId ExerciseId { get; private set; } = null!;
-
     public string Entry { get; private set; } = null!;
-
-    public ExerciseNoteDecoration NoteDecoration { get; private set; }
+    public ExerciseNoteDecoration Decoration { get; private set; }
 
     private ExerciseNote() { }
 
@@ -19,7 +17,7 @@ public sealed class ExerciseNote : BaseEntity<ExerciseNoteId>
     {
         ExerciseId = exerciseId;
         Entry = entry;
-        NoteDecoration = noteDecoration;
+        Decoration = noteDecoration;
     }
 
     public static ExerciseNote Create(
@@ -27,7 +25,7 @@ public sealed class ExerciseNote : BaseEntity<ExerciseNoteId>
         string entry,
         ExerciseNoteDecoration noteDecoration = ExerciseNoteDecoration.Plain)
     {
-        return new(
+        return new ExerciseNote(
             ExerciseNoteId.CreateUnique(),
             exerciseId,
             entry,

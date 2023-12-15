@@ -25,7 +25,7 @@ public sealed class Teacher : BaseEntity<TeacherId>, IAggregateRoot
         string lastName,
         string? patronymic = null)
     {
-        return new(
+        return new Teacher(
             TeacherId.CreateUnique(),
             firstName,
             lastName,
