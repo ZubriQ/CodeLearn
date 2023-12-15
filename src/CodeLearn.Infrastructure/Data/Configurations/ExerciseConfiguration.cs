@@ -82,7 +82,7 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
 
             noteBuilder
                 .WithOwner()
-                .HasForeignKey("ExerciseId");
+                .HasForeignKey(n => n.ExerciseId);
 
             noteBuilder.HasKey(n => n.Id);
 

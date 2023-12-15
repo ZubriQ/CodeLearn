@@ -1,17 +1,17 @@
 namespace CodeLearn.Domain.Exercises.ValueObjects;
 
-public sealed class TestMethodParameterId(Guid value) : ValueObject
+public sealed class MethodParameterId(Guid value) : ValueObject
 {
     public Guid Value { get; } = value;
 
-    public static TestMethodParameterId Create(Guid value)
+    public static MethodParameterId Create(Guid value)
     {
-        return new TestMethodParameterId(value);
+        return new MethodParameterId(value);
     }
 
-    public static TestMethodParameterId CreateUnique()
+    public static MethodParameterId CreateUnique()
     {
-        return new TestMethodParameterId(Guid.NewGuid());
+        return new MethodParameterId(Guid.NewGuid());
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

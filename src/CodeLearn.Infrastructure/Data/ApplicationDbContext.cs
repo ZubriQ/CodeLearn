@@ -20,7 +20,7 @@ public sealed class ApplicationDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(
-            "Server=.\\SQLEXPRESS;Database=TEST_CodeLearn;Trusted_Connection=True;TrustServerCertificate=True;",
+            "Server=.\\SQLEXPRESS;Database=TEST2_CodeLearn;Trusted_Connection=True;TrustServerCertificate=True;",
             b => b.MigrationsAssembly(ContextAssembly.FullName));
 
         base.OnConfiguring(optionsBuilder);
