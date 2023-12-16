@@ -5,7 +5,7 @@ public sealed class ExerciseTopic : BaseEntity<ExerciseTopicId>
     public string Name { get; private set; } = null!;
 
     private readonly IList<Exercise> _exercises = [];
-    public IEnumerable<Exercise> Exercises => _exercises.AsReadOnly();
+    public IReadOnlyList<Exercise> Exercises => _exercises.AsReadOnly();
 
     private ExerciseTopic() { }
 
