@@ -25,6 +25,11 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
             .Property(e => e.MethodName)
             .HasMaxLength(30)
             .IsRequired();
+        
+        builder
+            .Property(e => e.MethodStartingCode)
+            .HasMaxLength(150)
+            .IsRequired();
     }
 
     private static void ConfigureMethodCodingExerciseMethodParameterTable(EntityTypeBuilder<MethodCodingExercise> builder)

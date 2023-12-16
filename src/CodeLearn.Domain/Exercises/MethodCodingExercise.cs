@@ -3,6 +3,7 @@
 public sealed class MethodCodingExercise : Exercise
 {
     public string MethodName { get; private set; }
+    public string MethodStartingCode { get; private set; }
     public DataTypeId MethodReturnTypeId { get; private set; } = null!;
     public DataType MethodReturnType { get; private set; } = null!;
 
@@ -17,10 +18,12 @@ public sealed class MethodCodingExercise : Exercise
         string title,
         string description,
         ExerciseDifficulty difficulty,
-        string methodName)
+        string methodName,
+        string methodStartingCode)
         : base(id, testingId, title, description, difficulty)
     {
         MethodName = methodName;
+        MethodStartingCode = methodStartingCode;
     }
 
     public static MethodCodingExercise Create(
@@ -29,6 +32,7 @@ public sealed class MethodCodingExercise : Exercise
         string description,
         ExerciseDifficulty difficulty,
         string methodName,
+        string methodStartingCode,
         DataType dataType)
     {
         var exercise = new MethodCodingExercise(
@@ -37,7 +41,8 @@ public sealed class MethodCodingExercise : Exercise
            title,
            description,
            difficulty,
-           methodName
+           methodName,
+           methodStartingCode
        )
         {
             MethodReturnType = dataType,
