@@ -13,9 +13,12 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<Testing> Testings => Set<Testing>();
     public DbSet<Teacher> Teachers => Set<Teacher>();
     public DbSet<MethodCodingExercise> MethodCodingExercises => Set<MethodCodingExercise>();
+    public DbSet<ClassCodingExercise> ClassCodingExercises => Set<ClassCodingExercise>();
     public DbSet<DataType> DataTypes => Set<DataType>();
     public DbSet<ExerciseNote> ExerciseNotes => Set<ExerciseNote>();
     public DbSet<ExerciseTopic> ExerciseTopics => Set<ExerciseTopic>();
+    public DbSet<TestCase> TestCases => Set<TestCase>();
+    public DbSet<TestCaseParameter> TestCaseParameters => Set<TestCaseParameter>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

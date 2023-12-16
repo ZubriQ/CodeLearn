@@ -18,6 +18,10 @@ public sealed class TestCaseParameter : BaseEntity<TestCaseParameterId>
 
     public static TestCaseParameter Create(TestCaseId testCaseId, string value, int position)
     {
-        return new TestCaseParameter(TestCaseParameterId.CreateUnique(), testCaseId, value, position);
+        return new TestCaseParameter(
+            TestCaseParameterId.CreateUnique(), 
+            testCaseId, 
+            value, 
+            position);
     }
 }

@@ -2,8 +2,8 @@
 
 public sealed class MethodCodingExercise : Exercise
 {
-    public string MethodName { get; private set; }
-    public string MethodStartingCode { get; private set; }
+    public string MethodToExecute { get; private set; }
+    public string MethodSolutionCode { get; private set; }
     public DataTypeId MethodReturnTypeId { get; private set; } = null!;
     public DataType MethodReturnType { get; private set; } = null!;
 
@@ -13,17 +13,18 @@ public sealed class MethodCodingExercise : Exercise
     private readonly IList<TestCase> _testCases = [];
     public IReadOnlyList<TestCase> TestCases => _testCases.AsReadOnly();
 
-    private MethodCodingExercise(ExerciseId id,
+    private MethodCodingExercise(
+        ExerciseId id,
         TestingId testingId,
         string title,
         string description,
         ExerciseDifficulty difficulty,
-        string methodName,
-        string methodStartingCode)
+        string methodToExecute,
+        string methodSolutionCode)
         : base(id, testingId, title, description, difficulty)
     {
-        MethodName = methodName;
-        MethodStartingCode = methodStartingCode;
+        MethodToExecute = methodToExecute;
+        MethodSolutionCode = methodSolutionCode;
     }
 
     public static MethodCodingExercise Create(
@@ -31,8 +32,8 @@ public sealed class MethodCodingExercise : Exercise
         string title,
         string description,
         ExerciseDifficulty difficulty,
-        string methodName,
-        string methodStartingCode,
+        string methodToExecute,
+        string methodSolutionCode,
         DataType dataType)
     {
         var exercise = new MethodCodingExercise(
@@ -41,9 +42,8 @@ public sealed class MethodCodingExercise : Exercise
            title,
            description,
            difficulty,
-           methodName,
-           methodStartingCode
-       )
+           methodToExecute,
+           methodSolutionCode)
         {
             MethodReturnType = dataType,
             MethodReturnTypeId = dataType.Id

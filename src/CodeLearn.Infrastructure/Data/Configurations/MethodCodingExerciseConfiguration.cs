@@ -22,12 +22,12 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
             .IsRequired();
 
         builder
-            .Property(e => e.MethodName)
+            .Property(e => e.MethodToExecute)
             .HasMaxLength(30)
             .IsRequired();
         
         builder
-            .Property(e => e.MethodStartingCode)
+            .Property(e => e.MethodSolutionCode)
             .HasMaxLength(150)
             .IsRequired();
     }

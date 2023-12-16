@@ -16,6 +16,9 @@ public sealed class DataType : BaseEntity<DataTypeId>
 
     public static DataType Create(string systemName, string alias)
     {
-        return new DataType(DataTypeId.Create(Guid.NewGuid()), systemName, alias);
+        return new DataType(
+            DataTypeId.Create(Guid.NewGuid()), 
+            systemName, 
+            alias);
     }
 }

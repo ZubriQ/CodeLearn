@@ -71,7 +71,8 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
 
         builder
             .HasDiscriminator<string>("ExerciseType")
-            .HasValue<MethodCodingExercise>("MethodCoding");
+            .HasValue<MethodCodingExercise>("MethodCoding")
+            .HasValue<ClassCodingExercise>("ClassCoding");
     }
 
     private static void ConfigureExerciseNoteTable(EntityTypeBuilder<Exercise> builder)
