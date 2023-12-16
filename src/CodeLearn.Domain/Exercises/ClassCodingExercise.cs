@@ -2,8 +2,8 @@
 
 public sealed class ClassCodingExercise : Exercise
 {
-    public string ClassSolutionCode { get; set; } = null!;
-    public string ClassTesterCode { get; set; } = null!;
+    public string ClassSolutionCode { get; private set; }
+    public string ClassTesterCode { get; private set; }
 
     private ClassCodingExercise(
         ExerciseId id,
