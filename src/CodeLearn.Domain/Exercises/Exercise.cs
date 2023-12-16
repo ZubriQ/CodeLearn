@@ -16,7 +16,7 @@ public abstract class Exercise(
     private readonly IList<ExerciseNote> _exerciseNotes = [];
     public IReadOnlyList<ExerciseNote> ExerciseNotes => _exerciseNotes.AsReadOnly();
 
-    private readonly List<ExerciseTopic> _exerciseTopics = [];
+    private readonly IList<ExerciseTopic> _exerciseTopics = [];
     public IEnumerable<ExerciseTopic> ExerciseTopics => _exerciseTopics.AsReadOnly();
 
     public void AddTopic(ExerciseTopic exerciseTopic)
