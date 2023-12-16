@@ -20,7 +20,7 @@ public sealed class Testing : BaseEntity<TestingId>, IAggregateRoot
         int durationInMinutes,
         bool isPublic,
         DateTime createdDateTime,
-        DateTime modifiedDateTime) 
+        DateTime modifiedDateTime)
         : base(testingId)
     {
         TeacherId = teacherId;

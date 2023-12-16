@@ -9,7 +9,7 @@ public sealed class ExerciseTopic : BaseEntity<ExerciseTopicId>
 
     private ExerciseTopic() { }
 
-    private ExerciseTopic(ExerciseTopicId exerciseTopicId, string name) 
+    private ExerciseTopic(ExerciseTopicId exerciseTopicId, string name)
         : base(exerciseTopicId)
     {
         Name = name;

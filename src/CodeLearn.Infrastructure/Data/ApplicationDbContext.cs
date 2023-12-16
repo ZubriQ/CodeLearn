@@ -1,8 +1,8 @@
 ﻿using CodeLearn.Domain.Exercises;
+using CodeLearn.Domain.Exercises.Entities;
 using CodeLearn.Domain.Teachers;
 using CodeLearn.Domain.Testings;
 using System.Reflection;
-using CodeLearn.Domain.Exercises.Entities;
 
 namespace CodeLearn.Infrastructure.Data;
 

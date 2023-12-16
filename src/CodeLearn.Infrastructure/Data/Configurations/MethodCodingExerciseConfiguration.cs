@@ -20,48 +20,48 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
             .WithMany()
             .HasForeignKey(t => t.MethodReturnTypeId)
             .IsRequired();
-        
+
         builder
             .Property(e => e.MethodName)
             .HasMaxLength(30)
             .IsRequired();
     }
-    
+
     private static void ConfigureMethodCodingExerciseMethodParameterTable(EntityTypeBuilder<MethodCodingExercise> builder)
     {
-       builder.OwnsMany(e => e.MethodParameters, methodParameterBuilder =>
-       {
+        builder.OwnsMany(e => e.MethodParameters, methodParameterBuilder =>
+        {
             methodParameterBuilder.ToTable("MethodParameter", DatabaseSchemes.Test);
 
             methodParameterBuilder
-                .WithOwner()
-                .HasForeignKey(e => e.ExerciseId);
+               .WithOwner()
+               .HasForeignKey(e => e.ExerciseId);
 
             methodParameterBuilder.HasKey(mp => mp.Id);
 
             methodParameterBuilder
-                .Property(mp => mp.Id)
-                .ValueGeneratedNever()
-                .HasConversion(
-                    id => id.Value,
-                    value => MethodParameterId.Create(value));
+               .Property(mp => mp.Id)
+               .ValueGeneratedNever()
+               .HasConversion(
+                   id => id.Value,
+                   value => MethodParameterId.Create(value));
 
             methodParameterBuilder
-                .HasOne(mp => mp.DataType)
-                .WithMany()
-                .HasForeignKey(t => t.DataTypeId)
-                .OnDelete(DeleteBehavior.Restrict);
+               .HasOne(mp => mp.DataType)
+               .WithMany()
+               .HasForeignKey(t => t.DataTypeId)
+               .OnDelete(DeleteBehavior.Restrict);
 
             methodParameterBuilder
-                .Property(mp => mp.Position)
-                .IsRequired();
-       });
+               .Property(mp => mp.Position)
+               .IsRequired();
+        });
 
         builder.Metadata
             .FindNavigation(nameof(MethodCodingExercise.MethodParameters))!
-            .SetPropertyAccessMode(PropertyAccessMode.Field); 
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
-    
+
     private static void ConfigureMethodCodingExerciseTestCaseTable(EntityTypeBuilder<MethodCodingExercise> builder)
     {
         builder.OwnsMany(e => e.TestCases, testCaseBuilder =>
@@ -85,7 +85,7 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
                 .Property(tc => tc.CorrectOutputValue)
                 .HasMaxLength(250)
                 .IsRequired();
-            
+
             ConfigureMethodCodingExerciseTestCaseTestCaseParameterTable(testCaseBuilder);
         });
 
@@ -117,7 +117,7 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
             parameterBuilder
                 .Property(p => p.Position)
                 .IsRequired();
-                
+
             parameterBuilder
                 .Property(p => p.Value)
                 .HasMaxLength(250)

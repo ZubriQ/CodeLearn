@@ -7,10 +7,10 @@ public sealed class TestCase : BaseEntity<TestCaseId>
 
     private readonly IList<TestCaseParameter> _testCaseParameters = [];
     public IReadOnlyList<TestCaseParameter> TestCaseParameters => _testCaseParameters.AsReadOnly();
-    
+
     private TestCase() { }
-    
-    private TestCase(TestCaseId id, ExerciseId exerciseId, string correctOutputValue) 
+
+    private TestCase(TestCaseId id, ExerciseId exerciseId, string correctOutputValue)
         : base(id)
     {
         ExerciseId = exerciseId;
@@ -21,7 +21,7 @@ public sealed class TestCase : BaseEntity<TestCaseId>
     {
         return new TestCase(TestCaseId.CreateUnique(), exerciseId, correctOutputValue);
     }
-    
+
     public void AddTestCaseParameter(TestCaseParameter testCaseParameter)
     {
         _testCaseParameters.Add(testCaseParameter);

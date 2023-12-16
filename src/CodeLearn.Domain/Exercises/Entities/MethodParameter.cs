@@ -9,7 +9,7 @@ public sealed class MethodParameter : BaseEntity<MethodParameterId>
 
     private MethodParameter() { }
 
-    private MethodParameter(MethodParameterId id, ExerciseId exerciseId, DataType dataType, int position) 
+    private MethodParameter(MethodParameterId id, ExerciseId exerciseId, DataType dataType, int position)
         : base(id)
     {
         ExerciseId = exerciseId;

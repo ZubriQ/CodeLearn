@@ -5,10 +5,10 @@ public sealed class TestCaseParameter : BaseEntity<TestCaseParameterId>
     public TestCaseId TestCaseId { get; private set; } = null!;
     public string Value { get; private set; } = null!;
     public int Position { get; private set; }
-    
-    private TestCaseParameter () { }
 
-    private TestCaseParameter(TestCaseParameterId id, TestCaseId testCaseId, string value, int position) 
+    private TestCaseParameter() { }
+
+    private TestCaseParameter(TestCaseParameterId id, TestCaseId testCaseId, string value, int position)
         : base(id)
     {
         TestCaseId = testCaseId;

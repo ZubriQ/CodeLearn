@@ -4,7 +4,7 @@ public sealed class DataType : BaseEntity<DataTypeId>
 {
     public string SystemName { get; private set; } = null!;
     public string Alias { get; private set; } = null!;
-    
+
     private DataType() { }
 
     private DataType(DataTypeId id, string systemName, string alias)

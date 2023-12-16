@@ -27,7 +27,7 @@ public sealed class DataTypeConfiguration : IEntityTypeConfiguration<DataType>
             .Property(dt => dt.SystemName)
             .HasMaxLength(20)
             .IsRequired();
-        
+
         builder
             .Property(dt => dt.Alias)
             .HasMaxLength(7)
