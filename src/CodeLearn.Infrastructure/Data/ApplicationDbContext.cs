@@ -1,5 +1,6 @@
 ﻿using CodeLearn.Domain.Exercises;
 using CodeLearn.Domain.Exercises.Entities;
+using CodeLearn.Domain.QuestionChoices;
 using CodeLearn.Domain.Teachers;
 using CodeLearn.Domain.Testings;
 using System.Reflection;
@@ -14,6 +15,8 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<Teacher> Teachers => Set<Teacher>();
     public DbSet<MethodCodingExercise> MethodCodingExercises => Set<MethodCodingExercise>();
     public DbSet<ClassCodingExercise> ClassCodingExercises => Set<ClassCodingExercise>();
+    public DbSet<QuestionExercise> QuestionExercises => Set<QuestionExercise>();
+    public DbSet<QuestionChoice> QuestionChoices => Set<QuestionChoice>();
     public DbSet<DataType> DataTypes => Set<DataType>();
     public DbSet<ExerciseNote> ExerciseNotes => Set<ExerciseNote>();
     public DbSet<ExerciseTopic> ExerciseTopics => Set<ExerciseTopic>();

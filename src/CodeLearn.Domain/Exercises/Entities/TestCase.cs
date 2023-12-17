@@ -20,8 +20,8 @@ public sealed class TestCase : BaseEntity<TestCaseId>
     public static TestCase Create(ExerciseId exerciseId, string correctOutputValue)
     {
         return new TestCase(
-            TestCaseId.CreateUnique(), 
-            exerciseId, 
+            TestCaseId.CreateUnique(),
+            exerciseId,
             correctOutputValue);
     }
 

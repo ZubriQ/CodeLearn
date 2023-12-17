@@ -26,9 +26,9 @@ public sealed class ExerciseNote : BaseEntity<ExerciseNoteId>
         ExerciseNoteDecoration noteDecoration = ExerciseNoteDecoration.Plain)
     {
         return new ExerciseNote(
-            ExerciseNoteId.CreateUnique(), 
-            exerciseId, 
-            entry, 
+            ExerciseNoteId.CreateUnique(),
+            exerciseId,
+            entry,
             noteDecoration);
     }
 }

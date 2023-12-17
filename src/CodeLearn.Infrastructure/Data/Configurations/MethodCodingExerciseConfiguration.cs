@@ -25,7 +25,7 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
             .Property(e => e.MethodToExecute)
             .HasMaxLength(30)
             .IsRequired();
-        
+
         builder
             .Property(e => e.MethodSolutionCode)
             .HasMaxLength(150)

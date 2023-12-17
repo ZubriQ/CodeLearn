@@ -6,6 +6,11 @@ public sealed class ClassCodingExerciseConfiguration : IEntityTypeConfiguration<
 {
     public void Configure(EntityTypeBuilder<ClassCodingExercise> builder)
     {
+        ConfigureClassCodingExercise(builder);
+    }
+
+    private static void ConfigureClassCodingExercise(EntityTypeBuilder<ClassCodingExercise> builder)
+    {
         builder
             .Property(e => e.ClassSolutionCode)
             .HasMaxLength(300)

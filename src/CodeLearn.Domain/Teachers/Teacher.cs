@@ -12,7 +12,7 @@ public sealed class Teacher : BaseEntity<TeacherId>, IAggregateRoot
         TeacherId teacherId,
         string firstName,
         string lastName,
-        string? patronymic = null)
+        string? patronymic)
         : base(teacherId)
     {
         FirstName = firstName;
