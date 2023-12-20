@@ -2,8 +2,8 @@
 
 public sealed class TestingSession : BaseEntity<TestingSessionId>, IAggregateRoot
 {
-    public TestingId TestingId { get; set; }
-    public StudentId StudentId { get; set; }
+    public TestingId TestingId { get; set; } = null!;
+    public StudentId StudentId { get; set; } = null!;
     public int Score { get; set; }
     public TestingSessionStatus Status { get; set; }
     public DateTime StartDateTime { get; set; }

@@ -48,8 +48,14 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
             // Instead of UsingEntity("Exercise2ExerciseTopic); for renaming foreign keys.
             .UsingEntity<Dictionary<string, object>>(
                 "Exercise2ExerciseTopic",
-                et => et.HasOne<ExerciseTopic>().WithMany().HasForeignKey("ExerciseTopicId"),
-                e => e.HasOne<Exercise>().WithMany().HasForeignKey("ExerciseId"));
+                et => et
+                    .HasOne<ExerciseTopic>()
+                    .WithMany()
+                    .HasForeignKey("ExerciseTopicId"),
+                e => e
+                    .HasOne<Exercise>()
+                    .WithMany()
+                    .HasForeignKey("ExerciseId"));
 
         builder
             .Property(e => e.Title)

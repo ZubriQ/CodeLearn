@@ -54,7 +54,7 @@ public sealed class ExerciseSubmissionConfiguration : IEntityTypeConfiguration<E
 
         builder
             .HasDiscriminator<string>("SubmissionType")
-            //.HasValue<ChoiceExerciseSubmission>("Question")
+            .HasValue<ChoiceExerciseSubmission>("Question")
             .HasValue<CodeExerciseSubmission>("Code");
     }
 }

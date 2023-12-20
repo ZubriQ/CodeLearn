@@ -4,6 +4,7 @@ global using CodeLearn.Domain.Exercises.Enums;
 global using CodeLearn.Domain.Exercises.ValueObjects;
 global using CodeLearn.Domain.ExerciseSubmissions;
 global using CodeLearn.Domain.ExerciseSubmissions.Enum;
+global using CodeLearn.Domain.ExerciseSubmissions.JunctionTables;
 global using CodeLearn.Domain.ExerciseSubmissions.ValueObjects;
 global using CodeLearn.Domain.QuestionChoices;
 global using CodeLearn.Domain.QuestionChoices.ValueObjects;
