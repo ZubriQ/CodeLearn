@@ -1,4 +1,4 @@
-﻿namespace CodeLearn.Domain.ExerciseSubmissions.Enum;
+﻿namespace CodeLearn.Domain.ExerciseSubmissions.Enums;
 
 public enum SubmissionTestStatus
 {

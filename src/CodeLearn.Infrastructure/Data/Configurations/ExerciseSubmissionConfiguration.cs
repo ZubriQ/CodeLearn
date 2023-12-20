@@ -1,6 +1,6 @@
 ﻿using CodeLearn.Domain.Exercises;
 using CodeLearn.Domain.ExerciseSubmissions;
-using CodeLearn.Domain.ExerciseSubmissions.Enum;
+using CodeLearn.Domain.ExerciseSubmissions.Enums;
 using CodeLearn.Domain.ExerciseSubmissions.ValueObjects;
 using CodeLearn.Domain.TestingSessions;
 
