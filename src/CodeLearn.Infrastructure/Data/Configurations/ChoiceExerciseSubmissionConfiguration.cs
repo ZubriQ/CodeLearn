@@ -1,6 +1,8 @@
 ﻿using CodeLearn.Domain.ExerciseSubmissions;
 using CodeLearn.Domain.ExerciseSubmissions.JunctionTables;
+using CodeLearn.Domain.ExerciseSubmissions.ValueObjects;
 using CodeLearn.Domain.QuestionChoices;
+using CodeLearn.Domain.QuestionChoices.ValueObjects;
 
 namespace CodeLearn.Infrastructure.Data.Configurations;
 
@@ -9,19 +11,19 @@ public sealed class ChoiceExerciseSubmissionConfiguration : IEntityTypeConfigura
     public void Configure(EntityTypeBuilder<ChoiceExerciseSubmission> builder)
     {
           builder
-            .HasMany(e => e.QuestionChoices)
-            .WithMany(e => e.ChoiceExerciseSubmission)
+            .HasMany(e => e.Choices)
+            .WithMany(e => e.ExerciseSubmissions)
             .UsingEntity<SelectedChoices>(
-                "ExerciseSubmission2Choice",
+                nameof(SelectedChoices),
                 j => j
                     .HasOne<QuestionChoice>()
                     .WithMany()
-                    .HasForeignKey("QuestionChoiceId")
+                    .HasForeignKey(nameof(QuestionChoiceId))
                     .OnDelete(DeleteBehavior.NoAction),
                 j => j
                     .HasOne<ChoiceExerciseSubmission>()
                     .WithMany()
-                    .HasForeignKey("ExerciseSubmissionId")
+                    .HasForeignKey(nameof(ExerciseSubmissionId))
                     .HasPrincipalKey("Id"));
     }
 }

@@ -7,8 +7,8 @@ public sealed class QuestionChoice : BaseEntity<QuestionChoiceId>, IAggregateRoo
     public bool IsCorrect { get; private set; }
     public string? Explanation { get; private set; }
 
-    private readonly IList<ChoiceExerciseSubmission> _choiceExerciseSubmission = [];
-    public IReadOnlyList<ChoiceExerciseSubmission> ChoiceExerciseSubmission => _choiceExerciseSubmission.AsReadOnly();
+    private readonly IList<ChoiceExerciseSubmission> _exerciseSubmissions = [];
+    public IReadOnlyList<ChoiceExerciseSubmission> ExerciseSubmissions => _exerciseSubmissions.AsReadOnly();
 
     private QuestionChoice() { }
 

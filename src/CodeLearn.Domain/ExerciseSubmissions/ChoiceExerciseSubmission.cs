@@ -2,8 +2,8 @@
 
 public class ChoiceExerciseSubmission : ExerciseSubmission
 {
-    private readonly IList<QuestionChoice> _questionChoices = [];
-    public virtual IReadOnlyList<QuestionChoice> QuestionChoices => _questionChoices.ToList();
+    private readonly IList<QuestionChoice> _choices = [];
+    public virtual IReadOnlyList<QuestionChoice> Choices => _choices.ToList();
 
     private ChoiceExerciseSubmission(
         ExerciseSubmissionId id,
