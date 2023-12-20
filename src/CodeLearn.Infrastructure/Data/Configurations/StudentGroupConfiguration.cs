@@ -29,7 +29,7 @@ public sealed class StudentGroupConfiguration : IEntityTypeConfiguration<Student
             .IsRequired();
 
         builder
-            .Property(sg => sg.Year)
+            .Property(sg => sg.EnrolmentYear)
             .IsRequired();
     }
 }

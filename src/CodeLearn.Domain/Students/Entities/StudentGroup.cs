@@ -3,22 +3,22 @@
 public sealed class StudentGroup : BaseEntity<StudentGroupId> // Can be an aggregate root.
 {
     public string Name { get; set; } = null!;
-    public int Year { get; set; }
+    public int EnrolmentYear { get; set; }
 
     private StudentGroup() { }
 
-    private StudentGroup(StudentGroupId id, string name, int year)
+    private StudentGroup(StudentGroupId id, string name, int enrolmentYear)
         : base(id)
     {
         Name = name;
-        Year = year;
+        EnrolmentYear = enrolmentYear;
     }
 
-    public static StudentGroup Create(string name, int year)
+    public static StudentGroup Create(string name, int enrolmentYear)
     {
         return new StudentGroup(
             StudentGroupId.CreateUnique(),
             name,
-            year);
+            enrolmentYear);
     }
 }
