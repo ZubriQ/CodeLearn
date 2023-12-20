@@ -13,6 +13,9 @@ public sealed class MethodCodingExercise : Exercise
     private readonly IList<TestCase> _testCases = [];
     public IReadOnlyList<TestCase> TestCases => _testCases.AsReadOnly();
 
+    private readonly IList<InputOutputExample> _inputOutputExamples = [];
+    public IReadOnlyList<InputOutputExample> InputOutputExamples => _inputOutputExamples.AsReadOnly();
+
     private MethodCodingExercise(
         ExerciseId id,
         TestingId testingId,

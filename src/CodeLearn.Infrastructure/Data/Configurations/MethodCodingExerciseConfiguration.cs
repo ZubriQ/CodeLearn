@@ -11,6 +11,7 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
         ConfigureMethodCodingExercise(builder);
         ConfigureMethodCodingExerciseMethodParameterTable(builder);
         ConfigureMethodCodingExerciseTestCaseTable(builder);
+        ConfigureMethodCodingExerciseInputOutputExampleTable(builder);
     }
 
     private static void ConfigureMethodCodingExercise(EntityTypeBuilder<MethodCodingExercise> builder)
@@ -128,5 +129,45 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
                 .HasMaxLength(250)
                 .IsRequired();
         }).UsePropertyAccessMode(PropertyAccessMode.Field);
+    }
+
+    private static void ConfigureMethodCodingExerciseInputOutputExampleTable(EntityTypeBuilder<MethodCodingExercise> builder)
+    {
+        _ = builder.OwnsMany(e => e.InputOutputExamples, exampleBuilder =>
+        {
+            exampleBuilder.ToTable("InputOutputExample", DatabaseSchemes.Test);
+
+            exampleBuilder
+                .WithOwner()
+                .HasForeignKey(n => n.ExerciseId);
+
+            exampleBuilder.HasKey(n => n.Id);
+
+            exampleBuilder
+                .Property(n => n.Id)
+                .ValueGeneratedNever()
+                .HasConversion(
+                    id => id.Value,
+                    value => InputOutputExampleId.Create(value));
+
+            exampleBuilder
+                .Property(n => n.Input)
+                .HasMaxLength(100)
+                .IsRequired();
+
+            exampleBuilder
+               .Property(n => n.Output)
+               .HasMaxLength(50)
+               .IsRequired();
+
+            exampleBuilder
+               .Property(n => n.Explanation)
+               .HasMaxLength(200)
+               .IsRequired();
+        });
+
+        builder.Metadata
+            .FindNavigation(nameof(MethodCodingExercise.InputOutputExamples))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }
