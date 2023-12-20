@@ -13,8 +13,8 @@ public sealed class ChoiceExerciseSubmissionConfiguration : IEntityTypeConfigura
         builder
           .HasMany(e => e.Choices)
           .WithMany(e => e.ExerciseSubmissions)
-          .UsingEntity<SelectedChoices>(
-              nameof(SelectedChoices),
+          .UsingEntity<SelectedChoice>(
+              nameof(SelectedChoice),
               j => j
                   .HasOne<QuestionChoice>()
                   .WithMany()
