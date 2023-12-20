@@ -2,6 +2,7 @@
 using CodeLearn.Domain.ExerciseSubmissions;
 using CodeLearn.Domain.ExerciseSubmissions.Enum;
 using CodeLearn.Domain.ExerciseSubmissions.ValueObjects;
+using CodeLearn.Domain.TestingSessions;
 
 namespace CodeLearn.Infrastructure.Data.Configurations;
 
@@ -28,7 +29,14 @@ public sealed class ExerciseSubmissionConfiguration : IEntityTypeConfiguration<E
         builder
             .HasOne<Exercise>()
             .WithMany()
-            .HasForeignKey(e => e.ExerciseId)
+            .HasForeignKey(s => s.ExerciseId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder
+            .HasOne<TestingSession>()
+            .WithMany()
+            .HasForeignKey(s => s.TestingSessionId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
@@ -37,11 +45,11 @@ public sealed class ExerciseSubmissionConfiguration : IEntityTypeConfiguration<E
             .IsRequired();
 
         builder
-            .Property(e => e.Status)
+            .Property(s => s.Status)
             .HasMaxLength(9)
             .IsRequired()
             .HasConversion(
-                difficulty => difficulty.ToString(),
+                status => status.ToString(),
                 value => (SubmissionTestStatus)Enum.Parse(typeof(SubmissionTestStatus), value));
 
         builder

@@ -8,11 +8,12 @@ public sealed class CodeExerciseSubmission : ExerciseSubmission
     private CodeExerciseSubmission(
         ExerciseSubmissionId id,
         ExerciseId exerciseId,
+        TestingSessionId testingSessionId,
         DateTime sentDateTime,
         SubmissionTestStatus status,
         string studentCode,
         string testingInformation)
-        : base(id, exerciseId, sentDateTime, status)
+        : base(id, exerciseId, testingSessionId, sentDateTime, status)
     {
         StudentCode = studentCode;
         TestingInformation = testingInformation;
@@ -20,6 +21,7 @@ public sealed class CodeExerciseSubmission : ExerciseSubmission
 
     public static CodeExerciseSubmission Create(
         ExerciseId exerciseId,
+        TestingSessionId testingSessionId,
         DateTime sentDateTime,
         string studentCode,
         string testingInformation)
@@ -27,6 +29,7 @@ public sealed class CodeExerciseSubmission : ExerciseSubmission
         return new CodeExerciseSubmission(
             ExerciseSubmissionId.CreateUnique(),
             exerciseId,
+            testingSessionId,
             sentDateTime,
             SubmissionTestStatus.Untested,
             studentCode,
