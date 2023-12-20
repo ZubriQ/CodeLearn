@@ -20,8 +20,8 @@ public sealed class DataTypeConfiguration : IEntityTypeConfiguration<DataType>
             .Property(t => t.Id)
             .ValueGeneratedNever()
             .HasConversion(
-                testing => testing.Value,
-                id => DataTypeId.Create(id));
+                dataTypeId => dataTypeId.Value,
+                value => DataTypeId.Create(value));
 
         builder
             .Property(dt => dt.SystemName)

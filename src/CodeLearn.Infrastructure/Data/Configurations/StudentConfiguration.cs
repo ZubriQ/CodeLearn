@@ -15,8 +15,8 @@ public sealed class StudentConfiguration : IEntityTypeConfiguration<Student>
             .Property(s => s.Id)
             .ValueGeneratedNever()
             .HasConversion(
-                exercise => exercise.Value,
-                id => StudentId.Create(id));
+                studentId => studentId.Value,
+                value => StudentId.Create(value));
 
         builder
             .HasOne(s => s.StudentGroup)

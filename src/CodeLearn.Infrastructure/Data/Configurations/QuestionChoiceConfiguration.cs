@@ -20,8 +20,8 @@ public sealed class QuestionChoiceConfiguration : IEntityTypeConfiguration<Quest
             .Property(t => t.Id)
             .ValueGeneratedNever()
             .HasConversion(
-                teacher => teacher.Value,
-                id => QuestionChoiceId.Create(id));
+                choiceId => choiceId.Value,
+                value => QuestionChoiceId.Create(value));
 
         builder
             .Property(q => q.Text)

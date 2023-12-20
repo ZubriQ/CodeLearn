@@ -20,7 +20,7 @@ public sealed class ExerciseTopicConfiguration : IEntityTypeConfiguration<Exerci
             .Property(e => e.Id)
             .ValueGeneratedNever()
             .HasConversion(
-                exerciseId => exerciseId.Value,
+                topicId => topicId.Value,
                 idValue => ExerciseTopicId.Create(idValue));
 
         builder
