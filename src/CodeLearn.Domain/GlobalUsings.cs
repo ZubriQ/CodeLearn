@@ -13,3 +13,6 @@ global using CodeLearn.Domain.Students.ValueObjects;
 global using CodeLearn.Domain.Teachers;
 global using CodeLearn.Domain.Teachers.ValueObjects;
 global using CodeLearn.Domain.Testings.ValueObjects;
+global using CodeLearn.Domain.TestingSessions;
+global using CodeLearn.Domain.TestingSessions.Enums;
+global using CodeLearn.Domain.TestingSessions.ValueObjects;
