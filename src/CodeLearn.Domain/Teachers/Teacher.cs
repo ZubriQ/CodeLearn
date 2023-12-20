@@ -9,11 +9,11 @@ public sealed class Teacher : BaseEntity<TeacherId>, IAggregateRoot
     private Teacher() { }
 
     private Teacher(
-        TeacherId teacherId,
+        TeacherId id,
         string firstName,
         string lastName,
         string? patronymic)
-        : base(teacherId)
+        : base(id)
     {
         FirstName = firstName;
         LastName = lastName;
