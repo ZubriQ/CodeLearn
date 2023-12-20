@@ -1,6 +1,6 @@
 ﻿namespace CodeLearn.Domain.Students.Entities;
 
-public sealed class StudentGroup : BaseEntity<StudentGroupId>
+public sealed class StudentGroup : BaseEntity<StudentGroupId> // Can be an aggregate root.
 {
     public string Name { get; set; } = null!;
     public int Year { get; set; }
