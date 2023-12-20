@@ -28,7 +28,7 @@ public sealed class QuestionExercise : Exercise
     {
         return new QuestionExercise(
             ExerciseId.CreateUnique(),
-            testingId, 
+            testingId,
             title,
             description,
             difficulty,

@@ -13,11 +13,11 @@ public sealed class TestingSession : BaseEntity<TestingSessionId>, IAggregateRoo
 
     private TestingSession(
         TestingSessionId id,
-        TestingId testingId, 
-        StudentId studentId, 
-        int score, 
-        TestingSessionStatus status, 
-        DateTime startDateTime, 
+        TestingId testingId,
+        StudentId studentId,
+        int score,
+        TestingSessionStatus status,
+        DateTime startDateTime,
         DateTime finishDateTime)
         : base(id)
     {

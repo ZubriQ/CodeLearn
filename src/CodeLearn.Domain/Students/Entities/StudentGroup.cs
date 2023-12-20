@@ -7,7 +7,7 @@ public sealed class StudentGroup : BaseEntity<StudentGroupId> // Can be an aggre
 
     private StudentGroup() { }
 
-    private StudentGroup(StudentGroupId id, string name, int year) 
+    private StudentGroup(StudentGroupId id, string name, int year)
         : base(id)
     {
         Name = name;

@@ -10,20 +10,20 @@ public sealed class ChoiceExerciseSubmissionConfiguration : IEntityTypeConfigura
 {
     public void Configure(EntityTypeBuilder<ChoiceExerciseSubmission> builder)
     {
-          builder
-            .HasMany(e => e.Choices)
-            .WithMany(e => e.ExerciseSubmissions)
-            .UsingEntity<SelectedChoices>(
-                nameof(SelectedChoices),
-                j => j
-                    .HasOne<QuestionChoice>()
-                    .WithMany()
-                    .HasForeignKey(nameof(QuestionChoiceId))
-                    .OnDelete(DeleteBehavior.NoAction),
-                j => j
-                    .HasOne<ChoiceExerciseSubmission>()
-                    .WithMany()
-                    .HasForeignKey(nameof(ExerciseSubmissionId))
-                    .HasPrincipalKey("Id"));
+        builder
+          .HasMany(e => e.Choices)
+          .WithMany(e => e.ExerciseSubmissions)
+          .UsingEntity<SelectedChoices>(
+              nameof(SelectedChoices),
+              j => j
+                  .HasOne<QuestionChoice>()
+                  .WithMany()
+                  .HasForeignKey(nameof(QuestionChoiceId))
+                  .OnDelete(DeleteBehavior.NoAction),
+              j => j
+                  .HasOne<ChoiceExerciseSubmission>()
+                  .WithMany()
+                  .HasForeignKey(nameof(ExerciseSubmissionId))
+                  .HasPrincipalKey("Id"));
     }
 }
