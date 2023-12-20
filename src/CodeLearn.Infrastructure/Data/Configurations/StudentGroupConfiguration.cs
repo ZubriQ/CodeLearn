@@ -7,6 +7,11 @@ public sealed class StudentGroupConfiguration : IEntityTypeConfiguration<Student
 {
     public void Configure(EntityTypeBuilder<StudentGroup> builder)
     {
+        ConfigureStudentGroupTable(builder);
+    }
+
+    private static void ConfigureStudentGroupTable(EntityTypeBuilder<StudentGroup> builder)
+    {
         builder.ToTable("StudentGroup", DatabaseSchemes.Test);
 
         builder.HasKey(sg => sg.Id);
