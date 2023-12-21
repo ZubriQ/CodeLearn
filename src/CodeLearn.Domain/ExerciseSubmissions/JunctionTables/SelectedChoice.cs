@@ -2,6 +2,6 @@
 
 public sealed class SelectedChoice
 {
-    public ExerciseSubmissionId ExerciseSubmissionId { get; set; } = null!;
-    public QuestionChoiceId QuestionChoiceId { get; set; } = null!;
+    public ExerciseSubmissionId ExerciseSubmissionId { get; init; } = null!;
+    public QuestionChoiceId QuestionChoiceId { get; init; } = null!;
 }

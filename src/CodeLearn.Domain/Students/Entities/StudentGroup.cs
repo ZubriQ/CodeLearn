@@ -2,8 +2,8 @@
 
 public sealed class StudentGroup : BaseEntity<StudentGroupId> // Can be an aggregate root.
 {
-    public string Name { get; set; } = null!;
-    public int EnrolmentYear { get; set; }
+    public string Name { get; private set; } = null!;
+    public int EnrolmentYear { get; private set; }
 
     private StudentGroup() { }
 

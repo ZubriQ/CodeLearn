@@ -2,12 +2,12 @@
 
 public sealed class TestingSession : BaseEntity<TestingSessionId>, IAggregateRoot
 {
-    public TestingId TestingId { get; set; } = null!;
-    public StudentId StudentId { get; set; } = null!;
-    public int Score { get; set; }
-    public TestingSessionStatus Status { get; set; }
-    public DateTime StartDateTime { get; set; }
-    public DateTime FinishDateTime { get; set; }
+    public TestingId TestingId { get; private set; } = null!;
+    public StudentId StudentId { get; private set; } = null!;
+    public int Score { get; private set; }
+    public TestingSessionStatus Status { get; private set; }
+    public DateTime StartDateTime { get; private set; }
+    public DateTime FinishDateTime { get; private set; }
 
     private TestingSession() { }
 

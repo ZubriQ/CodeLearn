@@ -1,9 +1,9 @@
 ﻿namespace CodeLearn.Domain.ExerciseSubmissions;
 
-public class ChoiceExerciseSubmission : ExerciseSubmission
+public sealed class ChoiceExerciseSubmission : ExerciseSubmission
 {
     private readonly IList<QuestionChoice> _choices = [];
-    public virtual IReadOnlyList<QuestionChoice> Choices => _choices.ToList();
+    public IReadOnlyList<QuestionChoice> Choices => _choices.ToList();
 
     private ChoiceExerciseSubmission(
         ExerciseSubmissionId id,

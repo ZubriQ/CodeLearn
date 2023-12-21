@@ -5,8 +5,8 @@ public sealed class Student : BaseEntity<StudentId>, IAggregateRoot
     public string FirstName { get; private set; } = null!;
     public string LastName { get; private set; } = null!;
     public string? Patronymic { get; private set; }
-    public StudentGroupId StudentGroupId { get; set; } = null!;
-    public StudentGroup StudentGroup { get; set; } = null!;
+    public StudentGroupId StudentGroupId { get; private set; } = null!;
+    public StudentGroup StudentGroup { get; private set; } = null!;
 
     private Student() { }
 

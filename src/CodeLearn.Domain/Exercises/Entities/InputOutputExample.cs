@@ -2,10 +2,10 @@
 
 public sealed class InputOutputExample : BaseEntity<InputOutputExampleId>
 {
-    public ExerciseId ExerciseId { get; set; } = null!;
-    public string Input { get; set; } = null!;
-    public string Output { get; set; } = null!;
-    public string? Explanation { get; set; }
+    public ExerciseId ExerciseId { get; private set; } = null!;
+    public string Input { get; private set; } = null!;
+    public string Output { get; private set; } = null!;
+    public string? Explanation { get; private set; }
 
     private InputOutputExample() { }
 
