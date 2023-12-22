@@ -1,4 +1,5 @@
-﻿using CodeLearn.Domain.Exercises;
+﻿using CodeLearn.Application.Common.Interfaces;
+using CodeLearn.Domain.Exercises;
 using CodeLearn.Domain.Exercises.Entities;
 using CodeLearn.Domain.ExerciseSubmissions;
 using CodeLearn.Domain.ExerciseSubmissions.JunctionTables;
@@ -12,9 +13,9 @@ using System.Reflection;
 
 namespace CodeLearn.Infrastructure.Data;
 
-public sealed class ApplicationDbContext : DbContext
+public sealed class ApplicationDbContext : DbContext, IApplicationDbContext
 {
-    private static Assembly ContextAssembly => typeof(ApplicationDbContext).Assembly;
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     public DbSet<Teacher> Teachers => Set<Teacher>();
     public DbSet<Student> Students => Set<Student>();
@@ -39,19 +40,10 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<ExerciseSubmission> ExerciseSubmissions => Set<ExerciseSubmission>();
     public DbSet<ChoiceExerciseSubmission> ChoiceExerciseSubmissions => Set<ChoiceExerciseSubmission>();
     public DbSet<CodeExerciseSubmission> CodeExerciseSubmissions => Set<CodeExerciseSubmission>();
-    
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer(
-            "Server=.\\SQLEXPRESS;Database=TEST2_CodeLearn;Trusted_Connection=True;TrustServerCertificate=True;",
-            b => b.MigrationsAssembly(ContextAssembly.FullName));
-
-        base.OnConfiguring(optionsBuilder);
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(ContextAssembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         base.OnModelCreating(modelBuilder);
     }

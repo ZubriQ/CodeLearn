@@ -10,4 +10,12 @@
     <ProjectReference Include="..\CodeLearn.Domain\CodeLearn.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Testings\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.2.0" />
+  </ItemGroup>
+
 </Project>
