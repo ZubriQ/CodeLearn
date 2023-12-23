@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CodeLearn.Application\CodeLearn.Application.csproj" />
+    <ProjectReference Include="..\CodeLearn.Contracts\CodeLearn.Contracts.csproj" />
     <ProjectReference Include="..\CodeLearn.Infrastructure\CodeLearn.Infrastructure.csproj" />
   </ItemGroup>
 
