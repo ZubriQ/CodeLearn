@@ -1,4 +1,4 @@
-﻿using CodeLearn.Application.Testings.Commands;
+﻿using CodeLearn.Application.Testings.Commands.CreateTesting;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,21 +6,12 @@ namespace CodeLearn.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class TestingsController : ControllerBase
+public sealed class TestingsController(ISender sender) : ControllerBase
 {
-    private readonly ISender _mediator;
-
-    public TestingsController(ISender mediator)
-    {
-        _mediator = mediator;
-    }
-
-    // GET: TestingsController/Create
     [HttpPost]
     public async Task<IActionResult> Create(CreateTestingCommand request)
     {
-        var result = await _mediator.Send(request);
-
-        return Ok(result);
+        var testingId = await sender.Send(request);
+        return Ok(testingId);
     }
 }
