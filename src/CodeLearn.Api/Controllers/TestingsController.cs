@@ -2,9 +2,7 @@
 
 namespace CodeLearn.Api.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public sealed class TestingsController(ISender sender) : ControllerBase
+public sealed class TestingsController(ISender sender) : ApiControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> Create(CreateTestingCommand request)

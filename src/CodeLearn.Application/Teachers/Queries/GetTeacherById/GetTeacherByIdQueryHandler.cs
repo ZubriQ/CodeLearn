@@ -2,7 +2,8 @@
 
 namespace CodeLearn.Application.Teachers.Queries.GetTeacherById;
 
-public class GetTeacherByIdQueryHandler(IApplicationDbContext context) : IRequestHandler<GetTeacherByIdQuery, TeacherModel>
+public class GetTeacherByIdQueryHandler(IApplicationDbContext context) 
+    : IRequestHandler<GetTeacherByIdQuery, TeacherModel>
 {
     public async Task<TeacherModel> Handle(GetTeacherByIdQuery request, CancellationToken cancellationToken)
     {
@@ -13,7 +14,7 @@ public class GetTeacherByIdQueryHandler(IApplicationDbContext context) : IReques
 
         // TODO: handle null
 
-        var teacherModel = new TeacherModel(teacher.FirstName, teacher.LastName, teacher.Patronymic);
+        var teacherModel = new TeacherModel(teacher.Id.Value, teacher.FirstName, teacher.LastName, teacher.Patronymic);
 
         return teacherModel;
     }

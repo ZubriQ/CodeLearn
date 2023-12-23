@@ -1,8 +1,6 @@
 ﻿namespace CodeLearn.Api.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public sealed class BuggyController : ControllerBase
+public sealed class BuggyController : ApiControllerBase
 {
     [HttpGet("not-found")]
     public ActionResult GetNotFound()
