@@ -1,5 +1,4 @@
-﻿using CodeLearn.Application.Common.Interfaces;
-using CodeLearn.Domain.Testings;
+﻿using CodeLearn.Domain.Testings;
 
 namespace CodeLearn.Application.Testings.Commands.CreateTesting;
 

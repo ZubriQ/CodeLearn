@@ -1,4 +1,3 @@
-using CodeLearn.Application.Common.Interfaces;
 using CodeLearn.Domain.Teachers;
 
 namespace CodeLearn.Application.Teachers.Commands.CreateTeacher;

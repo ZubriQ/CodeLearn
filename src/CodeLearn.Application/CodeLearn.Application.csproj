@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Teachers\Queries\" />
     <Folder Include="Testings\Queries\" />
   </ItemGroup>
 

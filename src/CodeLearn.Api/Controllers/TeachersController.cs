@@ -1,4 +1,5 @@
 ﻿using CodeLearn.Application.Teachers.Commands.CreateTeacher;
+using CodeLearn.Application.Teachers.Queries.GetTeacherById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,5 +14,12 @@ public sealed class TeachersController(ISender sender) : ControllerBase
     {
         var teacherId = await sender.Send(request);
         return Ok(teacherId);
+    }
+
+    [HttpGet("{teacherId}")]
+    public async Task<IActionResult> Get(Guid teacherId)
+    {
+        var teacherModel = await sender.Send(new GetTeacherByIdQuery(teacherId));
+        return Ok(teacherModel);
     }
 }
