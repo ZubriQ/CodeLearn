@@ -31,4 +31,13 @@ public sealed class Teacher : BaseEntity<TeacherId>, IAggregateRoot
             lastName,
             patronymic);
     }
+
+    public void UpdateName(string firstName, string lastName, string? patronymic = null)
+    {
+        // TODO: Validate
+
+        FirstName = firstName;
+        LastName = lastName;
+        Patronymic = patronymic;
+    }
 }

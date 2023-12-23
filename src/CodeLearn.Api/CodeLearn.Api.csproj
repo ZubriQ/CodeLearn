@@ -25,4 +25,8 @@
     <ProjectReference Include="..\CodeLearn.Infrastructure\CodeLearn.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\" />
+  </ItemGroup>
+
 </Project>

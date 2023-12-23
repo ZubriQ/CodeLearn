@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace CodeLearn.Api.Controllers
 {
     [ApiController]

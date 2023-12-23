@@ -1,6 +1,4 @@
 ﻿using CodeLearn.Application.Testings.Commands.CreateTesting;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CodeLearn.Api.Controllers;
 

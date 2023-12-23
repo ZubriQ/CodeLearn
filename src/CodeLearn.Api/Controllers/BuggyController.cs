@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace CodeLearn.Api.Controllers;
+﻿namespace CodeLearn.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
