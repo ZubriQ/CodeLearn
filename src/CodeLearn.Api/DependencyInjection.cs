@@ -15,6 +15,8 @@ public static class DependencyInjection
             });
         });
 
+        services.AddRouting(options => options.LowercaseUrls = true);
+
         return services;
     }
 }
