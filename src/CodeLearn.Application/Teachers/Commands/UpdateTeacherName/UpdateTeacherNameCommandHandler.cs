@@ -3,9 +3,9 @@
 namespace CodeLearn.Application.Teachers.Commands.UpdateTeacherName;
 
 public class UpdateTeacherNameCommandHandler(IApplicationDbContext context) 
-    : IRequestHandler<UpdateTeacherNameCommand, bool>
+    : IRequestHandler<UpdateTeacherNameCommand, OneOf<Success, NotFound>>
 {
-    public async Task<bool> Handle(UpdateTeacherNameCommand request, CancellationToken cancellationToken)
+    public async Task<OneOf<Success, NotFound>> Handle(UpdateTeacherNameCommand request, CancellationToken cancellationToken)
     {
         var teacher = await context.Teachers
             .Where(t => t.Id == TeacherId.Create(request.Id))
@@ -13,13 +13,13 @@ public class UpdateTeacherNameCommandHandler(IApplicationDbContext context)
 
         if (teacher is null)
         {
-            return false; // TODO: custom Result class
+            return new NotFound();
         }
 
         teacher.UpdateName(request.FirstName, request.LastName, request.Patronymic);
 
         await context.SaveChangesAsync(cancellationToken);
 
-        return true;
+        return new Success();
     }
 }

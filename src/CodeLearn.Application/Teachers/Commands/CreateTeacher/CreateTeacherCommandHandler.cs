@@ -2,11 +2,16 @@ using CodeLearn.Domain.Teachers;
 
 namespace CodeLearn.Application.Teachers.Commands.CreateTeacher;
 
-public class CreateTeacherCommandHandler(IApplicationDbContext context) : IRequestHandler<CreateTeacherCommand, Guid>
+public class CreateTeacherCommandHandler(IApplicationDbContext context, IValidator<CreateTeacherCommand> validator)
+    : IRequestHandler<CreateTeacherCommand, OneOf<Guid, ValidationFailed>>
 {
-    public async Task<Guid> Handle(CreateTeacherCommand request, CancellationToken cancellationToken)
+    public async Task<OneOf<Guid, ValidationFailed>> Handle(CreateTeacherCommand request, CancellationToken cancellationToken)
     {
-        // TODO: Validate
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            return new ValidationFailed(validationResult.Errors);
+        }
 
         var teacher = Teacher.Create(request.FirstName, request.LastName, request.Patronymic);
 

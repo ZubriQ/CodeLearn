@@ -4,4 +4,4 @@ public record CreateTeacherCommand(
     string FirstName,
     string LastName,
     string? Patronymic)
-    : IRequest<Guid>;
+    : IRequest<OneOf<Guid, ValidationFailed>>;

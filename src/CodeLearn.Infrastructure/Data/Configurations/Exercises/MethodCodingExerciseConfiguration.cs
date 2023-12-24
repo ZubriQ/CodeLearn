@@ -2,7 +2,7 @@ using CodeLearn.Domain.Exercises;
 using CodeLearn.Domain.Exercises.Entities;
 using CodeLearn.Domain.Exercises.ValueObjects;
 
-namespace CodeLearn.Infrastructure.Data.Configurations;
+namespace CodeLearn.Infrastructure.Data.Configurations.Exercises;
 
 public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration<MethodCodingExercise>
 {

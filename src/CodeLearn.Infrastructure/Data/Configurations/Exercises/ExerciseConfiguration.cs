@@ -5,7 +5,7 @@ using CodeLearn.Domain.Exercises.ValueObjects;
 using CodeLearn.Domain.Testings;
 using CodeLearn.Domain.Testings.ValueObjects;
 
-namespace CodeLearn.Infrastructure.Data.Configurations;
+namespace CodeLearn.Infrastructure.Data.Configurations.Exercises;
 
 public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
 {

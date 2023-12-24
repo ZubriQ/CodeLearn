@@ -4,7 +4,7 @@ using CodeLearn.Domain.ExerciseSubmissions.ValueObjects;
 using CodeLearn.Domain.QuestionChoices;
 using CodeLearn.Domain.QuestionChoices.ValueObjects;
 
-namespace CodeLearn.Infrastructure.Data.Configurations;
+namespace CodeLearn.Infrastructure.Data.Configurations.ExerciseSubmissions;
 
 public sealed class ChoiceExerciseSubmissionConfiguration : IEntityTypeConfiguration<ChoiceExerciseSubmission>
 {

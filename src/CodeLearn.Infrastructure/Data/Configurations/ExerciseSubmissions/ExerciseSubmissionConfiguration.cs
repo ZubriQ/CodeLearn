@@ -4,7 +4,7 @@ using CodeLearn.Domain.ExerciseSubmissions.Enums;
 using CodeLearn.Domain.ExerciseSubmissions.ValueObjects;
 using CodeLearn.Domain.TestingSessions;
 
-namespace CodeLearn.Infrastructure.Data.Configurations;
+namespace CodeLearn.Infrastructure.Data.Configurations.ExerciseSubmissions;
 
 public sealed class ExerciseSubmissionConfiguration : IEntityTypeConfiguration<ExerciseSubmission>
 {

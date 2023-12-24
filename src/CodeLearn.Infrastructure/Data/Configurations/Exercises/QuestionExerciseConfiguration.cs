@@ -1,6 +1,6 @@
 ﻿using CodeLearn.Domain.Exercises;
 
-namespace CodeLearn.Infrastructure.Data.Configurations;
+namespace CodeLearn.Infrastructure.Data.Configurations.Exercises;
 
 public sealed class QuestionExerciseConfiguration : IEntityTypeConfiguration<QuestionExercise>
 {

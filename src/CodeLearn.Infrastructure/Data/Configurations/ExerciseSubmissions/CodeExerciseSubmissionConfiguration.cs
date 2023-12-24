@@ -1,6 +1,6 @@
 ﻿using CodeLearn.Domain.ExerciseSubmissions;
 
-namespace CodeLearn.Infrastructure.Data.Configurations;
+namespace CodeLearn.Infrastructure.Data.Configurations.ExerciseSubmissions;
 
 public sealed class CodeExerciseSubmissionConfiguration : IEntityTypeConfiguration<CodeExerciseSubmission>
 {

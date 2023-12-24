@@ -2,9 +2,10 @@
 
 namespace CodeLearn.Application.Teachers.Commands.DeleteTeacher;
 
-public class DeleteTeacherCommandHandler(IApplicationDbContext context) : IRequestHandler<DeleteTeacherCommand, bool>
+public class DeleteTeacherCommandHandler(IApplicationDbContext context)
+    : IRequestHandler<DeleteTeacherCommand, OneOf<Success, NotFound>>
 {
-    public async Task<bool> Handle(DeleteTeacherCommand request, CancellationToken cancellationToken)
+    public async Task<OneOf<Success, NotFound>> Handle(DeleteTeacherCommand request, CancellationToken cancellationToken)
     {
         var teacher = await context.Teachers
             .Where(t => t.Id == TeacherId.Create(request.Id))
@@ -12,13 +13,13 @@ public class DeleteTeacherCommandHandler(IApplicationDbContext context) : IReque
 
         if (teacher is null)
         {
-            return false; // TODO: custom Result class
+            return new NotFound();
         }
 
         context.Teachers.Remove(teacher!);
 
         await context.SaveChangesAsync(cancellationToken);
 
-        return true; 
+        return new Success();
     }
 }
