@@ -1,4 +1,6 @@
-﻿namespace CodeLearn.Api;
+﻿using System.Reflection;
+
+namespace CodeLearn.Api;
 
 public static class DependencyInjection
 {
@@ -15,8 +17,20 @@ public static class DependencyInjection
             });
         });
 
+        services.AddMappings();
+
         services.AddRouting(options => options.LowercaseUrls = true);
 
+        return services;
+    }
+
+    private static IServiceCollection AddMappings(this IServiceCollection services)
+    {
+        var config = TypeAdapterConfig.GlobalSettings;
+        config.Scan(Assembly.GetExecutingAssembly());
+
+        services.AddSingleton(config);
+        services.AddScoped<IMapper, ServiceMapper>();
         return services;
     }
 }

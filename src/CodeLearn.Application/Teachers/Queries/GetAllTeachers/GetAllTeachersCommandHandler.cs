@@ -2,7 +2,7 @@ using CodeLearn.Domain.Teachers;
 
 namespace CodeLearn.Application.Teachers.Queries.GetAllTeachers;
 
-public class GetAllTeachersCommandHandler(IApplicationDbContext context) 
+public class GetAllTeachersCommandHandler(IApplicationDbContext context)
     : IRequestHandler<GetAllTeachersCommand, Teacher[]>
 {
     public async Task<Teacher[]> Handle(GetAllTeachersCommand request, CancellationToken cancellationToken)
@@ -10,7 +10,7 @@ public class GetAllTeachersCommandHandler(IApplicationDbContext context)
         var teachers = await context.Teachers
             .AsNoTracking()
             .ToArrayAsync(cancellationToken); // TODO: Contracts.
-        
+
         return teachers.Length == 0 ? Array.Empty<Teacher>() : teachers;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace CodeLearn.Application.Teachers.Commands.UpdateTeacherName;
 
-public class UpdateTeacherNameCommandHandler(IApplicationDbContext context) 
+public class UpdateTeacherNameCommandHandler(IApplicationDbContext context)
     : IRequestHandler<UpdateTeacherNameCommand, OneOf<Success, NotFound>>
 {
     public async Task<OneOf<Success, NotFound>> Handle(UpdateTeacherNameCommand request, CancellationToken cancellationToken)
