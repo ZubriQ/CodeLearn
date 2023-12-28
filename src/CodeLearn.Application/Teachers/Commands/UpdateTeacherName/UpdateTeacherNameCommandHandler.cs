@@ -8,7 +8,7 @@ public class UpdateTeacherNameCommandHandler(IApplicationDbContext context)
     public async Task<OneOf<Success, NotFound, BadRequest>> Handle(UpdateTeacherNameCommand request, CancellationToken cancellationToken)
     {
         var teacher = await context.Teachers
-            .Where(t => t.Id == TeacherId.Create(request.Id))
+            .Where(t => t.Id == TeacherId.Create(request.TeacherId))
             .FirstOrDefaultAsync(cancellationToken);
         if (teacher is null)
         {

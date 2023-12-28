@@ -1,7 +1,7 @@
 namespace CodeLearn.Contracts.Teachers;
 
 public record TeacherResponse(
-    Guid Id,
+    Guid TeacherId,
     string FirstName,
     string LastName,
     string? Patronymic);

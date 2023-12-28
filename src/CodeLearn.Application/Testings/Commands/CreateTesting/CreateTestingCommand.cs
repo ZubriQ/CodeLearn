@@ -7,4 +7,4 @@ public record CreateTestingCommand(
     string Title,
     string Description,
     int DurationInMinutes)
-    : IRequest<Guid>;
+    : IRequest<OneOf<Guid, ValidationFailed>>;

@@ -34,22 +34,24 @@ public sealed class TeachersController(ISender sender, IMapper mapper) : ApiCont
     [HttpPost]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Create(CreateTeacherCommand request)
+    public async Task<IActionResult> Create(TeacherRequest request)
     {
-        var result = await sender.Send(request);
+        var command = mapper.Map<CreateTeacherCommand>(request);
+        var result = await sender.Send(command);
 
         return result.Match(
             id => CreatedAtAction(nameof(Create), new { id }, id),
             _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."));
     }
 
-    [HttpPut]
+    [HttpPut("{teacherId:guid}")]
     [ProducesResponseType(typeof(Success), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateName(UpdateTeacherNameCommand request)
+    public async Task<IActionResult> UpdateName(Guid teacherId, TeacherRequest request)
     {
-        var result = await sender.Send(request);
+        var command = mapper.Map<UpdateTeacherNameCommand>((teacherId, request));
+        var result = await sender.Send(command);
 
         return result.Match(
             success => Ok(success),

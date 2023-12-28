@@ -30,7 +30,9 @@ public static class DependencyInjection
         config.Scan(Assembly.GetExecutingAssembly());
 
         services.AddSingleton(config);
+
         services.AddScoped<IMapper, ServiceMapper>();
+
         return services;
     }
 }

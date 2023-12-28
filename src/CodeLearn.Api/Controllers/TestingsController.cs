@@ -1,13 +1,19 @@
 ﻿using CodeLearn.Application.Testings.Commands.CreateTesting;
+using CodeLearn.Contracts.Testings;
 
 namespace CodeLearn.Api.Controllers;
 
-public sealed class TestingsController(ISender sender) : ApiControllerBase
+public sealed class TestingsController(ISender sender, IMapper mapper) : ApiControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> Create(CreateTestingCommand request)
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Create(TestingRequest request)
     {
-        var testingId = await sender.Send(request);
-        return Ok(testingId);
+        var result = await sender.Send(mapper.Map<CreateTestingCommand>(request));
+
+        return result.Match(
+            id => CreatedAtAction(nameof(Create), new { id }, id),
+            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."));
     }
 }

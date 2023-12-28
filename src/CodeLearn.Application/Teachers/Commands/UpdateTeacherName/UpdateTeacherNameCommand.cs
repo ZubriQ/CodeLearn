@@ -1,7 +1,7 @@
 ﻿namespace CodeLearn.Application.Teachers.Commands.UpdateTeacherName;
 
 public record UpdateTeacherNameCommand(
-    Guid Id,
+    Guid TeacherId,
     string FirstName,
     string LastName,
     string? Patronymic)

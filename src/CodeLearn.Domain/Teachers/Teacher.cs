@@ -32,7 +32,7 @@ public sealed class Teacher : BaseEntity<TeacherId>, IAggregateRoot
             patronymic);
     }
 
-    public Result UpdateName(string? firstName, string? lastName, string? patronymic = null)
+    public Result UpdateName(string firstName, string lastName, string? patronymic = null)
     {
         if (patronymic is not null && patronymic.Length > 50)
         {
