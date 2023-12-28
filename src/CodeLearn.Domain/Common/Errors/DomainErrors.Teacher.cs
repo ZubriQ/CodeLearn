@@ -7,15 +7,15 @@ public static partial class DomainErrors
         private static string Prefix => "Teacher.";
 
         public static readonly Error MaxPatronymicLengthExceeded = new(
-            $"{Prefix}MaxPatronymicLengthExceeded",
+            $"{Prefix}{nameof(MaxPatronymicLengthExceeded)}",
             "Patronymic can't be longer than 50 characters");
 
         public static readonly Error InvalidFirstName = new(
-            $"{Prefix}InvalidFirstName",
+            $"{Prefix}{nameof(InvalidFirstName)}",
             "First name can't be longer than 50 characters or be empty.");
 
         public static readonly Error InvalidLastName = new(
-            $"{Prefix}InvalidLastName",
+            $"{Prefix}{nameof(InvalidLastName)}",
             "Last name can't be longer than 50 characters or be empty.");
     }
 }
