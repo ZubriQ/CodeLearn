@@ -9,8 +9,8 @@ public class GetAllTeachersCommandHandler(IApplicationDbContext context)
     {
         var teachers = await context.Teachers
             .AsNoTracking()
-            .ToArrayAsync(cancellationToken); // TODO: Contracts.
+            .ToArrayAsync(cancellationToken);
 
-        return teachers.Length == 0 ? Array.Empty<Teacher>() : teachers;
+        return teachers.Length == 0 ? [] : teachers;
     }
 }

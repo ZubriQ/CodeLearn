@@ -5,4 +5,4 @@ public record UpdateTeacherNameCommand(
     string FirstName,
     string LastName,
     string? Patronymic)
-    : IRequest<OneOf<Success, NotFound>>;
+    : IRequest<OneOf<Success, NotFound, BadRequest>>;

@@ -1,4 +1,4 @@
-﻿namespace CodeLearn.Domain.Common;
+﻿namespace CodeLearn.Domain.Common.Repository;
 
 public interface IUnitOfWork : IDisposable
 {

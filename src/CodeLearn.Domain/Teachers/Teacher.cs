@@ -32,12 +32,27 @@ public sealed class Teacher : BaseEntity<TeacherId>, IAggregateRoot
             patronymic);
     }
 
-    public void UpdateName(string firstName, string lastName, string? patronymic = null)
+    public Result UpdateName(string? firstName, string? lastName, string? patronymic = null)
     {
-        // TODO: Validate
+        if (patronymic is not null && patronymic.Length > 50)
+        {
+            return Result.Failure(DomainErrors.Teacher.MaxPatronymicLengthExceeded);
+        }
+
+        if (string.IsNullOrEmpty(firstName) || firstName.Length > 50)
+        {
+            return Result.Failure(DomainErrors.Teacher.InvalidFirstName);
+        }
+
+        if (string.IsNullOrEmpty(lastName) || lastName.Length > 50)
+        {
+            return Result.Failure(DomainErrors.Teacher.InvalidLastName);
+        }
 
         FirstName = firstName;
         LastName = lastName;
         Patronymic = patronymic;
+
+        return Result.Success();
     }
 }

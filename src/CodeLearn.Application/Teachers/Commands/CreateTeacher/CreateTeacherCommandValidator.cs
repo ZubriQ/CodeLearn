@@ -12,7 +12,6 @@ public class CreateTeacherCommandValidator : AbstractValidator<CreateTeacherComm
             .MaximumLength(50)
             .NotEmpty();
 
-        RuleFor(v => v.Patronymic)
-            .MaximumLength(50);
+        RuleFor(v => v.Patronymic).MaximumLength(50);
     }
 }

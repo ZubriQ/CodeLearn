@@ -27,6 +27,7 @@ public sealed class TeachersController(ISender sender, IMapper mapper) : ApiCont
     {
         var teachers = await sender.Send(new GetAllTeachersCommand());
         var mappedTeachers = teachers.Select(mapper.Map<TeacherResponse>).ToList();
+
         return Ok(new TeacherResponseCollection(mappedTeachers));
     }
 
@@ -45,13 +46,15 @@ public sealed class TeachersController(ISender sender, IMapper mapper) : ApiCont
     [HttpPut]
     [ProducesResponseType(typeof(Success), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateName(UpdateTeacherNameCommand request)
     {
         var result = await sender.Send(request);
 
         return result.Match(
             success => Ok(success),
-            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Teacher not found."));
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Teacher not found."),
+            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Invalid request."));
     }
 
     [HttpDelete("{teacherId:guid}")]
