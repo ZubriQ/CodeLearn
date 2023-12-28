@@ -2,4 +2,4 @@
 
 namespace CodeLearn.Application.Teachers.Queries.GetTeacherById;
 
-public record GetTeacherByIdQuery(Guid Id) : IRequest<OneOf<Teacher, NotFound>>;
+public record GetTeacherByIdQuery(Guid TeacherId) : IRequest<OneOf<Teacher, NotFound>>;

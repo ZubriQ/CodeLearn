@@ -36,7 +36,8 @@ public sealed class Testing : BaseEntity<TestingId>, IAggregateRoot
         TeacherId teacherId,
         string title,
         string description,
-        int durationInMinutes)
+        int durationInMinutes,
+        DateTime now)
     {
         return new Testing(
             TestingId.CreateUnique(),
@@ -45,20 +46,23 @@ public sealed class Testing : BaseEntity<TestingId>, IAggregateRoot
             description,
             durationInMinutes,
             true,
-            DateTime.UtcNow,
-            DateTime.UtcNow);
+            now,
+            now);
     }
 
-    public void UpdateFields(
+    public void UpdateDetails(
         string title,
         string description,
         int durationInMinutes,
-        bool isPublic)
+        bool isPublic,
+        DateTime now)
     {
+        // TODO: Validate
+
         Title = title;
         Description = description;
         DurationInMinutes = durationInMinutes;
         IsPublic = isPublic;
-        ModifiedDateTime = DateTime.UtcNow;
+        ModifiedDateTime = now;
     }
 }

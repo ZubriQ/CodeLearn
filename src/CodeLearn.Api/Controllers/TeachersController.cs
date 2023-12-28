@@ -17,7 +17,7 @@ public sealed class TeachersController(ISender sender, IMapper mapper) : ApiCont
         var result = await sender.Send(new GetTeacherByIdQuery(teacherId));
 
         return result.Match(
-            Ok,
+            teacher => Ok(mapper.Map<TeacherResponse>(teacher)),
             _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Teacher not found."));
     }
 
@@ -25,7 +25,7 @@ public sealed class TeachersController(ISender sender, IMapper mapper) : ApiCont
     [ProducesResponseType(typeof(TeacherResponseCollection), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
-        var teachers = await sender.Send(new GetAllTeachersCommand());
+        var teachers = await sender.Send(new GetAllTeachersQuery());
         var mappedTeachers = teachers.Select(mapper.Map<TeacherResponse>).ToList();
 
         return Ok(new TeacherResponseCollection(mappedTeachers));
