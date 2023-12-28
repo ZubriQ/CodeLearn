@@ -46,7 +46,7 @@ public sealed class ExerciseSubmissionConfiguration : IEntityTypeConfiguration<E
 
         builder
             .Property(s => s.Status)
-            .HasMaxLength(9)
+            .HasMaxLength(8)
             .IsRequired()
             .HasConversion(
                 status => status.ToString(),

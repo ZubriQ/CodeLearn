@@ -13,6 +13,8 @@ public class TestingMappingConfig : IRegister
 
         config.NewConfig<Testing, TestingResponse>()
             .Map(dest => dest.TestingId, src => src.Id.Value)
-            .Map(dest => dest.TeacherId, src => src.TeacherId.Value);
+            .Map(dest => dest.TeacherId, src => src.TeacherId.Value)
+            .Map(dest => dest.CreatedDateTime, src => src.CreatedDateTime.ToISO8601())
+            .Map(dest => dest.ModifiedDateTime, src => src.ModifiedDateTime.ToISO8601());
     }
 }

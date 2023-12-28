@@ -7,5 +7,5 @@ public record TestingResponse(
     string Description,
     int DurationInMinutes,
     bool IsPublic,
-    DateTime CreatedDateTime,
-    DateTime ModifiedDateTime);
+    string CreatedDateTime,
+    string ModifiedDateTime);
