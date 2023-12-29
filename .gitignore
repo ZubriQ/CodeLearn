@@ -364,3 +364,25 @@ FodyWeavers.xsd
 
 # Rider
 .idea
+
+# React gitignore files
+
+# Logs
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+*.ntvs*
+*.njsproj
+*.sw?
