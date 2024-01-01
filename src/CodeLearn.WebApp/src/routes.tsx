@@ -3,10 +3,10 @@ import { Navigate, type RouteObject } from 'react-router-dom';
 import TestingsPage from './pages/testings';
 import StudentGroupsPage from './pages/student-groups';
 
-const RootLayout = lazy(() => import('./layouts/root'));
-const DashboardLayout = lazy(() => import('./layouts/dashboard'));
-const StudentTestingLayout = lazy(() => import('./layouts/student-testing'));
-const Notfound = lazy(() => import('./pages/not-found'));
+const RootLayout = lazy(() => import('@/layouts/root'));
+const DashboardLayout = lazy(() => import('@/layouts/dashboard'));
+const StudentTestingLayout = lazy(() => import('@/layouts/student-testing'));
+const Notfound = lazy(() => import('@/pages/not-found'));
 
 export const routes: Array<RouteObject> = [
   {
