@@ -1,15 +1,19 @@
 import { lazy, Suspense } from 'react';
-import { type RouteObject } from 'react-router-dom';
+import { Navigate, type RouteObject } from 'react-router-dom';
+import TestingsPage from './pages/testings';
+import StudentGroupsPage from './pages/student-groups';
 
-const Index = lazy(() => import('./pages/index'));
-const Notfound = lazy(() => import('./pages/404'));
+const RootLayout = lazy(() => import('./layouts/root'));
+const DashboardLayout = lazy(() => import('./layouts/dashboard'));
+const StudentTestingLayout = lazy(() => import('./layouts/student-testing'));
+const Notfound = lazy(() => import('./pages/not-found'));
 
 export const routes: Array<RouteObject> = [
   {
     index: true,
     element: (
       <Suspense>
-        <Index />
+        <RootLayout />
       </Suspense>
     ),
   },
@@ -18,6 +22,36 @@ export const routes: Array<RouteObject> = [
     element: (
       <Suspense>
         <Notfound />
+      </Suspense>
+    ),
+  },
+  {
+    path: 'dashboard',
+    element: (
+      <Suspense>
+        <DashboardLayout />
+      </Suspense>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Navigate to="testings" />,
+      },
+      {
+        path: 'testings',
+        element: <TestingsPage />,
+      },
+      {
+        path: 'student-groups',
+        element: <StudentGroupsPage />,
+      },
+    ],
+  },
+  {
+    path: 'student-testing',
+    element: (
+      <Suspense>
+        <StudentTestingLayout />
       </Suspense>
     ),
   },
