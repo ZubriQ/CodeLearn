@@ -20,7 +20,7 @@ export default function Hero() {
         className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl md:-top-80"
         aria-hidden="true"
       ></div>
-      <div className="mx-auto max-w-2xl py-32 md:py-48 md:py-56">
+      <div className="mx-auto max-w-2xl py-28 md:py-40">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 md:text-6xl">
             Welcome to{' '}
@@ -30,8 +30,10 @@ export default function Hero() {
           </h1>
           <p className="mt-6 bg-clip-text text-lg leading-8 text-gray-600">
             Join us and experience a new way of learning.
-            <br className="" />
-            We automate the teaching of coding by allowing teachers to create tests, and students to solve them.
+            <br />
+            We automate the teaching of coding by allowing
+            <br className="block md:hidden" />
+            teachers to create tests, and students to solve them.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link
