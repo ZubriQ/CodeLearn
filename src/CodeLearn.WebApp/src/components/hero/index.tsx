@@ -31,9 +31,7 @@ export default function Hero() {
           <p className="mt-6 bg-clip-text text-lg leading-8 text-gray-600">
             Join us and experience a new way of learning.
             <br />
-            We automate the teaching of coding by allowing
-            <br className="block md:hidden" />
-            teachers to create tests, and students to solve them.
+            We automate the teaching of coding by allowing teachers to create tests, and students to solve them.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link

@@ -11,7 +11,7 @@ export default function HomePage() {
   ];
 
   return (
-    <section className="py-14">
+    <section className="pb-14 pt-6">
       <div className="mx-auto max-w-screen-xl px-4 text-gray-600 md:px-8">
         <div className="relative mx-auto max-w-2xl sm:text-center">
           <div className="relative z-10">
