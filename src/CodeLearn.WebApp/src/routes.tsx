@@ -5,8 +5,10 @@ import StudentGroupsPage from './pages/student-groups';
 
 const RootLayout = lazy(() => import('@/layouts/root'));
 const DashboardLayout = lazy(() => import('@/layouts/dashboard'));
-const StudentTestingLayout = lazy(() => import('@/layouts/student-testing'));
+const TestingPage = lazy(() => import('@/pages/testing'));
 const Notfound = lazy(() => import('@/pages/not-found'));
+const SignInPage = lazy(() => import('@/pages/sign-in'));
+const SignUpPage = lazy(() => import('@/pages/sign-up'));
 
 export const routes: Array<RouteObject> = [
   {
@@ -48,10 +50,26 @@ export const routes: Array<RouteObject> = [
     ],
   },
   {
-    path: 'student-testing',
+    path: 'testing',
     element: (
       <Suspense>
-        <StudentTestingLayout />
+        <TestingPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: 'sign-in',
+    element: (
+      <Suspense>
+        <SignInPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: 'sign-up',
+    element: (
+      <Suspense>
+        <SignUpPage />
       </Suspense>
     ),
   },
