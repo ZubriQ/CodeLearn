@@ -17,7 +17,11 @@ export default function Header() {
         <div className="flex md:flex-1">
           <Link to="#" className="-m-1.5 p-1.5">
             <span className="sr-only">CodeLearn</span>
-            <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=teal&shade=600" alt="" />
+            <img
+              className="h-8 w-auto"
+              src="https://tailwindui.com/img/logos/mark.svg?color=teal&shade=600"
+              alt="CodeLearn"
+            />
           </Link>
         </div>
         <div className="flex md:hidden">

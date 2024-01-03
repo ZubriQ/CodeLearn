@@ -11,27 +11,27 @@ export default function FeaturesSection() {
     {
       icon: <CodeBracketIcon />,
       title: 'Create Tests',
-      desc: 'Effortlessly create coding tests tailored to students’ needs.',
+      description: 'Effortlessly create coding tests tailored to students’ needs.',
     },
     {
       icon: <AcademicCapIcon />,
       title: 'Test Your Students',
-      desc: 'Solve the tests created by teachers; enhance your coding skills.',
+      description: 'Solve the tests created by teachers; enhance your coding skills.',
     },
     {
       icon: <CircleStackIcon />,
       title: 'Track Test Results',
-      desc: 'Monitor students’ written code and discuss test results, making the learning effective.',
+      description: 'Monitor students’ written code and discuss test results, making the learning effective.',
     },
     {
       icon: <CheckCircleIcon />,
       title: 'Automated Code Check',
-      desc: 'Relieve teachers of the burden of manual work.',
+      description: 'Relieve teachers of the burden of manual work.',
     },
     {
       icon: <GlobeAsiaAustraliaIcon />,
       title: 'Accessibility',
-      desc: 'Access from anywhere and anytime.',
+      description: 'Access from anywhere and anytime.',
     },
   ];
 
@@ -44,7 +44,7 @@ export default function FeaturesSection() {
               <li key={idx} className="space-y-3 rounded-lg border bg-white p-4 shadow-sm">
                 <div className="m-3 w-6 pb-3 text-green-600">{item.icon}</div>
                 <h4 className="text-lg font-semibold text-gray-800">{item.title}</h4>
-                <p>{item.desc}</p>
+                <p>{item.description}</p>
               </li>
             ))}
           </ul>
