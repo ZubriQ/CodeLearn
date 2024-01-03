@@ -3,8 +3,8 @@ import { Navigate, type RouteObject } from 'react-router-dom';
 import TestsPage from './pages/tests';
 import StudentGroupsPage from './pages/student-groups';
 
-const RootLayout = lazy(() => import('@/layouts/root'));
-const DashboardLayout = lazy(() => import('@/layouts/dashboard'));
+const HomePage = lazy(() => import('@/pages/home'));
+const TeacherDashboardLayout = lazy(() => import('@/layouts/teacher-dashboard'));
 const TestingPage = lazy(() => import('@/pages/testing'));
 const Notfound = lazy(() => import('@/pages/not-found'));
 const SignInPage = lazy(() => import('@/pages/sign-in'));
@@ -15,7 +15,7 @@ export const routes: Array<RouteObject> = [
     index: true,
     element: (
       <Suspense>
-        <RootLayout />
+        <HomePage />
       </Suspense>
     ),
   },
@@ -31,7 +31,7 @@ export const routes: Array<RouteObject> = [
     path: 'dashboard',
     element: (
       <Suspense>
-        <DashboardLayout />
+        <TeacherDashboardLayout />
       </Suspense>
     ),
     children: [
