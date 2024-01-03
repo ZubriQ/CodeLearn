@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Dialog } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars2Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 
 const navigation = [
-  { name: 'Testings', href: 'testings' },
+  { name: 'Tests', href: 'all-tests' },
   { name: 'About', href: 'about' },
 ];
 
@@ -13,7 +13,7 @@ export default function Header() {
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
-      <nav className="flex items-center justify-between p-6 md:px-8" aria-label="Global">
+      <nav className="mx-auto flex max-w-screen-xl items-center justify-between p-6 md:px-8" aria-label="Global">
         <div className="flex md:flex-1">
           <Link to="#" className="-m-1.5 p-1.5">
             <span className="sr-only">CodeLearn</span>
@@ -27,7 +27,7 @@ export default function Header() {
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
-            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+            <Bars2Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
         <div className="hidden md:flex md:gap-x-12">

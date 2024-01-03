@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Navigate, type RouteObject } from 'react-router-dom';
-import TestingsPage from './pages/testings';
+import TestsPage from './pages/tests';
 import StudentGroupsPage from './pages/student-groups';
 
 const RootLayout = lazy(() => import('@/layouts/root'));
@@ -35,11 +35,11 @@ export const routes: Array<RouteObject> = [
     children: [
       {
         index: true,
-        element: <Navigate to="testings" />,
+        element: <Navigate to="tests" />,
       },
       {
-        path: 'testings',
-        element: <TestingsPage />,
+        path: 'tests',
+        element: <TestsPage />,
       },
       {
         path: 'student-groups',
