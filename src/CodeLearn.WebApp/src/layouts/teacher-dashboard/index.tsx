@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-export default function TeacherDashboardLayout() {
+function TeacherDashboardLayout() {
   return (
     <>
       <div className="text-7xl text-amber-700">Header</div>
@@ -9,3 +9,5 @@ export default function TeacherDashboardLayout() {
     </>
   );
 }
+
+export default TeacherDashboardLayout;

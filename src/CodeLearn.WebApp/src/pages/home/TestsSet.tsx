@@ -1,4 +1,4 @@
-export default function HomePage() {
+export default function TestsSet() {
   const features = [
     {
       title: 'Test 1',

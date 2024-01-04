@@ -1,10 +1,10 @@
-import Header from '@/components/header';
-import Hero from '@/components/hero';
-import Footer from '@/components/footer';
-import FeaturesSection from '@/components/features-section';
-import TestsSet from './TestsSet';
+import Header from './Header.tsx';
+import Hero from './Hero.tsx';
+import Footer from './Footer.tsx';
+import FeaturesSection from './FeaturesSection.tsx';
+import TestsSet from './TestsSet.tsx';
 
-export default function HomePage() {
+function HomePage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -15,3 +15,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+export default HomePage;
