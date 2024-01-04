@@ -1,10 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './styles/tailwind.css';
-import routes from './routes.tsx';
-import App from './App.tsx';
-import Error from './pages/error';
+import '@/styles/tailwind.css';
+import App from '@/App.tsx';
+import routes from '@/routes';
+import ErrorPage from '@/pages/error';
 
 const container = document.getElementById('root') as HTMLElement;
 
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: routes,
-    errorElement: <Error />,
+    errorElement: <ErrorPage />,
   },
 ]);
 

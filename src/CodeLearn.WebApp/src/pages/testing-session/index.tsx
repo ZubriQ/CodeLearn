@@ -1,5 +1,5 @@
 function TestingSessionPage() {
-  return <div>TestingPage</div>;
+  return <div>TestingSessionPage</div>;
 }
 
 export default TestingSessionPage;

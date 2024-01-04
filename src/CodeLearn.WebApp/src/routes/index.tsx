@@ -1,12 +1,12 @@
 import { lazy, Suspense } from 'react';
 import { Navigate, type RouteObject } from 'react-router-dom';
-import TestsPage from './pages/tests';
-import StudentGroupsPage from './pages/student-groups';
+import TestsPage from '../pages/tests';
+import StudentGroupsPage from '../pages/student-groups';
 
 const HomePage = lazy(() => import('@/pages/home'));
 const TeacherDashboardLayout = lazy(() => import('@/layouts/teacher-dashboard'));
-const TestingPage = lazy(() => import('@/pages/testing-session'));
-const Notfound = lazy(() => import('@/pages/not-found'));
+const TestingSessionPage = lazy(() => import('@/pages/testing-session'));
+const NotFoundPage = lazy(() => import('@/pages/not-found'));
 const SignInPage = lazy(() => import('@/pages/sign-in'));
 const SignUpPage = lazy(() => import('@/pages/sign-up'));
 
@@ -23,7 +23,23 @@ export const routes: Array<RouteObject> = [
     path: '*',
     element: (
       <Suspense>
-        <Notfound />
+        <NotFoundPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: 'sign-in',
+    element: (
+      <Suspense>
+        <SignInPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: 'sign-up',
+    element: (
+      <Suspense>
+        <SignUpPage />
       </Suspense>
     ),
   },
@@ -53,23 +69,7 @@ export const routes: Array<RouteObject> = [
     path: 'testing-session',
     element: (
       <Suspense>
-        <TestingPage />
-      </Suspense>
-    ),
-  },
-  {
-    path: 'sign-in',
-    element: (
-      <Suspense>
-        <SignInPage />
-      </Suspense>
-    ),
-  },
-  {
-    path: 'sign-up',
-    element: (
-      <Suspense>
-        <SignUpPage />
+        <TestingSessionPage />
       </Suspense>
     ),
   },
