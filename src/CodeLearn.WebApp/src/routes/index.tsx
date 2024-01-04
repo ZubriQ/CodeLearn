@@ -1,7 +1,5 @@
 import { lazy, Suspense } from 'react';
 import { Navigate, type RouteObject } from 'react-router-dom';
-import TestsPage from '../pages/tests';
-import StudentGroupsPage from '../pages/student-groups';
 
 const HomePage = lazy(() => import('@/pages/home'));
 const TeacherDashboardLayout = lazy(() => import('@/layouts/teacher-dashboard'));
@@ -9,6 +7,8 @@ const TestingSessionPage = lazy(() => import('@/pages/testing-session'));
 const NotFoundPage = lazy(() => import('@/pages/not-found'));
 const SignInPage = lazy(() => import('@/pages/sign-in'));
 const SignUpPage = lazy(() => import('@/pages/sign-up'));
+const TestsPage = lazy(() => import('@/pages/tests'));
+const StudentGroupsPage = lazy(() => import('@/pages/student-groups'));
 
 export const routes: Array<RouteObject> = [
   {
@@ -57,16 +57,24 @@ export const routes: Array<RouteObject> = [
       },
       {
         path: 'tests',
-        element: <TestsPage />,
+        element: (
+          <Suspense>
+            <TestsPage />
+          </Suspense>
+        ),
       },
       {
         path: 'student-groups',
-        element: <StudentGroupsPage />,
+        element: (
+          <Suspense>
+            <StudentGroupsPage />
+          </Suspense>
+        ),
       },
     ],
   },
   {
-    path: 'testing-session',
+    path: 'testing-session/:id',
     element: (
       <Suspense>
         <TestingSessionPage />
