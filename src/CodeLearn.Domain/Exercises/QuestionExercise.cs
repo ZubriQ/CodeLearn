@@ -9,18 +9,18 @@ public sealed class QuestionExercise : Exercise
 
     private QuestionExercise(
         ExerciseId id,
-        TestingId testingId,
+        TestId testId,
         string title,
         string description,
         ExerciseDifficulty difficulty,
         bool isMultipleAnswers)
-        : base(id, testingId, title, description, difficulty)
+        : base(id, testId, title, description, difficulty)
     {
         IsMultipleAnswers = isMultipleAnswers;
     }
 
     public static QuestionExercise Create(
-        TestingId testingId,
+        TestId testId,
         string title,
         string description,
         ExerciseDifficulty difficulty,
@@ -28,7 +28,7 @@ public sealed class QuestionExercise : Exercise
     {
         return new QuestionExercise(
             ExerciseId.CreateUnique(),
-            testingId,
+            testId,
             title,
             description,
             difficulty,

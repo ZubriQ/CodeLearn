@@ -6,8 +6,8 @@ using CodeLearn.Domain.QuestionChoices;
 using CodeLearn.Domain.Students;
 using CodeLearn.Domain.Students.Entities;
 using CodeLearn.Domain.Teachers;
-using CodeLearn.Domain.Testings;
 using CodeLearn.Domain.TestingSessions;
+using CodeLearn.Domain.Tests;
 
 namespace CodeLearn.Application.Common.Interfaces;
 
@@ -25,7 +25,7 @@ public interface IApplicationDbContext
     DbSet<SelectedChoice> SelectedChoices { get; }
     DbSet<TestCase> TestCases { get; }
     DbSet<TestCaseParameter> TestCaseParameters { get; }
-    DbSet<Testing> Testings { get; }
+    DbSet<Test> Tests { get; }
     DbSet<TestingSession> TestingSessions { get; }
 
     DbSet<Exercise> Exercises { get; }

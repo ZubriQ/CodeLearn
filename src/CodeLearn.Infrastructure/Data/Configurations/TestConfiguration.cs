@@ -1,19 +1,19 @@
 ﻿using CodeLearn.Domain.Teachers;
-using CodeLearn.Domain.Testings;
-using CodeLearn.Domain.Testings.ValueObjects;
+using CodeLearn.Domain.Tests;
+using CodeLearn.Domain.Tests.ValueObjects;
 
 namespace CodeLearn.Infrastructure.Data.Configurations;
 
-public sealed class TestingConfiguration : IEntityTypeConfiguration<Testing>
+public sealed class TestConfiguration : IEntityTypeConfiguration<Test>
 {
-    public void Configure(EntityTypeBuilder<Testing> builder)
+    public void Configure(EntityTypeBuilder<Test> builder)
     {
-        ConfigureTestingTable(builder);
+        ConfigureTestTable(builder);
     }
 
-    private static void ConfigureTestingTable(EntityTypeBuilder<Testing> builder)
+    private static void ConfigureTestTable(EntityTypeBuilder<Test> builder)
     {
-        builder.ToTable("Testing", DatabaseSchemes.Test);
+        builder.ToTable("Test", DatabaseSchemes.Test);
 
         builder.HasKey(t => t.Id);
 
@@ -21,8 +21,8 @@ public sealed class TestingConfiguration : IEntityTypeConfiguration<Testing>
             .Property(t => t.Id)
             .ValueGeneratedNever()
             .HasConversion(
-                testingId => testingId.Value,
-                id => TestingId.Create(id));
+                testId => testId.Value,
+                id => TestId.Create(id));
 
         builder
             .HasOne<Teacher>()

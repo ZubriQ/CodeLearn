@@ -18,20 +18,20 @@ public sealed class MethodCodingExercise : Exercise
 
     private MethodCodingExercise(
         ExerciseId id,
-        TestingId testingId,
+        TestId testId,
         string title,
         string description,
         ExerciseDifficulty difficulty,
         string methodToExecute,
         string methodSolutionCode)
-        : base(id, testingId, title, description, difficulty)
+        : base(id, testId, title, description, difficulty)
     {
         MethodToExecute = methodToExecute;
         MethodSolutionCode = methodSolutionCode;
     }
 
     public static MethodCodingExercise Create(
-        TestingId testingId,
+        TestId testId,
         string title,
         string description,
         ExerciseDifficulty difficulty,
@@ -41,7 +41,7 @@ public sealed class MethodCodingExercise : Exercise
     {
         var exercise = new MethodCodingExercise(
            ExerciseId.CreateUnique(),
-           testingId,
+           testId,
            title,
            description,
            difficulty,

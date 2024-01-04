@@ -1,6 +1,6 @@
-﻿namespace CodeLearn.Contracts.Testings;
+﻿namespace CodeLearn.Contracts.Tests;
 
-public record TestingRequest(
+public record TestRequest(
     Guid TeacherId,
     string Title,
     string Description,

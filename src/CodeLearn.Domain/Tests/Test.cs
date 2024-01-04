@@ -1,6 +1,6 @@
-﻿namespace CodeLearn.Domain.Testings;
+﻿namespace CodeLearn.Domain.Tests;
 
-public sealed class Testing : BaseEntity<TestingId>, IAggregateRoot
+public sealed class Test : BaseEntity<TestId>, IAggregateRoot
 {
     public TeacherId TeacherId { get; private set; } = null!;
     public string Title { get; private set; } = null!;
@@ -10,10 +10,10 @@ public sealed class Testing : BaseEntity<TestingId>, IAggregateRoot
     public DateTime CreatedDateTime { get; private set; }
     public DateTime ModifiedDateTime { get; private set; }
 
-    private Testing() { }
+    private Test() { }
 
-    private Testing(
-        TestingId testingId,
+    private Test(
+        TestId testId,
         TeacherId teacherId,
         string title,
         string description,
@@ -21,7 +21,7 @@ public sealed class Testing : BaseEntity<TestingId>, IAggregateRoot
         bool isPublic,
         DateTime createdDateTime,
         DateTime modifiedDateTime)
-        : base(testingId)
+        : base(testId)
     {
         TeacherId = teacherId;
         Title = title;
@@ -32,15 +32,15 @@ public sealed class Testing : BaseEntity<TestingId>, IAggregateRoot
         ModifiedDateTime = modifiedDateTime;
     }
 
-    public static Testing Create(
+    public static Test Create(
         TeacherId teacherId,
         string title,
         string description,
         int durationInMinutes,
         DateTime now)
     {
-        return new Testing(
-            TestingId.CreateUnique(),
+        return new Test(
+            TestId.CreateUnique(),
             teacherId,
             title,
             description,

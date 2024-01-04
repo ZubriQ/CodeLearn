@@ -2,7 +2,7 @@
 
 public sealed class TestingSession : BaseEntity<TestingSessionId>, IAggregateRoot
 {
-    public TestingId TestingId { get; private set; } = null!;
+    public TestId TestId { get; private set; } = null!;
     public StudentId StudentId { get; private set; } = null!;
     public int Score { get; private set; }
     public TestingSessionStatus Status { get; private set; }
@@ -13,7 +13,7 @@ public sealed class TestingSession : BaseEntity<TestingSessionId>, IAggregateRoo
 
     private TestingSession(
         TestingSessionId id,
-        TestingId testingId,
+        TestId testId,
         StudentId studentId,
         int score,
         TestingSessionStatus status,
@@ -21,7 +21,7 @@ public sealed class TestingSession : BaseEntity<TestingSessionId>, IAggregateRoo
         DateTime finishDateTime)
         : base(id)
     {
-        TestingId = testingId;
+        TestId = testId;
         StudentId = studentId;
         Score = score;
         Status = status;
@@ -29,7 +29,7 @@ public sealed class TestingSession : BaseEntity<TestingSessionId>, IAggregateRoo
         FinishDateTime = finishDateTime;
     }
 
-    public static TestingSession Create(TestingId testingId,
+    public static TestingSession Create(TestId testId,
         StudentId studentId,
         int score,
         DateTime startDateTime,
@@ -37,7 +37,7 @@ public sealed class TestingSession : BaseEntity<TestingSessionId>, IAggregateRoo
     {
         return new TestingSession(
             TestingSessionId.CreateUnique(),
-            testingId,
+            testId,
             studentId,
             score,
             TestingSessionStatus.NotStarted,

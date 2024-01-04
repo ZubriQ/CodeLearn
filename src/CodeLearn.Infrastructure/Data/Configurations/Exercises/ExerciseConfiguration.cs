@@ -2,8 +2,8 @@
 using CodeLearn.Domain.Exercises.Entities;
 using CodeLearn.Domain.Exercises.Enums;
 using CodeLearn.Domain.Exercises.ValueObjects;
-using CodeLearn.Domain.Testings;
-using CodeLearn.Domain.Testings.ValueObjects;
+using CodeLearn.Domain.Tests;
+using CodeLearn.Domain.Tests.ValueObjects;
 
 namespace CodeLearn.Infrastructure.Data.Configurations.Exercises;
 
@@ -29,16 +29,16 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
                 id => ExerciseId.Create(id));
 
         builder
-            .Property(e => e.TestingId)
+            .Property(e => e.TestId)
             .IsRequired()
             .HasConversion(
                 v => v.Value,
-                v => TestingId.Create(v));
+                v => TestId.Create(v));
 
         builder
-            .HasOne<Testing>()
+            .HasOne<Test>()
             .WithMany()
-            .HasForeignKey(e => e.TestingId)
+            .HasForeignKey(e => e.TestId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 

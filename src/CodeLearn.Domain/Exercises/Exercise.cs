@@ -2,13 +2,13 @@
 
 public abstract class Exercise(
     ExerciseId id,
-    TestingId testingId,
+    TestId testId,
     string title,
     string description,
     ExerciseDifficulty difficulty)
     : BaseEntity<ExerciseId>(id), IAggregateRoot
 {
-    public TestingId TestingId { get; private set; } = testingId;
+    public TestId TestId { get; private set; } = testId;
     public string Title { get; private set; } = title;
     public string Description { get; private set; } = description;
     public ExerciseDifficulty Difficulty { get; private set; } = difficulty;

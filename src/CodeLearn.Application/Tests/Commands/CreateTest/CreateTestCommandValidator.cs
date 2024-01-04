@@ -1,8 +1,8 @@
-﻿namespace CodeLearn.Application.Testings.Commands.CreateTesting;
+﻿namespace CodeLearn.Application.Tests.Commands.CreateTest;
 
-public class CreateTestingCommandValidator : AbstractValidator<CreateTestingCommand>
+public class CreateTestCommandValidator : AbstractValidator<CreateTestCommand>
 {
-    public CreateTestingCommandValidator()
+    public CreateTestCommandValidator()
     {
         RuleFor(x => x.TeacherId).NotEmpty();
 

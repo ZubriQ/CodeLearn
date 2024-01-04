@@ -7,20 +7,20 @@ public sealed class ClassCodingExercise : Exercise
 
     private ClassCodingExercise(
         ExerciseId id,
-        TestingId testingId,
+        TestId testId,
         string title,
         string description,
         ExerciseDifficulty difficulty,
         string classSolutionCode,
         string classTesterCode)
-        : base(id, testingId, title, description, difficulty)
+        : base(id, testId, title, description, difficulty)
     {
         ClassSolutionCode = classSolutionCode;
         ClassTesterCode = classTesterCode;
     }
 
     public static ClassCodingExercise Create(
-        TestingId testingId,
+        TestId testId,
         string title,
         string description,
         ExerciseDifficulty difficulty,
@@ -29,7 +29,7 @@ public sealed class ClassCodingExercise : Exercise
     {
         return new ClassCodingExercise(
             ExerciseId.CreateUnique(),
-            testingId,
+            testId,
             title,
             description,
             difficulty,

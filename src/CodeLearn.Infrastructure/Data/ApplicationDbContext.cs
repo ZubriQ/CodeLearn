@@ -7,8 +7,8 @@ using CodeLearn.Domain.QuestionChoices;
 using CodeLearn.Domain.Students;
 using CodeLearn.Domain.Students.Entities;
 using CodeLearn.Domain.Teachers;
-using CodeLearn.Domain.Testings;
 using CodeLearn.Domain.TestingSessions;
+using CodeLearn.Domain.Tests;
 using System.Reflection;
 
 namespace CodeLearn.Infrastructure.Data;
@@ -29,7 +29,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<SelectedChoice> SelectedChoices => Set<SelectedChoice>();
     public DbSet<TestCase> TestCases => Set<TestCase>();
     public DbSet<TestCaseParameter> TestCaseParameters => Set<TestCaseParameter>();
-    public DbSet<Testing> Testings => Set<Testing>();
+    public DbSet<Test> Tests => Set<Test>();
     public DbSet<TestingSession> TestingSessions => Set<TestingSession>();
 
     public DbSet<Exercise> Exercises => Set<Exercise>();
