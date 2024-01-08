@@ -1,14 +1,14 @@
 import { lazy, Suspense } from 'react';
 import { Navigate, type RouteObject } from 'react-router-dom';
 
-const HomePage = lazy(() => import('@/features/home/pages/Home.tsx'));
+const HomePage = lazy(() => import('@/features/home/pages/Home.page.tsx'));
 const TeacherDashboardLayout = lazy(() => import('@/features/teachers/layout/'));
-const TestingSessionPage = lazy(() => import('@/features/testing-sessions/pages/TestingSession.tsx'));
-const NotFoundPage = lazy(() => import('@/features/errors/pages/404.tsx'));
-const SignInPage = lazy(() => import('@/features/users/pages/SignIn.tsx'));
-const SignUpPage = lazy(() => import('@/features/users/pages/SignUp.tsx'));
-const TestsPage = lazy(() => import('@/features/teachers/pages/Tests.tsx'));
-const StudentGroupsPage = lazy(() => import('@/features/teachers/pages/StudentGroups.tsx'));
+const TestingSessionPage = lazy(() => import('@/features/testing-sessions/pages/TestingSession.page.tsx'));
+const NotFoundPage = lazy(() => import('@/features/errors/pages/404.page.tsx'));
+const SignInPage = lazy(() => import('@/features/users/pages/SignIn.page.tsx'));
+const SignUpPage = lazy(() => import('@/features/users/pages/SignUp.page.tsx'));
+const TestsPage = lazy(() => import('@/features/teachers/pages/Tests.page.tsx'));
+const StudentGroupsPage = lazy(() => import('@/features/teachers/pages/StudentGroups.page.tsx'));
 
 export const routes: Array<RouteObject> = [
   {
