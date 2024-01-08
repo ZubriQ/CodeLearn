@@ -1,7 +1,7 @@
 import { Outlet, ScrollRestoration } from 'react-router-dom';
 import useDebugRender from 'tilg';
 
-export default function App() {
+function App() {
   useDebugRender();
 
   return (
@@ -11,3 +11,5 @@ export default function App() {
     </>
   );
 }
+
+export default App;

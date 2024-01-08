@@ -1,4 +1,4 @@
-export default function TestsSet() {
+export default function TestsList() {
   const features = [
     {
       title: 'Test 1',

@@ -1,6 +1,6 @@
-import Error from '@/components/error';
+import Error from '@/features/errors/components/Error.tsx';
 
-function NotFoundPage() {
+function NotFound404Page() {
   return (
     <Error
       statusCode={404}
@@ -10,4 +10,4 @@ function NotFoundPage() {
   );
 }
 
-export default NotFoundPage;
+export default NotFound404Page;
