@@ -9,6 +9,7 @@ const SignInPage = lazy(() => import('@/features/users/pages/SignIn.page.tsx'));
 const SignUpPage = lazy(() => import('@/features/users/pages/SignUp.page.tsx'));
 const TestsPage = lazy(() => import('@/features/teachers/pages/Tests.page.tsx'));
 const StudentGroupsPage = lazy(() => import('@/features/teachers/pages/StudentGroups.page.tsx'));
+const StudentDashboardLayout = lazy(() => import('@/features/students/layout/'));
 
 export const routes: Array<RouteObject> = [
   {
@@ -44,7 +45,7 @@ export const routes: Array<RouteObject> = [
     ),
   },
   {
-    path: 'dashboard',
+    path: 'teacher-dashboard',
     element: (
       <Suspense>
         <TeacherDashboardLayout />
@@ -72,6 +73,15 @@ export const routes: Array<RouteObject> = [
         ),
       },
     ],
+  },
+  {
+    path: 'student-dashboard',
+    element: (
+      <Suspense>
+        <StudentDashboardLayout />
+      </Suspense>
+    ),
+    children: [],
   },
   {
     path: 'testing-session/:id',
