@@ -1,11 +1,11 @@
-function DashboardTitle() {
+function SideMenuTitle() {
   return (
     <div className="border-default flex h-12 max-h-12 items-center border-b px-6">
-      <h4 className="mb-0 truncate text-lg" title="Dashboard">
+      <h4 className="mb-0 truncate text-lg font-medium" title="Dashboard">
         Dashboard
       </h4>
     </div>
   );
 }
 
-export default DashboardTitle;
+export default SideMenuTitle;

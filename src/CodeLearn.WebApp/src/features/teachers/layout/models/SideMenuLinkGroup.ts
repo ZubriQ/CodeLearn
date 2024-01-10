@@ -1,6 +1,6 @@
 import { SideMenuLink } from './SideMenuLink.ts';
 
-export type SideMenuGroup = {
+export type SideMenuLinkGroup = {
   title?: string;
   links: Array<SideMenuLink>;
 };
