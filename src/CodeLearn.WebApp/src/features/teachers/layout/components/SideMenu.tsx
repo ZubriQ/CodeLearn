@@ -1,14 +1,7 @@
-type SideMenuOption = {
-  name: string;
-  href: string;
-};
+import { SideMenuGroup } from '../models/SideMenuGroup.ts';
+import SideMenuSectionLinksList from '../components/SideMenuSectionLinksList.tsx';
 
-type SideMenuSection = {
-  title?: string;
-  links: Array<SideMenuOption>;
-};
-
-const sections: SideMenuSection[] = [
+const sections: SideMenuGroup[] = [
   {
     title: 'Pages',
     links: [
@@ -27,20 +20,16 @@ function SideMenu() {
   return (
     <nav role="menu" aria-label="Sidebar" aria-orientation="vertical">
       <ul>
-        {/* Section */}
-        <div className="border-default border-b px-6 py-5">
-          <ul className="space-y-1">
-            <li>
-              <a className="block" target="_self">
-                <span className="border-default ring-foreground group-hover:border-foreground-muted group flex max-w-full cursor-pointer items-center space-x-2 py-1 font-normal outline-none focus-visible:z-10 focus-visible:ring-1">
-                  <span className="text-foreground-light group-hover:text-foreground w-full truncate text-sm transition">
-                    Link
-                  </span>
-                </span>
-              </a>
-            </li>
-          </ul>
-        </div>
+        {sections.map((section) => (
+          <div className="border-default border-b px-6 py-5">
+            {section.title && (
+              <div className="mb-2 flex space-x-3 font-normal">
+                <span>{section.title}</span>
+              </div>
+            )}
+            <SideMenuSectionLinksList links={section.links} />
+          </div>
+        ))}
       </ul>
     </nav>
   );
