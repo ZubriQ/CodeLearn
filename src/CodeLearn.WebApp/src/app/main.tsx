@@ -5,7 +5,7 @@ import '@/styles/tailwind.css';
 import App from '@/app';
 import routes from '@/app/routes.tsx';
 import Error500Page from '@/features/errors/pages/500.page.tsx';
-import Index from '@/components/loading';
+import Loading from '@/components/loading';
 
 const container = document.getElementById('root') as HTMLElement;
 
@@ -22,6 +22,6 @@ const router = createBrowserRouter([
 
 root.render(
   <StrictMode>
-    <RouterProvider router={router} fallbackElement={<Index />} />
+    <RouterProvider router={router} fallbackElement={<Loading />} />
   </StrictMode>,
 );

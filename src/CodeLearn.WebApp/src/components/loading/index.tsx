@@ -1,5 +1,5 @@
-function Index() {
+function Loading() {
   return <div>Loading...</div>;
 }
 
-export default Index;
+export default Loading;

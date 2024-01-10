@@ -1,4 +1,4 @@
-import { Header, Hero, FeaturesSection, TestsList, Footer } from '@/features/home/components';
+import { Header, Hero, FeaturesSection, TestsList, Footer } from '../components';
 
 function HomePage() {
   return (
