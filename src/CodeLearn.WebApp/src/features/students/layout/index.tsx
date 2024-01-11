@@ -1,13 +1,23 @@
-import { Outlet } from 'react-router-dom';
+import { SideMenuLinkGroup } from '@/components/dashboard-layout/SideMenuLinkGroup.ts';
+import DashboardLayout from '@/components/dashboard-layout';
+
+const sections: SideMenuLinkGroup[] = [
+  {
+    id: 1,
+    title: 'Pages',
+    links: [
+      { name: 'Tests', href: '/student-dashboard/tests', id: 1 },
+      { name: 'Testing results', href: '/student-dashboard/testing-results', id: 2 },
+    ],
+  },
+  {
+    id: 2,
+    links: [{ name: 'Logout', href: '/sign-out', id: 5 }],
+  },
+];
 
 function StudentDashboardLayout() {
-  return (
-    <>
-      <div className="text-7xl text-amber-700">Header</div>
-      <div className="text-7xl text-amber-700">Left Navigation Bar</div>
-      <Outlet />
-    </>
-  );
+  return <DashboardLayout sections={sections} />;
 }
 
 export default StudentDashboardLayout;

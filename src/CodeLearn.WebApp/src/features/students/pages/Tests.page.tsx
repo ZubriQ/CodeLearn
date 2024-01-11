@@ -1,6 +1,6 @@
 import DashboardHeader from '@/components/dashboard-header';
 
-function TeacherTestsPage() {
+function StudentTestsPage() {
   return (
     <>
       <DashboardHeader title="Tests" />
@@ -14,4 +14,4 @@ function TeacherTestsPage() {
   );
 }
 
-export default TeacherTestsPage;
+export default StudentTestsPage;

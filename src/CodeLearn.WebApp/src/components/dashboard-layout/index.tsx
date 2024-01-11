@@ -1,6 +1,6 @@
+import { Outlet } from 'react-router-dom';
 import SideMenuTitle from '@/components/dashboard-layout/SideMenuTitle.tsx';
 import SideMenu from '@/components/dashboard-layout/SideMenu.tsx';
-import { Outlet } from 'react-router-dom';
 import { SideMenuLinkGroup } from '@/components/dashboard-layout/SideMenuLinkGroup.ts';
 
 const headerStyle = {
@@ -8,13 +8,13 @@ const headerStyle = {
   maxHeight: '100vh',
 };
 
-interface DashboardLayoutProps {
+type DashboardLayoutProps = {
   sections: Array<SideMenuLinkGroup>;
-}
+};
 
 function DashboardLayout(props: DashboardLayoutProps) {
   return (
-    <div className="flex h-full">
+    <div className="flex h-full bg-gray-50">
       <main
         className="bg-background hide-scrollbar border-default h-full w-64 overflow-auto border-r"
         style={headerStyle}

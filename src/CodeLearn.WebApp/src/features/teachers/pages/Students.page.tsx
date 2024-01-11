@@ -1,17 +1,17 @@
 import DashboardHeader from '@/components/dashboard-header';
 
-function TeacherTestsPage() {
+function StudentsPage() {
   return (
     <>
-      <DashboardHeader title="Tests" />
+      <DashboardHeader title="Students" />
 
       <div className="flex-1 flex-grow overflow-auto">
         <div className="px-5 py-4">
-          <div>TestsPage</div>
+          <div>StudentsPage</div>
         </div>
       </div>
     </>
   );
 }
 
-export default TeacherTestsPage;
+export default StudentsPage;
