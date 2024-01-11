@@ -1,49 +1,25 @@
-import { Outlet } from 'react-router-dom';
-import SideMenuTitle from '@/features/teachers/layout/components/SideMenuTitle.tsx';
-import SideMenu from '@/features/teachers/layout/components/SideMenu.tsx';
-import DashboardHeader from '@/components/dashboard-header';
-import { SideMenuLinkGroup } from '@/features/teachers/layout/models/SideMenuLinkGroup.ts';
-
-const headerStyle = {
-  height: '100vh',
-  maxHeight: '100vh',
-};
+import { SideMenuLinkGroup } from '@/components/dashboard-layout/SideMenuLinkGroup.ts';
+import DashboardLayout from '@/components/dashboard-layout';
 
 const sections: SideMenuLinkGroup[] = [
   {
+    id: 1,
     title: 'Pages',
     links: [
-      { name: 'Tests', href: '/teacher-dashboard/tests' },
-      { name: 'Student groups', href: '/teacher-dashboard/student-groups' },
-      { name: 'Students', href: '/teacher-dashboard/students' },
-      { name: 'Testing results', href: '/teacher-dashboard/testing-results' },
+      { name: 'Tests', href: '/teacher-dashboard/tests', id: 1 },
+      { name: 'Student groups', href: '/teacher-dashboard/student-groups', id: 2 },
+      { name: 'Students', href: '/teacher-dashboard/students', id: 3 },
+      { name: 'Testing results', href: '/teacher-dashboard/testing-results', id: 4 },
     ],
   },
   {
-    links: [{ name: 'Logout', href: '/sign-out' }],
+    id: 2,
+    links: [{ name: 'Logout', href: '/sign-out', id: 5 }],
   },
 ];
 
 function TeacherDashboardLayout() {
-  return (
-    <div className="flex h-full">
-      <main
-        className="bg-background hide-scrollbar border-default h-full w-64 overflow-auto border-r"
-        style={headerStyle}
-      >
-        <SideMenuTitle />
-        <SideMenu sections={sections} />
-      </main>
-      <div className="flex flex-1 flex-col">
-        <DashboardHeader />
-        <div className="flex-1 flex-grow overflow-auto">
-          <div className="px-5 py-4">
-            <Outlet />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <DashboardLayout sections={sections} />;
 }
 
 export default TeacherDashboardLayout;
