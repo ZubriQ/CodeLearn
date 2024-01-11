@@ -1,5 +1,6 @@
 export type SideMenuLink = {
+  id: number;
   name: string;
   href: string;
-  id: number;
+  icon?: JSX.Element;
 };

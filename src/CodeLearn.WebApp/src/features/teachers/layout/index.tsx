@@ -1,5 +1,6 @@
 import { SideMenuLinkGroup } from '@/components/dashboard-layout/SideMenuLinkGroup.ts';
 import DashboardLayout from '@/components/dashboard-layout';
+import { ArrowLeftStartOnRectangleIcon } from '@heroicons/react/24/outline';
 
 const sections: SideMenuLinkGroup[] = [
   {
@@ -14,7 +15,7 @@ const sections: SideMenuLinkGroup[] = [
   },
   {
     id: 2,
-    links: [{ name: 'Logout', href: '/sign-out', id: 5 }],
+    links: [{ name: 'Logout', href: '/sign-out', id: 5, icon: <ArrowLeftStartOnRectangleIcon /> }],
   },
 ];
 
