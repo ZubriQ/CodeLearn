@@ -9,7 +9,7 @@ const headerStyle = {
 };
 
 type DashboardLayoutProps = {
-  sections: Array<SideMenuLinkGroup>;
+  sections: SideMenuLinkGroup[];
 };
 
 function DashboardLayout(props: DashboardLayoutProps) {

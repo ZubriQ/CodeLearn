@@ -13,7 +13,7 @@ function SideMenu(props: SideMenuProps) {
           <div className="border-default border-b px-6 py-5" key={section.id}>
             {section.title && (
               <div className="mb-2 flex space-x-3 font-normal">
-                <span className="cursor-default text-sm font-medium text-gray-400">{section.title}</span>
+                <span className="text-sm font-medium text-gray-400">{section.title}</span>
               </div>
             )}
             <SideMenuSectionLinksList links={section.links} />
