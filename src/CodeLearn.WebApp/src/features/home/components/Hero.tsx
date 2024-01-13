@@ -28,7 +28,7 @@ export default function Hero() {
               CodeLearn
             </span>
           </h1>
-          <p className="mt-6 bg-clip-text text-lg leading-8 text-gray-600">
+          <p className="mt-6 bg-clip-text text-xl leading-8 text-gray-600">
             Join us and experience a new way of learning.
             <br />
             We automate the teaching of coding by allowing teachers to create tests, and students to solve them.
