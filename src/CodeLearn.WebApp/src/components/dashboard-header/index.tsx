@@ -5,7 +5,7 @@ type DashboardHeaderProps = {
 function DashboardHeader(props: DashboardHeaderProps) {
   return (
     <div className="border-default flex h-12 max-h-12 items-center justify-between border-b px-5 py-2">
-      <span className="truncate text-sm font-medium text-gray-400">{props.title}</span>
+      <span className="truncate text-sm font-medium text-zinc-400">{props.title}</span>
     </div>
   );
 }
