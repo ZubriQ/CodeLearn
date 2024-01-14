@@ -1,7 +1,10 @@
-import { Outlet } from 'react-router-dom';
+import { useState } from 'react';
+import { Outlet, useOutletContext } from 'react-router-dom';
 import SideMenuTitle from '@/components/dashboard-layout/SideMenuTitle.tsx';
 import SideMenu from '@/components/dashboard-layout/SideMenu.tsx';
-import { SideMenuLinkGroup } from '@/components/dashboard-layout/SideMenuLinkGroup.ts';
+import { SideMenuLinkGroup } from '@/components/dashboard-layout/models/SideMenuLinkGroup.ts';
+import DashboardHeader from '@/components/dashboard-header';
+import { DashboardPageTitle } from '@/components/dashboard-layout/models/DashboardPageTitle.ts';
 
 const headerStyle = {
   height: '100vh',
@@ -13,8 +16,10 @@ type DashboardLayoutProps = {
 };
 
 function DashboardLayout(props: DashboardLayoutProps) {
+  const [currentPageTitle, setCurrentPageTitle] = useState<DashboardPageTitle>('Tests');
+
   return (
-    <div className="flex h-full bg-gray-50">
+    <div className="fixed flex h-full bg-gray-50">
       <main
         className="bg-background hide-scrollbar border-default h-full w-64 overflow-auto border-r"
         style={headerStyle}
@@ -22,11 +27,22 @@ function DashboardLayout(props: DashboardLayoutProps) {
         <SideMenuTitle />
         <SideMenu sections={props.sections} />
       </main>
-      <div className="flex flex-1 flex-col">
-        <Outlet />
+
+      <div className="flex min-w-min flex-1 flex-col">
+        <DashboardHeader title={currentPageTitle} />
+
+        <div className="flex-1 flex-grow overflow-auto px-5 py-4">
+          <div className="my-2">
+            <Outlet context={[currentPageTitle, setCurrentPageTitle]} />
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
 export default DashboardLayout;
+
+export function useDashboardPageTitle() {
+  return useOutletContext<[DashboardPageTitle, React.Dispatch<React.SetStateAction<DashboardPageTitle>>]>();
+}

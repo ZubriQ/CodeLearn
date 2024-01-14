@@ -1,4 +1,4 @@
-import { SideMenuLinkGroup } from '@/components/dashboard-layout/SideMenuLinkGroup.ts';
+import { SideMenuLinkGroup } from '@/components/dashboard-layout/models/SideMenuLinkGroup.ts';
 import DashboardLayout from '@/components/dashboard-layout';
 
 const sections: SideMenuLinkGroup[] = [

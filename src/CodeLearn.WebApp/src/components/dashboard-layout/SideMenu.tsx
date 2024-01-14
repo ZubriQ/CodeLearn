@@ -1,4 +1,4 @@
-import { SideMenuLinkGroup } from './SideMenuLinkGroup.ts';
+import { SideMenuLinkGroup } from './models/SideMenuLinkGroup.ts';
 import SideMenuSectionLinksList from './SideMenuSectionLinksList.tsx';
 
 type SideMenuProps = {

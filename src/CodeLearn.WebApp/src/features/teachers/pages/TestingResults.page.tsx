@@ -1,17 +1,14 @@
-import DashboardHeader from '@/components/dashboard-header';
+import { useEffect } from 'react';
+import { useDashboardPageTitle } from '@/components/dashboard-layout';
 
 function TestingResultsPage() {
-  return (
-    <>
-      <DashboardHeader title="Testing results" />
+  const [, setCurrentPageTitle] = useDashboardPageTitle();
 
-      <div className="flex-1 flex-grow overflow-auto">
-        <div className="px-5 py-4">
-          <div>TestingResultsPage</div>
-        </div>
-      </div>
-    </>
-  );
+  useEffect(() => {
+    setCurrentPageTitle('Testing results');
+  }, []);
+
+  return <div>TestingResultsPage</div>;
 }
 
 export default TestingResultsPage;
