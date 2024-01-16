@@ -19,19 +19,19 @@ function DashboardLayout(props: DashboardLayoutProps) {
   const [currentPageTitle, setCurrentPageTitle] = useState<DashboardPageTitle>('Tests');
 
   return (
-    <div className="fixed flex h-full bg-gray-50">
-      <main
+    <div className="flex h-full bg-gray-50">
+      <div
         className="bg-background hide-scrollbar border-default h-full w-64 overflow-auto border-r"
         style={headerStyle}
       >
         <SideMenuTitle />
         <SideMenu sections={props.sections} />
-      </main>
+      </div>
 
       <div className="flex min-w-min flex-1 flex-col">
         <DashboardHeader title={currentPageTitle} />
 
-        <div className="flex-1 flex-grow overflow-auto px-5 py-4">
+        <div className="flex-1 flex-grow overflow-y-auto px-5 py-4">
           <div className="my-2">
             <Outlet context={[currentPageTitle, setCurrentPageTitle]} />
           </div>

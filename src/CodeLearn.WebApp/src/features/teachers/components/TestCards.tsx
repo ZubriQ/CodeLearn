@@ -1,26 +1,31 @@
-import { Test } from '@/components/test-cards/Test.ts';
+import { Test } from '@/features/teachers/models/Test.ts';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { ListBulletIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx';
+import NoItemsCard from '@/features/teachers/components/NoItemsCard.tsx';
 
 type TestCardsProps = {
   tests: Test[];
 };
 
 function TestCards(props: TestCardsProps) {
+  if (props.tests.length === 0) {
+    return <NoItemsCard itemName="test" itemNamePlural="tests" />;
+  }
+
   return (
     <ul className="mx-auto grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
       {props.tests.map((test) => {
         return (
           <li key={test.id}>
-            <Card className="min-w-72">
+            <Card className="min-w-80">
               <CardHeader>
                 <CardTitle>{test.title}</CardTitle>
                 <CardDescription>{test.description}</CardDescription>
               </CardHeader>
               <CardFooter className="flex justify-between gap-4">
-                <Button>START</Button>
+                <Button>Start testing</Button>
 
                 <div className="flex gap-4">
                   <TooltipProvider>

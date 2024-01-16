@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea.tsx';
-import { Test } from '@/components/test-cards/Test.ts';
-import TestCards from '@/components/test-cards';
+import { Test } from '@/features/teachers/models/Test.ts';
+import TestCards from '@/features/teachers/components/TestCards.tsx';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx';
 import {
   Dialog,
@@ -109,7 +109,6 @@ const tests: Test[] = [
 ];
 
 function TeacherTestsPage() {
-  // @ts-ignore
   const [, setCurrentPageTitle] = useDashboardPageTitle();
 
   useEffect(() => {
