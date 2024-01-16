@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
 import SideMenuTitle from '@/components/dashboard-layout/SideMenuTitle.tsx';
 import SideMenu from '@/components/dashboard-layout/SideMenu.tsx';
@@ -18,6 +18,14 @@ type DashboardLayoutProps = {
 function DashboardLayout(props: DashboardLayoutProps) {
   const [currentPageTitle, setCurrentPageTitle] = useState<DashboardPageTitle>('Tests');
 
+  useEffect(() => {
+    document.body.className += 'overflow-hidden';
+
+    return () => {
+      document.body.className = document.body.className.replace('overflow-hidden', '');
+    };
+  }, []);
+
   return (
     <div className="flex h-full bg-gray-50">
       <div
@@ -31,7 +39,7 @@ function DashboardLayout(props: DashboardLayoutProps) {
       <div className="flex min-w-min flex-1 flex-col">
         <DashboardHeader title={currentPageTitle} />
 
-        <div className="flex-1 flex-grow overflow-y-auto px-5 py-4">
+        <div className="hide-main-scrollbar flex-1 flex-grow overflow-y-auto px-5 py-4">
           <div className="my-2">
             <Outlet context={[currentPageTitle, setCurrentPageTitle]} />
           </div>

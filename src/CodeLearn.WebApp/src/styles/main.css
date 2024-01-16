@@ -1,0 +1,4 @@
+.hide-main-scrollbar {
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+}
