@@ -1,6 +1,6 @@
 ﻿namespace CodeLearn.Domain.TestingSessions;
 
-public sealed class TestingSession : BaseEntity<TestingSessionId>, IAggregateRoot
+public sealed class TestingSession : BaseEntity<TestingSessionId>, IAggregateRoot // TODO: Auditable
 {
     public TestId TestId { get; private set; } = null!;
     public StudentId StudentId { get; private set; } = null!;

@@ -1,0 +1,61 @@
+@CodeLearn.Api_HostAddress = http://localhost:5081
+
+GET {{CodeLearn.Api_HostAddress}}/api/teachers/
+Accept: application/json
+
+###
+
+POST {{CodeLearn.Api_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "string",
+  "lastName": "string",
+  "email": "1strI1ng@gmail.com",
+  "password": "1strI1ng@gmail.com",
+  "role": "Teacher"
+}
+
+###
+
+POST {{CodeLearn.Api_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "Test1@gmail.com",
+  "password": "Test1@gmail.com"
+}
+
+###
+
+POST {{CodeLearn.Api_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "Test3",
+  "email": "Test3@gmail.com",
+  "password": "Test3@gmail.com"
+}
+
+###
+
+POST {{CodeLearn.Api_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "Test3@gmail.com",
+  "password": "Test3@gmail.com"
+}
+
+###
+
+GET {{CodeLearn.Api_HostAddress}}/api/testAuth
+Accept: application/json
+Authorization: Bearer [token]
+
+###
+
+GET {{CodeLearn.Api_HostAddress}}/api/testAuth
+Accept: application/json
+
+###

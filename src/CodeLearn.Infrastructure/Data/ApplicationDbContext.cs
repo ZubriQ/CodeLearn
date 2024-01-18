@@ -9,11 +9,12 @@ using CodeLearn.Domain.Students.Entities;
 using CodeLearn.Domain.Teachers;
 using CodeLearn.Domain.TestingSessions;
 using CodeLearn.Domain.Tests;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Reflection;
 
 namespace CodeLearn.Infrastructure.Data;
 
-public sealed class ApplicationDbContext : DbContext, IApplicationDbContext
+public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 

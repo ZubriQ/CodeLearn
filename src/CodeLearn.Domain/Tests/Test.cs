@@ -1,6 +1,6 @@
 ﻿namespace CodeLearn.Domain.Tests;
 
-public sealed class Test : BaseEntity<TestId>, IAggregateRoot
+public sealed class Test : BaseAuditableEntity<TestId>, IAggregateRoot
 {
     public TeacherId TeacherId { get; private set; } = null!;
     public string Title { get; private set; } = null!;

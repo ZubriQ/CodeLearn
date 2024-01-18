@@ -24,7 +24,9 @@ public sealed class TestsController(ISender sender, IMapper mapper) : ApiControl
     public async Task<IActionResult> GetAll()
     {
         var tests = await sender.Send(new GetAllTestsQuery());
-        var mappedTestings = tests.Select(mapper.Map<TestResponse>).ToList();
+        var mappedTestings = tests
+            .Select(mapper.Map<TestResponse>)
+            .ToList();
 
         return Ok(new TestResponseCollection(mappedTestings));
     }
