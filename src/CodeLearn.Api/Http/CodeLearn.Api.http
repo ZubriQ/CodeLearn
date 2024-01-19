@@ -1,4 +1,5 @@
 @CodeLearn.Api_HostAddress = http://localhost:5081
+@CodeLearn.Test_Teacher_Bearer = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYmY4MzQ1My05YTMzLTRmZDYtYTU3Mi05ZTFkYWQ1YjBkN2UiLCJlbWFpbCI6IjEyM3N0ckkxbmdAZ21haWwuY29tIiwianRpIjoiMWQ5YTVhMmQtZTU4Ny00ZWIzLWFjNjgtZmE1ZDhmNTI2OTM0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVGVhY2hlciIsImV4cCI6MTcwNTY3OTc3MSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MDgxIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDgxIn0.yMaguwD9-qatSOdIxh-_3QFCxtG49_tUP4-nP822tfQ
 
 GET {{CodeLearn.Api_HostAddress}}/api/teachers/
 Accept: application/json
@@ -62,7 +63,7 @@ Accept: application/json
 
 POST {{CodeLearn.Api_HostAddress}}/api/tests
 Content-Type: application/json
-Authorization: Bearer [token]
+Authorization: Bearer {{CodeLearn.Test_Teacher_Bearer}}
 
 {
   "teacherId": "c24b6083-97cf-42ef-84a8-09e5c350b952",

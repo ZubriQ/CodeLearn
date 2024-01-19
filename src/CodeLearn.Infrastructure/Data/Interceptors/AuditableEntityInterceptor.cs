@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace CodeLearn.Infrastructure.Data.Interceptors;
+
 public class AuditableEntityInterceptor<TId> : SaveChangesInterceptor
 {
     private readonly IUser _user;
@@ -41,6 +42,7 @@ public class AuditableEntityInterceptor<TId> : SaveChangesInterceptor
         foreach (var entry in auditableEntries)
         {
             var baseEntity = (BaseAuditableEntity<TId>)entry.Entity;
+
             if (entry.State == EntityState.Added)
             {
                 baseEntity.CreatedBy = _user.Id;
