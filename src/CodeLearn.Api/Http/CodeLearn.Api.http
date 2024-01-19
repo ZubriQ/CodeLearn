@@ -5,25 +5,25 @@ Accept: application/json
 
 ###
 
-POST {{CodeLearn.Api_HostAddress}}/api/auth/register
+POST {{CodeLearn.Api_HostAddress}}/api/authentication/register
 Content-Type: application/json
 
 {
   "firstName": "string",
   "lastName": "string",
-  "email": "1strI1ng@gmail.com",
-  "password": "1strI1ng@gmail.com",
+  "email": "123strI1ng@gmail.com",
+  "password": "123strI1ng@gmail.com",
   "role": "Teacher"
 }
 
 ###
 
-POST {{CodeLearn.Api_HostAddress}}/api/auth/login
+POST {{CodeLearn.Api_HostAddress}}/api/authentication/login
 Content-Type: application/json
 
 {
-  "email": "Test1@gmail.com",
-  "password": "Test1@gmail.com"
+  "email": "123strI1ng@gmail.com",
+  "password": "123strI1ng@gmail.com"
 }
 
 ###
@@ -57,5 +57,18 @@ Authorization: Bearer [token]
 
 GET {{CodeLearn.Api_HostAddress}}/api/testAuth
 Accept: application/json
+
+###
+
+POST {{CodeLearn.Api_HostAddress}}/api/tests
+Content-Type: application/json
+Authorization: Bearer [token]
+
+{
+  "teacherId": "c24b6083-97cf-42ef-84a8-09e5c350b952",
+  "title": "string",
+  "description": "string",
+  "durationInMinutes": 10
+}
 
 ###

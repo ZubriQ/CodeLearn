@@ -1,11 +1,11 @@
 ﻿using CodeLearn.Application.Common.Interfaces;
+using CodeLearn.Domain.Tests.ValueObjects;
 using CodeLearn.Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -17,12 +17,8 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<int>>();
-        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<long>>();
-        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<Guid>>();
-        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<int>>();
-        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<long>>();
-        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<Guid>>();
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestId>>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<TestId>>();
 
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
@@ -44,8 +40,6 @@ public static class DependencyInjection
         })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
-            //.AddDefaultTokenProviders()
-            //.AddDefaultUI();
 
         services.AddJwtAuth(configuration);
 
@@ -60,7 +54,6 @@ public static class DependencyInjection
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         })
         .AddJwtBearer(options =>
         {
@@ -79,33 +72,6 @@ public static class DependencyInjection
         });
 
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-        
-        //var jwtSettings = new JwtSettings();
-        //configration.Bind(JwtSettings.SectionName, jwtSettings);
-
-        //services.AddSingleton(Options.Create(jwtSettings));
-
-        //services
-        //    .AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme);
-        //.AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
-        //{
-        //    ValidateIssuer = true,
-        //    ValidateAudience = true,
-        //    ValidateLifetime = true,
-        //    ValidateIssuerSigningKey = true,
-        //    ValidIssuer = jwtSettings.Issuer,
-        //    ValidAudience = jwtSettings.Audience,
-        //    IssuerSigningKey = new SymmetricSecurityKey(
-        //        Encoding.UTF8.GetBytes(jwtSettings.Secret)),
-        //});
-
-        //services
-        //    .AddAuthorizationBuilder()
-        //    .AddPolicy("api", policy =>
-        //    {
-        //        policy.RequireAuthenticatedUser();
-        //        policy.AddAuthenticationSchemes(IdentityConstants.BearerScheme);
-        //    });
 
         services.ConfigureApplicationCookie(options =>
         {

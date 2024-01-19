@@ -16,7 +16,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         _configuration = configuration;
     }
 
-    public string GenerateTokenString(string userId, string email, string? username)
+    public string GenerateTokenString(string userId, string email, string role)
     {
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Key"]!)),
@@ -26,8 +26,8 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         {
             new Claim(JwtRegisteredClaimNames.Sub, userId),
             new Claim(JwtRegisteredClaimNames.Email, email),
-            //new Claim(JwtRegisteredClaimNames.GivenName, username), possible null reference
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(ClaimTypes.Role, role),
         };
 
         var securityToken = new JwtSecurityToken(

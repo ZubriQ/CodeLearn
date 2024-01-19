@@ -106,7 +106,10 @@ public class IdentityService : IIdentityService
             return (Result.Failure(InfrastructureErrors.Identity.InvalidCredentials), string.Empty);
         }
 
-        var tokenString = _jwtTokenGenerator.GenerateTokenString(user.Id, email, user.UserName);
+        var roles = await _userManager.GetRolesAsync(user);
+
+        var tokenString = _jwtTokenGenerator.GenerateTokenString(user.Id, email, roles.FirstOrDefault()!);
+
         return (Result.Success(), tokenString);
     }
 }
