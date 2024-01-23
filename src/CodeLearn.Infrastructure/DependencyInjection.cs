@@ -47,7 +47,7 @@ public static class DependencyInjection
     }
 
     public static IServiceCollection AddJwtAuth(
-        this IServiceCollection services, 
+        this IServiceCollection services,
         IConfiguration configuration)
     {
         services.AddAuthentication(options =>

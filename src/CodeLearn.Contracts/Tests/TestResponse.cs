@@ -2,10 +2,11 @@
 
 public record TestResponse(
     Guid TestId,
-    Guid TeacherId,
     string Title,
     string Description,
     int DurationInMinutes,
     bool IsPublic,
-    string CreatedDateTime,
-    string ModifiedDateTime);
+    DateTimeOffset Created,
+    string? CreatedBy,
+    DateTimeOffset LastModified,
+    string? LastModifiedBy);

@@ -15,7 +15,7 @@ public class CreateTestCommandHandler(
             return new ValidationFailed(validationResult.Errors);
         }
 
-        var test = Test.Create(request.TeacherId, request.Title, request.Description, request.DurationInMinutes, DateTime.UtcNow);
+        var test = Test.Create(request.Title, request.Description, request.DurationInMinutes);
 
         context.Tests.Add(test);
 

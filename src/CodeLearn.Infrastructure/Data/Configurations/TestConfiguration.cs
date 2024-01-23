@@ -1,5 +1,4 @@
-﻿using CodeLearn.Domain.Teachers;
-using CodeLearn.Domain.Tests;
+﻿using CodeLearn.Domain.Tests;
 using CodeLearn.Domain.Tests.ValueObjects;
 
 namespace CodeLearn.Infrastructure.Data.Configurations;
@@ -25,12 +24,6 @@ public sealed class TestConfiguration : IEntityTypeConfiguration<Test>
                 id => TestId.Create(id));
 
         builder
-            .HasOne<Teacher>()
-            .WithMany()
-            .HasForeignKey(t => t.TeacherId)
-            .IsRequired();
-
-        builder
             .Property(t => t.Title)
             .HasMaxLength(100)
             .IsRequired();
@@ -46,14 +39,6 @@ public sealed class TestConfiguration : IEntityTypeConfiguration<Test>
 
         builder
             .Property(t => t.DurationInMinutes)
-            .IsRequired();
-
-        builder
-            .Property(t => t.CreatedDateTime)
-            .IsRequired();
-
-        builder
-            .Property(t => t.ModifiedDateTime)
             .IsRequired();
     }
 }

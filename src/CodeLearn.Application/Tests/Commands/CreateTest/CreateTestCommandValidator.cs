@@ -4,8 +4,6 @@ public class CreateTestCommandValidator : AbstractValidator<CreateTestCommand>
 {
     public CreateTestCommandValidator()
     {
-        RuleFor(x => x.TeacherId).NotEmpty();
-
         RuleFor(x => x.Title)
             .NotEmpty()
             .MaximumLength(100);

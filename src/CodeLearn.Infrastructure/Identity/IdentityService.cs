@@ -46,8 +46,8 @@ public class IdentityService : IIdentityService
             Email = userName,
         };
 
-        var result = await _userManager.CreateAsync(user, password); 
-        
+        var result = await _userManager.CreateAsync(user, password);
+
         await _userManager.AddToRoleAsync(user, userRole);
 
         return (result.ToApplicationResult(), user.Id);
@@ -93,7 +93,7 @@ public class IdentityService : IIdentityService
     public async Task<(Result Result, string JwtToken)> Login(string email, string password)
     {
         var user = await _userManager.FindByEmailAsync(email);
-        
+
         if (user == null)
         {
             return (Result.Failure(InfrastructureErrors.Identity.UserNotFoundByEmail), string.Empty);

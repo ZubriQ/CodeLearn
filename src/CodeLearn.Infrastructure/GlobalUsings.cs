@@ -1,5 +1,4 @@
-﻿
-global using CodeLearn.Infrastructure.Data;
+﻿global using CodeLearn.Infrastructure.Data;
 global using CodeLearn.Infrastructure.Data.Constants;
 global using CodeLearn.Infrastructure.Data.Interceptors;
 global using CodeLearn.Infrastructure.Identity;

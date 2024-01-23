@@ -43,16 +43,18 @@ public class AuditableEntityInterceptor<TId> : SaveChangesInterceptor
         {
             var baseEntity = (BaseAuditableEntity<TId>)entry.Entity;
 
+            var currentDateTime = _dateTime.GetUtcNow();
+
             if (entry.State == EntityState.Added)
             {
                 baseEntity.CreatedBy = _user.Id;
-                baseEntity.Created = _dateTime.GetUtcNow();
+                baseEntity.Created = currentDateTime;
             }
 
             if (entry.State == EntityState.Added || entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())
             {
                 baseEntity.LastModifiedBy = _user.Id;
-                baseEntity.LastModified = _dateTime.GetUtcNow();
+                baseEntity.LastModified = currentDateTime;
             }
         }
     }

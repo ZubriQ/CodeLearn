@@ -2,8 +2,6 @@
 using CodeLearn.Application.Tests.Queries.GetAllTests;
 using CodeLearn.Application.Tests.Queries.GetTestById;
 using CodeLearn.Contracts.Tests;
-using CodeLearn.Domain.Constants;
-using Microsoft.AspNetCore.Authorization;
 
 namespace CodeLearn.Api.Controllers;
 
@@ -34,7 +32,7 @@ public sealed class TestsController(ISender sender, IMapper mapper) : ApiControl
     }
 
     [HttpPost]
-    [Authorize(Roles = Roles.Teacher)]
+    //[Authorize(Roles = Roles.Teacher)]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(TestRequest request)
