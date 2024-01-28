@@ -7,6 +7,7 @@ using CodeLearn.Domain.QuestionChoices;
 using CodeLearn.Domain.Students;
 using CodeLearn.Domain.Students.Entities;
 using CodeLearn.Domain.Teachers;
+using CodeLearn.Domain.Testings;
 using CodeLearn.Domain.TestingSessions;
 using CodeLearn.Domain.Tests;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -31,6 +32,7 @@ public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser>, I
     public DbSet<TestCase> TestCases => Set<TestCase>();
     public DbSet<TestCaseParameter> TestCaseParameters => Set<TestCaseParameter>();
     public DbSet<Test> Tests => Set<Test>();
+    public DbSet<Testing> Testings => Set<Testing>();
     public DbSet<TestingSession> TestingSessions => Set<TestingSession>();
 
     public DbSet<Exercise> Exercises => Set<Exercise>();

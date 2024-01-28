@@ -36,7 +36,7 @@ public sealed class TestConfiguration : IEntityTypeConfiguration<Test>
         builder
             .Property(t => t.IsPublic)
             .IsRequired();
-
+        // TODO: delete
         builder
             .Property(t => t.DurationInMinutes)
             .IsRequired();
