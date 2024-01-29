@@ -1,5 +1,4 @@
-﻿using CodeLearn.Domain.Students;
-using CodeLearn.Domain.TestingSessions;
+﻿using CodeLearn.Domain.TestingSessions;
 using CodeLearn.Domain.TestingSessions.Enums;
 using CodeLearn.Domain.TestingSessions.ValueObjects;
 using CodeLearn.Domain.Tests;
@@ -34,13 +33,6 @@ public sealed class TestingSessionConfiguration : IEntityTypeConfiguration<Testi
             .OnDelete(DeleteBehavior.Restrict);
 
         builder
-           .HasOne<Student>()
-           .WithMany()
-           .HasForeignKey(ts => ts.StudentId)
-           .IsRequired()
-           .OnDelete(DeleteBehavior.Restrict);
-
-        builder
             .Property(ts => ts.Status)
             .HasMaxLength(10)
             .IsRequired()
@@ -50,10 +42,14 @@ public sealed class TestingSessionConfiguration : IEntityTypeConfiguration<Testi
 
         builder
             .Property(ts => ts.StartDateTime)
-            .IsRequired();
+            .IsRequired(false);
 
         builder
             .Property(ts => ts.FinishDateTime)
-            .IsRequired();
+            .IsRequired(false);
+
+        builder
+            .Property(ts => ts.Score)
+            .IsRequired(false);
     }
 }
