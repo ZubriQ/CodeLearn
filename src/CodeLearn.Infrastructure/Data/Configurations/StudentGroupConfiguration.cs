@@ -1,5 +1,5 @@
-﻿using CodeLearn.Domain.Students.Entities;
-using CodeLearn.Domain.Students.ValueObjects;
+﻿using CodeLearn.Domain.StudentGroups;
+using CodeLearn.Domain.StudentGroups.ValueObjects;
 
 namespace CodeLearn.Infrastructure.Data.Configurations;
 

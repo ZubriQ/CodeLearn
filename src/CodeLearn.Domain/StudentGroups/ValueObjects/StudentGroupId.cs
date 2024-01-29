@@ -1,4 +1,4 @@
-﻿namespace CodeLearn.Domain.Students.ValueObjects;
+﻿namespace CodeLearn.Domain.StudentGroups.ValueObjects;
 
 public sealed class StudentGroupId(Guid value) : ValueObject
 {

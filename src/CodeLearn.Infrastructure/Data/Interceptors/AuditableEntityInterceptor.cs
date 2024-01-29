@@ -36,8 +36,10 @@ public class AuditableEntityInterceptor<TId> : SaveChangesInterceptor
     {
         if (context == null) return;
 
-        var auditableEntries = context.ChangeTracker.Entries()
-            .Where(e => typeof(BaseAuditableEntity<TId>).IsAssignableFrom(e.Entity.GetType()));
+        var auditableEntries = context.ChangeTracker
+            .Entries()
+            .Where(e => typeof(BaseAuditableEntity<TId>)
+            .IsAssignableFrom(e.Entity.GetType()));
 
         foreach (var entry in auditableEntries)
         {

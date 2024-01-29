@@ -1,4 +1,4 @@
-﻿using CodeLearn.Domain.Students.Entities;
+﻿using CodeLearn.Domain.StudentGroups;
 using CodeLearn.Domain.Testings;
 using CodeLearn.Domain.Testings.ValueObjects;
 using CodeLearn.Domain.Tests;
