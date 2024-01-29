@@ -1,5 +1,5 @@
-﻿using CodeLearn.Domain.Exercises.Entities;
-using CodeLearn.Domain.Exercises.ValueObjects;
+﻿using CodeLearn.Domain.ExerciseTopics;
+using CodeLearn.Domain.ExerciseTopics.ValueObjects;
 
 namespace CodeLearn.Infrastructure.Data.Configurations;
 

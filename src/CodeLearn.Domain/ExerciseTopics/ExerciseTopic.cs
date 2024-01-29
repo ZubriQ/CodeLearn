@@ -1,6 +1,6 @@
-﻿namespace CodeLearn.Domain.Exercises.Entities;
+﻿namespace CodeLearn.Domain.ExerciseTopics;
 
-public sealed class ExerciseTopic : BaseEntity<ExerciseTopicId> // TODO: Aggregate root? Just Read with CQRS?
+public sealed class ExerciseTopic : BaseEntity<ExerciseTopicId>, IAggregateRoot
 {
     public string Name { get; private set; } = null!;
 

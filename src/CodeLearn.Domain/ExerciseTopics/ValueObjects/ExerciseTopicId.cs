@@ -1,4 +1,4 @@
-﻿namespace CodeLearn.Domain.Exercises.ValueObjects;
+﻿namespace CodeLearn.Domain.ExerciseTopics.ValueObjects;
 
 public sealed class ExerciseTopicId(Guid value) : ValueObject
 {

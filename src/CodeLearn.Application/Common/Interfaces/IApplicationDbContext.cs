@@ -2,6 +2,7 @@
 using CodeLearn.Domain.Exercises.Entities;
 using CodeLearn.Domain.ExerciseSubmissions;
 using CodeLearn.Domain.ExerciseSubmissions.JunctionTables;
+using CodeLearn.Domain.ExerciseTopics;
 using CodeLearn.Domain.QuestionChoices;
 using CodeLearn.Domain.StudentGroups;
 using CodeLearn.Domain.Teachers;

@@ -1,7 +1,7 @@
 ﻿using CodeLearn.Domain.Exercises;
-using CodeLearn.Domain.Exercises.Entities;
 using CodeLearn.Domain.Exercises.Enums;
 using CodeLearn.Domain.Exercises.ValueObjects;
+using CodeLearn.Domain.ExerciseTopics;
 using CodeLearn.Domain.Tests;
 using CodeLearn.Domain.Tests.ValueObjects;
 

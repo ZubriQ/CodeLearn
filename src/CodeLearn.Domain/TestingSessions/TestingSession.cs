@@ -32,7 +32,7 @@ public sealed class TestingSession : BaseAuditableEntity<TestingSessionId>, IAgg
         return new TestingSession(
             TestingSessionId.CreateUnique(),
             testId,
-            default,
+            null,
             TestingSessionStatus.Registered,
             default,
             default);

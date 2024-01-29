@@ -1,12 +1,15 @@
 ﻿global using CodeLearn.Domain.Common;
 global using CodeLearn.Domain.Common.Errors;
 global using CodeLearn.Domain.Common.Result;
+global using CodeLearn.Domain.Exercises;
 global using CodeLearn.Domain.Exercises.Entities;
 global using CodeLearn.Domain.Exercises.Enums;
 global using CodeLearn.Domain.Exercises.ValueObjects;
 global using CodeLearn.Domain.ExerciseSubmissions;
 global using CodeLearn.Domain.ExerciseSubmissions.Enums;
 global using CodeLearn.Domain.ExerciseSubmissions.ValueObjects;
+global using CodeLearn.Domain.ExerciseTopics;
+global using CodeLearn.Domain.ExerciseTopics.ValueObjects;
 global using CodeLearn.Domain.QuestionChoices;
 global using CodeLearn.Domain.QuestionChoices.ValueObjects;
 global using CodeLearn.Domain.StudentGroups.ValueObjects;
