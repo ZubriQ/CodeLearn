@@ -61,7 +61,13 @@ public class ApplicationDbContextInitialiser
         }
     }
 
-    public async Task TrySeedAsync()
+    private async Task TrySeedAsync()
+    {
+        await SeedDefaultRoles();
+        await EnsureAdministratorExists();
+    }
+
+    private async Task SeedDefaultRoles()
     {
         var defaultRoles = new List<IdentityRole>()
         {
@@ -75,6 +81,28 @@ public class ApplicationDbContextInitialiser
             if (_roleManager.Roles.All(r => r.Name != defaultRole.Name))
             {
                 await _roleManager.CreateAsync(defaultRole);
+            }
+        }
+    }
+
+    private async Task EnsureAdministratorExists()
+    {
+        var adminUsers = await _userManager.GetUsersInRoleAsync(Roles.Administrator);
+
+        if (!adminUsers.Any())
+        {
+            var adminUser = new ApplicationUser
+            {
+                FirstName = "AdminFirstName",
+                LastName = "AdminLastName",
+                UserName = "admin",
+                Email = "Adm1n@example.com"
+            };
+
+            var createUserResult = await _userManager.CreateAsync(adminUser, "Adm1n@example.com");
+            if (createUserResult.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(adminUser, Roles.Administrator);
             }
         }
     }
