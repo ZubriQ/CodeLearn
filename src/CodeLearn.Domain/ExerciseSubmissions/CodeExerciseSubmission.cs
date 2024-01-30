@@ -4,6 +4,7 @@ public sealed class CodeExerciseSubmission : ExerciseSubmission
 {
     public string StudentCode { get; private set; }
     public string? TestingInformation { get; private set; }
+    public TimeSpan Runtime { get; private set; }
 
     private CodeExerciseSubmission(
         ExerciseSubmissionId id,

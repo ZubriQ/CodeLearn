@@ -11,6 +11,7 @@ public class GetTestByIdQueryHandler(IApplicationDbContext context) : IRequestHa
             .AsNoTracking()
             .Where(t => t.Id == TestId.Create(query.TestId))
             .FirstOrDefaultAsync(cancellationToken);
+
         if (test is null)
         {
             return new NotFound();

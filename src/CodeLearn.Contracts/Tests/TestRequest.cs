@@ -2,5 +2,4 @@
 
 public record TestRequest(
     string Title,
-    string Description,
-    int DurationInMinutes);
+    string Description);

@@ -11,10 +11,5 @@ public class CreateTestCommandValidator : AbstractValidator<CreateTestCommand>
         RuleFor(x => x.Description)
             .NotEmpty()
             .MaximumLength(1000);
-
-        RuleFor(x => x.DurationInMinutes)
-            .NotEmpty()
-            .GreaterThanOrEqualTo(5)
-            .LessThanOrEqualTo(180);
     }
 }

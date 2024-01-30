@@ -6,7 +6,7 @@ public abstract class Exercise(
     string title,
     string description,
     ExerciseDifficulty difficulty)
-    : BaseEntity<ExerciseId>(id), IAggregateRoot // TODO: Auditable
+    : BaseEntity<ExerciseId>(id), IAggregateRoot
 {
     public TestId TestId { get; private set; } = testId;
     public string Title { get; private set; } = title;

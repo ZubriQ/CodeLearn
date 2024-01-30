@@ -1,7 +1,7 @@
-﻿using CodeLearn.Domain.TestingSessions;
+﻿using CodeLearn.Domain.Testings;
+using CodeLearn.Domain.TestingSessions;
 using CodeLearn.Domain.TestingSessions.Enums;
 using CodeLearn.Domain.TestingSessions.ValueObjects;
-using CodeLearn.Domain.Tests;
 
 namespace CodeLearn.Infrastructure.Data.Configurations;
 
@@ -26,9 +26,9 @@ public sealed class TestingSessionConfiguration : IEntityTypeConfiguration<Testi
                 value => TestingSessionId.Create(value));
 
         builder
-            .HasOne<Test>()
+            .HasOne<Testing>()
             .WithMany()
-            .HasForeignKey(ts => ts.TestId)
+            .HasForeignKey(ts => ts.TestingId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 

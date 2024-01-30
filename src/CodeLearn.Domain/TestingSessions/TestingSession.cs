@@ -2,40 +2,43 @@
 
 public sealed class TestingSession : BaseAuditableEntity<TestingSessionId>, IAggregateRoot
 {
-    public TestId TestId { get; private set; } = null!;
-    public int? Score { get; private set; }
+    public TestingId TestingId { get; private set; } = null!;
     public TestingSessionStatus Status { get; private set; }
     public DateTime? StartDateTime { get; private set; }
     public DateTime? FinishDateTime { get; private set; }
+    public int? Score { get; private set; }
 
     private TestingSession() { }
 
     private TestingSession(
         TestingSessionId id,
-        TestId testId,
-        int? score,
+        TestingId testingId,
         TestingSessionStatus status,
         DateTime? startDateTime,
-        DateTime? finishDateTime)
+        DateTime? finishDateTime,
+        int? score)
         : base(id)
     {
-        TestId = testId;
+        TestingId = testingId;
         Score = score;
         Status = status;
         StartDateTime = startDateTime;
         FinishDateTime = finishDateTime;
     }
 
+    /// <summary>
+    /// Used to register for testing.
+    /// </summary>
     public static TestingSession Create(
-        TestId testId)
+        TestingId testingId)
     {
         return new TestingSession(
             TestingSessionId.CreateUnique(),
-            testId,
-            null,
+            testingId,
             TestingSessionStatus.Registered,
             default,
-            default);
+            default,
+            null);
     }
 
     // TODO: StartTesting method

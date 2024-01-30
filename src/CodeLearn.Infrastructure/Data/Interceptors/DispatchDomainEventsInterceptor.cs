@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace CodeLearn.Infrastructure.Data.Interceptors;
+
 public class DispatchDomainEventsInterceptor<TId> : SaveChangesInterceptor
 {
     private readonly IMediator _mediator;
@@ -29,7 +30,10 @@ public class DispatchDomainEventsInterceptor<TId> : SaveChangesInterceptor
 
     public async Task DispatchDomainEvents(DbContext? context)
     {
-        if (context == null) return;
+        if (context == null)
+        {
+            return;
+        }
 
         var entities = context.ChangeTracker
             .Entries<BaseEntity<TId>>()
@@ -43,6 +47,8 @@ public class DispatchDomainEventsInterceptor<TId> : SaveChangesInterceptor
         entities.ToList().ForEach(e => e.ClearDomainEvents());
 
         foreach (var domainEvent in domainEvents)
+        {
             await _mediator.Publish(domainEvent);
+        }
     }
 }
