@@ -1,4 +1,6 @@
 ﻿using CodeLearn.Application.Common.Interfaces;
+using CodeLearn.Domain.Testings.ValueObjects;
+using CodeLearn.Domain.TestingSessions.ValueObjects;
 using CodeLearn.Domain.Tests.ValueObjects;
 using CodeLearn.Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,7 +20,11 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestId>>();
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestingId>>();
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestingSessionId>>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<TestId>>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<TestingId>>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<TestingSessionId>>();
 
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
