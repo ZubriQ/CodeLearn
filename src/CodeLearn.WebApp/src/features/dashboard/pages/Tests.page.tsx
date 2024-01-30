@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { InformationCircleIcon } from '@heroicons/react/16/solid';
 import { Button } from '@/components/ui/button.tsx';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input.tsx';
+import { Label } from '@/components/ui/label.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
-import { Test } from '@/features/teachers/models/Test.ts';
-import TestCards from '@/features/teachers/components/TestCards.tsx';
+import { Test } from '@/features/dashboard/models/Test.ts';
+import TestCards from '@/features/dashboard/components/TestCards.tsx';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx';
 import {
   Dialog,
@@ -16,7 +16,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog.tsx';
-import { useDashboardPageTitle } from '@/components/dashboard-layout';
+import { useDashboardPageTitle } from '@/components/layout';
 
 const tests: Test[] = [
   {

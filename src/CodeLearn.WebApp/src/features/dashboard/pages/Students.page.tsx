@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDashboardPageTitle } from '@/components/dashboard-layout';
+import { useDashboardPageTitle } from '@/components/layout';
 
 function StudentsPage() {
   const [, setCurrentPageTitle] = useDashboardPageTitle();

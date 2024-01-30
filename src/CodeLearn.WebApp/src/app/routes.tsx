@@ -1,23 +1,23 @@
 import { lazy, Suspense } from 'react';
 import { Navigate, type RouteObject } from 'react-router-dom';
 
-// Landing
+// For Landing & etc.
 const HomePage = lazy(() => import('@/features/home/pages/Home.page.tsx'));
 const NotFoundPage = lazy(() => import('@/features/errors/pages/404.page.tsx'));
 const SignInPage = lazy(() => import('@/features/users/pages/SignIn.page.tsx'));
 const SignUpPage = lazy(() => import('@/features/users/pages/SignUp.page.tsx'));
 const TestingSessionPage = lazy(() => import('@/features/testing-sessions/pages/TestingSession.page.tsx'));
 
-// Teacher
-const TeacherDashboardLayout = lazy(() => import('@/features/teachers/layout/'));
-const TeacherTestsPage = lazy(() => import('@/features/teachers/pages/Tests.page.tsx'));
-const StudentGroupsPage = lazy(() => import('@/features/teachers/pages/StudentGroups.page.tsx'));
-const StudentsPage = lazy(() => import('@/features/teachers/pages/Students.page.tsx'));
-const TestingResultsPage = lazy(() => import('@/features/teachers/pages/TestingResults.page.tsx'));
+// For Teachers & Administrator
+const DashboardLayout = lazy(() => import('@/features/dashboard/layout/'));
+const TeacherTestsPage = lazy(() => import('@/features/dashboard/pages/Tests.page.tsx'));
+const StudentGroupsPage = lazy(() => import('@/features/dashboard/pages/StudentGroups.page.tsx'));
+const StudentsPage = lazy(() => import('@/features/dashboard/pages/Students.page.tsx'));
+const TestingResultsPage = lazy(() => import('@/features/dashboard/pages/TestingResults.page.tsx'));
 
-// Student
-const StudentDashboardLayout = lazy(() => import('@/features/students/layout/'));
-const StudentTestsPage = lazy(() => import('@/features/students/pages/Tests.page.tsx'));
+// For Students
+const CurriculumLayout = lazy(() => import('@/features/curriculum/layout/'));
+const StudentTestsPage = lazy(() => import('@/features/curriculum/pages/Tests.page.tsx'));
 
 export const routes: RouteObject[] = [
   {
@@ -53,10 +53,10 @@ export const routes: RouteObject[] = [
     ),
   },
   {
-    path: 'teacher-dashboard',
+    path: 'dashboard',
     element: (
       <Suspense>
-        <TeacherDashboardLayout />
+        <DashboardLayout />
       </Suspense>
     ),
     children: [
@@ -99,10 +99,10 @@ export const routes: RouteObject[] = [
     ],
   },
   {
-    path: 'student-dashboard',
+    path: 'curriculum',
     element: (
       <Suspense>
-        <StudentDashboardLayout />
+        <CurriculumLayout />
       </Suspense>
     ),
     children: [

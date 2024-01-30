@@ -1,9 +1,9 @@
-import { Test } from '@/features/teachers/models/Test.ts';
+import { Test } from '@/features/dashboard/models/Test.ts';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { ListBulletIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx';
-import NoItemsCard from '@/features/teachers/components/NoItemsCard.tsx';
+import NoItemsCard from '@/features/dashboard/components/NoItemsCard.tsx';
 
 type TestCardsProps = {
   tests: Test[];
@@ -25,7 +25,7 @@ function TestCards(props: TestCardsProps) {
                 <CardDescription>{test.description}</CardDescription>
               </CardHeader>
               <CardFooter className="flex justify-between gap-4">
-                <Button>Start testing</Button>
+                <Button>Test a group</Button>
 
                 <div className="flex gap-4">
                   <TooltipProvider>

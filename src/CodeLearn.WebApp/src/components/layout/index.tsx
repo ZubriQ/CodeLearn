@@ -1,22 +1,23 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
-import SideMenuTitle from '@/components/dashboard-layout/SideMenuTitle.tsx';
-import SideMenu from '@/components/dashboard-layout/SideMenu.tsx';
-import { SideMenuLinkGroup } from '@/components/dashboard-layout/models/SideMenuLinkGroup.ts';
-import DashboardHeader from '@/components/dashboard-header';
-import { DashboardPageTitle } from '@/components/dashboard-layout/models/DashboardPageTitle.ts';
+import SideMenuTitle from '@/components/layout/SideMenuTitle.tsx';
+import SideMenu from '@/components/layout/SideMenu.tsx';
+import { SideMenuLinkGroup } from '@/components/layout/models/SideMenuLinkGroup.ts';
+import DashboardHeader from '@/components/layout-header';
+import { NavigationTitle } from '@/components/layout/models/NavigationTitle.ts';
 
 const headerStyle = {
   height: '100vh',
   maxHeight: '100vh',
 };
 
-type DashboardLayoutProps = {
+type LayoutProps = {
   sections: SideMenuLinkGroup[];
+  sectionsTitle: string;
 };
 
-function DashboardLayout(props: DashboardLayoutProps) {
-  const [currentPageTitle, setCurrentPageTitle] = useState<DashboardPageTitle>('Tests');
+function Layout(props: LayoutProps) {
+  const [currentPageTitle, setCurrentPageTitle] = useState<NavigationTitle>('Tests');
 
   useEffect(() => {
     document.body.className += 'overflow-hidden';
@@ -32,7 +33,7 @@ function DashboardLayout(props: DashboardLayoutProps) {
         className="bg-background hide-scrollbar border-default h-full w-64 overflow-auto border-r"
         style={headerStyle}
       >
-        <SideMenuTitle />
+        <SideMenuTitle name={props.sectionsTitle} />
         <SideMenu sections={props.sections} />
       </div>
 
@@ -49,8 +50,8 @@ function DashboardLayout(props: DashboardLayoutProps) {
   );
 }
 
-export default DashboardLayout;
+export default Layout;
 
 export function useDashboardPageTitle() {
-  return useOutletContext<[DashboardPageTitle, React.Dispatch<React.SetStateAction<DashboardPageTitle>>]>();
+  return useOutletContext<[NavigationTitle, React.Dispatch<React.SetStateAction<NavigationTitle>>]>();
 }
