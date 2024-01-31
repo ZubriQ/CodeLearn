@@ -1,9 +1,9 @@
 export type NavigationTitle =
-  | 'Exercise topics'
+  | 'Exercise Topics'
   | 'Tests'
   | 'Tests / Exercises'
   | 'Tests / Testings'
-  | 'Student groups'
+  | 'Testing Sessions'
+  | 'Student Groups'
   | 'Students'
-  | 'Teachers'
-  | 'Testing sessions';
+  | 'Teachers';
