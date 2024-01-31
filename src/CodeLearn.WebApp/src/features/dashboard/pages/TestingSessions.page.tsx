@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useDashboardPageTitle } from '@/components/layout';
 
-function TestingResultsPage() {
+function TestingSessionsPage() {
   const [, setCurrentPageTitle] = useDashboardPageTitle();
 
   useEffect(() => {
-    setCurrentPageTitle('Testing results');
+    setCurrentPageTitle('Testing Sessions');
   }, []);
 
   return <div>TestingResultsPage</div>;
 }
 
-export default TestingResultsPage;
+export default TestingSessionsPage;

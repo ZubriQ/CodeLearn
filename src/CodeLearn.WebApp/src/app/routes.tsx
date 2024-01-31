@@ -13,7 +13,7 @@ const DashboardLayout = lazy(() => import('@/features/dashboard/layout/'));
 const TeacherTestsPage = lazy(() => import('@/features/dashboard/pages/Tests.page.tsx'));
 const StudentGroupsPage = lazy(() => import('@/features/dashboard/pages/StudentGroups.page.tsx'));
 const StudentsPage = lazy(() => import('@/features/dashboard/pages/Students.page.tsx'));
-const TestingResultsPage = lazy(() => import('@/features/dashboard/pages/TestingResults.page.tsx'));
+const TestingSessionsPage = lazy(() => import('@/features/dashboard/pages/TestingSessions.page.tsx'));
 
 // For Students
 const CurriculumLayout = lazy(() => import('@/features/curriculum/layout/'));
@@ -92,7 +92,7 @@ export const routes: RouteObject[] = [
         path: 'testing-results',
         element: (
           <Suspense>
-            <TestingResultsPage />
+            <TestingSessionsPage />
           </Suspense>
         ),
       },
