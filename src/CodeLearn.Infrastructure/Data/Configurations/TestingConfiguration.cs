@@ -48,7 +48,7 @@ public sealed class TestingConfiguration : IEntityTypeConfiguration<Testing>
             .IsRequired();
 
         builder
-            .Property(t => t.Duration)
+            .Property(t => t.DurationInMinutes)
             .IsRequired();
     }
 }

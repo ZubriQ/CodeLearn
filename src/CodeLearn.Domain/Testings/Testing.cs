@@ -6,7 +6,7 @@ public sealed class Testing : BaseAuditableEntity<TestingId>, IAggregateRoot
     public StudentGroupId StudentGroupId { get; private set; } = null!;
     public DateTime StartDateTime { get; private set; }
     public DateTime EndDateTime { get; private set; }
-    public TimeSpan Duration { get; private set; }
+    public int DurationInMinutes { get; private set; }
 
     private Testing() { }
 
@@ -16,23 +16,23 @@ public sealed class Testing : BaseAuditableEntity<TestingId>, IAggregateRoot
         StudentGroupId studentGroupId,
         DateTime startDateTime,
         DateTime endDateTime,
-        TimeSpan duration)
+        int durationInMinutes)
         : base(id)
     {
         TestId = testId;
         StudentGroupId = studentGroupId;
         StartDateTime = startDateTime;
         EndDateTime = endDateTime;
-        Duration = duration;
+        DurationInMinutes = durationInMinutes;
     }
 
     public static Testing Create(
         TestId testId,
         StudentGroupId studentGroupId,
         DateTime startDateTime,
-        TimeSpan duration)
+        int durationInMinutes)
     {
-        var endDateTime = startDateTime.Add(duration);
+        var endDateTime = startDateTime.AddMinutes(durationInMinutes);
 
         return new Testing(
             TestingId.CreateUnique(),
@@ -40,6 +40,6 @@ public sealed class Testing : BaseAuditableEntity<TestingId>, IAggregateRoot
             studentGroupId,
             startDateTime,
             endDateTime,
-            duration);
+            durationInMinutes);
     }
 }
