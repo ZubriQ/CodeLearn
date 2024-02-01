@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDashboardPageTitle } from '@/components/layout';
 import { StudentGroup } from '@/features/dashboard/models/StudentGroup.ts';
 import { columns } from '../columns/StudentGroups.columns.tsx';
-import { DataTable } from '@/features/dashboard/pages/StudentGroups.data-table.tsx';
+import { DataTable } from '@/components/ui/data-table.tsx';
 
 const studentGroups: StudentGroup[] = [
   {
