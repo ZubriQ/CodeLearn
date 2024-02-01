@@ -17,10 +17,10 @@ import { useState } from 'react';
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  filterName: string;
+  filterBy: string;
 }
 
-export function DataTable<TData, TValue>({ columns, data, filterName }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, filterBy }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
@@ -40,8 +40,8 @@ export function DataTable<TData, TValue>({ columns, data, filterName }: DataTabl
       <div className="flex items-center py-4">
         <Input
           placeholder="Search..."
-          value={(table.getColumn(filterName)?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn(filterName)?.setFilterValue(event.target.value)}
+          value={(table.getColumn(filterBy)?.getFilterValue() as string) ?? ''}
+          onChange={(event) => table.getColumn(filterBy)?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
       </div>
