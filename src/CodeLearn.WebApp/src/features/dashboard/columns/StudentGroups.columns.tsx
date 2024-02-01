@@ -13,21 +13,21 @@ import { MoreHorizontal } from 'lucide-react';
 
 export const columns: ColumnDef<StudentGroup>[] = [
   {
-    accessorKey: 'enrolmentYear',
-    header: 'Enrolment',
-    cell: ({ row }) => {
-      const studentGroup = row.original;
-
-      return <p className="font-medium text-zinc-800">{studentGroup.enrolmentYear}</p>;
-    },
-  },
-  {
     accessorKey: 'name',
     header: 'Name',
     cell: ({ row }) => {
       const studentGroup = row.original;
 
       return <p className="text-zinc-700">{studentGroup.name}</p>;
+    },
+  },
+  {
+    accessorKey: 'enrolmentYear',
+    header: 'Enrolment',
+    cell: ({ row }) => {
+      const studentGroup = row.original;
+
+      return <p className="font-medium text-zinc-800">{studentGroup.enrolmentYear}</p>;
     },
   },
   {
