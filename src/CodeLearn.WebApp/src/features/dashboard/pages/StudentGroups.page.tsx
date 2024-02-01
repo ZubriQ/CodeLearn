@@ -132,7 +132,7 @@ function StudentGroupsPage() {
         Import a list
       </Button>
 
-      <DataTable columns={columns} data={studentGroups} />
+      <DataTable columns={columns} data={studentGroups} filterName="name" />
     </div>
   );
 }
