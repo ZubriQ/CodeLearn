@@ -84,7 +84,7 @@ function StudentGroupsPage() {
   }, []);
 
   return (
-    <div className="mx-auto whitespace-nowrap py-4 lg:px-11 xl:px-24">
+    <div className="mx-auto whitespace-nowrap lg:px-11 xl:px-24">
       <Dialog>
         <DialogTrigger asChild>
           <Button className="mb-6">Add new group</Button>

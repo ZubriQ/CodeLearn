@@ -8,7 +8,8 @@ const sections: SideMenuLinkGroup[] = [
     title: 'Test Builder',
     links: [
       { name: 'Tests', href: '/dashboard/tests', id: 1 },
-      { name: 'Exercise Topics', href: '/dashboard/exercise-topics', id: 2 },
+      { name: 'Testings', href: '/dashboard/testings', id: 2 },
+      { name: 'Exercise Topics', href: '/dashboard/exercise-topics', id: 3 },
     ],
   },
   {
