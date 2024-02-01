@@ -28,7 +28,6 @@ const sections: SideMenuLinkGroup[] = [
       { name: 'Teachers ', href: '/dashboard/teachers', id: 3 },
     ],
   },
-
   {
     id: 4,
     links: [{ name: 'Logout', href: '/sign-out', id: 5, icon: <ArrowLeftStartOnRectangleIcon /> }],
