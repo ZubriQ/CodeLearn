@@ -12,11 +12,10 @@ public sealed class Test : BaseAuditableEntity<TestId>, IAggregateRoot
     private Test() { }
 
     private Test(
-        TestId testId,
         string title,
         string description,
         bool isPublic)
-        : base(testId)
+        : base(default!)
     {
         Title = title;
         Description = description;
@@ -28,7 +27,6 @@ public sealed class Test : BaseAuditableEntity<TestId>, IAggregateRoot
         string description)
     {
         return new Test(
-            TestId.CreateUnique(),
             title,
             description,
             true);

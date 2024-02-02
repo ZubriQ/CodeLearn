@@ -5,8 +5,8 @@ public sealed class StudentGroup : BaseAuditableEntity<StudentGroupId>, IAggrega
     public string Name { get; private set; }
     public int EnrolmentYear { get; private set; }
     
-    private StudentGroup(StudentGroupId id, string name, int enrolmentYear)
-        : base(id)
+    private StudentGroup(string name, int enrolmentYear)
+        : base(default!)
     {
         Name = name;
         EnrolmentYear = enrolmentYear;
@@ -15,7 +15,6 @@ public sealed class StudentGroup : BaseAuditableEntity<StudentGroupId>, IAggrega
     public static StudentGroup Create(string name, int enrolmentYear)
     {
         return new StudentGroup(
-            StudentGroupId.CreateUnique(),
             name,
             enrolmentYear);
     }

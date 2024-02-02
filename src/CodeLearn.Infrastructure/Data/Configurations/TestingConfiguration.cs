@@ -20,7 +20,7 @@ public sealed class TestingConfiguration : IEntityTypeConfiguration<Testing>
 
         builder
             .Property(t => t.Id)
-            .ValueGeneratedNever()
+            .ValueGeneratedOnAdd()
             .HasConversion(
                 id => id.Value,
                 value => TestingId.Create(value));

@@ -18,7 +18,7 @@ public sealed class StudentGroupConfiguration : IEntityTypeConfiguration<Student
 
         builder
             .Property(sg => sg.Id)
-            .ValueGeneratedNever()
+            .ValueGeneratedOnAdd()
             .HasConversion(
                 groupId => groupId.Value,
                 value => StudentGroupId.Create(value));

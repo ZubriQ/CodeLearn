@@ -1,17 +1,12 @@
 ﻿namespace CodeLearn.Domain.StudentGroups.ValueObjects;
 
-public sealed class StudentGroupId(Guid value) : ValueObject
+public sealed class StudentGroupId(int value) : ValueObject
 {
-    public Guid Value { get; } = value;
+    public int Value { get; } = value;
 
-    public static StudentGroupId Create(Guid value)
+    public static StudentGroupId Create(int value)
     {
         return new StudentGroupId(value);
-    }
-
-    public static StudentGroupId CreateUnique()
-    {
-        return new StudentGroupId(Guid.NewGuid());
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

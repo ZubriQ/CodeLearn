@@ -9,13 +9,12 @@ public sealed class Testing : BaseAuditableEntity<TestingId>, IAggregateRoot
     public int DurationInMinutes { get; private set; }
     
     private Testing(
-        TestingId id,
         TestId testId,
         StudentGroupId studentGroupId,
         DateTime startDateTime,
         DateTime endDateTime,
         int durationInMinutes)
-        : base(id)
+        : base(default!)
     {
         TestId = testId;
         StudentGroupId = studentGroupId;
@@ -33,7 +32,6 @@ public sealed class Testing : BaseAuditableEntity<TestingId>, IAggregateRoot
         var endDateTime = startDateTime.AddMinutes(durationInMinutes);
 
         return new Testing(
-            TestingId.CreateUnique(),
             testId,
             studentGroupId,
             startDateTime,
