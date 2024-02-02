@@ -2,12 +2,10 @@
 
 public sealed class ExerciseTopic : BaseAuditableEntity<ExerciseTopicId>, IAggregateRoot
 {
-    public string Name { get; private set; } = null!;
+    public string Name { get; private set; }
 
     private readonly IList<Exercise> _exercises = [];
     public IReadOnlyList<Exercise> Exercises => _exercises.AsReadOnly();
-
-    private ExerciseTopic() { }
 
     private ExerciseTopic(string name)
         : base(default!)

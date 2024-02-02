@@ -2,11 +2,9 @@
 
 public sealed class StudentGroup : BaseAuditableEntity<StudentGroupId>, IAggregateRoot
 {
-    public string Name { get; private set; } = null!;
+    public string Name { get; private set; }
     public int EnrolmentYear { get; private set; }
-
-    private StudentGroup() { }
-
+    
     private StudentGroup(StudentGroupId id, string name, int enrolmentYear)
         : base(id)
     {

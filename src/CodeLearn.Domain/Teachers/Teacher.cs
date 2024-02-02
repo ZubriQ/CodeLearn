@@ -2,11 +2,9 @@
 
 public sealed class Teacher : BaseEntity<TeacherId>, IAggregateRoot
 {
-    public string FirstName { get; private set; } = null!;
-    public string LastName { get; private set; } = null!;
+    public string FirstName { get; private set; }
+    public string LastName { get; private set; }
     public string? Patronymic { get; private set; }
-
-    private Teacher() { }
 
     private Teacher(
         TeacherId id,
