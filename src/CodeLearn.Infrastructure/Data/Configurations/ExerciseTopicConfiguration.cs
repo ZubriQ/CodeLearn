@@ -18,7 +18,7 @@ public sealed class ExerciseTopicConfiguration : IEntityTypeConfiguration<Exerci
 
         builder
             .Property(e => e.Id)
-            .ValueGeneratedNever()
+            .ValueGeneratedOnAdd()
             .HasConversion(
                 topicId => topicId.Value,
                 idValue => ExerciseTopicId.Create(idValue));
@@ -27,5 +27,7 @@ public sealed class ExerciseTopicConfiguration : IEntityTypeConfiguration<Exerci
             .Property(et => et.Name)
             .HasMaxLength(30)
             .IsRequired();
+
+        builder.HasIndex(e => e.Name);
     }
 }

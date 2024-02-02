@@ -9,15 +9,15 @@ public sealed class ExerciseTopic : BaseAuditableEntity<ExerciseTopicId>, IAggre
 
     private ExerciseTopic() { }
 
-    private ExerciseTopic(ExerciseTopicId exerciseTopicId, string name)
-        : base(exerciseTopicId)
+    private ExerciseTopic(string name)
+        : base(default!)
     {
         Name = name;
     }
 
     public static ExerciseTopic Create(string name)
     {
-        return new ExerciseTopic(ExerciseTopicId.CreateUnique(), name);
+        return new ExerciseTopic(name);
     }
 
     internal void AddExercise(Exercise exercise)
