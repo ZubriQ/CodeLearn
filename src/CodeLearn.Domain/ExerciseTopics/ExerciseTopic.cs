@@ -1,6 +1,6 @@
 ﻿namespace CodeLearn.Domain.ExerciseTopics;
 
-public sealed class ExerciseTopic : BaseEntity<ExerciseTopicId>, IAggregateRoot
+public sealed class ExerciseTopic : BaseAuditableEntity<ExerciseTopicId>, IAggregateRoot
 {
     public string Name { get; private set; } = null!;
 
