@@ -6,10 +6,9 @@ public sealed class ChoiceExerciseSubmission : ExerciseSubmission
     public IReadOnlyList<QuestionChoice> Choices => _choices.ToList();
 
     private ChoiceExerciseSubmission(
-        ExerciseSubmissionId id,
         ExerciseId exerciseId,
         TestingSessionId testingSessionId,
         DateTime sentDateTime,
         SubmissionTestStatus status)
-        : base(id, exerciseId, testingSessionId, sentDateTime, status) { }
+        : base(exerciseId, testingSessionId, sentDateTime, status) { }
 }

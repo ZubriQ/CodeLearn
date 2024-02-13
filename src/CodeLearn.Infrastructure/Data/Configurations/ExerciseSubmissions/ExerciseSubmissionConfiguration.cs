@@ -21,7 +21,7 @@ public sealed class ExerciseSubmissionConfiguration : IEntityTypeConfiguration<E
 
         builder
             .Property(s => s.Id)
-            .ValueGeneratedNever()
+            .ValueGeneratedOnAdd()
             .HasConversion(
                 sId => sId.Value,
                 id => ExerciseSubmissionId.Create(id));

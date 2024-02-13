@@ -1,17 +1,12 @@
 namespace CodeLearn.Domain.Exercises.ValueObjects;
 
-public sealed class DataTypeId(Guid value) : ValueObject
+public sealed class DataTypeId(int value) : ValueObject
 {
-    public Guid Value { get; } = value;
+    public int Value { get; } = value;
 
-    public static DataTypeId Create(Guid value)
+    public static DataTypeId Create(int value)
     {
         return new DataTypeId(value);
-    }
-
-    public static DataTypeId CreateUnique()
-    {
-        return new DataTypeId(Guid.NewGuid());
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

@@ -19,5 +19,7 @@ public sealed class CodeExerciseSubmissionConfiguration : IEntityTypeConfigurati
         builder
             .Property(s => s.TestingInformation)
             .HasMaxLength(200);
+
+        builder.Property(e => e.RuntimeInMilliseconds);
     }
 }

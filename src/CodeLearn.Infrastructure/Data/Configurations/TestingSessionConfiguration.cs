@@ -20,7 +20,7 @@ public sealed class TestingSessionConfiguration : IEntityTypeConfiguration<Testi
 
         builder
             .Property(sg => sg.Id)
-            .ValueGeneratedNever()
+            .ValueGeneratedOnAdd()
             .HasConversion(
                 groupId => groupId.Value,
                 value => TestingSessionId.Create(value));

@@ -5,9 +5,9 @@ namespace CodeLearn.Application.Tests.Commands.CreateTest;
 public class CreateTestCommandHandler(
     IApplicationDbContext context,
     IValidator<CreateTestCommand> validator)
-    : IRequestHandler<CreateTestCommand, OneOf<Guid, ValidationFailed>>
+    : IRequestHandler<CreateTestCommand, OneOf<int, ValidationFailed>>
 {
-    public async Task<OneOf<Guid, ValidationFailed>> Handle(CreateTestCommand request, CancellationToken cancellationToken)
+    public async Task<OneOf<int, ValidationFailed>> Handle(CreateTestCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)

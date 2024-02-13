@@ -1,17 +1,12 @@
 ﻿namespace CodeLearn.Domain.TestingSessions.ValueObjects;
 
-public sealed class TestingSessionId(Guid value) : ValueObject
+public sealed class TestingSessionId(int value) : ValueObject
 {
-    public Guid Value { get; } = value;
+    public int Value { get; } = value;
 
-    public static TestingSessionId Create(Guid value)
+    public static TestingSessionId Create(int value)
     {
         return new TestingSessionId(value);
-    }
-
-    public static TestingSessionId CreateUnique()
-    {
-        return new TestingSessionId(Guid.NewGuid());
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

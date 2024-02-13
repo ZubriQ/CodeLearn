@@ -9,13 +9,12 @@ public sealed class TestingSession : BaseAuditableEntity<TestingSessionId>, IAgg
     public int? Score { get; private set; }
 
     private TestingSession(
-        TestingSessionId id,
         TestingId testingId,
         TestingSessionStatus status,
         DateTime? startDateTime,
         DateTime? finishDateTime,
         int? score)
-        : base(id)
+        : base(default!)
     {
         TestingId = testingId;
         Score = score;
@@ -31,7 +30,6 @@ public sealed class TestingSession : BaseAuditableEntity<TestingSessionId>, IAgg
         TestingId testingId)
     {
         return new TestingSession(
-            TestingSessionId.CreateUnique(),
             testingId,
             TestingSessionStatus.Registered,
             default,

@@ -18,7 +18,7 @@ public sealed class QuestionChoiceConfiguration : IEntityTypeConfiguration<Quest
 
         builder
             .Property(t => t.Id)
-            .ValueGeneratedNever()
+            .ValueGeneratedOnAdd()
             .HasConversion(
                 choiceId => choiceId.Value,
                 value => QuestionChoiceId.Create(value));

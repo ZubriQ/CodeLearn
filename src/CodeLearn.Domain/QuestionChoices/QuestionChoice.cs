@@ -11,12 +11,11 @@ public sealed class QuestionChoice : BaseEntity<QuestionChoiceId>, IAggregateRoo
     public IReadOnlyList<ChoiceExerciseSubmission> ExerciseSubmissions => _exerciseSubmissions.AsReadOnly();
 
     private QuestionChoice(
-        QuestionChoiceId id,
         ExerciseId exerciseId,
         string text,
         bool isCorrect,
         string? explanation)
-        : base(id)
+        : base(default!)
     {
         ExerciseId = exerciseId;
         Text = text;
@@ -31,7 +30,6 @@ public sealed class QuestionChoice : BaseEntity<QuestionChoiceId>, IAggregateRoo
         string? explanation = null)
     {
         return new QuestionChoice(
-            QuestionChoiceId.CreateUnique(),
             exerciseId,
             text,
             isCorrect,

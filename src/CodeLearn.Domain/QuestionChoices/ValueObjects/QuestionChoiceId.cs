@@ -1,17 +1,12 @@
 ﻿namespace CodeLearn.Domain.QuestionChoices.ValueObjects;
 
-public sealed class QuestionChoiceId(Guid value) : ValueObject
+public sealed class QuestionChoiceId(int value) : ValueObject
 {
-    public Guid Value { get; } = value;
+    public int Value { get; } = value;
 
-    public static QuestionChoiceId Create(Guid value)
+    public static QuestionChoiceId Create(int value)
     {
         return new QuestionChoiceId(value);
-    }
-
-    public static QuestionChoiceId CreateUnique()
-    {
-        return new QuestionChoiceId(Guid.NewGuid());
     }
 
     protected override IEnumerable<object> GetEqualityComponents()
