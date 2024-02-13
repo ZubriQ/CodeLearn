@@ -20,6 +20,13 @@ if (app.Environment.IsDevelopment())
     await app.InitialiseDatabaseAsync();
 }
 
+app.UseCors(options =>
+{
+    options
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .WithOrigins("http://localhost:5173");
+});
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
