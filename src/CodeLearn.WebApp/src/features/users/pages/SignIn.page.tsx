@@ -1,6 +1,16 @@
 import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '@/app/hooks.ts';
+import { loginPending, loginSuccess, loginFailure } from '@/features/users/auth-slice.ts';
+import { AuthState } from '@/features/users/models/AuthState.ts';
 
 function SignInPage() {
+  const authState: AuthState = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
+  function handleLogin() {
+    dispatch(); // TODO: fix
+  }
+
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -60,6 +70,7 @@ function SignInPage() {
             <button
               type="submit"
               className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+              onClick={}
             >
               Sign In
             </button>
