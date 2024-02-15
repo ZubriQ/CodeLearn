@@ -18,7 +18,7 @@ export const columns: ColumnDef<StudentGroup>[] = [
     cell: ({ row }) => {
       const studentGroup = row.original;
 
-      return <p className="text-zinc-700">{studentGroup.name}</p>;
+      return <p className="font-medium text-zinc-700">{studentGroup.name}</p>;
     },
   },
   {
@@ -27,7 +27,7 @@ export const columns: ColumnDef<StudentGroup>[] = [
     cell: ({ row }) => {
       const studentGroup = row.original;
 
-      return <p className="font-medium text-zinc-800">{studentGroup.enrolmentYear}</p>;
+      return <p className="text-zinc-800">{studentGroup.enrolmentYear}</p>;
     },
   },
   {

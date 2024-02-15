@@ -67,7 +67,7 @@ function StudentGroupsPage() {
                   </Tooltip>
                 </TooltipProvider>
               </Label>
-              <Input type="number" id="enrolmentYear" className="col-span-3" min={2018} max={2100} step={1} />
+              <Input type="number" id="enrolmentYear" className="col-span-3" min={2020} max={2100} step={1} />
             </div>
           </div>
           <DialogFooter>
