@@ -17,18 +17,33 @@ import { Button } from '@/components/ui/button.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx';
+import { useToast } from '@/components/ui/use-toast.ts';
 import agent from '@/api/agent.ts';
+import Loading from '@/components/loading';
 
 function StudentGroupsPage() {
   const [, setCurrentPageTitle] = useDashboardPageTitle();
   const [studentGroups, setStudentGroups] = useState<StudentGroup[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     setCurrentPageTitle('Student Groups');
-  }, []);
 
-  useEffect(() => {
-    agent.StudentGroup.list().then((groups) => setStudentGroups(groups));
+    setIsLoading(true);
+    agent.StudentGroup.list()
+      .then((groups) => {
+        setStudentGroups(groups);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        toast({
+          title: 'Error fetching student groups',
+          description: err.message || 'An unexpected error occurred.',
+          variant: 'destructive',
+        });
+        setIsLoading(false);
+      });
   }, []);
 
   return (
@@ -80,7 +95,7 @@ function StudentGroupsPage() {
         Import a list
       </Button>
 
-      <DataTable columns={columns} data={studentGroups} filterBy="name" />
+      {isLoading ? <Loading /> : <DataTable columns={columns} data={studentGroups} filterBy="name" />}
     </div>
   );
 }
