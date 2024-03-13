@@ -2,9 +2,7 @@
 
 namespace CodeLearn.Application.StudentGroups.Commands.CreateStudentGroup;
 
-public record CreateStudentGroupCommand(
-    string Name,
-    int EnrolmentYear)
+public record CreateStudentGroupCommand(string Name, int EnrolmentYear)
     : IRequest<OneOf<int, ValidationFailed>>;
 
 public class CreateStudentGroupCommandHandler(

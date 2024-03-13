@@ -1,5 +1,6 @@
 ﻿using CodeLearn.Application.StudentGroups.Commands.CreateStudentGroup;
 using CodeLearn.Application.StudentGroups.Commands.DeleteStudentGroup;
+using CodeLearn.Application.StudentGroups.Commands.UpdateStudentGroup;
 using CodeLearn.Application.StudentGroups.Queries.GetAllStudentGroups;
 using CodeLearn.Contracts.StudentGroups;
 
@@ -40,5 +41,20 @@ public class StudentGroupsController(ISender sender, IMapper mapper) : ApiContro
         return result.Match(
             success => Ok(success),
             _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Student group not found."));
+    }
+
+    [HttpPut("{studentGroupId:int}")]
+    [ProducesResponseType(typeof(Success), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Update(int studentGroupId, StudentGroupRequest request)
+    {
+        var command = mapper.Map<UpdateStudentGroupCommand>((studentGroupId, request));
+        var result = await sender.Send(command);
+
+        return result.Match(
+            success => Ok(success),
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Student group not found."),
+            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Invalid request."));
     }
 }

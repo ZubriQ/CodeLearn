@@ -18,4 +18,22 @@ public sealed class StudentGroup : BaseAuditableEntity<StudentGroupId>, IAggrega
             name,
             enrolmentYear);
     }
+
+    public Result UpdateDetails(string name, int enrolmentYear)
+    {
+        if (string.IsNullOrEmpty(name) || name.Length > 50)
+        {
+            return Result.Failure(DomainErrors.StudentGroup.InvalidNameLength);
+        }
+
+        if (enrolmentYear < 2020 || enrolmentYear > 2100)
+        {
+            return Result.Failure(DomainErrors.StudentGroup.InvalidEnrolmentYear);
+        }
+
+        Name = name;
+        EnrolmentYear = enrolmentYear;
+
+        return Result.Success();
+    }
 }

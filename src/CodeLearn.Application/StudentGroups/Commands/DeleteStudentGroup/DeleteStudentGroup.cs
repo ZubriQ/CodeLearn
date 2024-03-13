@@ -10,8 +10,7 @@ public class DeleteStudentGroupCommandHandler(IApplicationDbContext context)
     public async Task<OneOf<Success, NotFound>> Handle(DeleteStudentGroupCommand request, CancellationToken cancellationToken)
     {
         var studentGroup = await context.StudentGroups
-            .Where(t => t.Id == StudentGroupId.Create(request.Id))
-            .FirstOrDefaultAsync(cancellationToken);
+            .FirstOrDefaultAsync(t => t.Id == StudentGroupId.Create(request.Id),cancellationToken);
 
         if (studentGroup is null)
         {
