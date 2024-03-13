@@ -2,16 +2,16 @@
 
 namespace CodeLearn.Application.StudentGroups.Queries.GetAllStudentGroups;
 
-public record GetAllStudentGroups : IRequest<StudentGroup[]>;
+public record GetAllStudentGroupsCommand : IRequest<StudentGroup[]>;
 
 public class GetAllStudentGroupsQueryHandler(IApplicationDbContext context)
-    : IRequestHandler<GetAllStudentGroups, StudentGroup[]>
+    : IRequestHandler<GetAllStudentGroupsCommand, StudentGroup[]>
 {
-    public async Task<StudentGroup[]> Handle(GetAllStudentGroups request, CancellationToken cancellationToken)
+    public async Task<StudentGroup[]> Handle(GetAllStudentGroupsCommand request, CancellationToken cancellationToken)
     {
         var studentGroups = await context.StudentGroups
             .AsNoTracking()
-            .ToArrayAsync();
+            .ToArrayAsync(cancellationToken);
 
         return studentGroups.Length == 0 ? [] : studentGroups;
     }
