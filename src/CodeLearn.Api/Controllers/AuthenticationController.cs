@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace CodeLearn.Api.Controllers;
 
 [AllowAnonymous]
+[Route("api/auth")]
 public sealed class AuthenticationController : ApiControllerBase
 {
     private readonly IIdentityService _identityService;
