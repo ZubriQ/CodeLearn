@@ -7,7 +7,7 @@ using CodeLearn.Contracts.StudentGroups;
 
 namespace CodeLearn.Api.Controllers;
 
-public class StudentGroupsController(ISender sender, IMapper mapper) : ApiControllerBase
+public sealed class StudentGroupsController(ISender sender, IMapper mapper) : ApiControllerBase
 {
     [HttpGet("{studentGroupId:int}")]
     [ProducesResponseType(typeof(StudentGroupResponse), StatusCodes.Status200OK)]
