@@ -10,6 +10,7 @@ public class CreateTestCommandHandler(
     public async Task<OneOf<int, ValidationFailed>> Handle(CreateTestCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
         if (!validationResult.IsValid)
         {
             return new ValidationFailed(validationResult.Errors);

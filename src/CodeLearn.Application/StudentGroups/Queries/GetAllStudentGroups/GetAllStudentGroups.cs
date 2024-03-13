@@ -2,10 +2,12 @@
 
 namespace CodeLearn.Application.StudentGroups.Queries.GetAllStudentGroups;
 
+public record GetAllStudentGroups : IRequest<StudentGroup[]>;
+
 public class GetAllStudentGroupsQueryHandler(IApplicationDbContext context)
-    : IRequestHandler<GetAllStudentGroupsQuery, StudentGroup[]>
+    : IRequestHandler<GetAllStudentGroups, StudentGroup[]>
 {
-    public async Task<StudentGroup[]> Handle(GetAllStudentGroupsQuery request, CancellationToken cancellationToken)
+    public async Task<StudentGroup[]> Handle(GetAllStudentGroups request, CancellationToken cancellationToken)
     {
         var studentGroups = await context.StudentGroups
             .AsNoTracking()
