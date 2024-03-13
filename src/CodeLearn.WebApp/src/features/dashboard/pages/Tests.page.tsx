@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { InformationCircleIcon } from '@heroicons/react/16/solid';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
@@ -17,102 +17,27 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog.tsx';
 import { useDashboardPageTitle } from '@/components/layout';
-
-const tests: Test[] = [
-  {
-    id: 1,
-    teacherId: 1,
-    title: 'Title1',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius.',
-    durationInMinutes: 50,
-    createdDateTime: new Date(),
-    modifiedDateTime: new Date(),
-  },
-  {
-    id: 2,
-    teacherId: 1,
-    title: 'Title2',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius.',
-    durationInMinutes: 40,
-    createdDateTime: new Date(),
-    modifiedDateTime: new Date(),
-  },
-  {
-    id: 3,
-    teacherId: 1,
-    title: 'Title3',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius.',
-    durationInMinutes: 60,
-    createdDateTime: new Date(),
-    modifiedDateTime: new Date(),
-  },
-  {
-    id: 4,
-    teacherId: 1,
-    title: 'Title1',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius.',
-    durationInMinutes: 50,
-    createdDateTime: new Date(),
-    modifiedDateTime: new Date(),
-  },
-  {
-    id: 5,
-    teacherId: 1,
-    title: 'Title2',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius.',
-    durationInMinutes: 40,
-    createdDateTime: new Date(),
-    modifiedDateTime: new Date(),
-  },
-  {
-    id: 6,
-    teacherId: 1,
-    title: 'Title3',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius.',
-    durationInMinutes: 60,
-    createdDateTime: new Date(),
-    modifiedDateTime: new Date(),
-  },
-  {
-    id: 7,
-    teacherId: 1,
-    title: 'Title1',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius.',
-    durationInMinutes: 50,
-    createdDateTime: new Date(),
-    modifiedDateTime: new Date(),
-  },
-  {
-    id: 8,
-    teacherId: 1,
-    title: 'Title2',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius.',
-    durationInMinutes: 40,
-    createdDateTime: new Date(),
-    modifiedDateTime: new Date(),
-  },
-  {
-    id: 9,
-    teacherId: 1,
-    title: 'Title3',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue, nisl eget molestie varius.',
-    durationInMinutes: 60,
-    createdDateTime: new Date(),
-    modifiedDateTime: new Date(),
-  },
-];
+import agent from '@/api/agent.ts';
+import { toast } from '@/components/ui/use-toast.ts';
 
 function TeacherTestsPage() {
   const [, setCurrentPageTitle] = useDashboardPageTitle();
+  const [tests, setTests] = useState<Test[]>([]);
 
   useEffect(() => {
     setCurrentPageTitle('Tests');
+
+    agent.Tests.list()
+      .then((tests) => {
+        setTests(tests);
+      })
+      .catch((error) => {
+        toast({
+          title: 'Error fetching tests',
+          description: error.message || 'An unexpected error occurred.',
+          variant: 'destructive',
+        });
+      });
   }, []);
 
   return (
@@ -161,7 +86,7 @@ function TeacherTestsPage() {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Save</Button>
+            <Button type="submit">Submit</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

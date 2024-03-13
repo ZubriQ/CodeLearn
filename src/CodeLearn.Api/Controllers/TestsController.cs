@@ -33,7 +33,7 @@ public sealed class TestsController(ISender sender, IMapper mapper) : ApiControl
 
     [HttpPost]
     //[Authorize(Roles = Roles.Teacher)]
-    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(TestRequest request)
     {

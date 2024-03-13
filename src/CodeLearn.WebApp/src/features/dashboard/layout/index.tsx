@@ -1,6 +1,6 @@
-import { SideMenuLinkGroup } from '@/components/layout/models/SideMenuLinkGroup.ts';
-import Layout from '@/components/layout';
 import { ArrowLeftStartOnRectangleIcon } from '@heroicons/react/24/outline';
+import Layout from '@/components/layout';
+import { SideMenuLinkGroup } from '@/components/layout/models/SideMenuLinkGroup.ts';
 
 const sections: SideMenuLinkGroup[] = [
   {

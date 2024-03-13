@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { MoreHorizontal } from 'lucide-react';
+import agent from '@/api/agent.ts';
 
 export const columns: ColumnDef<StudentGroup>[] = [
   {
@@ -52,7 +53,19 @@ export const columns: ColumnDef<StudentGroup>[] = [
               <DropdownMenuItem>Initiate testing</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Edit</DropdownMenuItem>
-              <DropdownMenuItem>Delete</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  agent.StudentGroup.delete(studentGroup.id)
+                    .then(() => {
+                      location.reload();
+                    })
+                    .catch((error) => {
+                      // TODO: toast
+                    });
+                }}
+              >
+                Delete
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

@@ -22,10 +22,13 @@ import agent from '@/api/agent.ts';
 import Loading from '@/components/loading';
 
 function StudentGroupsPage() {
+  const { toast } = useToast();
   const [, setCurrentPageTitle] = useDashboardPageTitle();
   const [studentGroups, setStudentGroups] = useState<StudentGroup[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { toast } = useToast();
+  const [studentGroupName, setStudentGroupName] = useState('');
+  const [enrolmentYear, setEnrolmentYear] = useState('');
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     setCurrentPageTitle('Student Groups');
@@ -46,9 +49,43 @@ function StudentGroupsPage() {
       });
   }, []);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, setter: (value: string) => void) => {
+    setter(e.target.value);
+  };
+
+  const handleAdd = () => {
+    const newStudentGroup = {
+      name: studentGroupName,
+      enrolmentYear: parseInt(enrolmentYear, 10), // Ensure enrolmentYear is a number
+    };
+
+    agent.StudentGroup.create(newStudentGroup)
+      .then(() => {
+        setEnrolmentYear('');
+        setStudentGroupName('');
+        setIsDialogOpen(false);
+        toast({
+          title: 'Success',
+          description: 'New student group is added.',
+          variant: 'default',
+        });
+        setTimeout(() => {
+          // Refresh page
+          location.reload();
+        }, 5000);
+      })
+      .catch((error) => {
+        return toast({
+          title: 'Error adding a new student group',
+          description: error.message || 'An unexpected error occurred.',
+          variant: 'destructive',
+        });
+      });
+  };
+
   return (
     <div className="mx-auto whitespace-nowrap lg:px-11 xl:px-24">
-      <Dialog>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
           <Button className="mb-6">Add new group</Button>
         </DialogTrigger>
@@ -64,7 +101,12 @@ function StudentGroupsPage() {
               <Label htmlFor="studentGroupName" className="text-right">
                 Name
               </Label>
-              <Input id="studentGroupName" className="col-span-3" />
+              <Input
+                id="studentGroupName"
+                className="col-span-3"
+                value={studentGroupName}
+                onChange={(e) => handleInputChange(e, setStudentGroupName)}
+              />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="enrolmentYear" className="text-right">
@@ -82,11 +124,22 @@ function StudentGroupsPage() {
                   </Tooltip>
                 </TooltipProvider>
               </Label>
-              <Input type="number" id="enrolmentYear" className="col-span-3" min={2020} max={2100} step={1} />
+              <Input
+                type="number"
+                id="enrolmentYear"
+                className="col-span-3"
+                min={2020}
+                max={2100}
+                step={1}
+                value={enrolmentYear}
+                onChange={(e) => handleInputChange(e, setEnrolmentYear)}
+              />
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Save</Button>
+            <Button type="submit" onClick={handleAdd}>
+              Submit
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
