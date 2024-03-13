@@ -1,4 +1,5 @@
 ﻿using CodeLearn.Application.StudentGroups.Commands.CreateStudentGroup;
+using CodeLearn.Application.StudentGroups.Commands.DeleteStudentGroup;
 using CodeLearn.Application.StudentGroups.Queries.GetAllStudentGroups;
 using CodeLearn.Contracts.StudentGroups;
 
@@ -27,5 +28,17 @@ public class StudentGroupsController(ISender sender, IMapper mapper) : ApiContro
         return result.Match(
             id => CreatedAtAction(nameof(Create), new { id }, id),
             _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."));
+    }
+
+    [HttpDelete("{studentGroupId:int}")]
+    [ProducesResponseType(typeof(Success), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(int studentGroupId)
+    {
+        var result = await sender.Send(new DeleteStudentGroupCommand(studentGroupId));
+
+        return result.Match(
+            success => Ok(success),
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Student group not found."));
     }
 }

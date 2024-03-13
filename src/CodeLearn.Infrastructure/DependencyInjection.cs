@@ -1,4 +1,5 @@
 ﻿using CodeLearn.Application.Common.Interfaces;
+using CodeLearn.Domain.StudentGroups.ValueObjects;
 using CodeLearn.Domain.Testings.ValueObjects;
 using CodeLearn.Domain.TestingSessions.ValueObjects;
 using CodeLearn.Domain.Tests.ValueObjects;
@@ -20,11 +21,16 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestId>>();
-        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestingId>>();
-        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestingSessionId>>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<TestId>>();
+
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestingId>>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<TestingId>>();
+
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestingSessionId>>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<TestingSessionId>>();
+
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<StudentGroupId>>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<StudentGroupId>>();
 
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {

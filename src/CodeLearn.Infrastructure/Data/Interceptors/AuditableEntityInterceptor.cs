@@ -34,7 +34,10 @@ public class AuditableEntityInterceptor<TId> : SaveChangesInterceptor
 
     public void UpdateEntities(DbContext? context)
     {
-        if (context == null) return;
+        if (context == null)
+        {
+            return;
+        }
 
         var auditableEntries = context.ChangeTracker
             .Entries()

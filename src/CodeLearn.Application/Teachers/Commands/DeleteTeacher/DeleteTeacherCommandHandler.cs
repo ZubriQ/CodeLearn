@@ -10,6 +10,7 @@ public class DeleteTeacherCommandHandler(IApplicationDbContext context)
         var teacher = await context.Teachers
             .Where(t => t.Id == TeacherId.Create(request.Id))
             .FirstOrDefaultAsync(cancellationToken);
+
         if (teacher is null)
         {
             return new NotFound();

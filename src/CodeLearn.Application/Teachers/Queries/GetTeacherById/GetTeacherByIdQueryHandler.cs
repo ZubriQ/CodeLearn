@@ -12,6 +12,7 @@ public class GetTeacherByIdQueryHandler(IApplicationDbContext context)
             .AsNoTracking()
             .Where(t => t.Id == TeacherId.Create(query.TeacherId))
             .FirstOrDefaultAsync(cancellationToken);
+
         if (teacher is null)
         {
             return new NotFound();

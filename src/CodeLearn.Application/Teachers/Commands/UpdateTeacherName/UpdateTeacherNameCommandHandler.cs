@@ -10,12 +10,14 @@ public class UpdateTeacherNameCommandHandler(IApplicationDbContext context)
         var teacher = await context.Teachers
             .Where(t => t.Id == TeacherId.Create(request.TeacherId))
             .FirstOrDefaultAsync(cancellationToken);
+
         if (teacher is null)
         {
             return new NotFound();
         }
 
         var result = teacher.UpdateName(request.FirstName, request.LastName, request.Patronymic);
+
         if (result.IsFailure)
         {
             return new BadRequest();
