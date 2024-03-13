@@ -1,15 +1,29 @@
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '@/app/hooks.ts';
+import { useAppDispatch } from '@/app/hooks.ts';
 import { loginPending, loginSuccess, loginFailure } from '@/features/users/auth-slice.ts';
-import { AuthState } from '@/features/users/models/AuthState.ts';
+import agent from '@/api/agent.ts';
+
+//import { AuthState } from '@/features/users/models/AuthState.ts';
 
 function SignInPage() {
-  const authState: AuthState = useAppSelector((state) => state.auth);
+  //const authState: AuthState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
-  // function handleLogin() {
-  //   dispatch(); // TODO: implement
-  // }
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+    dispatch(loginPending());
+    try {
+      const token = await agent.Auth.login({ email, password });
+      dispatch(loginSuccess({ token, email, password }));
+    } catch (error) {
+      dispatch(loginFailure());
+      // TODO: Handle failure, use toast
+    }
+  }
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -38,6 +52,8 @@ function SignInPage() {
                 type="email"
                 autoComplete="email"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -61,6 +77,8 @@ function SignInPage() {
                 type="password"
                 autoComplete="current-password"
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -70,7 +88,7 @@ function SignInPage() {
             <button
               type="submit"
               className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
-              //onClick={}
+              onClick={handleLogin}
             >
               Sign In
             </button>

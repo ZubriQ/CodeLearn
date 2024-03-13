@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
+import { LoginCredentials } from '@/features/users/models/LoginCredentials.ts';
 
-axios.defaults.baseURL = 'http://localhost:5081/api/';
+axios.defaults.baseURL = 'https://localhost:7286/api/';
 
 const responseBody = (response: AxiosResponse) => response.data;
 
@@ -9,6 +10,12 @@ const requests = {
   post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
   put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
   delete: (url: string) => axios.delete(url).then(responseBody),
+};
+
+const Auth = {
+  login: (credentials: LoginCredentials): Promise<string> => {
+    return requests.post('auth/login', credentials);
+  },
 };
 
 const TestErrors = {
@@ -26,6 +33,7 @@ const StudentGroup = {
 };
 
 const agent = {
+  Auth,
   StudentGroup,
   TestErrors,
 };

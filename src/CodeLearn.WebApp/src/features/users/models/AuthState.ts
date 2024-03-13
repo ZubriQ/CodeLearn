@@ -1,7 +1,6 @@
-import { User } from '@/features/users/models/User.ts';
-
 export type AuthState = {
-  token?: string | null;
+  token?: string;
   isLoading: boolean;
-  userData?: User | null;
+  email?: string;
+  password?: string;
 };
