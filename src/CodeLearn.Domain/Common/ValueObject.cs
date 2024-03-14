@@ -12,6 +12,7 @@ public abstract class ValueObject : IEquatable<ValueObject>
         }
 
         var valueObject = (ValueObject)obj;
+
         return GetEqualityComponents()
             .SequenceEqual(valueObject.GetEqualityComponents());
     }

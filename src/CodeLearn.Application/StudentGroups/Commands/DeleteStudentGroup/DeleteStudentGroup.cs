@@ -17,7 +17,7 @@ public class DeleteStudentGroupCommandHandler(IApplicationDbContext context)
             return new NotFound();
         }
 
-        context.StudentGroups.Remove(studentGroup!);
+        context.StudentGroups.Remove(studentGroup);
 
         await context.SaveChangesAsync(cancellationToken);
 

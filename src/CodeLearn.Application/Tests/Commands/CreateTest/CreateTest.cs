@@ -2,10 +2,7 @@ using CodeLearn.Domain.Tests;
 
 namespace CodeLearn.Application.Tests.Commands.CreateTest;
 
-public record CreateTestCommand(
-    string Title,
-    string Description)
-    : IRequest<OneOf<int, ValidationFailed>>;
+public record CreateTestCommand(string Title, string Description) : IRequest<OneOf<int, ValidationFailed>>;
 
 public class CreateTestCommandHandler(
     IApplicationDbContext context,
