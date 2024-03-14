@@ -6,7 +6,6 @@ using CodeLearn.Domain.ExerciseSubmissions.JunctionTables;
 using CodeLearn.Domain.ExerciseTopics;
 using CodeLearn.Domain.QuestionChoices;
 using CodeLearn.Domain.StudentGroups;
-using CodeLearn.Domain.Teachers;
 using CodeLearn.Domain.Testings;
 using CodeLearn.Domain.TestingSessions;
 using CodeLearn.Domain.Tests;
@@ -19,7 +18,6 @@ public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser>, I
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-    public DbSet<Teacher> Teachers => Set<Teacher>();
     public DbSet<StudentGroup> StudentGroups => Set<StudentGroup>();
 
     public DbSet<DataType> DataTypes => Set<DataType>();

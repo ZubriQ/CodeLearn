@@ -5,7 +5,6 @@ using CodeLearn.Domain.ExerciseSubmissions.JunctionTables;
 using CodeLearn.Domain.ExerciseTopics;
 using CodeLearn.Domain.QuestionChoices;
 using CodeLearn.Domain.StudentGroups;
-using CodeLearn.Domain.Teachers;
 using CodeLearn.Domain.Testings;
 using CodeLearn.Domain.TestingSessions;
 using CodeLearn.Domain.Tests;
@@ -14,7 +13,6 @@ namespace CodeLearn.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
-    DbSet<Teacher> Teachers { get; }
     DbSet<StudentGroup> StudentGroups { get; }
 
     DbSet<DataType> DataTypes { get; }
