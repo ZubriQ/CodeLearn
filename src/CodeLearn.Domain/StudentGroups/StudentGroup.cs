@@ -4,7 +4,7 @@ public sealed class StudentGroup : BaseAuditableEntity<StudentGroupId>, IAggrega
 {
     public string Name { get; private set; }
     public int EnrolmentYear { get; private set; }
-    
+
     private StudentGroup(string name, int enrolmentYear)
         : base(default!)
     {

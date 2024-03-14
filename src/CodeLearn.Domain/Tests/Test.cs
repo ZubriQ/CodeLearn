@@ -5,7 +5,7 @@ public sealed class Test : BaseAuditableEntity<TestId>, IAggregateRoot
     public string Title { get; private set; }
     public string Description { get; private set; }
     public bool IsPublic { get; private set; }
-    
+
     /// <summary>
     /// Required by EF Core.
     /// </summary>

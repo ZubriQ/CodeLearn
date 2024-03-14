@@ -1,6 +1,5 @@
 ﻿using CodeLearn.Application.Common.Interfaces;
 using CodeLearn.Domain.ExerciseTopics;
-using Microsoft.AspNetCore.Authorization;
 
 namespace CodeLearn.Api.Controllers;
 

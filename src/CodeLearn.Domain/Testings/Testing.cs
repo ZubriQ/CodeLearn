@@ -7,7 +7,7 @@ public sealed class Testing : BaseAuditableEntity<TestingId>, IAggregateRoot
     public DateTime StartDateTime { get; private set; }
     public DateTime EndDateTime { get; private set; }
     public int DurationInMinutes { get; private set; }
-    
+
     private Testing(
         TestId testId,
         StudentGroupId studentGroupId,

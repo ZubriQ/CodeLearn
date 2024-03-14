@@ -8,7 +8,7 @@ public sealed class DataType : BaseEntity<DataTypeId>
     private DataType() { }
 
     private DataType(
-        string systemName, 
+        string systemName,
         string alias)
         : base(default!)
     {

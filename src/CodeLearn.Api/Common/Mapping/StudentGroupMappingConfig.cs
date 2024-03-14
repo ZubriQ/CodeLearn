@@ -1,8 +1,6 @@
 ﻿using CodeLearn.Application.StudentGroups.Commands.CreateStudentGroup;
 using CodeLearn.Application.StudentGroups.Commands.UpdateStudentGroup;
-using CodeLearn.Application.Teachers.Commands.UpdateTeacherName;
 using CodeLearn.Contracts.StudentGroups;
-using CodeLearn.Contracts.Teachers;
 using CodeLearn.Domain.StudentGroups;
 
 namespace CodeLearn.Api.Common.Mapping;

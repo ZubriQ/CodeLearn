@@ -2,5 +2,5 @@
 
 public record StudentGroupResponse(
     int Id,
-    string Name, 
+    string Name,
     int EnrolmentYear);
