@@ -17,7 +17,7 @@ public static class DependencyInjection
 
         services.AddEndpointsApiExplorer();
 
-        services.AddSwagger();
+        services.AddSwaggerWithJwt();
 
         services.AddMappings();
 
@@ -26,11 +26,38 @@ public static class DependencyInjection
         return services;
     }
 
-    private static IServiceCollection AddSwagger(this IServiceCollection services)
+    private static IServiceCollection AddSwaggerWithJwt(this IServiceCollection services)
     {
-        services.AddSwaggerGen(c =>
+        services.AddSwaggerGen(s =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "CodeLearn Web API", Version = "v1" });
+            s.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "CodeLearn Web API",
+                Version = "v1"
+            });
+            s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "Enter: 'Bearer [token]'",
+            });
+            s.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    Array.Empty<string>()
+                }
+            });
         });
 
         return services;
