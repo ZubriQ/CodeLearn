@@ -4,7 +4,6 @@ public record TestResponse(
     int TestId,
     string Title,
     string Description,
+    bool IsPublic,
     DateTimeOffset Created,
-    string? CreatedBy,
-    DateTimeOffset LastModified,
-    string? LastModifiedBy);
+    DateTimeOffset LastModified);

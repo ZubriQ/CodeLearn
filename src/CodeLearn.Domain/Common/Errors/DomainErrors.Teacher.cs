@@ -8,7 +8,7 @@ public static partial class DomainErrors
 
         public static readonly Error MaxPatronymicLengthExceeded = new(
             $"{Prefix}{nameof(MaxPatronymicLengthExceeded)}",
-            "Patronymic can't be longer than 50 characters");
+            "Patronymic can't be longer than 50 characters.");
 
         public static readonly Error InvalidFirstName = new(
             $"{Prefix}{nameof(InvalidFirstName)}",

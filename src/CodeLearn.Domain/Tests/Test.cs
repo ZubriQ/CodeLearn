@@ -32,15 +32,25 @@ public sealed class Test : BaseAuditableEntity<TestId>, IAggregateRoot
             true);
     }
 
-    public void UpdateDetails(
+    public Result UpdateDetails(
         string title,
         string description,
         bool isPublic)
     {
-        // TODO: Validate
+        if (string.IsNullOrEmpty(title) || title.Length > 100)
+        {
+            return Result.Failure(DomainErrors.Test.InvalidTitleLength);
+        }
+
+        if (string.IsNullOrEmpty(description) || description.Length > 1000)
+        {
+            return Result.Failure(DomainErrors.Test.InvalidDescriptionLength);
+        }
 
         Title = title;
         Description = description;
         IsPublic = isPublic;
+
+        return Result.Success();
     }
 }

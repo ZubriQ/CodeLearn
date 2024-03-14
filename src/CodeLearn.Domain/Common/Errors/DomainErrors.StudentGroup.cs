@@ -8,7 +8,7 @@ public static partial class DomainErrors
 
         public static readonly Error InvalidNameLength = new(
             $"{Prefix}{nameof(InvalidNameLength)}",
-            "Name can't be longer than 50 characters");
+            "Name can't be longer than 50 characters.");
 
         public static readonly Error InvalidEnrolmentYear = new(
             $"{Prefix}{nameof(InvalidEnrolmentYear)}",

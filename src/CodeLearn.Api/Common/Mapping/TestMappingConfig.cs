@@ -1,4 +1,5 @@
 ﻿using CodeLearn.Application.Tests.Commands.CreateTest;
+using CodeLearn.Application.Tests.Commands.UpdateTest;
 using CodeLearn.Contracts.Tests;
 using CodeLearn.Domain.Tests;
 
@@ -12,5 +13,9 @@ public class TestMappingConfig : IRegister
 
         config.NewConfig<Test, TestResponse>()
             .Map(dest => dest.TestId, src => src.Id.Value);
+
+        config.NewConfig<(int Id, UpdateTestDetailsRequest Request), UpdateTestCommand>()
+            .Map(dest => dest.Id, src => src.Id)
+            .Map(dest => dest, src => src.Request);
     }
 }

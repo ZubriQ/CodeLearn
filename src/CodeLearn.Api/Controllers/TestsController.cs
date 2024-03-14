@@ -1,5 +1,6 @@
 ﻿using CodeLearn.Application.Tests.Commands.CreateTest;
 using CodeLearn.Application.Tests.Commands.DeleteTest;
+using CodeLearn.Application.Tests.Commands.UpdateTest;
 using CodeLearn.Application.Tests.Queries.GetAllTests;
 using CodeLearn.Application.Tests.Queries.GetTestById;
 using CodeLearn.Contracts.Tests;
@@ -55,5 +56,20 @@ public sealed class TestsController(ISender sender, IMapper mapper) : ApiControl
         return result.Match(
             success => Ok(success),
             _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Test not found."));
+    }
+
+    [HttpPut("{testId:int}")]
+    [ProducesResponseType(typeof(Success), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Update(int testId, UpdateTestDetailsRequest request)
+    {
+        var command = mapper.Map<UpdateTestCommand>((testId, request));
+        var result = await sender.Send(command);
+
+        return result.Match(
+            success => Ok(success),
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Test not found."),
+            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Invalid request."));
     }
 }

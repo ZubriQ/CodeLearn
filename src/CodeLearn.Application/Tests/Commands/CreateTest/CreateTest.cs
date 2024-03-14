@@ -4,9 +4,7 @@ namespace CodeLearn.Application.Tests.Commands.CreateTest;
 
 public record CreateTestCommand(string Title, string Description) : IRequest<OneOf<int, ValidationFailed>>;
 
-public class CreateTestCommandHandler(
-    IApplicationDbContext context,
-    IValidator<CreateTestCommand> validator)
+public class CreateTestCommandHandler(IApplicationDbContext context, IValidator<CreateTestCommand> validator)
     : IRequestHandler<CreateTestCommand, OneOf<int, ValidationFailed>>
 {
     public async Task<OneOf<int, ValidationFailed>> Handle(CreateTestCommand request, CancellationToken cancellationToken)
