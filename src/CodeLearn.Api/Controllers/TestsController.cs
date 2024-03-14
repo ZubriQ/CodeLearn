@@ -7,10 +7,10 @@ namespace CodeLearn.Api.Controllers;
 
 public sealed class TestsController(ISender sender, IMapper mapper) : ApiControllerBase
 {
-    [HttpGet("{testId:guid}")]
+    [HttpGet("{testId:int}")]
     [ProducesResponseType(typeof(TestResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Get(Guid testId)
+    public async Task<IActionResult> Get(int testId)
     {
         var result = await sender.Send(new GetTestByIdQuery(testId));
 
@@ -23,12 +23,12 @@ public sealed class TestsController(ISender sender, IMapper mapper) : ApiControl
     [ProducesResponseType(typeof(TestResponseCollection), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
-        var tests = await sender.Send(new GetAllTestsQuery());
-        var mappedTestings = tests
+        var result = await sender.Send(new GetAllTestsQuery());
+        var mappedData = result
             .Select(mapper.Map<TestResponse>)
             .ToList();
 
-        return Ok(new TestResponseCollection(mappedTestings));
+        return Ok(new TestResponseCollection(mappedData));
     }
 
     [HttpPost]
