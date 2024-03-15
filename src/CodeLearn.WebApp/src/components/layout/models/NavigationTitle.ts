@@ -5,5 +5,6 @@ export type NavigationTitle =
   | 'Testings'
   | 'Testing Sessions'
   | 'Student Groups'
+  | 'Edit Student Group'
   | 'Students'
   | 'Teachers';

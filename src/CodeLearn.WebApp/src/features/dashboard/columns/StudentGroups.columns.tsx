@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button.tsx';
 import { MoreHorizontal } from 'lucide-react';
 import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
+import { Link } from 'react-router-dom';
 
 export const columns: ColumnDef<StudentGroup>[] = [
   {
@@ -53,7 +54,15 @@ export const columns: ColumnDef<StudentGroup>[] = [
               </DropdownMenuItem>
               <DropdownMenuItem>Initiate testing</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Edit</DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link
+                  className="h-full w-full"
+                  key={studentGroup.id}
+                  to={`/dashboard/student-groups/${studentGroup.id}`}
+                >
+                  Edit
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
                   agent.StudentGroup.delete(studentGroup.id)

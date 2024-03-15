@@ -20,6 +20,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { useToast } from '@/components/ui/use-toast.ts';
 import agent from '@/api/agent.ts';
 import Loading from '@/components/loading';
+import DashboardPageContainer from '@/features/dashboard/components/DashboardPageContainer.tsx';
 
 function StudentGroupsPage() {
   const { toast } = useToast();
@@ -76,7 +77,7 @@ function StudentGroupsPage() {
   };
 
   return (
-    <div className="mx-auto whitespace-nowrap lg:px-11 xl:px-24">
+    <DashboardPageContainer>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
           <Button className="mb-6">Add new group</Button>
@@ -141,7 +142,7 @@ function StudentGroupsPage() {
       </Button>
 
       {isLoading ? <Loading /> : <DataTable columns={columns} data={studentGroups} filterBy="name" />}
-    </div>
+    </DashboardPageContainer>
   );
 }
 
