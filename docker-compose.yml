@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  codelearn.db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: Database
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "C0D3LeArN!"
+
+  codelearn.api:
+    image: ${DOCKER_REGISTRY-}codelearnapi
+    ports:
+      - "5000:5000"
+      - "5001:5001" 
+    container_name: Api
+    build:
+      context: .
+      dockerfile: src/CodeLearn.Api/Dockerfile
+    restart: always
+
+  codelearn.mq:
+    image: rabbitmq:3.13.0-management
+    container_name: Queue
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+    hostname: codelearn-queue
+    volumes:
+        - ././containers/queue/data/:/var/lib/rabbitmq
+        - ././containers/queue/log/:/var/log/rabbitmq
+    environment:
+        RABBITMQ_DEFAULT_USER: guest
+        RABBITMQ_DEFAULT_PASS: guest

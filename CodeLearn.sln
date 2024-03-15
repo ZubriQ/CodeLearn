@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeLearn.Infrastructure", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeLearn.Domain", "src\CodeLearn.Domain\CodeLearn.Domain.csproj", "{73B0DF63-1EDF-4546-8668-DCD8FBDF4B9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeLearn.Contracts", "src\CodeLearn.Contracts\CodeLearn.Contracts.csproj", "{D87662D8-3377-486B-86D5-E98229B175EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeLearn.Contracts", "src\CodeLearn.Contracts\CodeLearn.Contracts.csproj", "{D87662D8-3377-486B-86D5-E98229B175EE}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F83975F9-9744-43D1-BA25-23480DC4A3FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{D87662D8-3377-486B-86D5-E98229B175EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D87662D8-3377-486B-86D5-E98229B175EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D87662D8-3377-486B-86D5-E98229B175EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F83975F9-9744-43D1-BA25-23480DC4A3FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F83975F9-9744-43D1-BA25-23480DC4A3FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F83975F9-9744-43D1-BA25-23480DC4A3FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F83975F9-9744-43D1-BA25-23480DC4A3FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

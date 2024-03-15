@@ -10,19 +10,23 @@ var builder = WebApplication.CreateBuilder(args);
     {
         options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
     });
+
     builder.Services.AddApplication();
+
     builder.Services.AddInfrastructure(builder.Configuration);
+
     builder.Services.AddWebServices();
 }
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment()) 
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    await app.InitialiseDatabaseAsync();
 }
+
+await app.InitialiseDatabaseAsync();
 
 app.UseCors(options =>
 {
@@ -31,8 +35,13 @@ app.UseCors(options =>
         .AllowAnyMethod()
         .WithOrigins("http://localhost:5173");
 });
+
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
+
 app.UseAuthorization();
+
 app.MapControllers();
+
 app.Run();
