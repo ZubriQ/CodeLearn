@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { LoginCredentials } from '@/features/users/models/LoginCredentials.ts';
 
-axios.defaults.baseURL = 'https://localhost:7286/api/';
+axios.defaults.baseURL = 'https://localhost:5001/api/';
 
 const responseBody = (response: AxiosResponse) => response.data;
 

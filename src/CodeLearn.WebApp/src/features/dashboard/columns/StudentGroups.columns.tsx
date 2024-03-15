@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button.tsx';
 import { MoreHorizontal } from 'lucide-react';
 import agent from '@/api/agent.ts';
+import { toast } from '@/components/ui/use-toast.ts';
 
 export const columns: ColumnDef<StudentGroup>[] = [
   {
@@ -60,7 +61,11 @@ export const columns: ColumnDef<StudentGroup>[] = [
                       location.reload();
                     })
                     .catch((error) => {
-                      // TODO: toast
+                      toast({
+                        title: 'Error deleting a student group',
+                        description: error.message || 'An unexpected error occurred.',
+                        variant: 'destructive',
+                      });
                     });
                 }}
               >

@@ -64,15 +64,7 @@ function StudentGroupsPage() {
         setEnrolmentYear('');
         setStudentGroupName('');
         setIsDialogOpen(false);
-        toast({
-          title: 'Success',
-          description: 'New student group is added.',
-          variant: 'default',
-        });
-        setTimeout(() => {
-          // Refresh page
-          location.reload();
-        }, 5000);
+        location.reload();
       })
       .catch((error) => {
         return toast({
