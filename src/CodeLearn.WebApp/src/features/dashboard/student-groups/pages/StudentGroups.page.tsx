@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { InformationCircleIcon } from '@heroicons/react/16/solid';
 import { useDashboardPageTitle } from '@/components/layout';
 import { StudentGroup } from '@/features/dashboard/student-groups/StudentGroup.ts';
-import { columns } from './StudentGroups.columns.tsx';
+import { columns } from '../StudentGroups.columns.tsx';
 import { DataTable } from '@/components/ui/data-table.tsx';
 import {
   Dialog,

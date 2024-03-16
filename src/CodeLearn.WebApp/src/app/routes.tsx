@@ -10,11 +10,11 @@ const TestingSessionPage = lazy(() => import('@/features/testing-sessions/pages/
 
 // For Teachers & Administrator
 const DashboardLayout = lazy(() => import('@/features/dashboard/DashboardLayout.tsx'));
-const TeacherTestsPage = lazy(() => import('@/features/dashboard/tests/Tests.page.tsx'));
-const StudentGroupsPage = lazy(() => import('@/features/dashboard/student-groups/StudentGroups.page.tsx'));
-const EditStudentGroupPage = lazy(() => import('@/features/dashboard/student-groups/EditStudentGroup.page.tsx'));
-const StudentsPage = lazy(() => import('@/features/dashboard/pages/Students.page.tsx'));
-const TestingSessionsPage = lazy(() => import('@/features/dashboard/pages/TestingSessions.page.tsx'));
+const TeacherTestsPage = lazy(() => import('@/features/dashboard/tests/pages/Tests.page.tsx'));
+const StudentGroupsPage = lazy(() => import('@/features/dashboard/student-groups/pages/StudentGroups.page.tsx'));
+const EditStudentGroupPage = lazy(() => import('@/features/dashboard/student-groups/pages/EditStudentGroup.page.tsx'));
+const StudentsPage = lazy(() => import('@/features/dashboard/students/pages/Students.page.tsx'));
+const TestingSessionsPage = lazy(() => import('@/features/dashboard/testing-sessions/pages/TestingSessions.page.tsx'));
 
 // For Students
 const CurriculumLayout = lazy(() => import('@/features/curriculum/layout'));

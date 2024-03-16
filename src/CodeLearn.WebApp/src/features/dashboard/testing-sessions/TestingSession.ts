@@ -1,4 +1,4 @@
-export type Testing = {
+export type TestingSession = {
   id: number;
   testId: string;
   studentGroupId: string;
