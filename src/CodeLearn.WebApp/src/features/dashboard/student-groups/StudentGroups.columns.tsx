@@ -1,5 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { StudentGroup } from '@/features/dashboard/models/StudentGroup.ts';
+import { StudentGroup } from '@/features/dashboard/student-groups/StudentGroup.ts';
 import {
   DropdownMenu,
   DropdownMenuContent,

@@ -9,10 +9,10 @@ const SignUpPage = lazy(() => import('@/features/users/pages/SignUp.page.tsx'));
 const TestingSessionPage = lazy(() => import('@/features/testing-sessions/pages/TestingSession.page.tsx'));
 
 // For Teachers & Administrator
-const DashboardLayout = lazy(() => import('@/features/dashboard/layout'));
-const TeacherTestsPage = lazy(() => import('@/features/dashboard/pages/Tests.page.tsx'));
-const StudentGroupsPage = lazy(() => import('@/features/dashboard/pages/StudentGroups.page.tsx'));
-const EditStudentGroupPage = lazy(() => import('@/features/dashboard/pages/EditStudentGroup.page.tsx'));
+const DashboardLayout = lazy(() => import('@/features/dashboard/DashboardLayout.tsx'));
+const TeacherTestsPage = lazy(() => import('@/features/dashboard/tests/Tests.page.tsx'));
+const StudentGroupsPage = lazy(() => import('@/features/dashboard/student-groups/StudentGroups.page.tsx'));
+const EditStudentGroupPage = lazy(() => import('@/features/dashboard/student-groups/EditStudentGroup.page.tsx'));
 const StudentsPage = lazy(() => import('@/features/dashboard/pages/Students.page.tsx'));
 const TestingSessionsPage = lazy(() => import('@/features/dashboard/pages/TestingSessions.page.tsx'));
 

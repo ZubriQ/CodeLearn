@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { InformationCircleIcon } from '@heroicons/react/16/solid';
 import { useDashboardPageTitle } from '@/components/layout';
-import { StudentGroup } from '@/features/dashboard/models/StudentGroup.ts';
-import { columns } from '../columns/StudentGroups.columns.tsx';
+import { StudentGroup } from '@/features/dashboard/student-groups/StudentGroup.ts';
+import { columns } from './StudentGroups.columns.tsx';
 import { DataTable } from '@/components/ui/data-table.tsx';
 import {
   Dialog,
@@ -20,7 +20,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { useToast } from '@/components/ui/use-toast.ts';
 import agent from '@/api/agent.ts';
 import Loading from '@/components/loading';
-import DashboardPageContainer from '@/features/dashboard/components/DashboardPageContainer.tsx';
+import DashboardPageContainer from '@/features/dashboard/DashboardPageContainer.tsx';
 
 function StudentGroupsPage() {
   const { toast } = useToast();

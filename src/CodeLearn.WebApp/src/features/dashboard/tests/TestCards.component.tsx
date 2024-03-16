@@ -1,9 +1,9 @@
 import { TrashIcon } from '@heroicons/react/24/outline';
-import { Test } from '@/features/dashboard/models/Test.ts';
+import { Test } from '@/features/dashboard/tests/Test.ts';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx';
-import NoItemsCard from '@/features/dashboard/components/NoItemsCard.tsx';
+import NoItemsCard from '@/components/no-items-card';
 import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 

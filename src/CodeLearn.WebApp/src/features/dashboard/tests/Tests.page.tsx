@@ -3,8 +3,8 @@ import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
-import { Test } from '@/features/dashboard/models/Test.ts';
-import TestCards from '@/features/dashboard/components/TestCards.tsx';
+import { Test } from '@/features/dashboard/tests/Test.ts';
+import TestCards from '@/features/dashboard/tests/TestCards.component.tsx';
 import {
   Dialog,
   DialogContent,

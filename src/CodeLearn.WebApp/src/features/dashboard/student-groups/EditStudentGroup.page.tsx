@@ -3,14 +3,14 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import DashboardPageContainer from '@/features/dashboard/components/DashboardPageContainer.tsx';
+import DashboardPageContainer from '@/features/dashboard/DashboardPageContainer.tsx';
 import { useDashboardPageTitle } from '@/components/layout';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { StudentGroup } from '@/features/dashboard/models/StudentGroup.ts';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { Input } from '@/components/ui/input.tsx';
+import { StudentGroup } from '@/features/dashboard/student-groups/StudentGroup.ts';
 import { toast } from '@/components/ui/use-toast.ts';
-import agent from '@/api/agent';
+import agent from '@/api/agent.ts';
 
 // Input Validation Schema
 const formSchema = z.object({
