@@ -29,7 +29,7 @@ const TestErrors = {
 const StudentGroup = {
   // Using '(response) => response.studentGroups' to destructure { list[] } object.
   list: () => requests.get('student-groups').then((response) => response.studentGroups),
-  details: (id: number) => requests.get(`student-groups/${id}`),
+  getById: (id: number) => requests.get(`student-groups/${id}`),
   create: (request: { name: string; enrolmentYear: number }) => requests.post(`student-groups`, request),
   update: (
     id: number,
@@ -43,7 +43,7 @@ const StudentGroup = {
 
 const Tests = {
   list: () => requests.get('tests').then((response) => response.tests),
-  details: (id: number) => requests.get(`tests/${id}`),
+  getById: (id: number) => requests.get(`tests/${id}`),
   create: (request: { title: string; description: string }) => requests.post(`tests`, request),
   update: (
     id: number,
