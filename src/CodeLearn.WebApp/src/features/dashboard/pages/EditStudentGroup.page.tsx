@@ -34,22 +34,27 @@ export default function EditStudentGroupPage() {
 
   useEffect(() => {
     setCurrentPageTitle('Edit Student Group');
-    const fetchStudentGroup = async () => {
-      try {
-        const response = await agent.StudentGroup.getById(parseInt(id, 10));
-        setStudentGroup(response);
-        form.reset({
-          name: response.name,
-          enrolmentYear: response.enrolmentYear,
+
+    const fetchStudentGroup = () => {
+      const idNumber = parseInt(id ?? '0', 10);
+      agent.StudentGroup.getById(idNumber)
+        .then((response) => {
+          setStudentGroup(response);
+
+          form.reset({
+            name: response.name,
+            enrolmentYear: response.enrolmentYear,
+          });
+        })
+        .catch((error) => {
+          toast({
+            title: 'Error fetching student group',
+            description: error.message || 'An unexpected error occurred.',
+            variant: 'destructive',
+          });
         });
-      } catch (error) {
-        toast({
-          title: 'Error fetching student group',
-          description: error.message || 'An unexpected error occurred.',
-          variant: 'destructive',
-        });
-      }
     };
+
     fetchStudentGroup();
   }, [id]);
 
