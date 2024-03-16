@@ -57,7 +57,7 @@ function StudentGroupsPage() {
   const handleAdd = () => {
     const newStudentGroup = {
       name: studentGroupName,
-      enrolmentYear: parseInt(enrolmentYear, 10), // Ensure enrolmentYear is a number
+      enrolmentYear: parseInt(enrolmentYear, 10),
     };
 
     agent.StudentGroup.create(newStudentGroup)

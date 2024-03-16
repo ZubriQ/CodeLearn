@@ -4,6 +4,8 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/comp
 import { Button } from '@/components/ui/button.tsx';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx';
 import NoItemsCard from '@/features/dashboard/components/NoItemsCard.tsx';
+import agent from '@/api/agent.ts';
+import { toast } from '@/components/ui/use-toast.ts';
 
 type TestCardsProps = {
   tests: Test[];
@@ -28,7 +30,23 @@ function TestCards(props: TestCardsProps) {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button variant="outline" size="icon">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => {
+                          agent.Tests.delete(test.id)
+                            .then(() => {
+                              location.reload();
+                            })
+                            .catch((error) =>
+                              toast({
+                                title: 'Error deleting a test',
+                                description: error.message || 'An unexpected error occurred.',
+                                variant: 'destructive',
+                              }),
+                            );
+                        }}
+                      >
                         <TrashIcon className="h-4 w-4" />
                       </Button>
                     </TooltipTrigger>
