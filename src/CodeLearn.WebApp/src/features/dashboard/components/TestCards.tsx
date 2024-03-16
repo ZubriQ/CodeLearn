@@ -1,4 +1,4 @@
-import { ListBulletIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { TrashIcon } from '@heroicons/react/24/outline';
 import { Test } from '@/features/dashboard/models/Test.ts';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.tsx';
 import { Button } from '@/components/ui/button.tsx';
@@ -19,54 +19,24 @@ function TestCards(props: TestCardsProps) {
       {props.tests.map((test) => {
         return (
           <li key={test.id}>
-            <Card className="min-w-80">
+            <Card className="min-w-80 cursor-pointer transition-colors duration-500 hover:bg-zinc-100">
               <CardHeader>
                 <CardTitle>{test.title}</CardTitle>
                 <CardDescription>{test.description}</CardDescription>
               </CardHeader>
-              <CardFooter className="flex justify-between gap-4">
-                <Button>Test</Button>
-
-                <div className="flex gap-4">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button variant="outline" size="icon">
-                          <ListBulletIcon className="h-5 w-5" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>See the list of exercises</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button variant="outline" size="icon">
-                          <PencilSquareIcon className="h-4 w-4" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Edit</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button variant="secondary" size="icon">
-                          <TrashIcon className="h-4 w-4" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Delete</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </div>
+              <CardFooter className="flex justify-end">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="outline" size="icon">
+                        <TrashIcon className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Delete</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </CardFooter>
             </Card>
           </li>
