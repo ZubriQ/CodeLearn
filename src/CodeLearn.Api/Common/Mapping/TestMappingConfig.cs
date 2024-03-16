@@ -12,7 +12,7 @@ public class TestMappingConfig : IRegister
         config.NewConfig<TestRequest, CreateTestCommand>();
 
         config.NewConfig<Test, TestResponse>()
-            .Map(dest => dest.TestId, src => src.Id.Value);
+            .Map(dest => dest.Id, src => src.Id.Value);
 
         config.NewConfig<(int Id, UpdateTestDetailsRequest Request), UpdateTestCommand>()
             .Map(dest => dest.Id, src => src.Id)

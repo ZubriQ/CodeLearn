@@ -1,7 +1,7 @@
 ﻿namespace CodeLearn.Contracts.Tests;
 
 public record TestResponse(
-    int TestId,
+    int Id,
     string Title,
     string Description,
     bool IsPublic,
