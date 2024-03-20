@@ -18,14 +18,6 @@ const Auth = {
   },
 };
 
-const TestErrors = {
-  get400Error: () => requests.get('buggy/bad-request'),
-  get401Error: () => requests.get('buggy/unauthorised'),
-  get404Error: () => requests.get('buggy/not-found'),
-  get500Error: () => requests.get('buggy/server-error'),
-  getValidationError: () => requests.get('buggy/validation-error'),
-};
-
 const StudentGroup = {
   // Using '(response) => response.studentGroups' to destructure { list[] } object.
   list: () => requests.get('student-groups').then((response) => response.studentGroups),
@@ -55,11 +47,19 @@ const Tests = {
   delete: (id: number) => requests.delete(`tests/${id}`),
 };
 
+// const TestErrors = {
+//   get400Error: () => requests.get('buggy/bad-request'),
+//   get401Error: () => requests.get('buggy/unauthorised'),
+//   get404Error: () => requests.get('buggy/not-found'),
+//   get500Error: () => requests.get('buggy/server-error'),
+//   getValidationError: () => requests.get('buggy/validation-error'),
+// };
+
 const agent = {
   Auth,
   StudentGroup,
   Tests,
-  TestErrors,
+  // TestErrors,
 };
 
 export default agent;
