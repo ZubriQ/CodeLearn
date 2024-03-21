@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDashboardPageTitle } from '@/components/layout';
-import { Test } from '@/features/dashboard/tests/Test.ts';
+import { Test } from '@/features/dashboard/tests/models/Test.ts';
 import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import DashboardPageContainer from '@/features/dashboard/DashboardPageContainer.tsx';
