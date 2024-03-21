@@ -23,7 +23,7 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
 
         builder
             .Property(e => e.Id)
-            .ValueGeneratedNever()
+            .ValueGeneratedOnAdd()
             .HasConversion(
                 exercise => exercise.Value,
                 id => ExerciseId.Create(id));
@@ -96,7 +96,7 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
 
             noteBuilder
                 .Property(n => n.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasConversion(
                     id => id.Value,
                     value => ExerciseNoteId.Create(value));

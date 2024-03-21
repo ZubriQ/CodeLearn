@@ -31,9 +31,5 @@ public sealed class QuestionChoiceConfiguration : IEntityTypeConfiguration<Quest
         builder
             .Property(q => q.IsCorrect)
             .IsRequired();
-
-        builder
-            .Property(q => q.Explanation)
-            .HasMaxLength(300);
     }
 }

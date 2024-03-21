@@ -1,12 +1,11 @@
 ﻿namespace CodeLearn.Domain.Exercises;
 
 public abstract class Exercise(
-    ExerciseId id,
     TestId testId,
     string title,
     string description,
     ExerciseDifficulty difficulty)
-    : BaseEntity<ExerciseId>(id), IAggregateRoot
+    : BaseEntity<ExerciseId>(default!), IAggregateRoot
 {
     public TestId TestId { get; private set; } = testId;
     public string Title { get; private set; } = title;

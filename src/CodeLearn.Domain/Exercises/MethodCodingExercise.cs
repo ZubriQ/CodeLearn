@@ -17,14 +17,13 @@ public sealed class MethodCodingExercise : Exercise
     public IReadOnlyList<InputOutputExample> InputOutputExamples => _inputOutputExamples.AsReadOnly();
 
     private MethodCodingExercise(
-        ExerciseId id,
         TestId testId,
         string title,
         string description,
         ExerciseDifficulty difficulty,
         string methodToExecute,
         string methodSolutionCode)
-        : base(id, testId, title, description, difficulty)
+        : base(testId, title, description, difficulty)
     {
         MethodToExecute = methodToExecute;
         MethodSolutionCode = methodSolutionCode;
@@ -40,7 +39,6 @@ public sealed class MethodCodingExercise : Exercise
         DataType dataType)
     {
         var exercise = new MethodCodingExercise(
-           ExerciseId.CreateUnique(),
            testId,
            title,
            description,

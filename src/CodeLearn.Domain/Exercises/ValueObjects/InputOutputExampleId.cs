@@ -1,17 +1,12 @@
 ﻿namespace CodeLearn.Domain.Exercises.ValueObjects;
 
-public sealed class InputOutputExampleId(Guid value) : ValueObject
+public sealed class InputOutputExampleId(int value) : ValueObject
 {
-    public Guid Value { get; } = value;
+    public int Value { get; } = value;
 
-    public static InputOutputExampleId Create(Guid value)
+    public static InputOutputExampleId Create(int value)
     {
         return new InputOutputExampleId(value);
-    }
-
-    public static InputOutputExampleId CreateUnique()
-    {
-        return new InputOutputExampleId(Guid.NewGuid());
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

@@ -30,8 +30,8 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<Guid>("ExerciseId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("SentDateTime")
                         .HasColumnType("datetime2");
@@ -119,8 +119,11 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("CodeLearn.Domain.Exercises.Exercise", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -164,12 +167,8 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("ExerciseId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Explanation")
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsCorrect")
                         .HasColumnType("bit");
@@ -432,8 +431,8 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Exercise2ExerciseTopic", b =>
                 {
-                    b.Property<Guid>("ExerciseId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ExerciseTopicId")
                         .HasColumnType("int");
@@ -693,8 +692,11 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
                     b.OwnsMany("CodeLearn.Domain.Exercises.Entities.ExerciseNote", "ExerciseNotes", b1 =>
                         {
-                            b1.Property<Guid>("Id")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
 
                             b1.Property<string>("Decoration")
                                 .IsRequired()
@@ -706,8 +708,8 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
 
-                            b1.Property<Guid>("ExerciseId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("ExerciseId")
+                                .HasColumnType("int");
 
                             b1.HasKey("Id");
 
@@ -846,16 +848,14 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
                     b.OwnsMany("CodeLearn.Domain.Exercises.Entities.InputOutputExample", "InputOutputExamples", b1 =>
                         {
-                            b1.Property<Guid>("Id")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
 
-                            b1.Property<Guid>("ExerciseId")
-                                .HasColumnType("uniqueidentifier");
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
 
-                            b1.Property<string>("Explanation")
-                                .IsRequired()
-                                .HasMaxLength(200)
-                                .HasColumnType("nvarchar(200)");
+                            b1.Property<int>("ExerciseId")
+                                .HasColumnType("int");
 
                             b1.Property<string>("Input")
                                 .IsRequired()
@@ -879,14 +879,17 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
                     b.OwnsMany("CodeLearn.Domain.Exercises.Entities.MethodParameter", "MethodParameters", b1 =>
                         {
-                            b1.Property<Guid>("Id")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
 
                             b1.Property<int>("DataTypeId")
                                 .HasColumnType("int");
 
-                            b1.Property<Guid>("ExerciseId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("ExerciseId")
+                                .HasColumnType("int");
 
                             b1.Property<int>("Position")
                                 .HasColumnType("int");
@@ -913,16 +916,19 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
                     b.OwnsMany("CodeLearn.Domain.Exercises.Entities.TestCase", "TestCases", b1 =>
                         {
-                            b1.Property<Guid>("Id")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
 
                             b1.Property<string>("CorrectOutputValue")
                                 .IsRequired()
                                 .HasMaxLength(250)
                                 .HasColumnType("nvarchar(250)");
 
-                            b1.Property<Guid>("ExerciseId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("ExerciseId")
+                                .HasColumnType("int");
 
                             b1.HasKey("Id");
 
@@ -935,14 +941,17 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
                             b1.OwnsMany("CodeLearn.Domain.Exercises.Entities.TestCaseParameter", "TestCaseParameters", b2 =>
                                 {
-                                    b2.Property<Guid>("Id")
-                                        .HasColumnType("uniqueidentifier");
+                                    b2.Property<int>("Id")
+                                        .ValueGeneratedOnAdd()
+                                        .HasColumnType("int");
+
+                                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b2.Property<int>("Id"));
 
                                     b2.Property<int>("Position")
                                         .HasColumnType("int");
 
-                                    b2.Property<Guid>("TestCaseId")
-                                        .HasColumnType("uniqueidentifier");
+                                    b2.Property<int>("TestCaseId")
+                                        .HasColumnType("int");
 
                                     b2.Property<string>("Value")
                                         .IsRequired()

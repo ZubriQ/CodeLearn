@@ -5,7 +5,6 @@ public sealed class QuestionChoice : BaseEntity<QuestionChoiceId>, IAggregateRoo
     public ExerciseId ExerciseId { get; private set; }
     public string Text { get; private set; }
     public bool IsCorrect { get; private set; }
-    public string? Explanation { get; private set; }
 
     private readonly IList<ChoiceExerciseSubmission> _exerciseSubmissions = [];
     public IReadOnlyList<ChoiceExerciseSubmission> ExerciseSubmissions => _exerciseSubmissions.AsReadOnly();
@@ -13,26 +12,22 @@ public sealed class QuestionChoice : BaseEntity<QuestionChoiceId>, IAggregateRoo
     private QuestionChoice(
         ExerciseId exerciseId,
         string text,
-        bool isCorrect,
-        string? explanation)
+        bool isCorrect)
         : base(default!)
     {
         ExerciseId = exerciseId;
         Text = text;
         IsCorrect = isCorrect;
-        Explanation = explanation;
     }
 
     public static QuestionChoice Create(
         ExerciseId exerciseId,
         string text,
-        bool isCorrect,
-        string? explanation = null)
+        bool isCorrect)
     {
         return new QuestionChoice(
             exerciseId,
             text,
-            isCorrect,
-            explanation);
+            isCorrect);
     }
 }

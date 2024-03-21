@@ -9,8 +9,8 @@ public sealed class MethodParameter : BaseEntity<MethodParameterId>
 
     private MethodParameter() { }
 
-    private MethodParameter(MethodParameterId id, ExerciseId exerciseId, DataType dataType, int position)
-        : base(id)
+    private MethodParameter(ExerciseId exerciseId, DataType dataType, int position)
+        : base(default!)
     {
         ExerciseId = exerciseId;
         DataTypeId = dataType.Id;
@@ -21,7 +21,6 @@ public sealed class MethodParameter : BaseEntity<MethodParameterId>
     public static MethodParameter Create(ExerciseId exerciseId, DataType dataType, int position)
     {
         return new MethodParameter(
-            MethodParameterId.CreateUnique(),
             exerciseId,
             dataType,
             position

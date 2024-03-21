@@ -47,7 +47,7 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
 
             methodParameterBuilder
                .Property(mp => mp.Id)
-               .ValueGeneratedNever()
+               .ValueGeneratedOnAdd()
                .HasConversion(
                    id => id.Value,
                    value => MethodParameterId.Create(value));
@@ -82,7 +82,7 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
 
             testCaseBuilder
                 .Property(tc => tc.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasConversion(
                     tcId => tcId.Value,
                     idValue => TestCaseId.Create(idValue));
@@ -115,7 +115,7 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
 
             parameterBuilder
                 .Property(p => p.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasConversion(
                     id => id.Value,
                     value => TestCaseParameterId.Create(value));
@@ -145,7 +145,7 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
 
             exampleBuilder
                 .Property(n => n.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasConversion(
                     id => id.Value,
                     value => InputOutputExampleId.Create(value));
@@ -158,11 +158,6 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
             exampleBuilder
                .Property(n => n.Output)
                .HasMaxLength(50)
-               .IsRequired();
-
-            exampleBuilder
-               .Property(n => n.Explanation)
-               .HasMaxLength(200)
                .IsRequired();
         });
 

@@ -10,8 +10,8 @@ public sealed class TestCase : BaseEntity<TestCaseId>
 
     private TestCase() { }
 
-    private TestCase(TestCaseId id, ExerciseId exerciseId, string correctOutputValue)
-        : base(id)
+    private TestCase(ExerciseId exerciseId, string correctOutputValue)
+        : base(default!)
     {
         ExerciseId = exerciseId;
         CorrectOutputValue = correctOutputValue;
@@ -20,7 +20,6 @@ public sealed class TestCase : BaseEntity<TestCaseId>
     public static TestCase Create(ExerciseId exerciseId, string correctOutputValue)
     {
         return new TestCase(
-            TestCaseId.CreateUnique(),
             exerciseId,
             correctOutputValue);
     }

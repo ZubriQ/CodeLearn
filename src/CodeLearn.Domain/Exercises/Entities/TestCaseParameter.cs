@@ -8,8 +8,8 @@ public sealed class TestCaseParameter : BaseEntity<TestCaseParameterId>
 
     private TestCaseParameter() { }
 
-    private TestCaseParameter(TestCaseParameterId id, TestCaseId testCaseId, string value, int position)
-        : base(id)
+    private TestCaseParameter(TestCaseId testCaseId, string value, int position)
+        : base(default!)
     {
         TestCaseId = testCaseId;
         Value = value;
@@ -19,7 +19,6 @@ public sealed class TestCaseParameter : BaseEntity<TestCaseParameterId>
     public static TestCaseParameter Create(TestCaseId testCaseId, string value, int position)
     {
         return new TestCaseParameter(
-            TestCaseParameterId.CreateUnique(),
             testCaseId,
             value,
             position);

@@ -9,11 +9,10 @@ public sealed class ExerciseNote : BaseEntity<ExerciseNoteId>
     private ExerciseNote() { }
 
     private ExerciseNote(
-        ExerciseNoteId exerciseNoteId,
         ExerciseId exerciseId,
         string entry,
         ExerciseNoteDecoration noteDecoration)
-        : base(exerciseNoteId)
+        : base(default!)
     {
         ExerciseId = exerciseId;
         Entry = entry;
@@ -26,7 +25,6 @@ public sealed class ExerciseNote : BaseEntity<ExerciseNoteId>
         ExerciseNoteDecoration noteDecoration = ExerciseNoteDecoration.Plain)
     {
         return new ExerciseNote(
-            ExerciseNoteId.CreateUnique(),
             exerciseId,
             entry,
             noteDecoration);

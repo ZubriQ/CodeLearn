@@ -8,13 +8,12 @@ public sealed class QuestionExercise : Exercise
     public IReadOnlyList<QuestionChoice> QuestionChoices => _questionChoices.AsReadOnly();
 
     private QuestionExercise(
-        ExerciseId id,
         TestId testId,
         string title,
         string description,
         ExerciseDifficulty difficulty,
         bool isMultipleAnswers)
-        : base(id, testId, title, description, difficulty)
+        : base(testId, title, description, difficulty)
     {
         IsMultipleAnswers = isMultipleAnswers;
     }
@@ -27,7 +26,6 @@ public sealed class QuestionExercise : Exercise
         bool isMultipleAnswers)
     {
         return new QuestionExercise(
-            ExerciseId.CreateUnique(),
             testId,
             title,
             description,
