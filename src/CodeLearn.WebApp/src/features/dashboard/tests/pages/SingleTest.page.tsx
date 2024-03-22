@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDashboardPageTitle } from '@/components/layout';
 import { Test } from '@/features/dashboard/tests/models/Test.ts';
 import agent from '@/api/agent.ts';
@@ -14,6 +14,9 @@ export default function SingleTestPage() {
   const [test, setTest] = useState<Test | undefined>(undefined);
   const { id } = useParams<{ id?: string }>();
   const [, setCurrentPageTitle] = useDashboardPageTitle();
+  const navigate = useNavigate();
+
+  const handleAddNewMethodCodingExerciseClick = () => navigate(`exercises/`);
 
   useEffect(() => {
     setCurrentPageTitle('Test');
@@ -33,7 +36,7 @@ export default function SingleTestPage() {
           });
         });
     }
-  }, []);
+  }, [id]);
 
   if (!test) {
     return <TypographyH2>Test not found</TypographyH2>;
@@ -48,7 +51,9 @@ export default function SingleTestPage() {
 
       <div className="mb-8 flex flex-row flex-wrap gap-4">
         <Button>Test group</Button>
-        <Button variant="outline">Add coding exercise</Button>
+        <Button variant="outline" onClick={handleAddNewMethodCodingExerciseClick}>
+          Add coding exercise
+        </Button>
         <Button variant="outline">Add question</Button>
       </div>
 

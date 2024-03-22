@@ -11,6 +11,9 @@ const TestingSessionPage = lazy(() => import('@/features/testing-sessions/pages/
 // For Teachers & Administrator
 const DashboardLayout = lazy(() => import('@/features/dashboard/DashboardLayout.tsx'));
 const TeacherTestsPage = lazy(() => import('@/features/dashboard/tests/pages/Tests.page.tsx'));
+const AddMethodCodingExercisePage = lazy(
+  () => import('@/features/dashboard/tests/pages/AddMethodCodingExercise.page.tsx'),
+);
 const SingleTestPage = lazy(() => import('@/features/dashboard/tests/pages/SingleTest.page.tsx'));
 const StudentGroupsPage = lazy(() => import('@/features/dashboard/student-groups/pages/StudentGroups.page.tsx'));
 const EditStudentGroupPage = lazy(() => import('@/features/dashboard/student-groups/pages/EditStudentGroup.page.tsx'));
@@ -79,6 +82,14 @@ export const routes: RouteObject[] = [
         element: (
           <Suspense>
             <SingleTestPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'tests/:id/exercises',
+        element: (
+          <Suspense>
+            <AddMethodCodingExercisePage />
           </Suspense>
         ),
       },
