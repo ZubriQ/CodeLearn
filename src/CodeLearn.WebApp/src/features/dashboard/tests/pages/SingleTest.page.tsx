@@ -50,16 +50,22 @@ export default function SingleTestPage() {
       </div>
 
       <div className="mb-8 flex flex-row flex-wrap gap-4">
-        <Button>Test group</Button>
-        <Button variant="outline" onClick={handleAddNewMethodCodingExerciseClick}>
+        <Button className="w-full sm:w-fit">Test group</Button>
+        <Button variant="outline" className="w-full sm:w-fit" onClick={handleAddNewMethodCodingExerciseClick}>
           Add coding exercise
         </Button>
-        <Button variant="outline">Add question</Button>
+        <Button variant="outline" className="w-full sm:w-fit">
+          Add question
+        </Button>
       </div>
 
       <div className="mb-8">
         <TypographyH3>Exercises</TypographyH3>
       </div>
+
+      {/* TODO: Render Method coding exercises */}
+
+      {/* TODO: Render Question exercises */}
     </DashboardPageContainer>
   );
 }
