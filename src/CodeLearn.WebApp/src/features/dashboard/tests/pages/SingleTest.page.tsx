@@ -29,7 +29,15 @@ export default function SingleTestPage() {
           });
         });
     }
-  }, [id]);
+  }, []);
 
-  return <DashboardPageContainer>Single Test</DashboardPageContainer>;
+  if (!test) {
+    return <h4>Test not found</h4>;
+  }
+
+  return (
+    <DashboardPageContainer>
+      <h2>{test?.title}</h2>
+    </DashboardPageContainer>
+  );
 }
