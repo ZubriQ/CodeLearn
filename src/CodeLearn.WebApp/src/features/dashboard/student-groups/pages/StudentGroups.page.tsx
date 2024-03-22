@@ -78,68 +78,70 @@ function StudentGroupsPage() {
 
   return (
     <DashboardPageContainer>
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogTrigger asChild>
-          <Button className="mb-6">Add new group</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[450px]">
-          <DialogHeader>
-            <DialogTitle>Add new student group</DialogTitle>
-            <DialogDescription>
-              Add the necessary information about the new student group here. Click save when you're done.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="studentGroupName" className="text-right">
-                Name
-              </Label>
-              <Input
-                id="studentGroupName"
-                className="col-span-3"
-                value={studentGroupName}
-                onChange={(e) => handleInputChange(e, setStudentGroupName)}
-              />
+      <div className="whitespace-nowrap">
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <Button className="mb-6">Add new group</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[450px]">
+            <DialogHeader>
+              <DialogTitle>Add new student group</DialogTitle>
+              <DialogDescription>
+                Add the necessary information about the new student group here. Click save when you're done.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="studentGroupName" className="text-right">
+                  Name
+                </Label>
+                <Input
+                  id="studentGroupName"
+                  className="col-span-3"
+                  value={studentGroupName}
+                  onChange={(e) => handleInputChange(e, setStudentGroupName)}
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="enrolmentYear" className="text-right">
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex items-center justify-end gap-1">
+                          <InformationCircleIcon className="h-4 w-4" />
+                          <p>Enrolment</p>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>The year the group started to exist</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </Label>
+                <Input
+                  type="number"
+                  id="enrolmentYear"
+                  className="col-span-3"
+                  min={2020}
+                  max={2100}
+                  step={1}
+                  value={enrolmentYear}
+                  onChange={(e) => handleInputChange(e, setEnrolmentYear)}
+                />
+              </div>
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="enrolmentYear" className="text-right">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div className="flex items-center justify-end gap-1">
-                        <InformationCircleIcon className="h-4 w-4" />
-                        <p>Enrolment</p>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>The year the group started to exist</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </Label>
-              <Input
-                type="number"
-                id="enrolmentYear"
-                className="col-span-3"
-                min={2020}
-                max={2100}
-                step={1}
-                value={enrolmentYear}
-                onChange={(e) => handleInputChange(e, setEnrolmentYear)}
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button type="submit" onClick={handleAdd}>
-              Submit
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            <DialogFooter>
+              <Button type="submit" onClick={handleAdd}>
+                Submit
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
 
-      <Button variant="outline" className="ml-4">
-        Import a list
-      </Button>
+        <Button variant="outline" className="ml-4">
+          Import a list
+        </Button>
+      </div>
 
       {isLoading ? <Loading /> : <DataTable columns={columns} data={studentGroups} filterBy="name" />}
     </DashboardPageContainer>

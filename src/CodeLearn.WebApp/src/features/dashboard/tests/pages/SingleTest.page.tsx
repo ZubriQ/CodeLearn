@@ -6,6 +6,9 @@ import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import DashboardPageContainer from '@/features/dashboard/DashboardPageContainer.tsx';
 import { TypographyH3 } from '@/components/typography/typography-h3.tsx';
+import { TypographyH2 } from '@/components/typography/typography-h2.tsx';
+import { TypographyP } from '@/components/typography/typography-p.tsx';
+import { Button } from '@/components/ui/button.tsx';
 
 export default function SingleTestPage() {
   const [test, setTest] = useState<Test | undefined>(undefined);
@@ -33,12 +36,25 @@ export default function SingleTestPage() {
   }, []);
 
   if (!test) {
-    return <h4>Test not found</h4>;
+    return <TypographyH2>Test not found</TypographyH2>;
   }
 
   return (
     <DashboardPageContainer>
-      <TypographyH3>{test?.title}</TypographyH3>
+      <div className="mb-8">
+        <TypographyH3>{test?.title}</TypographyH3>
+        <TypographyP>{test?.description}</TypographyP>
+      </div>
+
+      <div className="mb-8 flex flex-row flex-wrap gap-4">
+        <Button>Test group</Button>
+        <Button variant="outline">Add coding exercise</Button>
+        <Button variant="outline">Add question</Button>
+      </div>
+
+      <div className="mb-8">
+        <TypographyH3>Exercises</TypographyH3>
+      </div>
     </DashboardPageContainer>
   );
 }

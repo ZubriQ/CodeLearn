@@ -5,5 +5,5 @@ interface DashboardPageContainerProps {
 }
 
 export default function DashboardPageContainer({ children }: DashboardPageContainerProps) {
-  return <div className="mx-auto whitespace-nowrap lg:px-11 xl:px-24">{children}</div>;
+  return <div className="mx-auto lg:px-11 xl:px-24">{children}</div>;
 }
