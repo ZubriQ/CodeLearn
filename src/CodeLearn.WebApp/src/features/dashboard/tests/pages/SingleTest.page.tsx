@@ -5,6 +5,7 @@ import { Test } from '@/features/dashboard/tests/models/Test.ts';
 import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import DashboardPageContainer from '@/features/dashboard/DashboardPageContainer.tsx';
+import { TypographyH3 } from '@/components/typography/typography-h3.tsx';
 
 export default function SingleTestPage() {
   const [test, setTest] = useState<Test | undefined>(undefined);
@@ -37,7 +38,7 @@ export default function SingleTestPage() {
 
   return (
     <DashboardPageContainer>
-      <h2>{test?.title}</h2>
+      <TypographyH3>{test?.title}</TypographyH3>
     </DashboardPageContainer>
   );
 }
