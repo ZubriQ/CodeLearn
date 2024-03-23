@@ -6,17 +6,17 @@ import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import DashboardPageContainer from '@/features/dashboard/DashboardPageContainer.tsx';
 import { TypographyH3 } from '@/components/typography/typography-h3.tsx';
-import { TypographyH2 } from '@/components/typography/typography-h2.tsx';
 import { TypographyP } from '@/components/typography/typography-p.tsx';
 import { Button } from '@/components/ui/button.tsx';
+import { TypographyH2 } from '@/components/typography/typography-h2.tsx';
 
-export default function SingleTestPage() {
+export default function SingleTestPage(): JSX.Element {
   const [test, setTest] = useState<Test | undefined>(undefined);
   const { id } = useParams<{ id?: string }>();
   const [, setCurrentPageTitle] = useDashboardPageTitle();
   const navigate = useNavigate();
 
-  const handleAddNewMethodCodingExerciseClick = () => navigate(`exercises/`);
+  const handleAddNewMethodCodingExerciseClick = () => navigate(`exercises/add-method-coding`);
 
   useEffect(() => {
     setCurrentPageTitle('Test');
@@ -39,13 +39,13 @@ export default function SingleTestPage() {
   }, [id]);
 
   if (!test) {
-    return <TypographyH2>Test not found</TypographyH2>;
+    return <TypographyH3>Test not found</TypographyH3>;
   }
 
   return (
     <DashboardPageContainer>
       <div className="mb-8">
-        <TypographyH3>{test?.title}</TypographyH3>
+        <TypographyH2>{test?.title}</TypographyH2>
         <TypographyP>{test?.description}</TypographyP>
       </div>
 
@@ -60,11 +60,13 @@ export default function SingleTestPage() {
       </div>
 
       <div className="mb-8">
-        <TypographyH3>Exercises</TypographyH3>
+        <TypographyH3>Coding Exercises</TypographyH3>
       </div>
-
       {/* TODO: Render Method coding exercises */}
 
+      <div className="mb-8">
+        <TypographyH3>Questions</TypographyH3>
+      </div>
       {/* TODO: Render Question exercises */}
     </DashboardPageContainer>
   );

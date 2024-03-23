@@ -5,5 +5,9 @@ interface TypographyH2Props {
 }
 
 export function TypographyH2({ children }: TypographyH2Props) {
-  return <h3 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">{children}</h3>;
+  return (
+    <h3 className="scroll-m-20 border-b border-zinc-200 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+      {children}
+    </h3>
+  );
 }

@@ -86,7 +86,7 @@ export const routes: RouteObject[] = [
         ),
       },
       {
-        path: 'tests/:id/exercises',
+        path: 'tests/:id/exercises/add-method-coding',
         element: (
           <Suspense>
             <AddMethodCodingExercisePage />
