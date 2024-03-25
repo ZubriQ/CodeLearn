@@ -5,4 +5,4 @@ public record QuestionExerciseRequest(
     string Description,
     string Difficulty,
     bool IsMultipleAnswers,
-    QuestionChoiceDto[] Answers);
+    QuestionChoiceRequestDto[] Answers);
