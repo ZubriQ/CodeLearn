@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Exercises\Commands\CreateMethodCodingExercise\" />
     <Folder Include="Exercises\Queries\" />
   </ItemGroup>
 

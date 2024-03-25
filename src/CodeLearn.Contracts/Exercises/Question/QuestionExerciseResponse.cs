@@ -1,6 +1,4 @@
-﻿using CodeLearn.Contracts.Exercises;
-
-namespace CodeLearn.Contracts.QuestionExercises;
+﻿namespace CodeLearn.Contracts.Exercises.Question;
 
 public record QuestionExerciseResponse(
     int Id,

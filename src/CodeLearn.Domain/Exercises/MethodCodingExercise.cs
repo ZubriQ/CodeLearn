@@ -62,4 +62,9 @@ public sealed class MethodCodingExercise : Exercise
     {
         _testCases.Add(testCase);
     }
+
+    public void AddExample(InputOutputExample example)
+    {
+        _inputOutputExamples.Add(example);
+    }
 }

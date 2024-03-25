@@ -1,5 +1,7 @@
-﻿using CodeLearn.Application.Exercises.Commands.CreateQuestionExercise;
-using CodeLearn.Contracts.QuestionExercises;
+﻿using CodeLearn.Application.Exercises.Commands.CreateMethodCodingExercise;
+using CodeLearn.Application.Exercises.Commands.CreateQuestionExercise;
+using CodeLearn.Contracts.Exercises.MethodCoding;
+using CodeLearn.Contracts.Exercises.Question;
 
 namespace CodeLearn.Api.Controllers;
 
@@ -28,6 +30,20 @@ public sealed class TestsExercisesController(ISender sender, IMapper mapper) : A
 
         return result.Match(
             id => CreatedAtAction(nameof(Create), new { id }, id),
+            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."));
+    }
+
+    [HttpPost("add-method-coding")]
+    [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Create(int testId, MethodCodingExerciseRequest request)
+    {
+        var command = mapper.Map<CreateMethodCodingExerciseCommand>((testId, request));
+        var result = await sender.Send(command);
+
+        return result.Match(
+            id => CreatedAtAction(nameof(Create), new { id }, id),
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Not found."),
             _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."));
     }
 }
