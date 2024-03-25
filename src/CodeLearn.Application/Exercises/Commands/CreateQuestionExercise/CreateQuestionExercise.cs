@@ -1,0 +1,65 @@
+﻿using CodeLearn.Domain.Exercises;
+using CodeLearn.Domain.Exercises.Enums;
+using CodeLearn.Domain.QuestionChoices;
+using CodeLearn.Domain.Tests.ValueObjects;
+using FluentValidation.Results;
+
+namespace CodeLearn.Application.Exercises.Commands.CreateQuestionExercise;
+
+public record AnswerModel(string Text, bool IsCorrect);
+
+public record CreateQuestionExerciseCommand(
+    int TestId,
+    string Title,
+    string Description,
+    string Difficulty,
+    bool IsMultipleAnswers,
+    List<AnswerModel> Answers)
+    : IRequest<OneOf<int, ValidationFailed>>;
+
+public class CreateQuestionExerciseCommandHandler(
+    IApplicationDbContext context,
+    IValidator<CreateQuestionExerciseCommand> validator)
+    : IRequestHandler<CreateQuestionExerciseCommand, OneOf<int, ValidationFailed>>
+{
+    public async Task<OneOf<int, ValidationFailed>> Handle(CreateQuestionExerciseCommand request, CancellationToken cancellationToken)
+    {
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+        {
+            return new ValidationFailed(validationResult.Errors);
+        }
+
+        if (!Enum.TryParse<ExerciseDifficulty>(request.Difficulty, true, out var difficultyEnum))
+        {
+            List<ValidationFailure> validationFailure = ValidateEnum(request);
+
+            return new ValidationFailed(validationFailure);
+        }
+
+        var questionExercise = QuestionExercise.Create(TestId.Create(request.TestId), request.Title, request.Description, difficultyEnum, request.IsMultipleAnswers);
+
+        AddQuestionExercisesToExercise(request, questionExercise);
+
+        context.QuestionExercises.Add(questionExercise);
+
+        await context.SaveChangesAsync(cancellationToken);
+
+        return questionExercise.Id.Value;
+    }
+
+    private static List<ValidationFailure> ValidateEnum(CreateQuestionExerciseCommand request)
+    {
+        return [new(nameof(request.Difficulty), $"Invalid difficulty level: {request.Difficulty}.")];
+    }
+
+    private static void AddQuestionExercisesToExercise(CreateQuestionExerciseCommand request, QuestionExercise questionExercise)
+    {
+        foreach (var answerDto in request.Answers)
+        {
+            var questionChoice = QuestionChoice.Create(questionExercise.Id, answerDto.Text, answerDto.IsCorrect);
+            questionExercise.AddQuestionChoice(questionChoice);
+        }
+    }
+}

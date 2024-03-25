@@ -1,13 +1,13 @@
-﻿using CodeLearn.Application.Tests.Queries.GetTestById;
-using CodeLearn.Contracts.Tests;
+﻿using CodeLearn.Application.Exercises.Commands.CreateQuestionExercise;
+using CodeLearn.Contracts.QuestionExercises;
 
 namespace CodeLearn.Api.Controllers;
 
 [Route("api/tests/{testId:int}/exercises")]
 public sealed class TestsExercisesController(ISender sender, IMapper mapper) : ApiControllerBase
 {
-    //[HttpGet("{testId:int}")]
-    //[ProducesResponseType(typeof(TestResponse), StatusCodes.Status200OK)]
+    //[HttpGet]
+    //[ProducesResponseType(typeof(QuestionExerciseResponse), StatusCodes.Status200OK)]
     //[ProducesResponseType(StatusCodes.Status404NotFound)]
     //public async Task<IActionResult> Get(int testId)
     //{
@@ -17,4 +17,17 @@ public sealed class TestsExercisesController(ISender sender, IMapper mapper) : A
     //        test => Ok(mapper.Map<TestResponse>(test)),
     //        _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Test not found."));
     //}
+
+    [HttpPost("add-question")]
+    [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Create(int testId, QuestionExerciseRequest request)
+    {
+        var command = mapper.Map<CreateQuestionExerciseCommand>((testId, request));
+        var result = await sender.Send(command);
+
+        return result.Match(
+            id => CreatedAtAction(nameof(Create), new { id }, id),
+            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."));
+    }
 }
