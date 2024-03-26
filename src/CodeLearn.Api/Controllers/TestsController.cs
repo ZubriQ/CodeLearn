@@ -28,7 +28,7 @@ public sealed class TestsController(ISender sender, IMapper mapper) : ApiControl
         var result = await sender.Send(new GetAllTestsQuery());
         var mappedData = result
             .Select(mapper.Map<TestResponse>)
-            .ToList();
+            .ToArray();
 
         return Ok(new TestResponseCollection(mappedData));
     }
