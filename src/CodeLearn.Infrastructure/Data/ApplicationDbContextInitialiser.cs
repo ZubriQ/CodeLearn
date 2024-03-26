@@ -66,9 +66,10 @@ public class ApplicationDbContextInitialiser
     private async Task TrySeedAsync()
     {
         await SeedDefaultRoles();
-        await EnsureAdministratorExists();
         await SeedDataTypes();
         await SeedExerciseTopics();
+        await EnsureAdministratorExists();
+        await EnsureTestStudentExistExists();
     }
 
     private async Task SeedDefaultRoles()
@@ -108,6 +109,31 @@ public class ApplicationDbContextInitialiser
             if (createUserResult.Succeeded)
             {
                 await _userManager.AddToRoleAsync(adminUser, Roles.Administrator);
+            }
+        }
+    }
+
+    private async Task EnsureTestStudentExistExists()
+    {
+        var studentUsers = await _userManager.GetUsersInRoleAsync(Roles.Student);
+
+        if (!studentUsers.Any())
+        {
+            var student = new ApplicationUser
+            {
+                FirstName = "firstName",
+                LastName = "lastName",
+                UserName = "student",
+                Email = "Stud3nt@example.com",
+                StudentGroupName = "PIB",
+                EnrolmentYear = 2020,
+            };
+
+            var createUserResult = await _userManager.CreateAsync(student, "Stud3nt@example.com");
+
+            if (createUserResult.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(student, Roles.Student);
             }
         }
     }

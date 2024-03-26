@@ -4,11 +4,13 @@ public record ExerciseNoteDto(string Entry, string Decoration);
 
 public record InputOutputExampleDto(string Input, string Output);
 
-public record MethodParameterDto(int DataTypeId, int Position);
+public record MethodParameterRequestDto(int DataTypeId, int Position);
 
-public record TestCaseParameterDto(string Value, int Position);
+public record TestCaseParameterRequestDto(string Value, int Position);
 
-public record TestCaseDto(string CorrectOutputValue, TestCaseParameterDto[] TestCaseParameters);
+public record TestCaseRequestDto(
+    string CorrectOutputValue, 
+    TestCaseParameterRequestDto[] TestCaseParameters);
 
 public record MethodCodingExerciseRequest(
     string Title,
@@ -20,5 +22,5 @@ public record MethodCodingExerciseRequest(
     int MethodReturnTypeId,
     ExerciseNoteDto[] ExerciseNotes,
     InputOutputExampleDto[] InputOutputExamples,
-    MethodParameterDto[] MethodParameters,
-    TestCaseDto[] TestCases);
+    MethodParameterRequestDto[] MethodParameters,
+    TestCaseRequestDto[] TestCases);

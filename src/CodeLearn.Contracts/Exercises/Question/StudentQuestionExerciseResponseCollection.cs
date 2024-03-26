@@ -1,0 +1,3 @@
+﻿namespace CodeLearn.Contracts.Exercises.Question;
+
+public record StudentQuestionExerciseResponseCollection(StudentQuestionExerciseResponse[] QuestionExercises);

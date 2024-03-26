@@ -1,6 +1,8 @@
 ﻿using CodeLearn.Application.Exercises.Commands.CreateQuestionExercise;
-using CodeLearn.Application.Exercises.Queries.GetAllQuestionExercises;
+using CodeLearn.Application.Exercises.Queries.GetAllQuestionExercisesByTestId;
 using CodeLearn.Contracts.Exercises.Question;
+using CodeLearn.Domain.Constants;
+using System.Security.Claims;
 
 namespace CodeLearn.Api.Controllers;
 
@@ -8,14 +10,37 @@ namespace CodeLearn.Api.Controllers;
 public sealed class TestsQuestionExercisesController(ISender sender, IMapper mapper) : ApiControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(typeof(QuestionExerciseResponseCollection), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(TeacherQuestionExerciseResponseCollection), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(StudentQuestionExerciseResponseCollection), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllByTestId(int testId)
+    public async Task<IActionResult> GetAllByTestIdForTeacher(int testId)
     {
-        var response = await sender.Send(new GetAllQuestionExercisesByTestIdQuery(testId));
-        var mappedData = response.Select(mapper.Map<QuestionExerciseResponse>).ToArray();
+        var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
 
-        return Ok(new QuestionExerciseResponseCollection(mappedData));
+        var result = await sender.Send(new GetAllQuestionExercisesByTestIdQuery(testId));
+
+        return result.Match(
+            exercises =>
+            {
+                // Map data for teacher / administrator
+                if (userRole == Roles.Teacher || userRole == Roles.Administrator)
+                {
+                    var mappedDataForTeacher = exercises
+                        .Select(mapper.Map<TeacherQuestionExerciseResponse>)
+                        .ToArray();
+                    return Ok(new TeacherQuestionExerciseResponseCollection(mappedDataForTeacher));
+                }
+
+                // Map data for student
+                var mappedDataForStudent = exercises
+                    .Select(mapper.Map<StudentQuestionExerciseResponse>)
+                    .ToArray();
+                return Ok(new StudentQuestionExerciseResponseCollection(mappedDataForStudent));
+            },
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Test not found."),
+            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."));
     }
 
     [HttpPost]
