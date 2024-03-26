@@ -70,6 +70,7 @@ public class CreateMethodCodingExerciseCommandHandler(
             request.MethodSolutionCode,
             dataType);
 
+        // Add Notes
         foreach (var note in request.ExerciseNotes)
         {
             if (!Enum.TryParse<ExerciseNoteDecoration>(note.Decoration, true, out var noteDecorationEnum))
@@ -82,12 +83,9 @@ public class CreateMethodCodingExerciseCommandHandler(
             exercise.AddNote(newNote);
         }
 
-        foreach (var example in request.InputOutputExamples)
-        {
-            var newExample = InputOutputExample.Create(exercise.Id, example.Input, example.Output);
-            exercise.AddExample(newExample);
-        }
+        AddInputOutputExamples(request, exercise);
 
+        // Add Method Parameters
         foreach (var methodParameter in request.MethodParameters)
         {
             var parameterDataType = await _context.DataTypes
@@ -103,26 +101,16 @@ public class CreateMethodCodingExerciseCommandHandler(
             exercise.AddMethodParameter(parameter);
         }
 
-        foreach(var testCase in request.TestCases)
-        {
-            var newTestCase = TestCase.Create(exercise.Id, testCase.CorrectOutputValue);
+        AddTestCases(request, exercise);
 
-            foreach (var testCaseParameter in testCase.TestCaseParameters)
-            {
-                var parameter = TestCaseParameter.Create(newTestCase.Id, testCaseParameter.Value, testCaseParameter.Position);
-                newTestCase.AddTestCaseParameter(parameter);
-            }
-
-            exercise.AddTestCase(newTestCase);
-        }
-
+        // Add Topics
         foreach (var topicId in request.ExerciseTopics)
         {
             var topic = await _context.ExerciseTopics
                 .FirstOrDefaultAsync(x => x.Id == ExerciseTopicId.Create(topicId), cancellationToken);
 
             if (topic is null)
-            {
+            { 
                 return new NotFound();
             }
 
@@ -135,7 +123,34 @@ public class CreateMethodCodingExerciseCommandHandler(
 
         return exercise.Id.Value;
     }
-    
+
+    private static void AddInputOutputExamples(
+        CreateMethodCodingExerciseCommand request, MethodCodingExercise exercise)
+    {
+        foreach (var example in request.InputOutputExamples)
+        {
+            var newExample = InputOutputExample.Create(exercise.Id, example.Input, example.Output);
+            exercise.AddExample(newExample);
+        }
+    }
+
+    private static void AddTestCases(
+        CreateMethodCodingExerciseCommand request, MethodCodingExercise exercise)
+    {
+        foreach (var testCase in request.TestCases)
+        {
+            var newTestCase = TestCase.Create(exercise.Id, testCase.CorrectOutputValue);
+
+            foreach (var testCaseParameter in testCase.TestCaseParameters)
+            {
+                var parameter = TestCaseParameter.Create(newTestCase.Id, testCaseParameter.Value, testCaseParameter.Position);
+                newTestCase.AddTestCaseParameter(parameter);
+            }
+
+            exercise.AddTestCase(newTestCase);
+        }
+    }
+
     private static List<ValidationFailure> ValidateDifficultyEnum(CreateMethodCodingExerciseCommand request)
     {
         return [new(nameof(request.Difficulty), $"Invalid difficulty level: {request.Difficulty}.")];

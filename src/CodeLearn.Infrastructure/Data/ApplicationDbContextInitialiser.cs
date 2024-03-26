@@ -147,6 +147,7 @@ public class ApplicationDbContextInitialiser
                 ExerciseTopic.Create("Math"),
                 ExerciseTopic.Create("Dynamic Programming"),
                 ExerciseTopic.Create("Greedy"),
+                ExerciseTopic.Create("Sorting"),
                 ExerciseTopic.Create("Binary Search"),
                 ExerciseTopic.Create("Linked List"),
                 ExerciseTopic.Create("Bredth-First Search"),
