@@ -19,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Exercises\Queries\" />
+    <Folder Include="Exercises\Queries\GetQuestionExerciseById\" />
+    <Folder Include="Exercises\Queries\GetAllMethodCodingExercises\" />
+    <Folder Include="Exercises\Queries\GetMethodCodingExerciseById\" />
   </ItemGroup>
 
 </Project>

@@ -12,7 +12,7 @@ public sealed class TestsController(ISender sender, IMapper mapper) : ApiControl
     [HttpGet("{testId:int}")]
     [ProducesResponseType(typeof(TestResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Get(int testId)
+    public async Task<IActionResult> GetById(int testId)
     {
         var result = await sender.Send(new GetTestByIdQuery(testId));
 

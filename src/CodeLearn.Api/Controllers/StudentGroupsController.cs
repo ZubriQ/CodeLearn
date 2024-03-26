@@ -12,9 +12,9 @@ public sealed class StudentGroupsController(ISender sender, IMapper mapper) : Ap
     [HttpGet("{studentGroupId:int}")]
     [ProducesResponseType(typeof(StudentGroupResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Get(int studentGroupId)
+    public async Task<IActionResult> GetById(int studentGroupId)
     {
-        var result = await sender.Send(new GetStudentGroupByIdCommand(studentGroupId));
+        var result = await sender.Send(new GetStudentGroupByIdQuery(studentGroupId));
 
         return result.Match(
             studentGroup => Ok(mapper.Map<StudentGroupResponse>(studentGroup)),
@@ -25,7 +25,7 @@ public sealed class StudentGroupsController(ISender sender, IMapper mapper) : Ap
     [ProducesResponseType(typeof(StudentGroupResponseCollection), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
-        var response = await sender.Send(new GetAllStudentGroupsCommand());
+        var response = await sender.Send(new GetAllStudentGroupsQuery());
         var mappedData = response.Select(mapper.Map<StudentGroupResponse>).ToArray();
 
         return Ok(new StudentGroupResponseCollection(mappedData));
