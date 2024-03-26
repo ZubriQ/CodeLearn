@@ -4,6 +4,7 @@ using CodeLearn.Domain.Tests.ValueObjects;
 using FluentValidation.Results;
 using CodeLearn.Domain.Exercises.Entities;
 using CodeLearn.Domain.Exercises.ValueObjects;
+using CodeLearn.Domain.ExerciseTopics.ValueObjects;
 
 namespace CodeLearn.Application.Exercises.Commands.CreateMethodCodingExercise;
 
@@ -33,13 +34,13 @@ public record CreateMethodCodingExerciseCommand(
     : IRequest<OneOf<int, ValidationFailed, NotFound>>;
 
 public class CreateMethodCodingExerciseCommandHandler(
-    IApplicationDbContext context,
-    IValidator<CreateMethodCodingExerciseCommand> validator) 
+    IApplicationDbContext _context,
+    IValidator<CreateMethodCodingExerciseCommand> _validator) 
     : IRequestHandler<CreateMethodCodingExerciseCommand, OneOf<int, ValidationFailed, NotFound>>
 {
     public async Task<OneOf<int, ValidationFailed, NotFound>> Handle(CreateMethodCodingExerciseCommand request, CancellationToken cancellationToken)
     {
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
         {
@@ -52,8 +53,8 @@ public class CreateMethodCodingExerciseCommandHandler(
             return new ValidationFailed(validationFailure);
         }
 
-        var dataType = await context.DataTypes
-            .FirstOrDefaultAsync(x => x.Id == DataTypeId.Create(request.MethodReturnTypeId));
+        var dataType = await _context.DataTypes
+            .FirstOrDefaultAsync(x => x.Id == DataTypeId.Create(request.MethodReturnTypeId), cancellationToken);
 
         if (dataType is null)
         {
@@ -89,8 +90,8 @@ public class CreateMethodCodingExerciseCommandHandler(
 
         foreach (var methodParameter in request.MethodParameters)
         {
-            var parameterDataType = await context.DataTypes
-                .FirstOrDefaultAsync(x => x.Id == DataTypeId.Create(methodParameter.DataTypeId));
+            var parameterDataType = await _context.DataTypes
+                .FirstOrDefaultAsync(x => x.Id == DataTypeId.Create(methodParameter.DataTypeId), cancellationToken);
 
             if (parameterDataType is null)
             {
@@ -115,9 +116,22 @@ public class CreateMethodCodingExerciseCommandHandler(
             exercise.AddTestCase(newTestCase);
         }
 
-        context.MethodCodingExercises.Add(exercise);
+        foreach (var topicId in request.ExerciseTopics)
+        {
+            var topic = await _context.ExerciseTopics
+                .FirstOrDefaultAsync(x => x.Id == ExerciseTopicId.Create(topicId), cancellationToken);
 
-        await context.SaveChangesAsync(cancellationToken);
+            if (topic is null)
+            {
+                return new NotFound();
+            }
+
+            exercise.AddTopic(topic);
+        }
+
+        _context.MethodCodingExercises.Add(exercise);
+
+        await _context.SaveChangesAsync(cancellationToken);
 
         return exercise.Id.Value;
     }
