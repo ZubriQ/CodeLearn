@@ -52,8 +52,8 @@ public class CreateMethodCodingExerciseCommandHandler(
             return new ValidationFailed(validationFailure);
         }
 
-        var dataType = context.DataTypes
-            .FirstOrDefault(x => x.Id == DataTypeId.Create(request.MethodReturnTypeId));
+        var dataType = await context.DataTypes
+            .FirstOrDefaultAsync(x => x.Id == DataTypeId.Create(request.MethodReturnTypeId));
 
         if (dataType is null)
         {
@@ -90,13 +90,13 @@ public class CreateMethodCodingExerciseCommandHandler(
         foreach (var methodParameter in request.MethodParameters)
         {
             var parameterDataType = await context.DataTypes
-                .FirstOrDefaultAsync(x => x.Id.Value == methodParameter.DataTypeId);
+                .FirstOrDefaultAsync(x => x.Id == DataTypeId.Create(methodParameter.DataTypeId));
 
             if (parameterDataType is null)
             {
                 return new NotFound();
             }
-            // Is id generated?
+
             var parameter = MethodParameter.Create(exercise.Id, parameterDataType, methodParameter.Position);
 
             exercise.AddMethodParameter(parameter);
@@ -108,7 +108,6 @@ public class CreateMethodCodingExerciseCommandHandler(
 
             foreach (var testCaseParameter in testCase.TestCaseParameters)
             {
-                // Is id generated?
                 var parameter = TestCaseParameter.Create(newTestCase.Id, testCaseParameter.Value, testCaseParameter.Position);
                 newTestCase.AddTestCaseParameter(parameter);
             }

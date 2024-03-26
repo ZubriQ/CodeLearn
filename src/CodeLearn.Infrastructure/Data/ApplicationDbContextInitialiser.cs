@@ -1,4 +1,6 @@
 ﻿using CodeLearn.Domain.Constants;
+using CodeLearn.Domain.Exercises.Entities;
+using CodeLearn.Domain.ExerciseTopics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -65,6 +67,8 @@ public class ApplicationDbContextInitialiser
     {
         await SeedDefaultRoles();
         await EnsureAdministratorExists();
+        await SeedDataTypes();
+        await SeedExerciseTopics();
     }
 
     private async Task SeedDefaultRoles()
@@ -100,10 +104,67 @@ public class ApplicationDbContextInitialiser
             };
 
             var createUserResult = await _userManager.CreateAsync(adminUser, "Adm1n@example.com");
+
             if (createUserResult.Succeeded)
             {
                 await _userManager.AddToRoleAsync(adminUser, Roles.Administrator);
             }
+        }
+    }
+
+    private async Task SeedDataTypes()
+    {
+        if (!_context.DataTypes.Any())
+        {
+            var dataTypes = new List<DataType>
+            {
+                DataType.Create("System.Void", "void"),
+                DataType.Create("System.Object", "object"),
+                DataType.Create("System.Boolean", "bool"),
+                DataType.Create("System.String", "string"),
+                DataType.Create("System.Char", "char"),
+                DataType.Create("System.Byte", "byte"),
+                DataType.Create("System.Int32", "int"),
+                DataType.Create("System.Int64", "long"),
+                DataType.Create("System.Double", "double"),
+                DataType.Create("System.Single", "float"),
+            };
+
+            _context.DataTypes.AddRange(dataTypes);
+
+            await _context.SaveChangesAsync();
+        }
+    }
+
+    private async Task SeedExerciseTopics()
+    {
+        if (!_context.ExerciseTopics.Any())
+        {
+            var topics = new List<ExerciseTopic>
+            {
+                ExerciseTopic.Create("Array"),
+                ExerciseTopic.Create("String"),
+                ExerciseTopic.Create("Math"),
+                ExerciseTopic.Create("Dynamic Programming"),
+                ExerciseTopic.Create("Greedy"),
+                ExerciseTopic.Create("Binary Search"),
+                ExerciseTopic.Create("Linked List"),
+                ExerciseTopic.Create("Bredth-First Search"),
+                ExerciseTopic.Create("Tree"),
+                ExerciseTopic.Create("Binary Tree"),
+                ExerciseTopic.Create("Trie"),
+                ExerciseTopic.Create("Matrix"),
+                ExerciseTopic.Create("Two Pointers"),
+                ExerciseTopic.Create("Stack"),
+                ExerciseTopic.Create("Queue"),
+                ExerciseTopic.Create("Hashing"),
+                ExerciseTopic.Create("Backtracking"),
+                ExerciseTopic.Create("Geometry"),
+            };
+
+            _context.ExerciseTopics.AddRange(topics);
+
+            await _context.SaveChangesAsync();
         }
     }
 }
