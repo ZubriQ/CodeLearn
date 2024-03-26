@@ -9,7 +9,7 @@ public record MethodParameterRequestDto(int DataTypeId, int Position);
 public record TestCaseParameterRequestDto(string Value, int Position);
 
 public record TestCaseRequestDto(
-    string CorrectOutputValue, 
+    string CorrectOutputValue,
     TestCaseParameterRequestDto[] TestCaseParameters);
 
 public record MethodCodingExerciseRequest(

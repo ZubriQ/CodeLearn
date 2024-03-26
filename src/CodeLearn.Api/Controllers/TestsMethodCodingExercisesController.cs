@@ -22,7 +22,7 @@ public sealed class TestsMethodCodingExercisesController(ISender sender, IMapper
         var result = await sender.Send(new GetAllMethodCodingExercisesByTestIdQuery(testId));
 
         return result.Match(
-            exercises => 
+            exercises =>
             {
                 // Map data for teacher / administrator
                 if (userRole == Roles.Teacher || userRole == Roles.Administrator)

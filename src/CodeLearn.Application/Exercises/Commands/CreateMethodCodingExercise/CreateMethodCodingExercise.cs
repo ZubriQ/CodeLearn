@@ -1,10 +1,10 @@
-﻿using CodeLearn.Domain.Exercises.Enums;
-using CodeLearn.Domain.Exercises;
-using CodeLearn.Domain.Tests.ValueObjects;
-using FluentValidation.Results;
+﻿using CodeLearn.Domain.Exercises;
 using CodeLearn.Domain.Exercises.Entities;
+using CodeLearn.Domain.Exercises.Enums;
 using CodeLearn.Domain.Exercises.ValueObjects;
 using CodeLearn.Domain.ExerciseTopics.ValueObjects;
+using CodeLearn.Domain.Tests.ValueObjects;
+using FluentValidation.Results;
 
 namespace CodeLearn.Application.Exercises.Commands.CreateMethodCodingExercise;
 
@@ -35,7 +35,7 @@ public record CreateMethodCodingExerciseCommand(
 
 public class CreateMethodCodingExerciseCommandHandler(
     IApplicationDbContext _context,
-    IValidator<CreateMethodCodingExerciseCommand> _validator) 
+    IValidator<CreateMethodCodingExerciseCommand> _validator)
     : IRequestHandler<CreateMethodCodingExerciseCommand, OneOf<int, ValidationFailed, NotFound>>
 {
     public async Task<OneOf<int, ValidationFailed, NotFound>> Handle(CreateMethodCodingExerciseCommand request, CancellationToken cancellationToken)
@@ -110,7 +110,7 @@ public class CreateMethodCodingExerciseCommandHandler(
                 .FirstOrDefaultAsync(x => x.Id == ExerciseTopicId.Create(topicId), cancellationToken);
 
             if (topic is null)
-            { 
+            {
                 return new NotFound();
             }
 
