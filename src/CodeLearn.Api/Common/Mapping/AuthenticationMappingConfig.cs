@@ -1,4 +1,5 @@
-﻿using CodeLearn.Application.Authentication.Commands.RegisterStudent;
+﻿using CodeLearn.Application.Authentication.Commands.Login;
+using CodeLearn.Application.Authentication.Commands.RegisterStudent;
 using CodeLearn.Application.Authentication.Commands.RegisterTeacher;
 using CodeLearn.Application.Common.IdentityModels;
 using CodeLearn.Contracts.Authentication;
@@ -19,5 +20,7 @@ public class AuthenticationMappingConfig : IRegister
                 UserCredentials.Create(src.Email, src.Password),
                 UserFullName.Create(src.FirstName, src.LastName, src.Patronymic),
                 UserStudentDetails.Create(src.StudentGroupName, src.EnrolmentYear)));
+
+        config.NewConfig<LoginRequest, LoginCommand>();
     }
 }

@@ -1,4 +1,5 @@
-﻿using CodeLearn.Application.Authentication.Commands.RegisterStudent;
+﻿using CodeLearn.Application.Authentication.Commands.Login;
+using CodeLearn.Application.Authentication.Commands.RegisterStudent;
 using CodeLearn.Application.Authentication.Commands.RegisterTeacher;
 using CodeLearn.Contracts.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -37,17 +38,17 @@ public sealed class AuthenticationController(ISender _sender, IMapper _mapper) :
             _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed"));
     }
 
-    //[HttpPost]
-    //[Route("login")]
-    //public async Task<IActionResult> Login([FromBody] LoginRequest request)
-    //{
-    //    (var result, var jwtToken) = await _identityService.Login(request.Email, request.Password);
+    [HttpPost]
+    [Route("login")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
+    {
+        var command = _mapper.Map<LoginCommand>(request);
+        var result = await _sender.Send(command);
 
-    //    if (result.IsFailure)
-    //    {
-    //        return Forbid();
-    //    }
-
-    //    return Ok(jwtToken);
-    //}
+        return result.Match<IActionResult>(
+            Ok,
+            _ => Problem(statusCode: StatusCodes.Status403Forbidden, title: "Invalid credentials"));
+    }
 }
