@@ -38,9 +38,14 @@ public class CreateQuestionExerciseCommandHandler(
             return new ValidationFailed(validationFailure);
         }
 
-        var questionExercise = QuestionExercise.Create(TestId.Create(request.TestId), request.Title, request.Description, difficultyEnum, request.IsMultipleAnswers);
+        var questionExercise = QuestionExercise.Create(
+            TestId.Create(request.TestId),
+            request.Title,
+            request.Description,
+            difficultyEnum,
+            request.IsMultipleAnswers);
 
-        AddQuestionExercisesToExercise(request, questionExercise);
+        AddQuestionChoicesToExercise(request, questionExercise);
 
         _context.QuestionExercises.Add(questionExercise);
 
@@ -54,7 +59,7 @@ public class CreateQuestionExerciseCommandHandler(
         return [new(nameof(request.Difficulty), $"Invalid difficulty level: {request.Difficulty}.")];
     }
 
-    private static void AddQuestionExercisesToExercise(CreateQuestionExerciseCommand request, QuestionExercise questionExercise)
+    private static void AddQuestionChoicesToExercise(CreateQuestionExerciseCommand request, QuestionExercise questionExercise)
     {
         foreach (var answerDto in request.Answers)
         {
