@@ -4,12 +4,12 @@ namespace CodeLearn.Application.Tests.Commands.DeleteTest;
 
 public record DeleteTestCommand(int Id) : IRequest<OneOf<Success, NotFound>>;
 
-public class DeleteTestCommandHandler(IApplicationDbContext context)
+public class DeleteTestCommandHandler(IApplicationDbContext _context)
     : IRequestHandler<DeleteTestCommand, OneOf<Success, NotFound>>
 {
     public async Task<OneOf<Success, NotFound>> Handle(DeleteTestCommand request, CancellationToken cancellationToken)
     {
-        var test = await context.Tests
+        var test = await _context.Tests
             .FirstOrDefaultAsync(t => t.Id == TestId.Create(request.Id), cancellationToken);
 
         if (test is null)
@@ -17,9 +17,9 @@ public class DeleteTestCommandHandler(IApplicationDbContext context)
             return new NotFound();
         }
 
-        context.Tests.Remove(test);
+        _context.Tests.Remove(test);
 
-        await context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         return new Success();
     }

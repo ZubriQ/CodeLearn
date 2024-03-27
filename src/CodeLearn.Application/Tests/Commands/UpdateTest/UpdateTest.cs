@@ -5,12 +5,12 @@ namespace CodeLearn.Application.Tests.Commands.UpdateTest;
 public record UpdateTestCommand(int Id, string Title, string Description, bool IsPublic)
     : IRequest<OneOf<Success, NotFound, BadRequest>>;
 
-public class UpdateTestCommandHandler(IApplicationDbContext context)
+public class UpdateTestCommandHandler(IApplicationDbContext _context)
     : IRequestHandler<UpdateTestCommand, OneOf<Success, NotFound, BadRequest>>
 {
     public async Task<OneOf<Success, NotFound, BadRequest>> Handle(UpdateTestCommand request, CancellationToken cancellationToken)
     {
-        var test = await context.Tests
+        var test = await _context.Tests
             .FirstOrDefaultAsync(x => x.Id == TestId.Create(request.Id), cancellationToken);
 
         if (test is null)
@@ -25,7 +25,7 @@ public class UpdateTestCommandHandler(IApplicationDbContext context)
             return new BadRequest();
         }
 
-        await context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         return new Success();
     }

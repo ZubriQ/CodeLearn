@@ -18,13 +18,13 @@ public record CreateQuestionExerciseCommand(
     : IRequest<OneOf<int, ValidationFailed>>;
 
 public class CreateQuestionExerciseCommandHandler(
-    IApplicationDbContext context,
-    IValidator<CreateQuestionExerciseCommand> validator)
+    IApplicationDbContext _context,
+    IValidator<CreateQuestionExerciseCommand> _validator)
     : IRequestHandler<CreateQuestionExerciseCommand, OneOf<int, ValidationFailed>>
 {
     public async Task<OneOf<int, ValidationFailed>> Handle(CreateQuestionExerciseCommand request, CancellationToken cancellationToken)
     {
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
         {
@@ -42,9 +42,9 @@ public class CreateQuestionExerciseCommandHandler(
 
         AddQuestionExercisesToExercise(request, questionExercise);
 
-        context.QuestionExercises.Add(questionExercise);
+        _context.QuestionExercises.Add(questionExercise);
 
-        await context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         return questionExercise.Id.Value;
     }

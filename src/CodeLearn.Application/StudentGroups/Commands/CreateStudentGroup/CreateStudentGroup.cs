@@ -6,13 +6,13 @@ public record CreateStudentGroupCommand(string Name, int EnrolmentYear)
     : IRequest<OneOf<int, ValidationFailed>>;
 
 public class CreateStudentGroupCommandHandler(
-    IApplicationDbContext context,
-    IValidator<CreateStudentGroupCommand> validator)
+    IApplicationDbContext _context,
+    IValidator<CreateStudentGroupCommand> _validator)
     : IRequestHandler<CreateStudentGroupCommand, OneOf<int, ValidationFailed>>
 {
     public async Task<OneOf<int, ValidationFailed>> Handle(CreateStudentGroupCommand request, CancellationToken cancellationToken)
     {
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
         {
@@ -21,9 +21,9 @@ public class CreateStudentGroupCommandHandler(
 
         var studentGroup = StudentGroup.Create(request.Name, request.EnrolmentYear);
 
-        context.StudentGroups.Add(studentGroup);
+        _context.StudentGroups.Add(studentGroup);
 
-        await context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         return studentGroup.Id.Value;
     }

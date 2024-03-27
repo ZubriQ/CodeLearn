@@ -7,17 +7,17 @@ using CodeLearn.Contracts.StudentGroups;
 
 namespace CodeLearn.Api.Controllers;
 
-public sealed class StudentGroupsController(ISender sender, IMapper mapper) : ApiControllerBase
+public sealed class StudentGroupsController(ISender _sender, IMapper _mapper) : ApiControllerBase
 {
     [HttpGet("{studentGroupId:int}")]
     [ProducesResponseType(typeof(StudentGroupResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(int studentGroupId)
     {
-        var result = await sender.Send(new GetStudentGroupByIdQuery(studentGroupId));
+        var result = await _sender.Send(new GetStudentGroupByIdQuery(studentGroupId));
 
         return result.Match(
-            studentGroup => Ok(mapper.Map<StudentGroupResponse>(studentGroup)),
+            studentGroup => Ok(_mapper.Map<StudentGroupResponse>(studentGroup)),
             _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Student group not found."));
     }
 
@@ -25,8 +25,8 @@ public sealed class StudentGroupsController(ISender sender, IMapper mapper) : Ap
     [ProducesResponseType(typeof(StudentGroupResponseCollection), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
-        var response = await sender.Send(new GetAllStudentGroupsQuery());
-        var mappedData = response.Select(mapper.Map<StudentGroupResponse>).ToArray();
+        var response = await _sender.Send(new GetAllStudentGroupsQuery());
+        var mappedData = response.Select(_mapper.Map<StudentGroupResponse>).ToArray();
 
         return Ok(new StudentGroupResponseCollection(mappedData));
     }
@@ -36,8 +36,8 @@ public sealed class StudentGroupsController(ISender sender, IMapper mapper) : Ap
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(StudentGroupRequest request)
     {
-        var command = mapper.Map<CreateStudentGroupCommand>(request);
-        var result = await sender.Send(command);
+        var command = _mapper.Map<CreateStudentGroupCommand>(request);
+        var result = await _sender.Send(command);
 
         return result.Match(
             id => CreatedAtAction(nameof(Create), new { id }, id),
@@ -49,7 +49,7 @@ public sealed class StudentGroupsController(ISender sender, IMapper mapper) : Ap
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int studentGroupId)
     {
-        var result = await sender.Send(new DeleteStudentGroupCommand(studentGroupId));
+        var result = await _sender.Send(new DeleteStudentGroupCommand(studentGroupId));
 
         return result.Match(
             success => Ok(success),
@@ -62,8 +62,8 @@ public sealed class StudentGroupsController(ISender sender, IMapper mapper) : Ap
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Update(int studentGroupId, StudentGroupRequest request)
     {
-        var command = mapper.Map<UpdateStudentGroupCommand>((studentGroupId, request));
-        var result = await sender.Send(command);
+        var command = _mapper.Map<UpdateStudentGroupCommand>((studentGroupId, request));
+        var result = await _sender.Send(command);
 
         return result.Match(
             success => Ok(success),

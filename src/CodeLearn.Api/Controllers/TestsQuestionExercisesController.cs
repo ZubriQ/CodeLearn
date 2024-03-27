@@ -7,7 +7,7 @@ using System.Security.Claims;
 namespace CodeLearn.Api.Controllers;
 
 [Route("api/tests/{testId:int}/question-exercises")]
-public sealed class TestsQuestionExercisesController(ISender sender, IMapper mapper) : ApiControllerBase
+public sealed class TestsQuestionExercisesController(ISender _sender, IMapper _mapper) : ApiControllerBase
 {
     [HttpGet]
     [ProducesResponseType(typeof(TeacherQuestionExerciseResponseCollection), StatusCodes.Status200OK)]
@@ -19,7 +19,7 @@ public sealed class TestsQuestionExercisesController(ISender sender, IMapper map
     {
         var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
 
-        var result = await sender.Send(new GetAllQuestionExercisesByTestIdQuery(testId));
+        var result = await _sender.Send(new GetAllQuestionExercisesByTestIdQuery(testId));
 
         return result.Match(
             exercises =>
@@ -28,14 +28,14 @@ public sealed class TestsQuestionExercisesController(ISender sender, IMapper map
                 if (userRole == Roles.Teacher || userRole == Roles.Administrator)
                 {
                     var mappedDataForTeacher = exercises
-                        .Select(mapper.Map<TeacherQuestionExerciseResponse>)
+                        .Select(_mapper.Map<TeacherQuestionExerciseResponse>)
                         .ToArray();
                     return Ok(new TeacherQuestionExerciseResponseCollection(mappedDataForTeacher));
                 }
 
                 // Map data for student
                 var mappedDataForStudent = exercises
-                    .Select(mapper.Map<StudentQuestionExerciseResponse>)
+                    .Select(_mapper.Map<StudentQuestionExerciseResponse>)
                     .ToArray();
                 return Ok(new StudentQuestionExerciseResponseCollection(mappedDataForStudent));
             },
@@ -48,8 +48,8 @@ public sealed class TestsQuestionExercisesController(ISender sender, IMapper map
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(int testId, QuestionExerciseRequest request)
     {
-        var command = mapper.Map<CreateQuestionExerciseCommand>((testId, request));
-        var result = await sender.Send(command);
+        var command = _mapper.Map<CreateQuestionExerciseCommand>((testId, request));
+        var result = await _sender.Send(command);
 
         return result.Match(
             id => CreatedAtAction(nameof(Create), new { id }, id),

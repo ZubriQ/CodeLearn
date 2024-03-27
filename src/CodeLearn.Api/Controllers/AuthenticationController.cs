@@ -6,15 +6,8 @@ namespace CodeLearn.Api.Controllers;
 
 [AllowAnonymous]
 [Route("api/auth")]
-public sealed class AuthenticationController : ApiControllerBase
+public sealed class AuthenticationController(IIdentityService _identityService) : ApiControllerBase
 {
-    private readonly IIdentityService _identityService;
-
-    public AuthenticationController(IIdentityService identityService)
-    {
-        _identityService = identityService;
-    }
-
     [HttpPost]
     [Route("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)

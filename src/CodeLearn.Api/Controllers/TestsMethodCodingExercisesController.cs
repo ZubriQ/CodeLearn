@@ -7,7 +7,7 @@ using System.Security.Claims;
 namespace CodeLearn.Api.Controllers;
 
 [Route("api/tests/{testId:int}/method-coding-exercises")]
-public sealed class TestsMethodCodingExercisesController(ISender sender, IMapper mapper) : ApiControllerBase
+public sealed class TestsMethodCodingExercisesController(ISender _sender, IMapper _mapper) : ApiControllerBase
 {
     [HttpGet]
     [ProducesResponseType(typeof(TeacherMethodCodingExerciseResponseCollection), StatusCodes.Status200OK)]
@@ -19,7 +19,7 @@ public sealed class TestsMethodCodingExercisesController(ISender sender, IMapper
     {
         var userRole = User.FindFirst(ClaimTypes.Role)!.Value;
 
-        var result = await sender.Send(new GetAllMethodCodingExercisesByTestIdQuery(testId));
+        var result = await _sender.Send(new GetAllMethodCodingExercisesByTestIdQuery(testId));
 
         return result.Match(
             exercises =>
@@ -28,14 +28,14 @@ public sealed class TestsMethodCodingExercisesController(ISender sender, IMapper
                 if (userRole == Roles.Teacher || userRole == Roles.Administrator)
                 {
                     var mappedDataForTeacher = exercises
-                        .Select(mapper.Map<TeacherMethodCodingExerciseResponse>)
+                        .Select(_mapper.Map<TeacherMethodCodingExerciseResponse>)
                         .ToArray();
                     return Ok(new TeacherMethodCodingExerciseResponseCollection(mappedDataForTeacher));
                 }
 
                 // Map data for student
                 var mappedDataForStudent = exercises
-                    .Select(mapper.Map<StudentMethodCodingExerciseResponse>)
+                    .Select(_mapper.Map<StudentMethodCodingExerciseResponse>)
                     .ToArray();
                 return Ok(new StudentMethodCodingExerciseResponseCollection(mappedDataForStudent));
             },
@@ -48,8 +48,8 @@ public sealed class TestsMethodCodingExercisesController(ISender sender, IMapper
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(int testId, MethodCodingExerciseRequest request)
     {
-        var command = mapper.Map<CreateMethodCodingExerciseCommand>((testId, request));
-        var result = await sender.Send(command);
+        var command = _mapper.Map<CreateMethodCodingExerciseCommand>((testId, request));
+        var result = await _sender.Send(command);
 
         return result.Match(
             id => CreatedAtAction(nameof(Create), new { id }, id),

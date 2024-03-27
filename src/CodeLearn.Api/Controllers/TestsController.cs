@@ -7,17 +7,17 @@ using CodeLearn.Contracts.Tests;
 
 namespace CodeLearn.Api.Controllers;
 
-public sealed class TestsController(ISender sender, IMapper mapper) : ApiControllerBase
+public sealed class TestsController(ISender _sender, IMapper _mapper) : ApiControllerBase
 {
     [HttpGet("{testId:int}")]
     [ProducesResponseType(typeof(TestResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(int testId)
     {
-        var result = await sender.Send(new GetTestByIdQuery(testId));
+        var result = await _sender.Send(new GetTestByIdQuery(testId));
 
         return result.Match(
-            test => Ok(mapper.Map<TestResponse>(test)),
+            test => Ok(_mapper.Map<TestResponse>(test)),
             _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Test not found."));
     }
 
@@ -25,9 +25,9 @@ public sealed class TestsController(ISender sender, IMapper mapper) : ApiControl
     [ProducesResponseType(typeof(TestResponseCollection), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
-        var result = await sender.Send(new GetAllTestsQuery());
+        var result = await _sender.Send(new GetAllTestsQuery());
         var mappedData = result
-            .Select(mapper.Map<TestResponse>)
+            .Select(_mapper.Map<TestResponse>)
             .ToArray();
 
         return Ok(new TestResponseCollection(mappedData));
@@ -38,8 +38,8 @@ public sealed class TestsController(ISender sender, IMapper mapper) : ApiControl
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(TestRequest request)
     {
-        var command = mapper.Map<CreateTestCommand>(request);
-        var result = await sender.Send(command);
+        var command = _mapper.Map<CreateTestCommand>(request);
+        var result = await _sender.Send(command);
 
         return result.Match(
             id => CreatedAtAction(nameof(Create), new { id }, id),
@@ -51,7 +51,7 @@ public sealed class TestsController(ISender sender, IMapper mapper) : ApiControl
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int testId)
     {
-        var result = await sender.Send(new DeleteTestCommand(testId));
+        var result = await _sender.Send(new DeleteTestCommand(testId));
 
         return result.Match(
             success => Ok(success),
@@ -64,8 +64,8 @@ public sealed class TestsController(ISender sender, IMapper mapper) : ApiControl
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Update(int testId, UpdateTestDetailsRequest request)
     {
-        var command = mapper.Map<UpdateTestCommand>((testId, request));
-        var result = await sender.Send(command);
+        var command = _mapper.Map<UpdateTestCommand>((testId, request));
+        var result = await _sender.Send(command);
 
         return result.Match(
             success => Ok(success),
