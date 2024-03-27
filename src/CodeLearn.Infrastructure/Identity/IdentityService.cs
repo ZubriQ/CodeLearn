@@ -1,4 +1,5 @@
-﻿using CodeLearn.Application.Common.Interfaces;
+﻿using CodeLearn.Application.Common.IdentityModels;
+using CodeLearn.Application.Common.Interfaces;
 using CodeLearn.Domain.Common.Result;
 using CodeLearn.Domain.Constants;
 using CodeLearn.Infrastructure.Identity.Errors;
@@ -33,24 +34,61 @@ public class IdentityService : IIdentityService
         return user.UserName;
     }
 
-    public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password, string userRole)
+    /// <summary>
+    /// Creates a User. If Student group name and Enrolment year are _null_,
+    /// We create Teacher, otherwise Student.
+    /// </summary>
+    /// <param name="credentials">User email and password.</param>
+    /// <param name="fullName">User full name.</param>
+    /// <param name="studentDetails">Student group name and enrolment year.</param>
+    /// <returns>Result information and created user Id.</returns>
+    public async Task<(Result Result, string? UserId)> CreateUserAsync(
+        UserCredentials credentials, UserFullName fullName, UserStudentDetails? studentDetails = null)
     {
-        if (userRole != Roles.Teacher && userRole != Roles.Student)
+        if (await _userManager.FindByEmailAsync(credentials.Email) is not null)
         {
-            return (Result.Failure(InfrastructureErrors.Identity.InvalidRoleName), string.Empty);
+            return (Result.Failure(InfrastructureErrors.Identity.EmailAlreadyInUse), null);
         }
+
+        var baseUsername = $"{fullName.FirstName}{fullName.LastName}";
+
+        var username = await GenerateUniqueUsernameWithNumber(baseUsername, 1000, 9999);
 
         var user = new ApplicationUser
         {
-            UserName = userName,
-            Email = userName,
+            UserName = username,
+            Email = credentials.Email,
+            FirstName = fullName.FirstName,
+            LastName = fullName.LastName,
+            Patronymic = fullName.Patronymic,
+            StudentGroupName = studentDetails?.StudentGroupName,
+            EnrolmentYear = studentDetails?.EnrolmentYear,
         };
 
-        var result = await _userManager.CreateAsync(user, password);
+        var result = await _userManager.CreateAsync(user, credentials.Password);
+
+        var userRole = (studentDetails is null)
+            ? Roles.Teacher
+            : Roles.Student;
 
         await _userManager.AddToRoleAsync(user, userRole);
 
         return (result.ToApplicationResult(), user.Id);
+    }
+
+    private async Task<string> GenerateUniqueUsernameWithNumber(string baseUsername, int min, int max)
+    {
+        var rng = new Random();
+        string username;
+
+        do
+        {
+            var randomNumber = rng.Next(min, max + 1);
+            username = $"{baseUsername}{randomNumber}";
+        }
+        while (await _userManager.FindByNameAsync(username) != null);
+
+        return username;
     }
 
     public async Task<bool> IsInRoleAsync(string userId, string role)

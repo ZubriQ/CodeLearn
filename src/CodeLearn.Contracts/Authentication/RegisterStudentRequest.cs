@@ -1,8 +1,10 @@
 ﻿namespace CodeLearn.Contracts.Authentication;
 
-public record RegisterRequest(
+public record RegisterStudentRequest(
     string FirstName,
     string LastName,
+    string? Patronymic,
     string Email,
     string Password,
-    string Role);
+    string StudentGroupName,
+    int EnrolmentYear);

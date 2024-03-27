@@ -8,9 +8,9 @@ public static partial class InfrastructureErrors
     {
         private static string Prefix => "Identity.";
 
-        public static readonly Error InvalidRoleName = new(
-            $"{Prefix}{nameof(InvalidRoleName)}",
-            "Role can be only Teacher or Student.");
+        public static readonly Error EmailAlreadyInUse = new(
+            $"{Prefix}{nameof(EmailAlreadyInUse)}",
+            "Email is already in use.");
 
         public static readonly Error UserNotFoundByEmail = new(
             $"{Prefix}{nameof(UserNotFoundByEmail)}",

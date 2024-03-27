@@ -1,4 +1,5 @@
-﻿using CodeLearn.Domain.Common.Result;
+﻿using CodeLearn.Application.Common.IdentityModels;
+using CodeLearn.Domain.Common.Result;
 
 namespace CodeLearn.Application.Common.Interfaces;
 
@@ -10,7 +11,8 @@ public interface IIdentityService
 
     Task<bool> AuthorizeAsync(string userId, string policyName);
 
-    Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password, string userRole);
+    Task<(Result Result, string? UserId)> CreateUserAsync(
+        UserCredentials credentials, UserFullName fullName, UserStudentDetails? studentDetails = null);
 
     Task<(Result Result, string JwtToken)> Login(string email, string password);
 
