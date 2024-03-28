@@ -10,6 +10,6 @@ public class TestingMappingConfig : IRegister
     {
         config.NewConfig<TestingRequest, CreateTestCommand>();
 
-        config.NewConfig<TestingModel, TestingResponse>();
+        config.NewConfig<TestingDto, TestingResponse>();
     }
 }

@@ -15,7 +15,7 @@ public sealed class TestsQuestionExercisesController(ISender _sender, IMapper _m
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllByTestIdForTeacher(int testId)
+    public async Task<IActionResult> GetAllByTestId(int testId)
     {
         var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
 

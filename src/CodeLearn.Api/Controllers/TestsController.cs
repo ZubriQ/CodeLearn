@@ -3,6 +3,7 @@ using CodeLearn.Application.Tests.Commands.DeleteTest;
 using CodeLearn.Application.Tests.Commands.UpdateTest;
 using CodeLearn.Application.Tests.Queries.GetAllTests;
 using CodeLearn.Application.Tests.Queries.GetTestById;
+using CodeLearn.Application.Tests.Queries.GetTestByIdWithExercises;
 using CodeLearn.Contracts.Tests;
 
 namespace CodeLearn.Api.Controllers;
@@ -18,6 +19,18 @@ public sealed class TestsController(ISender _sender, IMapper _mapper) : ApiContr
 
         return result.Match(
             test => Ok(_mapper.Map<TestResponse>(test)),
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Test not found."));
+    }
+
+    [HttpGet("{testId:int}/with-exercises")]
+    [ProducesResponseType(typeof(TestWithExercisesResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetByIdWithExercises(int testId)
+    {
+        var result = await _sender.Send(new GetTestByIdWithExercisesQuery(testId));
+
+        return result.Match(
+            test => Ok(_mapper.Map<TestWithExercisesResponse>(test)),
             _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Test not found."));
     }
 

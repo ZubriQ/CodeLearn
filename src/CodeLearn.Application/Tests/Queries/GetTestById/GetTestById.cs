@@ -8,11 +8,11 @@ public record GetTestByIdQuery(int TestId) : IRequest<OneOf<Test, NotFound>>;
 public class GetTestByIdQueryHandler(IApplicationDbContext _context)
     : IRequestHandler<GetTestByIdQuery, OneOf<Test, NotFound>>
 {
-    public async Task<OneOf<Test, NotFound>> Handle(GetTestByIdQuery query, CancellationToken cancellationToken)
+    public async Task<OneOf<Test, NotFound>> Handle(GetTestByIdQuery request, CancellationToken cancellationToken)
     {
         var test = await _context.Tests
             .AsNoTracking()
-            .FirstOrDefaultAsync(t => t.Id == TestId.Create(query.TestId), cancellationToken);
+            .FirstOrDefaultAsync(t => t.Id == TestId.Create(request.TestId), cancellationToken);
 
         if (test is null)
         {
