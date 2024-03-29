@@ -1,8 +1,8 @@
 ﻿namespace CodeLearn.Contracts.Exercises.MethodCoding;
 
-public record ExerciseNoteDto(string Entry, string Decoration);
+public record ExerciseNoteRequestDto(string Entry, string Decoration);
 
-public record InputOutputExampleDto(string Input, string Output);
+public record InputOutputExampleRequestDto(string Input, string Output);
 
 public record MethodParameterRequestDto(int DataTypeId, int Position);
 
@@ -20,7 +20,7 @@ public record MethodCodingExerciseRequest(
     string MethodToExecute,
     string MethodSolutionCode,
     int MethodReturnTypeId,
-    ExerciseNoteDto[] ExerciseNotes,
-    InputOutputExampleDto[] InputOutputExamples,
+    ExerciseNoteRequestDto[] ExerciseNotes,
+    InputOutputExampleRequestDto[] InputOutputExamples,
     MethodParameterRequestDto[] MethodParameters,
     TestCaseRequestDto[] TestCases);
