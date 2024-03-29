@@ -4,11 +4,11 @@ import { useDashboardPageTitle } from '@/components/layout';
 import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import { TypographyH3 } from '@/components/typography/typography-h3.tsx';
-import { TypographyP } from '@/components/typography/typography-p.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { TypographyH2 } from '@/components/typography/typography-h2.tsx';
 import { TestWithExercises } from '@/features/dashboard/tests/models/TestWithExercises.ts';
 import ExerciseCards from '@/features/dashboard/tests/ExerciseCards.component.tsx';
+import { TypographyMuted } from '@/components/typography/typography-muted.tsx';
 
 export default function SingleTestPage(): JSX.Element {
   const [test, setTest] = useState<TestWithExercises | undefined>(undefined);
@@ -48,7 +48,7 @@ export default function SingleTestPage(): JSX.Element {
     <div className="my-4">
       <div className="mb-8">
         <TypographyH2>{test?.title}</TypographyH2>
-        <TypographyP>{test?.description}</TypographyP>
+        <TypographyMuted>{test?.description}</TypographyMuted>
       </div>
 
       <div className="mb-8 flex flex-row flex-wrap gap-4">
