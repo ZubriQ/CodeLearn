@@ -2,6 +2,10 @@
 
 namespace CodeLearn.Api.Common;
 
+/// <summary>
+/// Changes route naming style.
+/// For example: 'StudentGroups' to 'student-groups'
+/// </summary>
 public class SlugifyParameterTransformer : IOutboundParameterTransformer
 {
     public string? TransformOutbound(object? value)
