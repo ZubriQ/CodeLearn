@@ -41,7 +41,9 @@ function TestCards(props: TestCardsProps) {
                       <Button
                         variant="outline"
                         size="icon"
-                        onClick={() => {
+                        onClick={(event) => {
+                          event.stopPropagation();
+
                           agent.Tests.delete(test.id)
                             .then(() => {
                               location.reload();
