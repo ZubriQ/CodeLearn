@@ -1,22 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDashboardPageTitle } from '@/components/layout';
-import { Test } from '@/features/dashboard/tests/models/Test.ts';
 import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
-import DashboardPageContainer from '@/features/dashboard/DashboardPageContainer.tsx';
 import { TypographyH3 } from '@/components/typography/typography-h3.tsx';
 import { TypographyP } from '@/components/typography/typography-p.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { TypographyH2 } from '@/components/typography/typography-h2.tsx';
+import { TestWithExercises } from '@/features/dashboard/tests/models/TestWithExercises.ts';
+import ExerciseCards from '@/features/dashboard/tests/ExerciseCards.component.tsx';
 
 export default function SingleTestPage(): JSX.Element {
-  const [test, setTest] = useState<Test | undefined>(undefined);
+  const [test, setTest] = useState<TestWithExercises | undefined>(undefined);
   const { id } = useParams<{ id?: string }>();
   const [, setCurrentPageTitle] = useDashboardPageTitle();
   const navigate = useNavigate();
 
-  const handleAddNewMethodCodingExerciseClick = () => navigate(`exercises/add-method-coding`);
+  const handleAddMethodCodingExerciseClick = () => navigate(`exercises/add-method-coding`);
+
+  const handleAddQuestionExerciseClick = () => {};
 
   useEffect(() => {
     setCurrentPageTitle('Test');
@@ -24,7 +26,7 @@ export default function SingleTestPage(): JSX.Element {
     const testId = parseInt(id!, 10);
 
     if (id) {
-      agent.Tests.getById(testId)
+      agent.Tests.getByIdWithExercises(testId)
         .then((fetchedTest) => {
           setTest(fetchedTest);
         })
@@ -43,31 +45,30 @@ export default function SingleTestPage(): JSX.Element {
   }
 
   return (
-    <DashboardPageContainer>
+    <div className="my-4">
       <div className="mb-8">
         <TypographyH2>{test?.title}</TypographyH2>
         <TypographyP>{test?.description}</TypographyP>
       </div>
 
       <div className="mb-8 flex flex-row flex-wrap gap-4">
-        <Button className="w-full sm:w-fit">Test group</Button>
-        <Button variant="outline" className="w-full sm:w-fit" onClick={handleAddNewMethodCodingExerciseClick}>
+        <Button className="w-full sm:w-fit" onClick={handleAddMethodCodingExerciseClick}>
           Add coding exercise
         </Button>
-        <Button variant="outline" className="w-full sm:w-fit">
+        <Button className="w-full sm:w-fit" onClick={handleAddQuestionExerciseClick}>
           Add question
         </Button>
       </div>
 
       <div className="mb-8">
         <TypographyH3>Coding Exercises</TypographyH3>
+        <ExerciseCards exercises={test.methodCodingExercises} />
       </div>
-      {/* TODO: Render Method coding exercises */}
 
       <div className="mb-8">
         <TypographyH3>Questions</TypographyH3>
+        <ExerciseCards exercises={test.questionExercises} />
       </div>
-      {/* TODO: Render Question exercises */}
-    </DashboardPageContainer>
+    </div>
   );
 }

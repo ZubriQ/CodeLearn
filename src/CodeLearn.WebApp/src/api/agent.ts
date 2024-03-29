@@ -36,6 +36,7 @@ const StudentGroup = {
 const Tests = {
   list: () => requests.get('tests').then((response) => response.tests),
   getById: (id: number) => requests.get(`tests/${id}`),
+  getByIdWithExercises: (id: number) => requests.get(`tests/${id}/with-exercises`),
   create: (request: { title: string; description: string }) => requests.post(`tests`, request),
   update: (
     id: number,
