@@ -62,12 +62,12 @@ export default function SingleTestPage(): JSX.Element {
 
       <div className="mb-8">
         <TypographyH3>Coding Exercises</TypographyH3>
-        <ExerciseCards exercises={test.methodCodingExercises} />
+        <ExerciseCards exercises={test.methodCodingExercises} exerciseType="MethodCoding" />
       </div>
 
       <div className="mb-8">
         <TypographyH3>Questions</TypographyH3>
-        <ExerciseCards exercises={test.questionExercises} />
+        <ExerciseCards exercises={test.questionExercises} exerciseType="Question" />
       </div>
     </div>
   );

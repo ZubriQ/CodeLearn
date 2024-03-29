@@ -7,9 +7,11 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import NoItemsCard from '@/components/no-items-card';
 import { toast } from '@/components/ui/use-toast.ts';
 import agent from '@/api/agent.ts';
+import { ExerciseType } from '@/features/dashboard/tests/models/ExerciseType.ts';
 
 type ExerciseCardsProps = {
   exercises: ExerciseDetails[];
+  exerciseType: ExerciseType;
 };
 
 function ExerciseCards(props: ExerciseCardsProps) {
@@ -23,8 +25,11 @@ function ExerciseCards(props: ExerciseCardsProps) {
     <ul className="mx-auto my-4 grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
       {props.exercises.map((exercise) => {
         const handleCardClick = () => {
-          // Assuming you might navigate to an exercise detail or edit page
-          // navigate(`/dashboard/exercises/${exercise.id}`);
+          if (props.exerciseType === 'MethodCoding') {
+            navigate(`method-coding-exercises/${exercise.id}`);
+          } else {
+            navigate(`question-exercises/${exercise.id}`);
+          }
         };
 
         return (
@@ -42,12 +47,11 @@ function ExerciseCards(props: ExerciseCardsProps) {
                         variant="outline"
                         size="icon"
                         onClick={(event) => {
-                          event.stopPropagation(); // Prevent card click
+                          event.stopPropagation();
 
-                          // Adapt
                           agent.Exercises.delete(exercise.id)
                             .then(() => {
-                              location.reload(); // Or update the state to remove the deleted item
+                              location.reload();
                             })
                             .catch((error) =>
                               toast({
