@@ -1,6 +1,6 @@
 ﻿namespace CodeLearn.Contracts.Tests;
 
-public record ExerciseDto(
+public record ExerciseResponseDto(
     int Id,
     string Title,
     string Description,
@@ -13,5 +13,5 @@ public record TestWithExercisesResponse(
     bool IsPublic,
     DateTimeOffset Created,
     DateTimeOffset LastModified,
-    ExerciseDto[] MethodCodingExercises,
-    ExerciseDto[] QuestionExercises);
+    ExerciseResponseDto[] MethodCodingExercises,
+    ExerciseResponseDto[] QuestionExercises);

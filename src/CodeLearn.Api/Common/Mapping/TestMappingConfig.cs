@@ -27,10 +27,10 @@ public class TestMappingConfig : IRegister
             .Map(dest => dest.Created, src => src.Test.Created)
             .Map(dest => dest.LastModified, src => src.Test.LastModified)
             .Map(dest => dest.MethodCodingExercises, src => src.MethodCodingExercises
-                .Select(x => new ExerciseDto(x.Id.Value, x.Title, x.Description, x.Difficulty.ToString()))
+                .Select(x => new ExerciseResponseDto(x.Id.Value, x.Title, x.Description, x.Difficulty.ToString()))
                 .ToArray())
             .Map(dest => dest.QuestionExercises, src => src.QuestionExercises
-                .Select(x => new ExerciseDto(x.Id.Value, x.Title, x.Description, x.Difficulty.ToString()))
+                .Select(x => new ExerciseResponseDto(x.Id.Value, x.Title, x.Description, x.Difficulty.ToString()))
                 .ToArray());
     }
 }
