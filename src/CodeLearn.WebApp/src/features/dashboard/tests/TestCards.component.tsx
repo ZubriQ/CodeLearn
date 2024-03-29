@@ -35,7 +35,7 @@ function TestCards(props: TestCardsProps) {
                 <CardDescription>{test.description}</CardDescription>
               </CardHeader>
               <CardFooter className="flex justify-end">
-                <TooltipProvider>
+                <TooltipProvider delayDuration={100}>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button

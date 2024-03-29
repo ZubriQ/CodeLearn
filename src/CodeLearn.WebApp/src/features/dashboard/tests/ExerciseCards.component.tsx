@@ -35,7 +35,7 @@ function ExerciseCards(props: ExerciseCardsProps) {
                 <CardDescription>{exercise.description}</CardDescription>
               </CardHeader>
               <CardFooter className="flex justify-end">
-                <TooltipProvider>
+                <TooltipProvider delayDuration={100}>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
