@@ -16,9 +16,9 @@ export default function SingleTestPage(): JSX.Element {
   const [, setCurrentPageTitle] = useDashboardPageTitle();
   const navigate = useNavigate();
 
-  const handleAddMethodCodingExerciseClick = () => navigate(`exercises/add-method-coding`);
+  const handleAddMethodCodingExerciseClick = () => navigate(`add-method-coding-exercise`);
 
-  const handleAddQuestionExerciseClick = () => {};
+  const handleAddQuestionExerciseClick = () => navigate(`add-question-exercise`);
 
   useEffect(() => {
     setCurrentPageTitle('Test');

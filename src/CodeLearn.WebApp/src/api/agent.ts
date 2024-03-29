@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { LoginCredentials } from '@/features/users/models/LoginCredentials.ts';
+import { CreateMethodCodingRequest } from '@/api/exercises/CreateMethodCodingRequest.ts';
+import { AnswerDto } from '@/api/exercises/AnswerDto.ts';
 
 axios.defaults.baseURL = 'https://localhost:5001/api/';
 
@@ -50,6 +52,14 @@ const Tests = {
 
 const Exercises = {
   delete: (id: number) => requests.delete(`exercises/${id}`),
+  createQuestion: (request: {
+    title: string;
+    description: string;
+    difficulty: string;
+    isMultipleAnswers: boolean;
+    answers: AnswerDto[];
+  }) => requests.post(`question-exercises`, request),
+  createMethodCoding: (request: CreateMethodCodingRequest) => requests.post(`method-coding-exercises`, request),
 };
 
 // const TestErrors = {
