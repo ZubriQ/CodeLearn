@@ -52,13 +52,16 @@ const Tests = {
 
 const Exercises = {
   delete: (id: number) => requests.delete(`exercises/${id}`),
-  createQuestion: (request: {
-    title: string;
-    description: string;
-    difficulty: string;
-    isMultipleAnswers: boolean;
-    answers: AnswerDto[];
-  }) => requests.post(`question-exercises`, request),
+  createQuestion: (
+    testId: number,
+    request: {
+      title: string;
+      description: string;
+      difficulty: string;
+      isMultipleAnswers: boolean;
+      answers: AnswerDto[];
+    },
+  ) => requests.post(`tests/${testId}/question-exercises`, request),
   createMethodCoding: (request: CreateMethodCodingRequest) => requests.post(`method-coding-exercises`, request),
 };
 
