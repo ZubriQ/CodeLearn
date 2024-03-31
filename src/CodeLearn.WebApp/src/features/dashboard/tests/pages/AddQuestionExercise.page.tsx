@@ -21,7 +21,6 @@ import {
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
-import { Switch } from '@/components/ui/switch.tsx';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command';
 import { Card } from '@/components/ui/card.tsx';
@@ -41,6 +40,7 @@ const formSchema = z.object({
   description: z.string().min(10).max(1000),
   difficultyId: z.number(),
   answers: z.array(answerSchema),
+  exerciseTopics: z.array(z.number()).nonempty('You have to select at least one exercise topic.'),
 });
 
 export default function AddQuestionExercisePage() {
@@ -48,7 +48,7 @@ export default function AddQuestionExercisePage() {
   const numericId = id ? parseInt(id, 10) : undefined;
   const [, setCurrentPageTitle] = useDashboardPageTitle();
   const navigate = useNavigate();
-  const [exerciseTopics, setExerciseTopics] = useState<ExerciseTopic | undefined>(undefined);
+  const [exerciseTopics, setExerciseTopics] = useState<ExerciseTopic[] | undefined>(undefined);
 
   console.log(exerciseTopics);
   useEffect(() => {
@@ -79,6 +79,7 @@ export default function AddQuestionExercisePage() {
         { text: '', isCorrect: false },
         { text: '', isCorrect: false },
       ],
+      exerciseTopics: [],
     },
   });
 
@@ -92,7 +93,7 @@ export default function AddQuestionExercisePage() {
         text: answer.text,
         isCorrect: answer.isCorrect,
       })),
-      exerciseTopics: [],
+      exerciseTopics: values.exerciseTopics,
     };
 
     if (numericId !== undefined) {
@@ -213,6 +214,48 @@ export default function AddQuestionExercisePage() {
             )}
           />
 
+          {exerciseTopics && (
+            <FormField
+              control={form.control}
+              name="exerciseTopics"
+              render={() => (
+                <FormItem>
+                  <div className="mb-3">
+                    <FormLabel>Exercise Topics</FormLabel>
+                    <FormDescription>Select at least 1 topic that fits best</FormDescription>
+                  </div>
+                  {exerciseTopics.map((topic) => (
+                    <FormField
+                      key={topic.id}
+                      control={form.control}
+                      name="exerciseTopics"
+                      render={({ field }) => (
+                        <FormItem className="ml-2 flex items-center space-x-3">
+                          <div>
+                            <FormControl>
+                              <Checkbox
+                                className="mr-2 align-middle"
+                                checked={field.value?.includes(topic.id)}
+                                onCheckedChange={(checked) => {
+                                  const newValue = checked
+                                    ? [...field.value, topic.id]
+                                    : field.value.filter((value) => value !== topic.id);
+                                  field.onChange(newValue);
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel>{topic.name}</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                  ))}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+
           <>
             {fields.map((item, index) => (
               <Card key={item.id} className="space-y-4 p-5 shadow-sm">
@@ -243,7 +286,7 @@ export default function AddQuestionExercisePage() {
                               className="mr-2"
                             />
                           </FormControl>
-                          <FormLabel>Is correct answer?</FormLabel>
+                          <FormLabel>Is correct?</FormLabel>
                         </div>
                       </FormItem>
                     )}
