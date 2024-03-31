@@ -17,9 +17,9 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
     private static void ConfigureMethodCodingExercise(EntityTypeBuilder<MethodCodingExercise> builder)
     {
         builder
-            .HasOne(e => e.MethodReturnType)
+            .HasOne(e => e.MethodReturnDataType)
             .WithMany()
-            .HasForeignKey(t => t.MethodReturnTypeId)
+            .HasForeignKey(t => t.MethodReturnDataTypeId)
             .IsRequired();
 
         builder

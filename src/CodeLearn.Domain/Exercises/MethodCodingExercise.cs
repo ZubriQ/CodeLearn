@@ -4,8 +4,8 @@ public sealed class MethodCodingExercise : Exercise
 {
     public string MethodToExecute { get; private set; }
     public string MethodSolutionCode { get; private set; }
-    public DataTypeId MethodReturnTypeId { get; private set; } = null!;
-    public DataType MethodReturnType { get; private set; } = null!;
+    public DataTypeId MethodReturnDataTypeId { get; private set; } = null!;
+    public DataType MethodReturnDataType { get; private set; } = null!;
 
     private readonly IList<MethodParameter> _methodParameters = [];
     public IReadOnlyList<MethodParameter> MethodParameters => _methodParameters.AsReadOnly();
@@ -46,8 +46,8 @@ public sealed class MethodCodingExercise : Exercise
            methodToExecute,
            methodSolutionCode)
         {
-            MethodReturnType = dataType,
-            MethodReturnTypeId = dataType.Id
+            MethodReturnDataType = dataType,
+            MethodReturnDataTypeId = dataType.Id
         };
 
         return exercise;

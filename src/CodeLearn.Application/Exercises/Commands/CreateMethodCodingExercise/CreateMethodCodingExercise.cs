@@ -26,7 +26,7 @@ public record CreateMethodCodingExerciseCommand(
     int[] ExerciseTopics,
     string MethodToExecute,
     string MethodSolutionCode,
-    int MethodReturnTypeId,
+    int MethodReturnDataTypeId,
     ExerciseNoteModel[] ExerciseNotes,
     InputOutputExampleModel[] InputOutputExamples,
     MethodParameterModel[] MethodParameters,
@@ -54,7 +54,7 @@ public class CreateMethodCodingExerciseCommandHandler(
         }
 
         var dataType = await _context.DataTypes
-            .FirstOrDefaultAsync(x => x.Id == DataTypeId.Create(request.MethodReturnTypeId), cancellationToken);
+            .FirstOrDefaultAsync(x => x.Id == DataTypeId.Create(request.MethodReturnDataTypeId), cancellationToken);
 
         if (dataType is null)
         {

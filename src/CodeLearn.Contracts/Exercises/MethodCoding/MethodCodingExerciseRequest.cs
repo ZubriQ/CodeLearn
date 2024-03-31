@@ -19,7 +19,7 @@ public record MethodCodingExerciseRequest(
     int[] ExerciseTopics,
     string MethodToExecute,
     string MethodSolutionCode,
-    int MethodReturnTypeId,
+    int MethodReturnDataTypeId,
     ExerciseNoteRequestDto[] ExerciseNotes,
     InputOutputExampleRequestDto[] InputOutputExamples,
     MethodParameterRequestDto[] MethodParameters,

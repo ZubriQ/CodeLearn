@@ -25,10 +25,10 @@ public sealed class StudentGroupsController(ISender _sender, IMapper _mapper) : 
     [ProducesResponseType(typeof(StudentGroupResponseCollection), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
-        var response = await _sender.Send(new GetAllStudentGroupsQuery());
-        var mappedData = response.Select(_mapper.Map<StudentGroupResponse>).ToArray();
+        var queryResult = await _sender.Send(new GetAllStudentGroupsQuery());
+        var responseData = queryResult.Select(_mapper.Map<StudentGroupResponse>).ToArray();
 
-        return Ok(new StudentGroupResponseCollection(mappedData));
+        return Ok(new StudentGroupResponseCollection(responseData));
     }
 
     [HttpPost]

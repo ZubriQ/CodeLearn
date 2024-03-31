@@ -9,7 +9,7 @@ public record StudentMethodCodingExerciseResponse(
     string Difficulty,
     string MethodToExecute,
     string MethodSolutionCode,
-    int MethodReturnTypeId,
+    int MethodReturnDataTypeId,
     ExerciseTopicResponseDto[] ExerciseTopics,
     ExerciseNoteResponseDto[] ExerciseNotes,
     InputOutputExampleResponseDto[] InputOutputExamples,
