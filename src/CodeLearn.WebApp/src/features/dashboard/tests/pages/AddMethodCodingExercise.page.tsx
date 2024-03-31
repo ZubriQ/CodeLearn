@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDashboardPageTitle } from '@/components/layout';
 import { TypographyH3 } from '@/components/typography/typography-h3.tsx';
 import {
@@ -27,6 +27,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import { difficulties } from '@/features/dashboard/tests/pages/Difficulties.ts';
+import { DataType } from '@/features/dashboard/tests/models/DataType.ts';
+import { ExerciseTopic } from '@/features/dashboard/tests/models/ExerciseTopic.ts';
 
 const methodParameterSchema = z.object({
   dataTypeId: z.number(),
@@ -73,9 +75,24 @@ function AddMethodCodingExercisePage() {
   const numericId = id ? parseInt(id, 10) : undefined;
   const [, setCurrentPageTitle] = useDashboardPageTitle();
   const navigate = useNavigate();
+  const [dataTypes, setDataTypes] = useState<DataType | undefined>(undefined);
+  const [exerciseTopics, setExerciseTopics] = useState<ExerciseTopic | undefined>(undefined);
 
+  console.log(exerciseTopics);
   useEffect(() => {
     setCurrentPageTitle('Test > Add method coding exercise');
+
+    // agent.ExerciseTopics.list()
+    //   .then((exerciseTopics) => {
+    //     setExerciseTopics(exerciseTopics);
+    //   })
+    //   .catch((error) => {
+    //     toast({
+    //       title: 'Error fetching exercise topics',
+    //       description: error.message || 'An unexpected error occurred.',
+    //       variant: 'destructive',
+    //     });
+    //   });
   }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({

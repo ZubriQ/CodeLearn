@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
@@ -27,6 +27,8 @@ import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@
 import { Card } from '@/components/ui/card.tsx';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { difficulties } from '@/features/dashboard/tests/pages/Difficulties.ts';
+import { ExerciseTopic } from '@/features/dashboard/tests/models/ExerciseTopic.ts';
+import { Checkbox } from '@/components/ui/checkbox.tsx';
 
 const answerSchema = z.object({
   text: z.string().min(1, 'Answer text cannot be empty'),
@@ -38,7 +40,6 @@ const formSchema = z.object({
   title: z.string().min(3).max(100),
   description: z.string().min(10).max(1000),
   difficultyId: z.number(),
-  isMultipleAnswers: z.boolean().default(false),
   answers: z.array(answerSchema),
 });
 
@@ -47,9 +48,23 @@ export default function AddQuestionExercisePage() {
   const numericId = id ? parseInt(id, 10) : undefined;
   const [, setCurrentPageTitle] = useDashboardPageTitle();
   const navigate = useNavigate();
+  const [exerciseTopics, setExerciseTopics] = useState<ExerciseTopic | undefined>(undefined);
 
+  console.log(exerciseTopics);
   useEffect(() => {
     setCurrentPageTitle('Test > Add question exercise');
+
+    agent.ExerciseTopics.list()
+      .then((exerciseTopics) => {
+        setExerciseTopics(exerciseTopics);
+      })
+      .catch((error) => {
+        toast({
+          title: 'Error fetching exercise topics',
+          description: error.message || 'An unexpected error occurred.',
+          variant: 'destructive',
+        });
+      });
   }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -58,7 +73,6 @@ export default function AddQuestionExercisePage() {
       title: '',
       description: '',
       difficultyId: difficulties[0].id,
-      isMultipleAnswers: false,
       answers: [
         { text: '', isCorrect: false },
         { text: '', isCorrect: false },
@@ -70,17 +84,15 @@ export default function AddQuestionExercisePage() {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const selectedDifficulty = difficulties.find((d) => d.id === values.difficultyId);
-    const correctAnswersCount = values.answers.reduce((count, answer) => count + (answer.isCorrect ? 1 : 0), 0);
-    const isMultipleAnswers = correctAnswersCount > 1;
     const formattedData = {
       title: values.title,
       description: values.description,
       difficulty: selectedDifficulty!.name,
-      isMultipleAnswers: isMultipleAnswers,
       answers: values.answers.map((answer) => ({
         text: answer.text,
         isCorrect: answer.isCorrect,
       })),
+      exerciseTopics: [],
     };
 
     if (numericId !== undefined) {
@@ -203,7 +215,7 @@ export default function AddQuestionExercisePage() {
 
           <>
             {fields.map((item, index) => (
-              <Card key={item.id} className="space-y-4 p-6 shadow-sm">
+              <Card key={item.id} className="space-y-4 p-5 shadow-sm">
                 <FormField
                   control={form.control}
                   name={`answers.${index}.text`}
@@ -223,13 +235,15 @@ export default function AddQuestionExercisePage() {
                     name={`answers.${index}.isCorrect`}
                     render={({ field }) => (
                       <FormItem className="flex items-center">
-                        <div className="flex-grow">
-                          <FormLabel className="mr-2">Is correct?</FormLabel>
-                        </div>
-                        <div className="flex-shrink">
+                        <div className="flex">
                           <FormControl>
-                            <Switch checked={field.value} onCheckedChange={(val) => field.onChange(val)} />
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={(val) => field.onChange(val)}
+                              className="mr-2"
+                            />
                           </FormControl>
+                          <FormLabel>Is correct answer?</FormLabel>
                         </div>
                       </FormItem>
                     )}

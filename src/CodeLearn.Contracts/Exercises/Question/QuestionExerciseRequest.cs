@@ -8,5 +8,5 @@ public record QuestionExerciseRequest(
     string Title,
     string Description,
     string Difficulty,
-    bool IsMultipleAnswers,
-    QuestionChoiceRequestDto[] Answers);
+    QuestionChoiceRequestDto[] Answers,
+    int[] ExerciseTopics);

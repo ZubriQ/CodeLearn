@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { LoginCredentials } from '@/features/users/models/LoginCredentials.ts';
 import { CreateMethodCodingRequest } from '@/api/exercises/CreateMethodCodingRequest.ts';
 import { AnswerDto } from '@/api/exercises/AnswerDto.ts';
+import { CreateQuestionRequest } from '@/api/exercises/CreateQuestionRequest.ts';
 
 axios.defaults.baseURL = 'https://localhost:5001/api/';
 
@@ -52,17 +53,17 @@ const Tests = {
 
 const Exercises = {
   delete: (id: number) => requests.delete(`exercises/${id}`),
-  createQuestion: (
-    testId: number,
-    request: {
-      title: string;
-      description: string;
-      difficulty: string;
-      isMultipleAnswers: boolean;
-      answers: AnswerDto[];
-    },
-  ) => requests.post(`tests/${testId}/question-exercises`, request),
+  createQuestion: (testId: number, request: CreateQuestionRequest) =>
+    requests.post(`tests/${testId}/question-exercises`, request),
   createMethodCoding: (request: CreateMethodCodingRequest) => requests.post(`method-coding-exercises`, request),
+};
+
+const ExerciseTopics = {
+  list: () => requests.get('exercise-topics').then((response) => response.exerciseTopics),
+};
+
+const DataTypes = {
+  list: () => requests.get('data-types').then((response) => response.dataTypes),
 };
 
 // const TestErrors = {
@@ -78,6 +79,8 @@ const agent = {
   StudentGroup,
   Tests,
   Exercises,
+  ExerciseTopics,
+  DataTypes,
   // TestErrors,
 };
 

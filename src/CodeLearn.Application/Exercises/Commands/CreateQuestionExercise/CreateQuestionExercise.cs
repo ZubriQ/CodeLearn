@@ -13,7 +13,6 @@ public record CreateQuestionExerciseCommand(
     string Title,
     string Description,
     string Difficulty,
-    bool IsMultipleAnswers,
     List<AnswerDto> Answers)
     : IRequest<OneOf<int, ValidationFailed>>;
 
@@ -43,7 +42,7 @@ public class CreateQuestionExerciseCommandHandler(
             request.Title,
             request.Description,
             difficultyEnum,
-            request.IsMultipleAnswers);
+            true); // TODO: handle multiple answers
 
         AddQuestionChoicesToExercise(request, questionExercise);
 

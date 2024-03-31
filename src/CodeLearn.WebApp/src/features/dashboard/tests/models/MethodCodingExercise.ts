@@ -1,4 +1,3 @@
-import { DataType } from '@/features/dashboard/tests/models/DataType.ts';
 import { MethodParameter } from '@/features/dashboard/tests/models/MethodParameter.ts';
 import { TestCase } from '@/features/dashboard/tests/models/TestCase.ts';
 import { InputOutputExample } from '@/features/dashboard/tests/models/InputOutputExample.ts';
@@ -13,12 +12,12 @@ export type MethodCodingExercise = {
   title: string;
   description: string;
   difficulty: ExerciseDifficulty;
-  exerciseNotes?: ExerciseNote[];
   exerciseTopics?: ExerciseTopic[];
   // Method coding fields
   methodToExecute: string;
   methodSolutionCode?: string;
-  dataType: DataType;
+  methodReturnDataTypeId: number;
+  exerciseNotes?: ExerciseNote[];
   methodParameters: MethodParameter[];
   testCases: TestCase[];
   inputOutputExamples?: InputOutputExample[];

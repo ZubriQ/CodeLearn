@@ -46,7 +46,7 @@ public sealed class TestsQuestionExercisesController(ISender _sender, IMapper _m
     [HttpPost]
     [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Create(int testId, QuestionExerciseRequest request)
+    public async Task<IActionResult> Create(int testId, [FromBody] QuestionExerciseRequest request)
     {
         var command = _mapper.Map<CreateQuestionExerciseCommand>((testId, request));
         var result = await _sender.Send(command);
