@@ -26,6 +26,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command';
 import { Card } from '@/components/ui/card.tsx';
 import { TrashIcon } from '@heroicons/react/24/outline';
+import { difficulties } from '@/features/dashboard/tests/pages/Difficulties.ts';
 
 const answerSchema = z.object({
   text: z.string().min(1, 'Answer text cannot be empty'),
@@ -42,21 +43,6 @@ const formSchema = z.object({
 });
 
 export default function AddQuestionExercisePage() {
-  const difficulties = [
-    {
-      id: 1,
-      name: 'Easy',
-    },
-    {
-      id: 2,
-      name: 'Medium',
-    },
-    {
-      id: 3,
-      name: 'Hard',
-    },
-  ];
-
   const { id } = useParams<{ id: string }>();
   const numericId = id ? parseInt(id, 10) : undefined;
   const [, setCurrentPageTitle] = useDashboardPageTitle();
@@ -84,12 +70,8 @@ export default function AddQuestionExercisePage() {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const selectedDifficulty = difficulties.find((d) => d.id === values.difficultyId);
-
     const correctAnswersCount = values.answers.reduce((count, answer) => count + (answer.isCorrect ? 1 : 0), 0);
-
-    // Set isMultipleAnswers to true if more than one answer is marked as correct
     const isMultipleAnswers = correctAnswersCount > 1;
-
     const formattedData = {
       title: values.title,
       description: values.description,
@@ -118,10 +100,9 @@ export default function AddQuestionExercisePage() {
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: 'answers', // The key of the field array in your form
+    name: 'answers',
   });
 
-  // Function to handle adding a new answer
   const addAnswer = () => {
     append({ text: '', isCorrect: false });
   };
@@ -214,7 +195,7 @@ export default function AddQuestionExercisePage() {
                     </Popover>
                   </FormControl>
                 </div>
-                <FormDescription>Relative difficulty of the question</FormDescription>
+                <FormDescription>Relative exercise difficulty</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -272,7 +253,7 @@ export default function AddQuestionExercisePage() {
               type="button"
               onClick={addAnswer}
               disabled={fields.length >= 10}
-              className="mt-4"
+              className="mt-4 hover:bg-zinc-200/70"
             >
               Add answer
             </Button>
