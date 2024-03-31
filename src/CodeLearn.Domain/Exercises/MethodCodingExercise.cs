@@ -13,6 +13,10 @@ public sealed class MethodCodingExercise : Exercise
     private readonly IList<TestCase> _testCases = [];
     public IReadOnlyList<TestCase> TestCases => _testCases.AsReadOnly();
 
+
+    private readonly IList<ExerciseNote> _exerciseNotes = [];
+    public IReadOnlyList<ExerciseNote> ExerciseNotes => _exerciseNotes.AsReadOnly();
+
     private readonly IList<InputOutputExample> _inputOutputExamples = [];
     public IReadOnlyList<InputOutputExample> InputOutputExamples => _inputOutputExamples.AsReadOnly();
 
@@ -66,5 +70,10 @@ public sealed class MethodCodingExercise : Exercise
     public void AddExample(InputOutputExample example)
     {
         _inputOutputExamples.Add(example);
+    }
+
+    public void AddNote(ExerciseNote exerciseNote)
+    {
+        _exerciseNotes.Add(exerciseNote);
     }
 }

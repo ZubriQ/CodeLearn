@@ -1,5 +1,6 @@
 using CodeLearn.Domain.Exercises;
 using CodeLearn.Domain.Exercises.Entities;
+using CodeLearn.Domain.Exercises.Enums;
 using CodeLearn.Domain.Exercises.ValueObjects;
 
 namespace CodeLearn.Infrastructure.Data.Configurations.Exercises;
@@ -12,6 +13,7 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
         ConfigureMethodCodingExerciseMethodParameterTable(builder);
         ConfigureMethodCodingExerciseTestCaseTable(builder);
         ConfigureMethodCodingExerciseInputOutputExampleTable(builder);
+        ConfigureMethodCodingExerciseNoteTable(builder);
     }
 
     private static void ConfigureMethodCodingExercise(EntityTypeBuilder<MethodCodingExercise> builder)
@@ -163,6 +165,44 @@ public sealed class MethodCodingExerciseConfiguration : IEntityTypeConfiguration
 
         builder.Metadata
             .FindNavigation(nameof(MethodCodingExercise.InputOutputExamples))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+    }
+
+    private static void ConfigureMethodCodingExerciseNoteTable(EntityTypeBuilder<MethodCodingExercise> builder)
+    {
+        _ = builder.OwnsMany(e => e.ExerciseNotes, noteBuilder =>
+        {
+            noteBuilder.ToTable("ExerciseNote", DatabaseSchemes.Test);
+
+            noteBuilder
+                .WithOwner()
+                .HasForeignKey(n => n.ExerciseId);
+
+            noteBuilder.HasKey(n => n.Id);
+
+            noteBuilder
+                .Property(n => n.Id)
+                .ValueGeneratedOnAdd()
+                .HasConversion(
+                    id => id.Value,
+                    value => ExerciseNoteId.Create(value));
+
+            noteBuilder
+                .Property(n => n.Entry)
+                .HasMaxLength(100)
+                .IsRequired();
+
+            noteBuilder
+                .Property(n => n.Decoration)
+                .HasMaxLength(30)
+                .IsRequired()
+                .HasConversion(
+                    decoration => decoration.ToString(),
+                    value => (ExerciseNoteDecoration)Enum.Parse(typeof(ExerciseNoteDecoration), value));
+        });
+
+        builder.Metadata
+            .FindNavigation(nameof(MethodCodingExercise.ExerciseNotes))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

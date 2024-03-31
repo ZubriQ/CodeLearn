@@ -639,7 +639,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                 {
                     b.HasBaseType("CodeLearn.Domain.Exercises.Exercise");
 
-                    b.Property<int>("MethodReturnTypeId")
+                    b.Property<int>("MethodReturnDataTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("MethodSolutionCode")
@@ -652,7 +652,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasIndex("MethodReturnTypeId");
+                    b.HasIndex("MethodReturnDataTypeId");
 
                     b.HasDiscriminator().HasValue("MethodCoding");
                 });
@@ -840,9 +840,9 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("CodeLearn.Domain.Exercises.MethodCodingExercise", b =>
                 {
-                    b.HasOne("CodeLearn.Domain.Exercises.Entities.DataType", "MethodReturnType")
+                    b.HasOne("CodeLearn.Domain.Exercises.Entities.DataType", "MethodReturnDataType")
                         .WithMany()
-                        .HasForeignKey("MethodReturnTypeId")
+                        .HasForeignKey("MethodReturnDataTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -975,7 +975,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
                     b.Navigation("MethodParameters");
 
-                    b.Navigation("MethodReturnType");
+                    b.Navigation("MethodReturnDataType");
 
                     b.Navigation("TestCases");
                 });

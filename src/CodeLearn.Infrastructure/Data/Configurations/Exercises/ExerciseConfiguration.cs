@@ -12,7 +12,6 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
     public void Configure(EntityTypeBuilder<Exercise> builder)
     {
         ConfigureExerciseTable(builder);
-        ConfigureExerciseNoteTable(builder);
     }
 
     private static void ConfigureExerciseTable(EntityTypeBuilder<Exercise> builder)
@@ -80,43 +79,5 @@ public sealed class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
             .HasValue<MethodCodingExercise>("MethodCoding")
             .HasValue<ClassCodingExercise>("ClassCoding")
             .HasValue<QuestionExercise>("Question");
-    }
-
-    private static void ConfigureExerciseNoteTable(EntityTypeBuilder<Exercise> builder)
-    {
-        _ = builder.OwnsMany(e => e.ExerciseNotes, noteBuilder =>
-        {
-            noteBuilder.ToTable("ExerciseNote", DatabaseSchemes.Test);
-
-            noteBuilder
-                .WithOwner()
-                .HasForeignKey(n => n.ExerciseId);
-
-            noteBuilder.HasKey(n => n.Id);
-
-            noteBuilder
-                .Property(n => n.Id)
-                .ValueGeneratedOnAdd()
-                .HasConversion(
-                    id => id.Value,
-                    value => ExerciseNoteId.Create(value));
-
-            noteBuilder
-                .Property(n => n.Entry)
-                .HasMaxLength(100)
-                .IsRequired();
-
-            noteBuilder
-                .Property(n => n.Decoration)
-                .HasMaxLength(30)
-                .IsRequired()
-                .HasConversion(
-                    decoration => decoration.ToString(),
-                    value => (ExerciseNoteDecoration)Enum.Parse(typeof(ExerciseNoteDecoration), value));
-        });
-
-        builder.Metadata
-            .FindNavigation(nameof(Exercise.ExerciseNotes))!
-            .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }
