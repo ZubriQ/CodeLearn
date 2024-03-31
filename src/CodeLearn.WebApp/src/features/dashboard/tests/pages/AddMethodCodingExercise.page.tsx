@@ -29,6 +29,7 @@ import { toast } from '@/components/ui/use-toast.ts';
 import { difficulties } from '@/features/dashboard/tests/pages/Difficulties.ts';
 import { DataType } from '@/features/dashboard/tests/models/DataType.ts';
 import { ExerciseTopic } from '@/features/dashboard/tests/models/ExerciseTopic.ts';
+import { Checkbox } from '@/components/ui/checkbox.tsx';
 
 const methodParameterSchema = z.object({
   dataTypeId: z.number(),
@@ -60,7 +61,7 @@ const formSchema = z.object({
   title: z.string().min(3).max(100),
   description: z.string().min(10).max(1000),
   difficultyId: z.number(),
-  exerciseTopics: z.array(z.number()),
+  exerciseTopics: z.array(z.number()).nonempty('You have to select at least one exercise topic.'),
   methodToExecute: z.string().min(1),
   methodSolutionCode: z.string().max(1000),
   methodReturnDataTypeId: z.number(),
@@ -75,24 +76,36 @@ function AddMethodCodingExercisePage() {
   const numericId = id ? parseInt(id, 10) : undefined;
   const [, setCurrentPageTitle] = useDashboardPageTitle();
   const navigate = useNavigate();
-  const [dataTypes, setDataTypes] = useState<DataType | undefined>(undefined);
-  const [exerciseTopics, setExerciseTopics] = useState<ExerciseTopic | undefined>(undefined);
+  const [dataTypes, setDataTypes] = useState<DataType[] | undefined>(undefined);
+  const [exerciseTopics, setExerciseTopics] = useState<ExerciseTopic[] | undefined>(undefined);
 
   console.log(exerciseTopics);
   useEffect(() => {
     setCurrentPageTitle('Test > Add method coding exercise');
 
-    // agent.ExerciseTopics.list()
-    //   .then((exerciseTopics) => {
-    //     setExerciseTopics(exerciseTopics);
-    //   })
-    //   .catch((error) => {
-    //     toast({
-    //       title: 'Error fetching exercise topics',
-    //       description: error.message || 'An unexpected error occurred.',
-    //       variant: 'destructive',
-    //     });
-    //   });
+    agent.ExerciseTopics.list()
+      .then((exerciseTopics) => {
+        setExerciseTopics(exerciseTopics);
+      })
+      .catch((error) => {
+        toast({
+          title: 'Error fetching exercise topics',
+          description: error.message || 'An unexpected error occurred.',
+          variant: 'destructive',
+        });
+      });
+
+    agent.DataTypes.list()
+      .then((dataTypes) => {
+        setDataTypes(dataTypes);
+      })
+      .catch((error) => {
+        toast({
+          title: 'Error fetching data types',
+          description: error.message || 'An unexpected error occurred.',
+          variant: 'destructive',
+        });
+      });
   }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -101,12 +114,9 @@ function AddMethodCodingExercisePage() {
       title: '',
       description: '',
       difficultyId: difficulties[0].id,
-      answers: [
-        { text: '', isCorrect: false },
-        { text: '', isCorrect: false },
-        { text: '', isCorrect: false },
-        { text: '', isCorrect: false },
-      ],
+      exerciseTopics: [],
+      methodToExecute: 'GetArea',
+      methodSolutionCode: 'public static double GetArea(double a, double b)\n{\n    // Example\n    return a * b;\n}',
     },
   });
 
@@ -116,13 +126,13 @@ function AddMethodCodingExercisePage() {
     const formattedData = {};
 
     if (numericId !== undefined) {
-      agent.Exercises.createQuestion(numericId, formattedData)
+      agent.Exercises.createMethodCoding(numericId, formattedData)
         .then(() => {
           navigate(`/dashboard/tests/${id}`);
         })
         .catch((error) => {
           toast({
-            title: 'Error adding question',
+            title: 'Error adding exercise',
             description: error.message || 'An unexpected error occurred.',
             variant: 'destructive',
           });
@@ -134,7 +144,7 @@ function AddMethodCodingExercisePage() {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="m-auto mb-12 min-w-[320px] max-w-[500px] space-y-8">
-          <TypographyH3>Add Question Exercise</TypographyH3>
+          <TypographyH3>Add Method Coding Exercise</TypographyH3>
           <FormField
             control={form.control}
             name="title"
@@ -155,9 +165,9 @@ function AddMethodCodingExercisePage() {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Question</FormLabel>
+                <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Description" {...field} maxLength={1000} className="bg-white" />
+                  <Textarea placeholder="Text" {...field} maxLength={1000} className="bg-white" />
                 </FormControl>
                 <FormDescription>Question up to 1000 characters long</FormDescription>
                 <FormMessage />
@@ -219,6 +229,78 @@ function AddMethodCodingExercisePage() {
                   </FormControl>
                 </div>
                 <FormDescription>Relative exercise difficulty</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {exerciseTopics && (
+            <FormField
+              control={form.control}
+              name="exerciseTopics"
+              render={() => (
+                <FormItem>
+                  <div className="mb-3">
+                    <FormLabel>Exercise Topics</FormLabel>
+                    <FormDescription>Select at least 1 topic that fits best</FormDescription>
+                  </div>
+                  {exerciseTopics.map((topic) => (
+                    <FormField
+                      key={topic.id}
+                      control={form.control}
+                      name="exerciseTopics"
+                      render={({ field }) => (
+                        <FormItem className="ml-2 flex items-center space-x-3">
+                          <div>
+                            <FormControl>
+                              <Checkbox
+                                className="mr-2 align-middle"
+                                checked={field.value?.includes(topic.id)}
+                                onCheckedChange={(checked) => {
+                                  const newValue = checked
+                                    ? [...field.value, topic.id]
+                                    : field.value.filter((value) => value !== topic.id);
+                                  field.onChange(newValue);
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel>{topic.name}</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                  ))}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+
+          <FormField
+            control={form.control}
+            name="methodToExecute"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Method Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter name" {...field} maxLength={50} className="bg-white" />
+                </FormControl>
+                <FormDescription>Method for running test cases to check if they work correctly</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="methodSolutionCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Student's Initial Solution Code</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="Code" {...field} maxLength={1000} className="h-32 bg-white" />
+                </FormControl>
+                <FormDescription>Help students by adding some initial code</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

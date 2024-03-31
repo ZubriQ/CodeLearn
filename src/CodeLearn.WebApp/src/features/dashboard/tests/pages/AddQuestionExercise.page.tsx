@@ -103,7 +103,7 @@ export default function AddQuestionExercisePage() {
         })
         .catch((error) => {
           toast({
-            title: 'Error adding question',
+            title: 'Error adding exercise',
             description: error.message || 'An unexpected error occurred.',
             variant: 'destructive',
           });
@@ -147,7 +147,7 @@ export default function AddQuestionExercisePage() {
               <FormItem>
                 <FormLabel>Question</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Description" {...field} maxLength={1000} className="bg-white" />
+                  <Textarea placeholder="Text" {...field} maxLength={1000} className="bg-white" />
                 </FormControl>
                 <FormDescription>Question up to 1000 characters long</FormDescription>
                 <FormMessage />

@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { LoginCredentials } from '@/features/users/models/LoginCredentials.ts';
 import { CreateMethodCodingRequest } from '@/api/exercises/CreateMethodCodingRequest.ts';
-import { AnswerDto } from '@/api/exercises/AnswerDto.ts';
 import { CreateQuestionRequest } from '@/api/exercises/CreateQuestionRequest.ts';
 
 axios.defaults.baseURL = 'https://localhost:5001/api/';
