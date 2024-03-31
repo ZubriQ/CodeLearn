@@ -17,7 +17,7 @@ public class CreateQuestionExerciseCommandValidator : AbstractValidator<CreateQu
             .MaximumLength(50);
 
         RuleFor(x => x.IsMultipleAnswers)
-            .NotEmpty();
+            .NotNull();
 
         RuleFor(x => x.Answers)
             .NotNull()

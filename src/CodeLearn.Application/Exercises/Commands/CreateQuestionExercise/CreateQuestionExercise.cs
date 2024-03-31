@@ -6,7 +6,7 @@ using FluentValidation.Results;
 
 namespace CodeLearn.Application.Exercises.Commands.CreateQuestionExercise;
 
-public record AnswerModel(string Text, bool IsCorrect);
+public record AnswerDto(string Text, bool IsCorrect);
 
 public record CreateQuestionExerciseCommand(
     int TestId,
@@ -14,7 +14,7 @@ public record CreateQuestionExerciseCommand(
     string Description,
     string Difficulty,
     bool IsMultipleAnswers,
-    List<AnswerModel> Answers)
+    List<AnswerDto> Answers)
     : IRequest<OneOf<int, ValidationFailed>>;
 
 public class CreateQuestionExerciseCommandHandler(
