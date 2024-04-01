@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useDashboardPageTitle } from '@/components/layout';
-import { TypographyH3 } from '@/components/typography/typography-h3.tsx';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { z } from 'zod';
 import {
   Form,
   FormControl,
@@ -10,26 +11,20 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form.tsx';
+import { useDashboardPageTitle } from '@/components/layout';
+import agent from '@/api/agent.ts';
+import { TypographyH3 } from '@/components/typography/typography-h3.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { cn } from '@/lib/utils.ts';
-import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
-import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command.tsx';
 import { Card } from '@/components/ui/card.tsx';
-import { Switch } from '@/components/ui/switch.tsx';
-import { TrashIcon } from '@heroicons/react/24/outline';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import { difficulties } from '@/features/dashboard/tests/pages/Difficulties.ts';
 import { DataType } from '@/features/dashboard/tests/models/DataType.ts';
 import { ExerciseTopic } from '@/features/dashboard/tests/models/ExerciseTopic.ts';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
+import Combobox from '@/components/ui/combobox.tsx';
 
 const methodParameterSchema = z.object({
   dataTypeId: z.number(),
@@ -79,7 +74,6 @@ function AddMethodCodingExercisePage() {
   const [dataTypes, setDataTypes] = useState<DataType[] | undefined>(undefined);
   const [exerciseTopics, setExerciseTopics] = useState<ExerciseTopic[] | undefined>(undefined);
 
-  console.log(exerciseTopics);
   useEffect(() => {
     setCurrentPageTitle('Test > Add method coding exercise');
 
@@ -140,10 +134,16 @@ function AddMethodCodingExercisePage() {
     }
   };
 
+  const { control } = form;
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'methodParameters',
+  });
+
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="m-auto mb-12 min-w-[320px] max-w-[500px] space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="m-auto mb-12 min-w-[320px] max-w-2xl space-y-8">
           <TypographyH3>Add Method Coding Exercise</TypographyH3>
           <FormField
             control={form.control}
@@ -178,54 +178,16 @@ function AddMethodCodingExercisePage() {
           <FormField
             control={form.control}
             name="difficultyId"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <div className="flex flex-col">
                   <FormLabel className="pb-3">Difficulty</FormLabel>
                   <FormControl>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={cn('justify-between font-normal', !field.value && 'text-muted-foreground')}
-                          >
-                            {field.value
-                              ? difficulties.find((d) => d.id === field.value)?.name || 'Select difficulty'
-                              : 'Select difficulty'}
-                            <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-
-                      <PopoverContent className="p-0">
-                        <Command>
-                          <CommandEmpty>Nothing found.</CommandEmpty>
-                          <CommandList>
-                            <CommandGroup>
-                              {difficulties.map((dif) => (
-                                <CommandItem
-                                  value={dif.name}
-                                  key={dif.id}
-                                  onSelect={() => {
-                                    form.setValue('difficultyId', dif.id);
-                                  }}
-                                >
-                                  {dif.name}
-                                  <CheckIcon
-                                    className={cn(
-                                      'ml-auto h-4 w-4',
-                                      dif.id === field.value ? 'opacity-100' : 'opacity-0',
-                                    )}
-                                  />
-                                </CommandItem>
-                              ))}
-                            </CommandGroup>
-                          </CommandList>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
+                    <Combobox
+                      name="difficultyId"
+                      options={difficulties.map((dif) => ({ id: dif.id, alias: dif.name }))}
+                      placeholder="Select difficulty"
+                    />
                   </FormControl>
                 </div>
                 <FormDescription>Relative exercise difficulty</FormDescription>
@@ -293,6 +255,29 @@ function AddMethodCodingExercisePage() {
 
           <FormField
             control={form.control}
+            name="methodReturnDataTypeId"
+            render={() => (
+              <FormItem>
+                <div className="flex flex-col">
+                  <FormLabel className="pb-3">Method Return Data Type</FormLabel>
+                  <FormControl>
+                    {dataTypes && (
+                      <Combobox
+                        name="methodReturnDataTypeId"
+                        options={dataTypes.map((type) => ({ id: type.id, alias: type.alias }))}
+                        placeholder="Select data type"
+                      />
+                    )}
+                  </FormControl>
+                </div>
+                <FormDescription>Select what kind of data the method will return</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
             name="methodSolutionCode"
             render={({ field }) => (
               <FormItem>
@@ -303,6 +288,49 @@ function AddMethodCodingExercisePage() {
                 <FormDescription>Help students by adding some initial code</FormDescription>
                 <FormMessage />
               </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="methodParameters"
+            render={() => (
+              <div>
+                <FormLabel>Method Parameters</FormLabel>
+                <FormDescription>You must add at least 1 parameter</FormDescription>
+                <div className="mb-4 mt-4 flex space-x-2">
+                  <Button
+                    type="button"
+                    onClick={() =>
+                      append({
+                        dataTypeId: dataTypes?.[0]?.id ?? 0,
+                        position: fields.length + 1,
+                      })
+                    }
+                  >
+                    Add Parameter
+                  </Button>
+                  {fields.length > 0 && (
+                    <Button type="button" variant="destructive" onClick={() => remove(fields.length - 1)}>
+                      Remove Last
+                    </Button>
+                  )}
+                </div>
+
+                {fields.length > 0 && (
+                  <Card className="bg-transparent pl-4 pt-4">
+                    {fields.map((item, index) => (
+                      <Combobox
+                        key={item.id}
+                        name={`methodParameters.${index}.dataTypeId`}
+                        options={dataTypes ?? []}
+                        placeholder="Select data type"
+                        className="mb-4 mr-4 flex-1"
+                      />
+                    ))}
+                  </Card>
+                )}
+              </div>
             )}
           />
 

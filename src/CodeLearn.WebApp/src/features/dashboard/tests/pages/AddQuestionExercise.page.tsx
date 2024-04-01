@@ -123,7 +123,7 @@ export default function AddQuestionExercisePage() {
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="m-auto mb-12 min-w-[320px] max-w-[500px] space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="m-auto mb-12 min-w-[320px] max-w-2xl space-y-8">
           <TypographyH3>Add Question Exercise</TypographyH3>
           <FormField
             control={form.control}
@@ -272,7 +272,7 @@ export default function AddQuestionExercisePage() {
                     </FormItem>
                   )}
                 />
-                <div className="flex justify-between gap-1">
+                <div className="flex justify-between">
                   <FormField
                     control={form.control}
                     name={`answers.${index}.isCorrect`}
@@ -310,7 +310,7 @@ export default function AddQuestionExercisePage() {
               type="button"
               onClick={addAnswer}
               disabled={fields.length >= 10}
-              className="mt-4 hover:bg-zinc-200/70"
+              className="hover:bg-zinc-200/70"
             >
               Add answer
             </Button>
