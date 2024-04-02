@@ -10,7 +10,7 @@ export type CreateMethodCodingRequest = {
   exerciseTopics: number[];
   methodToExecute: string;
   methodSolutionCode: string;
-  methodReturnTypeId: number;
+  methodReturnDataTypeId: number;
   exerciseNotes: ExerciseNoteDto[];
   inputOutputExamples: InputOutputExampleDto[];
   methodParameters: MethodParameterDto[];

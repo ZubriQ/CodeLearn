@@ -24,7 +24,7 @@ import { Textarea } from '@/components/ui/textarea.tsx';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command';
 import { Card } from '@/components/ui/card.tsx';
-import { TrashIcon } from '@heroicons/react/24/outline';
+import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { difficulties } from '@/features/dashboard/tests/pages/Difficulties.ts';
 import { ExerciseTopic } from '@/features/dashboard/tests/models/ExerciseTopic.ts';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
@@ -258,7 +258,7 @@ export default function AddQuestionExercisePage() {
 
           <>
             {fields.map((item, index) => (
-              <Card key={item.id} className="space-y-4 p-5 shadow-sm">
+              <Card key={item.id} className="space-y-4 bg-transparent p-5 shadow-sm">
                 <FormField
                   control={form.control}
                   name={`answers.${index}.text`}
@@ -266,7 +266,7 @@ export default function AddQuestionExercisePage() {
                     <FormItem>
                       <FormLabel>Answer {index + 1}</FormLabel>
                       <FormControl>
-                        <Textarea {...field} placeholder="Text" />
+                        <Textarea {...field} placeholder="Text" className="bg-white" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -305,22 +305,16 @@ export default function AddQuestionExercisePage() {
               </Card>
             ))}
 
-            <Button
-              variant="secondary"
-              type="button"
-              onClick={addAnswer}
-              disabled={fields.length >= 10}
-              className="hover:bg-zinc-200/70"
-            >
-              Add answer
+            <Button type="button" onClick={addAnswer} disabled={fields.length >= 10}>
+              <PlusIcon className="mr-2 size-4" /> Add answer
             </Button>
           </>
 
           <div className="grid grid-cols-1 justify-between gap-4 sm:flex sm:grid-cols-2">
-            <Button type="submit" className="w-full sm:w-52">
+            <Button type="submit" className="w-full sm:w-32">
               Submit
             </Button>
-            <Button className="w-full sm:w-52" variant="outline" onClick={() => navigate(`/dashboard/tests/${id}`)}>
+            <Button className="w-full sm:w-32" variant="outline" onClick={() => navigate(`/dashboard/tests/${id}`)}>
               Cancel
             </Button>
           </div>

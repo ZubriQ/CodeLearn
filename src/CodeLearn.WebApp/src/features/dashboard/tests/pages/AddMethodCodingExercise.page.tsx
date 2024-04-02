@@ -25,6 +25,7 @@ import { DataType } from '@/features/dashboard/tests/models/DataType.ts';
 import { ExerciseTopic } from '@/features/dashboard/tests/models/ExerciseTopic.ts';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import Combobox from '@/components/ui/combobox.tsx';
+import { TrashIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
 
 const methodParameterSchema = z.object({
   dataTypeId: z.number(),
@@ -37,8 +38,8 @@ const inputOutputExampleSchema = z.object({
 });
 
 const exerciseNoteSchema = z.object({
-  dataTypeId: z.number().min(1),
-  position: z.number().min(1),
+  entry: z.string(),
+  decoration: z.string(),
 });
 
 const testCaseParameterSchema = z.object({
@@ -47,7 +48,7 @@ const testCaseParameterSchema = z.object({
 });
 
 const testCaseSchema = z.object({
-  correctOutputValue: z.number(),
+  correctOutputValue: z.string(),
   testCaseParameters: z.array(testCaseParameterSchema),
 });
 
@@ -111,13 +112,30 @@ function AddMethodCodingExercisePage() {
       exerciseTopics: [],
       methodToExecute: 'GetArea',
       methodSolutionCode: 'public static double GetArea(double a, double b)\n{\n    // Example\n    return a * b;\n}',
+      methodReturnDataTypeId: undefined,
+      exerciseNotes: [], // TODO: these
+      inputOutputExamples: [], // TODO: these
+      methodParameters: [],
+      testCases: [],
     },
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const selectedDifficulty = difficulties.find((d) => d.id === values.difficultyId);
 
-    const formattedData = {};
+    const formattedData = {
+      title: values.title,
+      description: values.description,
+      difficulty: selectedDifficulty!.name,
+      exerciseTopics: values.exerciseTopics,
+      methodToExecute: values.methodToExecute,
+      methodSolutionCode: values.methodSolutionCode,
+      methodReturnDataTypeId: values.methodReturnDataTypeId,
+      exerciseNotes: values.exerciseNotes,
+      inputOutputExamples: values.inputOutputExamples,
+      methodParameters: values.methodParameters,
+      testCases: values.testCases,
+    };
 
     if (numericId !== undefined) {
       agent.Exercises.createMethodCoding(numericId, formattedData)
@@ -134,17 +152,41 @@ function AddMethodCodingExercisePage() {
     }
   };
 
-  const { control } = form;
+  const { control, watch, setValue } = form;
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'methodParameters',
   });
+
+  // Watching the length of methodParameters to trigger updates
+  const methodParametersLength = watch('methodParameters')?.length || 0;
+
+  const testCasesArray = useFieldArray({
+    control,
+    name: 'testCases',
+  });
+
+  // For updating test cases according method parameters count
+  useEffect(() => {
+    const updatedTestCases = testCasesArray.fields.map((testCase) => {
+      const updatedParams = testCase.testCaseParameters || [];
+      while (updatedParams.length < methodParametersLength) {
+        updatedParams.push({ value: '', position: updatedParams.length });
+      }
+      updatedParams.length = methodParametersLength;
+      return { ...testCase, testCaseParameters: updatedParams };
+    });
+
+    setValue('testCases', updatedTestCases);
+  }, [methodParametersLength]);
 
   return (
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="m-auto mb-12 min-w-[320px] max-w-2xl space-y-8">
           <TypographyH3>Add Method Coding Exercise</TypographyH3>
+
           <FormField
             control={form.control}
             name="title"
@@ -169,7 +211,7 @@ function AddMethodCodingExercisePage() {
                 <FormControl>
                   <Textarea placeholder="Text" {...field} maxLength={1000} className="bg-white" />
                 </FormControl>
-                <FormDescription>Question up to 1000 characters long</FormDescription>
+                <FormDescription>Description of the problem to solve</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -240,6 +282,21 @@ function AddMethodCodingExercisePage() {
 
           <FormField
             control={form.control}
+            name="methodSolutionCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Student's Initial Solution Code</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="Code" {...field} maxLength={1000} className="h-32 bg-white" />
+                </FormControl>
+                <FormDescription>Help students by adding some initial code</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
             name="methodToExecute"
             render={({ field }) => (
               <FormItem>
@@ -278,21 +335,6 @@ function AddMethodCodingExercisePage() {
 
           <FormField
             control={form.control}
-            name="methodSolutionCode"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Student's Initial Solution Code</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="Code" {...field} maxLength={1000} className="h-32 bg-white" />
-                </FormControl>
-                <FormDescription>Help students by adding some initial code</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
             name="methodParameters"
             render={() => (
               <div>
@@ -300,33 +342,42 @@ function AddMethodCodingExercisePage() {
                 <FormDescription>You must add at least 1 parameter</FormDescription>
                 <div className="mb-4 mt-4 flex space-x-2">
                   <Button
+                    className="w-full space-x-2 sm:w-fit"
                     type="button"
                     onClick={() =>
                       append({
                         dataTypeId: dataTypes?.[0]?.id ?? 0,
-                        position: fields.length + 1,
+                        position: fields.length,
                       })
                     }
                   >
-                    Add Parameter
+                    <PlusIcon className="mr-2 size-4" /> Add parameter
                   </Button>
                   {fields.length > 0 && (
-                    <Button type="button" variant="destructive" onClick={() => remove(fields.length - 1)}>
-                      Remove Last
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      onClick={() => remove(fields.length - 1)}
+                      className="w-full space-x-2 sm:w-fit"
+                    >
+                      <MinusIcon className="mr-2 size-4" /> Remove last
                     </Button>
                   )}
                 </div>
 
                 {fields.length > 0 && (
-                  <Card className="bg-transparent pl-4 pt-4">
+                  <Card className="flex w-full flex-row flex-wrap bg-transparent pl-4 pt-4 shadow-sm">
                     {fields.map((item, index) => (
-                      <Combobox
-                        key={item.id}
-                        name={`methodParameters.${index}.dataTypeId`}
-                        options={dataTypes ?? []}
-                        placeholder="Select data type"
-                        className="mb-4 mr-4 flex-1"
-                      />
+                      <div className="flex w-fit flex-col">
+                        <FormLabel className="mb-2">Param {index + 1}</FormLabel>
+                        <Combobox
+                          key={item.id}
+                          name={`methodParameters.${index}.dataTypeId`}
+                          options={dataTypes ?? []}
+                          placeholder="Select data type"
+                          className="mb-4 mr-4 flex-1"
+                        />
+                      </div>
                     ))}
                   </Card>
                 )}
@@ -334,11 +385,96 @@ function AddMethodCodingExercisePage() {
             )}
           />
 
+          <FormField
+            control={form.control}
+            name="testCases"
+            render={() => (
+              <FormItem>
+                <div>
+                  <FormLabel>Test Cases</FormLabel>
+                  <FormDescription>Create a few test cases to ensure students write correct code</FormDescription>
+                  <Button
+                    className="mb-4 mt-4 flex w-full space-x-2 sm:w-fit"
+                    type="button"
+                    onClick={() =>
+                      testCasesArray.append({
+                        correctOutputValue: '',
+                        testCaseParameters: Array(methodParametersLength)
+                          .fill(null)
+                          .map((_, idx) => ({
+                            value: '',
+                            position: idx,
+                          })),
+                      })
+                    }
+                  >
+                    <PlusIcon className="mr-2 size-4" /> Add test case
+                  </Button>
+                  <FormControl>
+                    <>
+                      {testCasesArray.fields.map((testCase, index) => (
+                        <Card key={testCase.id} className="mt-4 flex flex-col space-y-4 bg-transparent p-4 shadow-sm">
+                          <div className="flex items-center justify-between">
+                            <Button
+                              size="icon"
+                              variant="outline"
+                              disabled={true}
+                              className="bg-transparent shadow-none disabled:opacity-100"
+                            >
+                              {index + 1}
+                            </Button>
+                            <Button
+                              type="button"
+                              size="icon"
+                              variant="outline"
+                              onClick={() => testCasesArray.remove(index)}
+                              aria-label={`Delete Test Case ${index + 1}`}
+                            >
+                              <TrashIcon className="h-4 w-4" />
+                            </Button>
+                          </div>
+                          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+                            <div className="flex flex-col">
+                              <FormLabel htmlFor={`correctOutput-${index}`} className="mb-2 font-medium">
+                                Correct Output
+                              </FormLabel>
+                              <Input
+                                id={`correctOutput-${index}`}
+                                {...form.register(`testCases.${index}.correctOutputValue`)}
+                                placeholder="Value"
+                                className="bg-white"
+                              />
+                            </div>
+                            {testCase.testCaseParameters.map((_, paramIndex) => (
+                              <div className="flex flex-col" key={`${index}-${paramIndex}`}>
+                                <FormLabel
+                                  htmlFor={`param-${index}-${paramIndex}`}
+                                  className="mb-2"
+                                >{`Param ${paramIndex + 1}`}</FormLabel>
+                                <Input
+                                  id={`param-${index}-${paramIndex}`}
+                                  {...form.register(`testCases.${index}.testCaseParameters.${paramIndex}.value`)}
+                                  placeholder={`Value`}
+                                  className="bg-white"
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </Card>
+                      ))}
+                    </>
+                  </FormControl>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
+
           <div className="grid grid-cols-1 justify-between gap-4 sm:flex sm:grid-cols-2">
-            <Button type="submit" className="w-full sm:w-52">
+            <Button type="submit" className="w-full sm:w-32">
               Submit
             </Button>
-            <Button className="w-full sm:w-52" variant="outline" onClick={() => navigate(`/dashboard/tests/${id}`)}>
+            <Button className="w-full sm:w-32" variant="outline" onClick={() => navigate(`/dashboard/tests/${id}`)}>
               Cancel
             </Button>
           </div>

@@ -54,7 +54,8 @@ const Exercises = {
   delete: (id: number) => requests.delete(`exercises/${id}`),
   createQuestion: (testId: number, request: CreateQuestionRequest) =>
     requests.post(`tests/${testId}/question-exercises`, request),
-  createMethodCoding: (request: CreateMethodCodingRequest) => requests.post(`method-coding-exercises`, request),
+  createMethodCoding: (testId: number, request: CreateMethodCodingRequest) =>
+    requests.post(`tests/${testId}/method-coding-exercises`, request),
 };
 
 const ExerciseTopics = {
