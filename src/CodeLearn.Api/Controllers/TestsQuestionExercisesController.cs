@@ -17,27 +17,23 @@ public sealed class TestsQuestionExercisesController(ISender _sender, IMapper _m
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllByTestId(int testId)
     {
-        var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
-
         var result = await _sender.Send(new GetAllQuestionExercisesByTestIdQuery(testId));
 
         return result.Match(
             exercises =>
             {
+                var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+
                 // Map data for teacher / administrator
                 if (userRole == Roles.Teacher || userRole == Roles.Administrator)
                 {
-                    var mappedDataForTeacher = exercises
-                        .Select(_mapper.Map<TeacherQuestionExerciseResponse>)
-                        .ToArray();
-                    return Ok(new TeacherQuestionExerciseResponseCollection(mappedDataForTeacher));
+                    var mappedTeacherData = exercises.Select(_mapper.Map<TeacherQuestionExerciseResponse>).ToArray();
+                    return Ok(new TeacherQuestionExerciseResponseCollection(mappedTeacherData));
                 }
 
-                // Map data for student
-                var mappedDataForStudent = exercises
-                    .Select(_mapper.Map<StudentQuestionExerciseResponse>)
-                    .ToArray();
-                return Ok(new StudentQuestionExerciseResponseCollection(mappedDataForStudent));
+                // Map data for student / guest
+                var mappedStudentData = exercises.Select(_mapper.Map<StudentQuestionExerciseResponse>).ToArray();
+                return Ok(new StudentQuestionExerciseResponseCollection(mappedStudentData));
             },
             _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Test not found."),
             _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."));
