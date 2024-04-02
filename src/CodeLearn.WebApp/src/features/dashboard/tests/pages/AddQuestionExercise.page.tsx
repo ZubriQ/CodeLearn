@@ -305,9 +305,11 @@ export default function AddQuestionExercisePage() {
               </Card>
             ))}
 
-            <Button type="button" onClick={addAnswer} disabled={fields.length >= 10}>
-              <PlusIcon className="mr-2 size-4" /> Add answer
-            </Button>
+            <Card className="flex items-center justify-center border-dashed bg-transparent px-4 py-12">
+              <Button type="button" onClick={addAnswer} disabled={fields.length >= 10} className="w-fit content-center">
+                <PlusIcon className="mr-2 size-4" /> Add answer
+              </Button>
+            </Card>
           </>
 
           <div className="grid grid-cols-1 justify-between gap-4 sm:flex sm:grid-cols-2">
