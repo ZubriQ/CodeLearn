@@ -66,6 +66,11 @@ const DataTypes = {
   list: () => requests.get('data-types').then((response) => response.dataTypes),
 };
 
+const Testings = {
+  list: () => requests.get('testings').then((response) => response.testings),
+  delete: (id: number) => requests.delete(`testings/${id}`),
+};
+
 // const TestErrors = {
 //   get400Error: () => requests.get('buggy/bad-request'),
 //   get401Error: () => requests.get('buggy/unauthorised'),
@@ -81,6 +86,7 @@ const agent = {
   Exercises,
   ExerciseTopics,
   DataTypes,
+  Testings,
   // TestErrors,
 };
 

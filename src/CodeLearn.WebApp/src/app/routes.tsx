@@ -20,6 +20,7 @@ const StudentGroupsPage = lazy(() => import('@/features/dashboard/student-groups
 const EditStudentGroupPage = lazy(() => import('@/features/dashboard/student-groups/pages/EditStudentGroup.page.tsx'));
 const StudentsPage = lazy(() => import('@/features/dashboard/students/pages/Students.page.tsx'));
 const TestingSessionsPage = lazy(() => import('@/features/dashboard/testing-sessions/pages/TestingSessions.page.tsx'));
+const TestingsPage = lazy(() => import('@/features/dashboard/testings/pages/Testings.page.tsx'));
 
 // For Students
 const CurriculumLayout = lazy(() => import('@/features/curriculum/layout'));
@@ -97,8 +98,16 @@ export const routes: RouteObject[] = [
       {
         path: 'tests/:id/add-question-exercise',
         element: (
-          <Suspense fallback={'heh'}>
+          <Suspense>
             <AddQuestionExercisePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'testings',
+        element: (
+          <Suspense>
+            <TestingsPage />
           </Suspense>
         ),
       },
