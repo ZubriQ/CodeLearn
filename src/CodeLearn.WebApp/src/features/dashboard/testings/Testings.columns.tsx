@@ -17,7 +17,7 @@ import { Testing } from '@/features/dashboard/testings/Testing.ts';
 export const columns: ColumnDef<Testing>[] = [
   {
     accessorKey: 'testTitle',
-    header: 'Test Title',
+    header: 'Test',
     cell: ({ row }) => {
       const testing = row.original;
 
@@ -26,7 +26,7 @@ export const columns: ColumnDef<Testing>[] = [
   },
   {
     accessorKey: 'studentGroupName',
-    header: 'Student Group',
+    header: 'Group',
     cell: ({ row }) => {
       const testing = row.original;
 

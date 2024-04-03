@@ -220,10 +220,7 @@ export default function AddQuestionExercisePage() {
               name="exerciseTopics"
               render={() => (
                 <FormItem>
-                  <div className="mb-3">
-                    <FormLabel>Exercise Topics</FormLabel>
-                    <FormDescription>Select at least 1 topic that fits best</FormDescription>
-                  </div>
+                  <FormLabel>Exercise Topics</FormLabel>
                   {exerciseTopics.map((topic) => (
                     <FormField
                       key={topic.id}
@@ -250,13 +247,15 @@ export default function AddQuestionExercisePage() {
                       )}
                     />
                   ))}
+                  <FormDescription>Select at least one topic that fits best</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
           )}
 
-          <>
+          <div className="space-y-3">
+            <FormLabel>Answers</FormLabel>
             {fields.map((item, index) => (
               <Card key={item.id} className="space-y-4 bg-transparent p-5 shadow-sm">
                 <FormField
@@ -310,7 +309,7 @@ export default function AddQuestionExercisePage() {
                 <PlusIcon className="mr-2 size-4" /> Add answer
               </Button>
             </Card>
-          </>
+          </div>
 
           <div className="grid grid-cols-1 justify-between gap-4 sm:flex sm:grid-cols-2">
             <Button type="submit" className="w-full sm:w-32">

@@ -274,10 +274,7 @@ function AddMethodCodingExercisePage() {
               name="exerciseTopics"
               render={() => (
                 <FormItem>
-                  <div className="mb-3">
-                    <FormLabel>Exercise Topics</FormLabel>
-                    <FormDescription>Select at least 1 topic that fits best</FormDescription>
-                  </div>
+                  <FormLabel>Exercise Topics</FormLabel>
                   {exerciseTopics.map((topic) => (
                     <FormField
                       key={topic.id}
@@ -304,6 +301,7 @@ function AddMethodCodingExercisePage() {
                       )}
                     />
                   ))}
+                  <FormDescription>Select at least one topic that fits best</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -312,11 +310,8 @@ function AddMethodCodingExercisePage() {
 
           <div>
             <FormLabel>Input-Output Examples</FormLabel>
-            <FormDescription>
-              Show what parameters are passed into the method and what the output should be
-            </FormDescription>
             {inputOutputExamplesFields.map((item, index) => (
-              <Card key={item.id} className="mt-4 flex flex-col space-y-4 bg-transparent p-5 shadow-sm">
+              <Card key={item.id} className="mt-4 flex flex-col space-y-3 bg-transparent p-5 shadow-sm">
                 <div className="flex items-center justify-between">
                   <Button
                     size="icon"
@@ -375,13 +370,16 @@ function AddMethodCodingExercisePage() {
                 </Button>
               </Card>
             )}
+
+            <FormDescription className="mt-2">
+              Show what parameters are passed into the method and what the output should be
+            </FormDescription>
           </div>
 
           <div>
             <FormLabel>Exercise Notes</FormLabel>
-            <FormDescription>Comments or restrictions</FormDescription>
             {exerciseNotesFields.map((note, index) => (
-              <Card key={note.id} className="mt-4 flex flex-col space-y-4 bg-transparent p-5 shadow-sm">
+              <Card key={note.id} className="mt-4 flex flex-col space-y-3 bg-transparent p-5 shadow-sm">
                 <div className="flex items-center justify-between">
                   <Button
                     size="icon"
@@ -448,6 +446,8 @@ function AddMethodCodingExercisePage() {
                 </Button>
               </Card>
             )}
+
+            <FormDescription className="mt-2">Comments or restrictions</FormDescription>
           </div>
 
           <FormField
@@ -509,7 +509,6 @@ function AddMethodCodingExercisePage() {
             render={() => (
               <div>
                 <FormLabel>Method Parameters</FormLabel>
-                <FormDescription>You must add at least 1 parameter</FormDescription>
                 <div className="mb-4 mt-4 flex space-x-2">
                   <Button
                     className="w-full space-x-2 sm:w-fit"
@@ -557,6 +556,8 @@ function AddMethodCodingExercisePage() {
                     <FormDescription> No method parameters added yet </FormDescription>
                   </Card>
                 )}
+
+                <FormDescription className="mt-2">You must add at least one parameter</FormDescription>
               </div>
             )}
           />
@@ -568,11 +569,10 @@ function AddMethodCodingExercisePage() {
               <FormItem>
                 <div>
                   <FormLabel>Test Cases</FormLabel>
-                  <FormDescription>Create a few test cases to ensure students write correct code</FormDescription>
                   <FormControl>
                     <>
                       {testCasesArray.fields.map((testCase, index) => (
-                        <Card key={testCase.id} className="mt-4 flex flex-col space-y-4 bg-transparent p-4 shadow-sm">
+                        <Card key={testCase.id} className="mt-4 flex flex-col space-y-3 bg-transparent p-4 shadow-sm">
                           <div className="flex items-center justify-between">
                             <Button
                               size="icon"
@@ -644,6 +644,9 @@ function AddMethodCodingExercisePage() {
                       </Button>
                     </Card>
                   )}
+                  <FormDescription className="mt-2">
+                    Create a few test cases to ensure students write correct code
+                  </FormDescription>
                   <FormMessage />
                 </div>
               </FormItem>
