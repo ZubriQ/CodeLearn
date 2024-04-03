@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { TrashIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
 import {
   Form,
   FormControl,
@@ -11,21 +13,20 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form.tsx';
-import { useDashboardPageTitle } from '@/components/layout';
 import agent from '@/api/agent.ts';
+import { useDashboardPageTitle } from '@/components/layout';
 import { TypographyH3 } from '@/components/typography/typography-h3.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Card } from '@/components/ui/card.tsx';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from '@/components/ui/use-toast.ts';
 import { difficulties } from '@/features/dashboard/tests/pages/Difficulties.ts';
 import { DataType } from '@/features/dashboard/tests/models/DataType.ts';
 import { ExerciseTopic } from '@/features/dashboard/tests/models/ExerciseTopic.ts';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
+import { decorations } from '@/features/dashboard/tests/pages/Decorations.ts';
 import Combobox from '@/components/ui/combobox.tsx';
-import { TrashIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
 
 const methodParameterSchema = z.object({
   dataTypeId: z.number(),
@@ -38,8 +39,8 @@ const inputOutputExampleSchema = z.object({
 });
 
 const exerciseNoteSchema = z.object({
-  entry: z.string(),
-  decoration: z.string(),
+  entry: z.string().min(1),
+  decoration: z.any(), // actually a string that works as id
 });
 
 const testCaseParameterSchema = z.object({
@@ -113,8 +114,8 @@ function AddMethodCodingExercisePage() {
       methodToExecute: 'GetArea',
       methodSolutionCode: 'public static double GetArea(double a, double b)\n{\n    // Example\n    return a * b;\n}',
       methodReturnDataTypeId: undefined,
-      exerciseNotes: [], // TODO: these
-      inputOutputExamples: [], // TODO: these
+      exerciseNotes: [],
+      inputOutputExamples: [],
       methodParameters: [],
       testCases: [],
     },
@@ -122,7 +123,10 @@ function AddMethodCodingExercisePage() {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const selectedDifficulty = difficulties.find((d) => d.id === values.difficultyId);
-
+    const processedNotes = values.exerciseNotes.map((note) => ({
+      ...note,
+      decoration: note.decoration.toString(),
+    }));
     const formattedData = {
       title: values.title,
       description: values.description,
@@ -131,7 +135,7 @@ function AddMethodCodingExercisePage() {
       methodToExecute: values.methodToExecute,
       methodSolutionCode: values.methodSolutionCode,
       methodReturnDataTypeId: values.methodReturnDataTypeId,
-      exerciseNotes: values.exerciseNotes,
+      exerciseNotes: processedNotes,
       inputOutputExamples: values.inputOutputExamples,
       methodParameters: values.methodParameters,
       testCases: values.testCases,
@@ -154,10 +158,27 @@ function AddMethodCodingExercisePage() {
 
   const { control, watch, setValue } = form;
 
-  const { fields, append, remove } = useFieldArray({
-    control,
+  const {
+    fields: inputOutputExamplesFields,
+    append: appendInputOutputExample,
+    remove: removeInputOutputExample,
+  } = useFieldArray({
+    control: form.control,
+    name: 'inputOutputExamples',
+  });
+
+  const {
+    fields: methodParametersFields,
+    append: appendMethodParameter,
+    remove: removeMethodParameter,
+  } = useFieldArray({
+    control: form.control,
     name: 'methodParameters',
   });
+
+  const addInputOutputExample = () => {
+    appendInputOutputExample({ input: '', output: '' });
+  };
 
   // Watching the length of methodParameters to trigger updates
   const methodParametersLength = watch('methodParameters')?.length || 0;
@@ -165,6 +186,15 @@ function AddMethodCodingExercisePage() {
   const testCasesArray = useFieldArray({
     control,
     name: 'testCases',
+  });
+
+  const {
+    fields: exerciseNotesFields,
+    append: appendExerciseNote,
+    remove: removeExerciseNote,
+  } = useFieldArray({
+    control: form.control,
+    name: 'exerciseNotes',
   });
 
   // For updating test cases according method parameters count
@@ -280,6 +310,146 @@ function AddMethodCodingExercisePage() {
             />
           )}
 
+          <div>
+            <FormLabel>Input-Output Examples</FormLabel>
+            <FormDescription>
+              Show what parameters are passed into the method and what the output should be
+            </FormDescription>
+            {inputOutputExamplesFields.map((item, index) => (
+              <Card key={item.id} className="mt-4 flex flex-col space-y-4 bg-transparent p-5 shadow-sm">
+                <div className="flex items-center justify-between">
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    disabled={true}
+                    className="bg-transparent shadow-none disabled:opacity-100"
+                  >
+                    {index + 1}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => removeInputOutputExample(index)}
+                    aria-label={`Delete Input Output Example ${index + 1}`}
+                  >
+                    <TrashIcon className="h-4 w-4" />
+                  </Button>
+                </div>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name={`inputOutputExamples.${index}.input`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Input {index + 1}</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="Text" className="w-full bg-white" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div>
+                    <FormField
+                      control={form.control}
+                      name={`inputOutputExamples.${index}.output`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Output {index + 1}</FormLabel>
+                          <FormControl>
+                            <Input {...field} placeholder="Text" className="w-full bg-white" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+              </Card>
+            ))}
+
+            {inputOutputExamplesFields.length >= 4 || (
+              <Card className="mt-4 flex items-center justify-center border-dashed bg-transparent px-4 py-10">
+                <Button type="button" onClick={addInputOutputExample} className="w-fit content-center">
+                  <PlusIcon className="mr-2 size-4" /> Add input-output example
+                </Button>
+              </Card>
+            )}
+          </div>
+
+          <div>
+            <FormLabel>Exercise Notes</FormLabel>
+            <FormDescription>Comments or restrictions</FormDescription>
+            {exerciseNotesFields.map((note, index) => (
+              <Card key={note.id} className="mt-4 flex flex-col space-y-4 bg-transparent p-5 shadow-sm">
+                <div className="flex items-center justify-between">
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    disabled={true}
+                    className="bg-transparent shadow-none disabled:opacity-100"
+                  >
+                    {index + 1}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => removeExerciseNote(index)}
+                    aria-label={`Delete Note ${index + 1}`}
+                  >
+                    <TrashIcon className="h-4 w-4" />
+                  </Button>
+                </div>
+                <FormField
+                  control={form.control}
+                  name={`exerciseNotes.${index}.entry`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Note Text</FormLabel>
+                      <FormControl>
+                        <Input {...field} placeholder="Note text" className="w-full bg-white" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`exerciseNotes.${index}.decoration`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Decoration</FormLabel>
+                      <FormControl>
+                        <Combobox
+                          {...field}
+                          options={decorations.map((decoration) => ({
+                            id: decoration.id,
+                            alias: decoration.name,
+                          }))}
+                          placeholder="Select decoration"
+                          className="w-full bg-white"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </Card>
+            ))}
+
+            {exerciseNotesFields.length >= 4 || (
+              <Card className="mt-4 flex items-center justify-center border-dashed bg-transparent px-4 py-10">
+                <Button
+                  type="button"
+                  onClick={() => appendExerciseNote({ entry: '', decoration: decorations[0].id })}
+                  className="mt-4"
+                >
+                  <PlusIcon className="mr-2 size-4" /> Add note
+                </Button>
+              </Card>
+            )}
+          </div>
+
           <FormField
             control={form.control}
             name="methodSolutionCode"
@@ -344,31 +514,31 @@ function AddMethodCodingExercisePage() {
                   <Button
                     className="w-full space-x-2 sm:w-fit"
                     type="button"
+                    disabled={methodParametersFields.length >= 5}
                     onClick={() =>
-                      append({
+                      appendMethodParameter({
                         dataTypeId: dataTypes?.[0]?.id ?? 0,
-                        position: fields.length,
+                        position: methodParametersFields.length + 1,
                       })
                     }
                   >
                     <PlusIcon className="mr-2 size-4" /> Add parameter
                   </Button>
-                  {fields.length > 0 && (
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      onClick={() => remove(fields.length - 1)}
-                      className="w-full space-x-2 sm:w-fit"
-                    >
-                      <MinusIcon className="mr-2 size-4" /> Remove last
-                    </Button>
-                  )}
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    disabled={methodParametersFields.length === 0}
+                    onClick={() => removeMethodParameter(methodParametersFields.length - 1)}
+                    className="w-full space-x-2 sm:w-fit"
+                  >
+                    <MinusIcon className="mr-2 size-4" /> Remove last
+                  </Button>
                 </div>
 
-                {fields.length > 0 && (
+                {methodParametersFields.length > 0 && (
                   <Card className="flex w-full flex-row flex-wrap bg-transparent pl-4 pt-4 shadow-sm">
-                    {fields.map((item, index) => (
-                      <div className="flex w-fit flex-col">
+                    {methodParametersFields.map((item, index) => (
+                      <div className="flex w-fit flex-col" key={index}>
                         <FormLabel className="mb-2">Param {index + 1}</FormLabel>
                         <Combobox
                           key={item.id}
@@ -379,6 +549,12 @@ function AddMethodCodingExercisePage() {
                         />
                       </div>
                     ))}
+                  </Card>
+                )}
+
+                {methodParametersFields.length < 1 && (
+                  <Card className="mt-4 flex items-center justify-center border-dashed bg-transparent px-4 py-8">
+                    <FormDescription> No method parameters added yet </FormDescription>
                   </Card>
                 )}
               </div>
@@ -393,23 +569,6 @@ function AddMethodCodingExercisePage() {
                 <div>
                   <FormLabel>Test Cases</FormLabel>
                   <FormDescription>Create a few test cases to ensure students write correct code</FormDescription>
-                  <Button
-                    className="mb-4 mt-4 flex w-full space-x-2 sm:w-fit"
-                    type="button"
-                    onClick={() =>
-                      testCasesArray.append({
-                        correctOutputValue: '',
-                        testCaseParameters: Array(methodParametersLength)
-                          .fill(null)
-                          .map((_, idx) => ({
-                            value: '',
-                            position: idx,
-                          })),
-                      })
-                    }
-                  >
-                    <PlusIcon className="mr-2 size-4" /> Add test case
-                  </Button>
                   <FormControl>
                     <>
                       {testCasesArray.fields.map((testCase, index) => (
@@ -464,6 +623,27 @@ function AddMethodCodingExercisePage() {
                       ))}
                     </>
                   </FormControl>
+                  {testCasesArray.fields.length >= 8 || (
+                    <Card className="mt-4 flex items-center justify-center border-dashed bg-transparent px-4 py-10">
+                      <Button
+                        className="mb-4 mt-4 flex w-full space-x-2 sm:w-fit"
+                        type="button"
+                        onClick={() =>
+                          testCasesArray.append({
+                            correctOutputValue: '',
+                            testCaseParameters: Array(methodParametersLength)
+                              .fill(null)
+                              .map((_, idx) => ({
+                                value: '',
+                                position: idx,
+                              })),
+                          })
+                        }
+                      >
+                        <PlusIcon className="mr-2 size-4" /> Add test case
+                      </Button>
+                    </Card>
+                  )}
                   <FormMessage />
                 </div>
               </FormItem>

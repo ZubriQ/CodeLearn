@@ -1,4 +1,4 @@
-import React from 'react';
+import { forwardRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
@@ -18,7 +18,7 @@ interface ComboboxProps {
   className?: string;
 }
 
-const Combobox: React.FC<ComboboxProps> = ({ name, options, placeholder, className }) => {
+const Combobox = forwardRef<HTMLButtonElement, ComboboxProps>(({ name, options, placeholder, className }, ref) => {
   const { watch, setValue } = useFormContext();
 
   const selectedValue = watch(name);
@@ -28,6 +28,7 @@ const Combobox: React.FC<ComboboxProps> = ({ name, options, placeholder, classNa
     <Popover>
       <PopoverTrigger asChild>
         <Button
+          ref={ref}
           variant="outline"
           role="combobox"
           className={cn('justify-between font-normal', !selectedOption && 'text-muted-foreground', className)}
@@ -55,6 +56,6 @@ const Combobox: React.FC<ComboboxProps> = ({ name, options, placeholder, classNa
       </PopoverContent>
     </Popover>
   );
-};
+});
 
 export default Combobox;
