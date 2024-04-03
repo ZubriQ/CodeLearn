@@ -6,6 +6,6 @@ public record TestingResponse(
     string TestTitle,
     int StudentGroupId,
     string StudentGroupName,
-    DateTime StartDateTime,
-    DateTime EndDateTime,
+    DateTimeOffset StartDateTime,
+    DateTimeOffset EndDateTime,
     int DurationInMinutes);
