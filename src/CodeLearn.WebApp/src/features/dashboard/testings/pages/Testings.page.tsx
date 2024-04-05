@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { format } from 'date-fns';
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { Calendar as CalendarIcon } from 'lucide-react';
 import { useDashboardPageTitle } from '@/components/layout';
 import { columns } from '../Testings.columns.tsx';
 import { DataTable } from '@/components/ui/data-table.tsx';
@@ -7,63 +10,201 @@ import { useToast } from '@/components/ui/use-toast.ts';
 import agent from '@/api/agent.ts';
 import Loading from '@/components/loading';
 import DashboardPageContainer from '@/features/dashboard/DashboardPageContainer.tsx';
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet.tsx';
+import { Test } from '@/features/dashboard/tests/models/Test.ts';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover.tsx';
+import { Command, CommandGroup, CommandItem, CommandList } from '@/components/ui/command.tsx';
 import { Testing } from '@/features/dashboard/testings/Testing.ts';
+import { StudentGroup } from '@/features/dashboard/student-groups/StudentGroup.ts';
+import { Label } from '@/components/ui/label.tsx';
+import { cn } from '@/lib/utils.ts';
+import { Calendar } from '@/components/ui/calendar.tsx';
+import { Input } from '@/components/ui/input.tsx';
 
 export default function TestingsPage() {
   const { toast } = useToast();
   const [, setCurrentPageTitle] = useDashboardPageTitle();
-  const [testings, setTestings] = useState<Testing[]>([]);
+
   const [isLoading, setIsLoading] = useState(true);
+  const [testings, setTestings] = useState<Testing[]>([]);
+  const [tests, setTests] = useState<Test[]>([]);
+  const [studentGroups, setStudentGroups] = useState<StudentGroup[]>([]);
+
+  // Add new testing states
+  const [selectedTest, setSelectedTest] = useState<Test>();
+  const [selectedStudentGroup, setSelectedStudentGroup] = useState<StudentGroup>();
+  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [duration, setDuration] = useState<number>(90);
 
   useEffect(() => {
     setCurrentPageTitle('Testings');
-
     setIsLoading(true);
-    agent.Testings.list()
-      .then((testings) => {
-        setTestings(testings);
-        setIsLoading(false);
+    Promise.all([agent.Testings.list(), agent.Tests.list(), agent.StudentGroup.list()])
+      .then(([testingsData, testsData, studentGroupsData]) => {
+        setTestings(testingsData);
+        setTests(testsData);
+        setStudentGroups(studentGroupsData);
       })
       .catch((error) => {
         toast({
-          title: 'Error fetching testings',
+          title: 'Error fetching data',
           description: error.message || 'An unexpected error occurred.',
           variant: 'destructive',
         });
-        setIsLoading(false);
-      });
-  }, []);
+      })
+      .finally(() => setIsLoading(false));
+  }, [toast]);
 
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, setter: (value: string) => void) => {
-  //   setter(e.target.value);
-  // };
-
-  const handleAdd = () => {
-    // const newStudentGroup = {
-    //   name: studentGroupName,
-    //   enrolmentYear: parseInt(enrolmentYear, 10),
-    // };
-    //
-    // agent.StudentGroup.create(newStudentGroup)
-    //   .then(() => {
-    //     setEnrolmentYear('');
-    //     setStudentGroupName('');
-    //     setIsDialogOpen(false);
-    //     location.reload();
-    //   })
-    //   .catch((error) => {
-    //     return toast({
-    //       title: 'Error adding a new student group',
-    //       description: error.message || 'An unexpected error occurred.',
-    //       variant: 'destructive',
-    //     });
-    //   });
+  const handleSelectTest = (testId: number) => {
+    const test = tests.find((t: Test) => t.id === testId);
+    setSelectedTest(test);
   };
+
+  const handleSelectStudentGroup = (groupId: number) => {
+    const group = studentGroups.find((t: StudentGroup) => t.id === groupId);
+    setSelectedStudentGroup(group);
+  };
+
+  const handleDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDuration(Number(e.target.value));
+  };
+
+  const handleOnSubmit = async (event: React.FormEvent) => {};
 
   return (
     <DashboardPageContainer>
-      <div className="whitespace-nowrap">
-        <Button className="mb-6">Assign testing to a student group</Button>
+      <div>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button className="mb-6">Assign testing to a student group</Button>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Start testing</SheetTitle>
+              <SheetDescription>
+                This action will initiate testing for a student group at selected date time.
+              </SheetDescription>
+            </SheetHeader>
+
+            <div className="grid gap-4 py-4">
+              <Label>Test</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button className="justify-between" role="combobox" variant="outline">
+                    {selectedTest ? selectedTest.title : 'Select a test'}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-60 rounded-lg bg-white p-0 shadow-lg">
+                  <Command>
+                    {isLoading ? (
+                      <Loading />
+                    ) : (
+                      <CommandList>
+                        <CommandGroup>
+                          {tests.map((test: Test) => (
+                            <CommandItem
+                              key={test.id}
+                              onSelect={() => handleSelectTest(test.id)}
+                              className="flex items-center justify-between p-2 hover:bg-gray-100"
+                            >
+                              <Check
+                                className={cn(
+                                  'mr-2 h-4 w-4',
+                                  selectedTest?.id === test.id ? 'opacity-100' : 'opacity-0',
+                                )}
+                              />
+                              <span className="flex-1 text-left">{test.title}</span>
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    )}
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            <div className="grid gap-4 py-4">
+              <Label>Student Group</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button className="justify-between" role="combobox" variant="outline">
+                    {selectedStudentGroup ? selectedStudentGroup.name : 'Select a student group'}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-60 rounded-lg bg-white p-0 shadow-lg">
+                  <Command>
+                    {isLoading ? (
+                      <div>Loading student groups...</div>
+                    ) : (
+                      <CommandList>
+                        <CommandGroup>
+                          {studentGroups.map((group: StudentGroup) => (
+                            <CommandItem
+                              key={group.id}
+                              onSelect={() => handleSelectStudentGroup(group.id)}
+                              className="flex items-center justify-between p-2 hover:bg-gray-100"
+                            >
+                              <Check
+                                className={cn(
+                                  'mr-2 h-4 w-4',
+                                  selectedStudentGroup?.id === group.id ? 'opacity-100' : 'opacity-0',
+                                )}
+                              />
+                              <span className="flex-1 text-left">{group.name}</span>
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    )}
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            <div className="grid gap-4 py-4">
+              <Label>Date</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={'outline'}
+                    className={cn('justify-start text-left font-normal', !selectedDate && 'text-muted-foreground')}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {selectedDate ? format(selectedDate, 'PPP') : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-full p-0">
+                  <Calendar mode="single" selected={selectedDate} onSelect={setSelectedDate} initialFocus />
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            <div className="grid gap-4 py-4">
+              <Label>Duration In Minutes</Label>
+              <Input type="number" min={5} max={300} step={5} value={duration} onChange={handleDurationChange} />
+            </div>
+
+            <SheetFooter>
+              <SheetClose asChild>
+                <Button type="submit" onSubmit={handleOnSubmit} className="mt-8">
+                  Create
+                </Button>
+              </SheetClose>
+            </SheetFooter>
+          </SheetContent>
+        </Sheet>
       </div>
 
       {isLoading ? <Loading /> : <DataTable columns={columns} data={testings} filterBy="studentGroupName" />}
