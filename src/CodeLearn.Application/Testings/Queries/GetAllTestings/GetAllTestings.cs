@@ -23,8 +23,7 @@ public class GetAllTestingsQueryHandler(IApplicationDbContext _context) : IReque
                 test?.Title,
                 testing.StudentGroupId.Value,
                 studentGroup?.Name,
-                testing.StartDateTime,
-                testing.EndDateTime,
+                testing.DeadlineDate,
                 testing.DurationInMinutes));
         }
 

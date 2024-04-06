@@ -276,20 +276,17 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTimeOffset>("DeadlineDate")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<int>("DurationInMinutes")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("EndDateTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTimeOffset>("LastModified")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartDateTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("StudentGroupId")
                         .HasColumnType("int");
@@ -689,39 +686,6 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.OwnsMany("CodeLearn.Domain.Exercises.Entities.ExerciseNote", "ExerciseNotes", b1 =>
-                        {
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
-
-                            b1.Property<string>("Decoration")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
-
-                            b1.Property<string>("Entry")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)");
-
-                            b1.Property<int>("ExerciseId")
-                                .HasColumnType("int");
-
-                            b1.HasKey("Id");
-
-                            b1.HasIndex("ExerciseId");
-
-                            b1.ToTable("ExerciseNote", "Test");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ExerciseId");
-                        });
-
-                    b.Navigation("ExerciseNotes");
                 });
 
             modelBuilder.Entity("CodeLearn.Domain.QuestionChoices.QuestionChoice", b =>
@@ -845,6 +809,37 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                         .HasForeignKey("MethodReturnDataTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.OwnsMany("CodeLearn.Domain.Exercises.Entities.ExerciseNote", "ExerciseNotes", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<string>("Decoration")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("Entry")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<int>("ExerciseId")
+                                .HasColumnType("int");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("ExerciseId");
+
+                            b1.ToTable("ExerciseNote", "Test");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ExerciseId");
+                        });
 
                     b.OwnsMany("CodeLearn.Domain.Exercises.Entities.InputOutputExample", "InputOutputExamples", b1 =>
                         {
@@ -970,6 +965,8 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
                             b1.Navigation("TestCaseParameters");
                         });
+
+                    b.Navigation("ExerciseNotes");
 
                     b.Navigation("InputOutputExamples");
 

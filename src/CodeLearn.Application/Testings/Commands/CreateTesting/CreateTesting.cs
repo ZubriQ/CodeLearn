@@ -7,7 +7,7 @@ namespace CodeLearn.Application.Testings.Commands.CreateTesting;
 public record CreateTestingCommand(
     int TestId,
     int StudentGroupId,
-    DateTime StartDateTime,
+    DateTimeOffset DeadlineDate,
     int DurationInMinutes)
     : IRequest<OneOf<int, ValidationFailed, NotFound>>;
 
@@ -44,7 +44,7 @@ public class CreateTestingCommandHandler(
         var testing = Testing.Create(
             TestId.Create(request.TestId),
             StudentGroupId.Create(request.StudentGroupId),
-            request.StartDateTime,
+            request.DeadlineDate,
             request.DurationInMinutes);
 
         _context.Testings.Add(testing);

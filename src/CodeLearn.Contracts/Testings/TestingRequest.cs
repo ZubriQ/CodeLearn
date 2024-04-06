@@ -3,5 +3,5 @@
 public record TestingRequest(
     int TestId,
     int StudentGroupId,
-    DateTime StartDateTime,
+    DateTimeOffset DeadlineDate,
     int DurationInMinutes);

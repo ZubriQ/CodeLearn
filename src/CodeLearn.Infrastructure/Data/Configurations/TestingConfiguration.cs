@@ -40,11 +40,7 @@ public sealed class TestingConfiguration : IEntityTypeConfiguration<Testing>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
-            .Property(t => t.StartDateTime)
-            .IsRequired();
-
-        builder
-            .Property(t => t.EndDateTime)
+            .Property(t => t.DeadlineDate)
             .IsRequired();
 
         builder

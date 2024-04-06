@@ -10,7 +10,7 @@ public class CreateTestingCommandValidator : AbstractValidator<CreateTestingComm
         RuleFor(x => x.StudentGroupId)
             .GreaterThan(0);
 
-        RuleFor(x => x.StartDateTime)
+        RuleFor(x => x.DeadlineDate)
             .Must(BeAValidDate);
 
         RuleFor(x => x.DurationInMinutes)
@@ -18,8 +18,8 @@ public class CreateTestingCommandValidator : AbstractValidator<CreateTestingComm
             .LessThanOrEqualTo(300);
     }
 
-    private bool BeAValidDate(DateTime date)
+    private bool BeAValidDate(DateTimeOffset date)
     {
-        return date > DateTime.Now;
+        return date > DateTimeOffset.Now;
     }
 }
