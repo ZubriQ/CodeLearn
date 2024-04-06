@@ -4,7 +4,6 @@ export type Testing = {
   testTitle: string;
   studentGroupId: number;
   studentGroupName: string;
-  startDateTime: Date;
-  endDateTime: Date;
+  deadlineDate: Date;
   durationInMinutes: number;
 };

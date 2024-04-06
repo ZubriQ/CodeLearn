@@ -33,37 +33,16 @@ export const columns: ColumnDef<Testing>[] = [
     },
   },
   {
-    accessorKey: 'startDateTime',
-    header: 'Start',
+    accessorKey: 'deadlineDate',
+    header: 'Deadline',
     cell: ({ row }) => {
       const testing = row.original;
 
-      const date = new Date(testing.startDateTime);
+      const date = new Date(testing.deadlineDate);
       const formattedDateTime = new Intl.DateTimeFormat('ru-RU', {
         year: 'numeric',
         month: 'numeric',
         day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-      }).format(date);
-
-      return <p className="text-zinc-800">{formattedDateTime}</p>;
-    },
-  },
-  {
-    accessorKey: 'endDateTime',
-    header: 'End',
-    cell: ({ row }) => {
-      const testing = row.original;
-
-      const date = new Date(testing.startDateTime);
-      const formattedDateTime = new Intl.DateTimeFormat('ru-RU', {
-        year: 'numeric',
-        month: 'numeric',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
         hour12: false,
       }).format(date);
 

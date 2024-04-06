@@ -29,7 +29,6 @@ import { Label } from '@/components/ui/label.tsx';
 import { cn } from '@/lib/utils.ts';
 import { Calendar } from '@/components/ui/calendar.tsx';
 import { Input } from '@/components/ui/input.tsx';
-import { TimePicker } from '@/components/time-picker';
 import { CreateTestingRequest } from '@/api/testings/CreateTestingRequest.ts';
 
 export default function TestingsPage() {
@@ -96,7 +95,7 @@ export default function TestingsPage() {
     const createTestingRequest: CreateTestingRequest = {
       testId: selectedTest.id,
       studentGroupId: selectedStudentGroup.id,
-      startDateTime: selectedDate,
+      deadlineDate: selectedDate,
       durationInMinutes: duration,
     };
 
@@ -207,7 +206,7 @@ export default function TestingsPage() {
               </div>
 
               <div className="grid gap-4 py-4">
-                <Label>Date</Label>
+                <Label>Deadline</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -222,11 +221,6 @@ export default function TestingsPage() {
                     <Calendar mode="single" selected={selectedDate} onSelect={setSelectedDate} initialFocus />
                   </PopoverContent>
                 </Popover>
-              </div>
-
-              <div className="grid gap-4 py-4">
-                <Label>Time</Label>
-                <TimePicker date={selectedDate} setDate={setSelectedDate} />
               </div>
 
               <div className="grid gap-4 py-4">
