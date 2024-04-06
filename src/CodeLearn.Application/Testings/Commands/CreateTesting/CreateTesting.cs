@@ -34,7 +34,7 @@ public class CreateTestingCommandHandler(
         }
 
         var studentGroupExists = await _context.StudentGroups
-            .AnyAsync(x => x.Id == StudentGroupId.Create(request.TestId), cancellationToken);
+            .AnyAsync(x => x.Id == StudentGroupId.Create(request.StudentGroupId), cancellationToken);
 
         if (!studentGroupExists)
         {

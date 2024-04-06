@@ -4,6 +4,7 @@ using CodeLearn.Domain.Common.Result;
 using CodeLearn.Domain.Constants;
 using CodeLearn.Infrastructure.Identity.Errors;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace CodeLearn.Infrastructure.Identity;

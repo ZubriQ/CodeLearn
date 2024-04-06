@@ -39,9 +39,7 @@ public sealed class TestsController(ISender _sender, IMapper _mapper) : ApiContr
     public async Task<IActionResult> GetAll()
     {
         var result = await _sender.Send(new GetAllTestsQuery());
-        var mappedData = result
-            .Select(_mapper.Map<TestResponse>)
-            .ToArray();
+        var mappedData = result.Select(_mapper.Map<TestResponse>).ToArray();
 
         return Ok(new TestResponseCollection(mappedData));
     }

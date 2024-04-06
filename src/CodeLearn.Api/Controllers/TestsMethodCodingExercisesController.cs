@@ -17,26 +17,22 @@ public sealed class TestsMethodCodingExercisesController(ISender _sender, IMappe
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllByTestId(int testId)
     {
-        var userRole = User.FindFirst(ClaimTypes.Role)!.Value;
-
         var result = await _sender.Send(new GetAllMethodCodingExercisesByTestIdQuery(testId));
 
         return result.Match(
             exercises =>
             {
+                var userRole = User.FindFirst(ClaimTypes.Role)!.Value;
+
                 // Map data for teacher / administrator
                 if (userRole == Roles.Teacher || userRole == Roles.Administrator)
                 {
-                    var mappedDataForTeacher = exercises
-                        .Select(_mapper.Map<TeacherMethodCodingExerciseResponse>)
-                        .ToArray();
+                    var mappedDataForTeacher = exercises.Select(_mapper.Map<TeacherMethodCodingExerciseResponse>).ToArray();
                     return Ok(new TeacherMethodCodingExerciseResponseCollection(mappedDataForTeacher));
                 }
 
-                // Map data for student
-                var mappedDataForStudent = exercises
-                    .Select(_mapper.Map<StudentMethodCodingExerciseResponse>)
-                    .ToArray();
+                // Map data for student / guest
+                var mappedDataForStudent = exercises.Select(_mapper.Map<StudentMethodCodingExerciseResponse>).ToArray();
                 return Ok(new StudentMethodCodingExerciseResponseCollection(mappedDataForStudent));
             },
             _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Test not found."),

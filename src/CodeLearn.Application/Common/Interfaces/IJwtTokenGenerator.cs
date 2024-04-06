@@ -2,5 +2,5 @@
 
 public interface IJwtTokenGenerator
 {
-    string GenerateTokenString(string userId, string email, string role);
+    string GenerateTokenString(string userId, string email, string role, string? windowsAccountName = null);
 }

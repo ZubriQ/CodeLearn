@@ -7,12 +7,14 @@ using CodeLearn.Domain.Tests.ValueObjects;
 using CodeLearn.Infrastructure.Authentication;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 
 namespace CodeLearn.Infrastructure;
@@ -124,7 +126,8 @@ public static class DependencyInjection
                     Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!)),
                 ValidateLifetime = true
             };
-        });
+        })
+        .AddNegotiate();
 
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
