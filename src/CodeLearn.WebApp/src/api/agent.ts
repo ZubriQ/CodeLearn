@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { LoginCredentials } from '@/features/users/models/LoginCredentials.ts';
 import { CreateMethodCodingRequest } from '@/api/exercises/CreateMethodCodingRequest.ts';
 import { CreateQuestionRequest } from '@/api/exercises/CreateQuestionRequest.ts';
+import { CreateTestingRequest } from '@/api/testings/CreateTestingRequest.ts';
 
 axios.defaults.baseURL = 'https://localhost:5001/api/';
 
@@ -68,6 +69,7 @@ const DataTypes = {
 
 const Testings = {
   list: () => requests.get('testings').then((response) => response.testings),
+  create: (request: CreateTestingRequest) => requests.post(`testings`, request),
   delete: (id: number) => requests.delete(`testings/${id}`),
 };
 

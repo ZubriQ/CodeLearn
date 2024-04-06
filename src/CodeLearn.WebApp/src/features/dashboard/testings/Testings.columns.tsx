@@ -11,7 +11,6 @@ import { Button } from '@/components/ui/button.tsx';
 import { MoreHorizontal } from 'lucide-react';
 import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
-import { Link } from 'react-router-dom';
 import { Testing } from '@/features/dashboard/testings/Testing.ts';
 
 export const columns: ColumnDef<Testing>[] = [

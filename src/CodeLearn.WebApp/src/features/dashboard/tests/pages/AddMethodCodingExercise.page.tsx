@@ -437,12 +437,9 @@ function AddMethodCodingExercisePage() {
 
             {exerciseNotesFields.length >= 4 || (
               <Card className="mt-4 flex items-center justify-center border-dashed bg-transparent px-4 py-10">
-                <Button
-                  type="button"
-                  onClick={() => appendExerciseNote({ entry: '', decoration: decorations[0].id })}
-                  className="mt-4"
-                >
-                  <PlusIcon className="mr-2 size-4" /> Add note
+                <Button type="button" onClick={() => appendExerciseNote({ entry: '', decoration: decorations[0].id })}>
+                  <PlusIcon className="mr-2 size-4" />
+                  Add note
                 </Button>
               </Card>
             )}
