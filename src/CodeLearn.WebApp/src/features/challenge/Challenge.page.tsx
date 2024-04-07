@@ -29,8 +29,8 @@ export default function ChallengePage() {
           <div className="grid h-full grid-rows-[auto_1fr] gap-4">
             {/* Exercise number, Exercise difficulty, Testing time left, Topics */}
             <div className="space-x-2 space-y-1">
-              <Badge variant="secondary">Exercise 1</Badge>
               <Badge variant="secondary">Remaining time</Badge>
+              <Badge variant="secondary">Exercise 1</Badge>
               <Badge variant="secondary">Exercise difficulty</Badge>
               <Badge variant="secondary">Topic 1</Badge>
               <Badge variant="secondary">Topic 2</Badge>
@@ -38,9 +38,10 @@ export default function ChallengePage() {
             </div>
 
             {/* Exercise description and related content */}
-            <div className="space-y-2 overflow-auto rounded-xl border bg-zinc-100 p-4">
-              <h1 className="mb-2 text-lg font-semibold">Exercise Title</h1>
-              <p>
+            <div className="space-y-3 overflow-auto rounded-xl border bg-zinc-100 p-4">
+              <h2 className="text-2xl font-semibold">Exercise Title</h2>
+
+              <p className="text-sm leading-6">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
                 ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
@@ -48,18 +49,26 @@ export default function ChallengePage() {
                 deserunt mollit anim id est laborum.
               </p>
 
-              <h2 className="font-semibold">Example 1</h2>
-              <pre className="rounded bg-zinc-200/70 p-2">...</pre>
-              <h2 className="font-semibold">Example 2</h2>
-              <pre className="rounded bg-zinc-200/70 p-2">...</pre>
-              <h2 className="font-semibold">Example 3</h2>
-              <pre className="rounded bg-zinc-200/70 p-2">...</pre>
+              <div>
+                <h3 className="font-semibold">Example 1</h3>
+                <pre className="rounded bg-zinc-200/70 p-2">...</pre>
+              </div>
+              <div>
+                <h3 className="font-semibold">Example 2</h3>
+                <pre className="rounded bg-zinc-200/70 p-2">...</pre>
+              </div>
+              <div>
+                <h3 className="font-semibold">Example 3</h3>
+                <pre className="rounded bg-zinc-200/70 p-2">...</pre>
+              </div>
 
-              <h2 className="font-semibold">Notes</h2>
-              <ul className="list-inside list-disc ">
-                <li>Note 1...</li>
-                <li>Note 2...</li>
-              </ul>
+              <div>
+                <h3 className="font-semibold">Notes</h3>
+                <ul className="list-inside list-disc ">
+                  <li>Note 1...</li>
+                  <li>Note 2...</li>
+                </ul>
+              </div>
             </div>
           </div>
         </ResizablePanel>
