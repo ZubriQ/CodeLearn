@@ -6,7 +6,7 @@ const HomePage = lazy(() => import('@/features/home/pages/Home.page.tsx'));
 const NotFoundPage = lazy(() => import('@/features/errors/pages/404.page.tsx'));
 const SignInPage = lazy(() => import('@/features/users/pages/SignIn.page.tsx'));
 const SignUpPage = lazy(() => import('@/features/users/pages/SignUp.page.tsx'));
-const TestingSessionPage = lazy(() => import('@/features/testing-sessions/pages/TestingSession.page.tsx'));
+// const TestingSessionPage = lazy(() => import('@/features/testing-sessions/pages/TestingSession.page.tsx'));
 
 // For Teachers & Administrator
 const DashboardLayout = lazy(() => import('@/features/dashboard/DashboardLayout.tsx'));
@@ -27,7 +27,7 @@ const CurriculumLayout = lazy(() => import('@/features/curriculum/layout'));
 const StudentTestsPage = lazy(() => import('@/features/curriculum/pages/Tests.page.tsx'));
 
 // Students are tested on this page
-const ChallengePage = lazy(() => import('@/features/challenge/Challenge.page.tsx'));
+const TestingSessionPage = lazy(() => import('@/features/testing-session/TestingSession.page.tsx'));
 
 export const routes: RouteObject[] = [
   {
@@ -171,10 +171,10 @@ export const routes: RouteObject[] = [
     ],
   },
   {
-    path: 'challenge/:id',
+    path: 'testing-session/:id',
     element: (
       <Suspense>
-        <ChallengePage />
+        <TestingSessionPage />
       </Suspense>
     ),
   },

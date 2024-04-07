@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button.tsx';
 import { ChevronLeft, ChevronRight, RotateCw } from 'lucide-react';
 import { Badge } from '@/components/ui/badge.tsx';
 
-export default function ChallengePage() {
+export default function TestingSessionPage() {
   return (
     <div className="flex h-screen flex-col bg-zinc-50 p-4">
       <div className="mb-4">
@@ -63,12 +63,24 @@ export default function ChallengePage() {
           <div className="grid h-full grid-rows-[auto_1fr] gap-2">
             {/* Exercise number, Exercise difficulty, Testing time left, Topics */}
             <div className="space-x-2 space-y-1">
-              <Badge variant="secondary">Remaining time</Badge>
-              <Badge variant="secondary">Exercise 1</Badge>
-              <Badge variant="secondary">Exercise difficulty</Badge>
-              <Badge variant="secondary">Topic 1</Badge>
-              <Badge variant="secondary">Topic 2</Badge>
-              <Badge variant="secondary">Topic 3</Badge>
+              <Badge variant="secondary" className="truncate">
+                Remaining time
+              </Badge>
+              <Badge variant="secondary" className="truncate">
+                Exercise 1
+              </Badge>
+              <Badge variant="secondary" className="truncate">
+                Exercise difficulty
+              </Badge>
+              <Badge variant="secondary" className="truncate">
+                Topic 1
+              </Badge>
+              <Badge variant="secondary" className="truncate">
+                Topic 2
+              </Badge>
+              <Badge variant="secondary" className="truncate">
+                Topic 3
+              </Badge>
             </div>
 
             {/* Exercise description and related content */}
@@ -143,7 +155,7 @@ export default function ChallengePage() {
                   <ChevronLeft width="18" className="-ml-1" />
                   Back
                 </Button>
-                <Button variant="secondary">
+                <Button variant="secondary" className="hover:bg-zinc-200">
                   <RotateCw width="16" className="-ml-1 mr-2" />
                   Reset
                 </Button>
