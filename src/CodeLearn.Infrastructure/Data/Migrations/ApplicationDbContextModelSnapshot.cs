@@ -38,8 +38,8 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("SubmissionType")
                         .IsRequired()
@@ -232,8 +232,8 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("FinishDateTime")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("FinishDateTime")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<DateTimeOffset>("LastModified")
                         .HasColumnType("datetimeoffset");
@@ -241,11 +241,11 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Score")
+                    b.Property<int>("Score")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("StartDateTime")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("StartDateTime")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Status")
                         .IsRequired()

@@ -2,7 +2,6 @@
 
 public enum TestingSessionStatus
 {
-    Registered = 1,
-    InProgress = 2,
-    Finished = 3,
+    InProgress = 1,
+    Finished = 2,
 }

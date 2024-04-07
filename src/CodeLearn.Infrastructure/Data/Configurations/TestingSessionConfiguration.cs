@@ -16,14 +16,14 @@ public sealed class TestingSessionConfiguration : IEntityTypeConfiguration<Testi
     {
         builder.ToTable("TestingSession", DatabaseSchemes.Test);
 
-        builder.HasKey(sg => sg.Id);
+        builder.HasKey(x => x.Id);
 
         builder
-            .Property(sg => sg.Id)
+            .Property(x => x.Id)
             .ValueGeneratedOnAdd()
             .HasConversion(
-                groupId => groupId.Value,
-                value => TestingSessionId.Create(value));
+                sessionId => sessionId.Value,
+                id => TestingSessionId.Create(id));
 
         builder
             .HasOne<Testing>()
@@ -42,14 +42,14 @@ public sealed class TestingSessionConfiguration : IEntityTypeConfiguration<Testi
 
         builder
             .Property(ts => ts.StartDateTime)
-            .IsRequired(false);
+            .IsRequired();
 
         builder
             .Property(ts => ts.FinishDateTime)
-            .IsRequired(false);
+            .IsRequired();
 
         builder
             .Property(ts => ts.Score)
-            .IsRequired(false);
+            .IsRequired();
     }
 }

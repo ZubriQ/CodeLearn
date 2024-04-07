@@ -4,5 +4,7 @@ public enum SubmissionTestStatus
 {
     Untested = 1,
     Solved = 2,
-    Unsolved = 3,
+    PartiallySolved = 3,
+    Unsolved = 4,
+    Timeout = 5,
 }

@@ -4,40 +4,38 @@ public sealed class TestingSession : BaseAuditableEntity<TestingSessionId>, IAgg
 {
     public TestingId TestingId { get; private set; }
     public TestingSessionStatus Status { get; private set; }
-    public DateTime? StartDateTime { get; private set; }
-    public DateTime? FinishDateTime { get; private set; }
-    public int? Score { get; private set; }
+    public DateTimeOffset StartDateTime { get; private set; }
+    public DateTimeOffset FinishDateTime { get; private set; }
+    public int Score { get; private set; }
 
     private TestingSession(
         TestingId testingId,
         TestingSessionStatus status,
-        DateTime? startDateTime,
-        DateTime? finishDateTime,
-        int? score)
+        DateTimeOffset startDateTime,
+        DateTimeOffset finishDateTime)
         : base(default!)
     {
         TestingId = testingId;
-        Score = score;
         Status = status;
         StartDateTime = startDateTime;
         FinishDateTime = finishDateTime;
+        Score = 0;
     }
 
     /// <summary>
-    /// Used to register for testing.
+    /// Used to start testing.
     /// </summary>
     public static TestingSession Create(
-        TestingId testingId)
+        TestingId testingId,
+        DateTimeOffset startDateTime,
+        DateTimeOffset finishDateTime)
     {
         return new TestingSession(
             testingId,
-            TestingSessionStatus.Registered,
-            default,
-            default,
-            null);
+            TestingSessionStatus.InProgress,
+            startDateTime,
+            finishDateTime);
     }
-
-    // TODO: StartTesting method
 
     // TODO: FinishTesting method
 }
