@@ -3,6 +3,7 @@ import { Textarea } from '@/components/ui/textarea.tsx';
 import { CodeBracketIcon, CommandLineIcon } from '@heroicons/react/24/outline';
 import { Button } from '@/components/ui/button.tsx';
 import { ChevronLeft, ChevronRight, RotateCw } from 'lucide-react';
+import { Badge } from '@/components/ui/badge.tsx';
 
 export default function ChallengePage() {
   return (
@@ -24,25 +25,42 @@ export default function ChallengePage() {
       {/* Resizable panels for the main content */}
       <ResizablePanelGroup direction="horizontal" className="flex flex-1 overflow-hidden">
         {/* Left panel for exercise descriptions */}
-        <ResizablePanel
-          defaultSize={50}
-          maxSize={60}
-          className="overflow-auto rounded-xl border border-zinc-200 bg-white p-4"
-        >
-          {/* Exercise number, Exercise difficulty, Testing time left, Topics */}
-          <div></div>
+        <ResizablePanel defaultSize={50} maxSize={60} className="overflow-auto">
+          <div className="grid h-full grid-rows-[auto_1fr] gap-4">
+            {/* Exercise number, Exercise difficulty, Testing time left, Topics */}
+            <div className="space-x-2 space-y-1">
+              <Badge variant="secondary">Exercise 1</Badge>
+              <Badge variant="secondary">Remaining time</Badge>
+              <Badge variant="secondary">Exercise difficulty</Badge>
+              <Badge variant="secondary">Topic 1</Badge>
+              <Badge variant="secondary">Topic 2</Badge>
+              <Badge variant="secondary">Topic 3</Badge>
+            </div>
 
-          {/* Exercise description and related content */}
-          <div className="h-full p-4">
-            <h1 className="mb-2 text-lg font-semibold">Exercise Title</h1>
-            <p>Description...</p>
-            <h2 className="font-semibold">Examples</h2>
-            <pre className="rounded bg-zinc-200 p-2">...</pre>
-            <h2 className="font-semibold">Notes</h2>
-            <ul className="list-inside list-disc rounded bg-zinc-200 p-2">
-              <li>Note 1...</li>
-              <li>Note 2...</li>
-            </ul>
+            {/* Exercise description and related content */}
+            <div className="space-y-2 overflow-auto rounded-xl border bg-zinc-100 p-4">
+              <h1 className="mb-2 text-lg font-semibold">Exercise Title</h1>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+              </p>
+
+              <h2 className="font-semibold">Example 1</h2>
+              <pre className="rounded bg-zinc-200/70 p-2">...</pre>
+              <h2 className="font-semibold">Example 2</h2>
+              <pre className="rounded bg-zinc-200/70 p-2">...</pre>
+              <h2 className="font-semibold">Example 3</h2>
+              <pre className="rounded bg-zinc-200/70 p-2">...</pre>
+
+              <h2 className="font-semibold">Notes</h2>
+              <ul className="list-inside list-disc ">
+                <li>Note 1...</li>
+                <li>Note 2...</li>
+              </ul>
+            </div>
           </div>
         </ResizablePanel>
 
@@ -60,7 +78,7 @@ export default function ChallengePage() {
             {/* Textarea container */}
             <div className="mt-4 flex h-full flex-col">
               {/* Stretch the textarea to fill the container */}
-              <Textarea className="mb-8 flex-1 resize-none rounded-sm" />
+              <Textarea className="mb-9 flex-1 resize-none rounded-sm" />
             </div>
           </div>
 
