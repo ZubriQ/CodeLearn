@@ -8,17 +8,51 @@ import { Badge } from '@/components/ui/badge.tsx';
 export default function ChallengePage() {
   return (
     <div className="flex h-screen flex-col bg-zinc-50 p-4">
-      {/* Header with exercise types */}
       <div className="mb-4">
-        <div className="mb-2 flex space-x-2">
-          <div className="h-10 w-10 rounded bg-green-300"></div>
-          <div className="h-10 w-10 rounded bg-green-300"></div>
-          {/* ...more exercises */}
+        {/* Row for green boxes with text */}
+        <div className="-mt-1 mb-2 flex flex-wrap items-center space-x-2 space-y-1">
+          <span className="whitespace-nowrap font-medium">Questions</span>
+          <Button className="h-8 w-8 rounded-md" variant="outline">
+            1
+          </Button>
+          <Button className="h-8 w-8 rounded-md" variant="outline">
+            2
+          </Button>
+          <Button className="h-8 w-8 rounded-md" variant="outline">
+            3
+          </Button>
+          <Button className="h-8 w-8 rounded-md" variant="outline">
+            4
+          </Button>
+          <Button className="h-8 w-8 rounded-md" variant="outline">
+            5
+          </Button>
+          <Button className="h-8 w-8 rounded-md" variant="outline">
+            6
+          </Button>
+          <Button className="h-8 w-8 rounded-md" variant="outline">
+            7
+          </Button>
+          <Button className="h-8 w-8 rounded-md" variant="outline">
+            8
+          </Button>
         </div>
-        <div className="flex space-x-2">
-          <div className="h-10 w-10 rounded bg-blue-300"></div>
-          <div className="h-10 w-10 rounded bg-blue-300"></div>
-          {/* ...more exercises */}
+
+        {/* Row for blue boxes with text */}
+        <div className="-mt-1 flex flex-wrap items-center space-x-2 space-y-1">
+          <span className="whitespace-nowrap font-medium">Exercises</span>
+          <Button className="h-8 w-8 rounded-md" variant="outline">
+            1
+          </Button>
+          <Button className="h-8 w-8 rounded-md" variant="outline">
+            2
+          </Button>
+          <Button className="h-8 w-8 rounded-md" variant="outline">
+            3
+          </Button>
+          <Button className="h-8 w-8 rounded-md" variant="outline">
+            4
+          </Button>
         </div>
       </div>
 
@@ -26,7 +60,7 @@ export default function ChallengePage() {
       <ResizablePanelGroup direction="horizontal" className="flex flex-1 overflow-hidden">
         {/* Left panel for exercise descriptions */}
         <ResizablePanel defaultSize={50} maxSize={60} className="overflow-auto">
-          <div className="grid h-full grid-rows-[auto_1fr] gap-4">
+          <div className="grid h-full grid-rows-[auto_1fr] gap-2">
             {/* Exercise number, Exercise difficulty, Testing time left, Topics */}
             <div className="space-x-2 space-y-1">
               <Badge variant="secondary">Remaining time</Badge>
@@ -50,20 +84,20 @@ export default function ChallengePage() {
               </p>
 
               <div>
-                <h3 className="font-semibold">Example 1</h3>
+                <h3 className="font-semibold">Example 1:</h3>
                 <pre className="rounded bg-zinc-200/70 p-2">...</pre>
               </div>
               <div>
-                <h3 className="font-semibold">Example 2</h3>
+                <h3 className="font-semibold">Example 2:</h3>
                 <pre className="rounded bg-zinc-200/70 p-2">...</pre>
               </div>
               <div>
-                <h3 className="font-semibold">Example 3</h3>
+                <h3 className="font-semibold">Example 3:</h3>
                 <pre className="rounded bg-zinc-200/70 p-2">...</pre>
               </div>
 
               <div>
-                <h3 className="font-semibold">Notes</h3>
+                <h3 className="font-semibold">Notes:</h3>
                 <ul className="list-inside list-disc ">
                   <li>Note 1...</li>
                   <li>Note 2...</li>
