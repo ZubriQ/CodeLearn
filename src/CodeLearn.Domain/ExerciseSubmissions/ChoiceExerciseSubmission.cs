@@ -5,7 +5,6 @@ public sealed class ChoiceExerciseSubmission : ExerciseSubmission
     private readonly IList<QuestionChoice> _choices = [];
     public IReadOnlyList<QuestionChoice> Choices => _choices.ToList();
 
-    // TODO: Also accept chosen answers
     private ChoiceExerciseSubmission(
         ExerciseId exerciseId,
         TestingSessionId testingSessionId,
@@ -24,4 +23,6 @@ public sealed class ChoiceExerciseSubmission : ExerciseSubmission
             sentDateTime,
             SubmissionTestStatus.Untested);
     }
+
+    // TODO: Add answer (choice) method?
 }
