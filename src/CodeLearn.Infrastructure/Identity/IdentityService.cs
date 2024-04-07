@@ -4,7 +4,6 @@ using CodeLearn.Domain.Common.Result;
 using CodeLearn.Domain.Constants;
 using CodeLearn.Infrastructure.Identity.Errors;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace CodeLearn.Infrastructure.Identity;
@@ -150,5 +149,12 @@ public class IdentityService : IIdentityService
         var tokenString = _jwtTokenGenerator.GenerateTokenString(user.Id, email, roles.FirstOrDefault()!);
 
         return (Result.Success(), tokenString);
+    }
+
+    public async Task<bool> UserExistsAsync(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+
+        return user != null;
     }
 }
