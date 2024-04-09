@@ -27,7 +27,7 @@ const CurriculumLayout = lazy(() => import('@/features/curriculum/layout'));
 const StudentTestsPage = lazy(() => import('@/features/curriculum/pages/Tests.page.tsx'));
 
 // Students are tested on this page
-const TestingSessionPage = lazy(() => import('@/features/testing-session/TestingSession.page.tsx'));
+const TestingSessionPage = lazy(() => import('@/features/testing-session/pages/TestingSession.page.tsx'));
 
 export const routes: RouteObject[] = [
   {
