@@ -2,12 +2,9 @@
 
 public record StudentResponse(
     string Id,
-    string Email,
     string UserName,
-    string FirstName,
-    string LastName,
-    string Patronymic,
-    string WindowsAccountName,
+    string FullName,
     string StudentGroupName,
-    string EnrolmentYear,
-    string UserCode);
+    int? EnrolmentYear,
+    string UserCode,
+    string TemporaryPassword);

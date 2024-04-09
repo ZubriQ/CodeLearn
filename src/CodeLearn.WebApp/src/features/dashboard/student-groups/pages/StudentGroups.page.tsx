@@ -25,8 +25,10 @@ import DashboardPageContainer from '@/features/dashboard/DashboardPageContainer.
 function StudentGroupsPage() {
   const { toast } = useToast();
   const [, setCurrentPageTitle] = useDashboardPageTitle();
+
   const [studentGroups, setStudentGroups] = useState<StudentGroup[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
   const [studentGroupName, setStudentGroupName] = useState('');
   const [enrolmentYear, setEnrolmentYear] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);

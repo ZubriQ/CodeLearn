@@ -1,10 +1,9 @@
 export type Student = {
   id: string;
-  firstName: string;
-  lastName: string;
-  patronymic?: string;
-  groupName: string;
-  enrolmentYear: number;
   userName: string;
-  email: string;
+  fullName: string;
+  studentGroupName: string;
+  enrolmentYear: number;
+  userCode: string;
+  temporaryPassword: string;
 };

@@ -19,4 +19,6 @@ public class UserDto
     public int? EnrolmentYear { get; set; }
 
     public string? UserCode { get; set; }
+
+    public string TemporaryPassword { get; set; }
 }

@@ -73,6 +73,12 @@ const Testings = {
   delete: (id: number) => requests.delete(`testings/${id}`),
 };
 
+const Students = {
+  list: () => requests.get('users/students').then((response) => response.students),
+  // create: (request: ) => requests.post(`users/students`, request),
+  delete: (id: string) => requests.delete(`users/students/${id}`),
+};
+
 // const TestErrors = {
 //   get400Error: () => requests.get('buggy/bad-request'),
 //   get401Error: () => requests.get('buggy/unauthorised'),
@@ -89,6 +95,7 @@ const agent = {
   ExerciseTopics,
   DataTypes,
   Testings,
+  Students,
   // TestErrors,
 };
 
