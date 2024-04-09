@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿namespace CodeLearn.Application.Users;
 
-namespace CodeLearn.Infrastructure.Identity;
-
-public class ApplicationUser : IdentityUser
+public class UserDto
 {
+    public string Id { get; set; } = null!;
+
+    public string UserName { get; set; } = null!;
+
     public string FirstName { get; set; } = null!;
 
     public string LastName { get; set; } = null!;

@@ -7,14 +7,12 @@ using CodeLearn.Domain.Tests.ValueObjects;
 using CodeLearn.Infrastructure.Authentication;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 using System.Text;
 
 namespace CodeLearn.Infrastructure;
@@ -58,7 +56,8 @@ public static class DependencyInjection
 
         services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         {
-            options.Password.RequiredLength = 5;
+            options.Password.RequiredLength = 8;
+            options.User.RequireUniqueEmail = false;
         })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();

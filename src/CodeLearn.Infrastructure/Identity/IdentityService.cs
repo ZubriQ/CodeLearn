@@ -1,5 +1,6 @@
 ﻿using CodeLearn.Application.Common.IdentityModels;
 using CodeLearn.Application.Common.Interfaces;
+using CodeLearn.Application.Users;
 using CodeLearn.Domain.Common.Result;
 using CodeLearn.Domain.Constants;
 using CodeLearn.Infrastructure.Identity.Errors;
@@ -36,7 +37,7 @@ public class IdentityService : IIdentityService
 
     /// <summary>
     /// Creates a User. If Student group name and Enrolment year are _null_,
-    /// We create Teacher, otherwise Student.
+    /// we create Teacher, otherwise Student.
     /// </summary>
     /// <param name="credentials">User email and password.</param>
     /// <param name="fullName">User full name.</param>
@@ -156,5 +157,12 @@ public class IdentityService : IIdentityService
         var user = await _userManager.FindByIdAsync(userId);
 
         return user != null;
+    }
+
+    public async Task<UserDto[]> GetUsersInRoleAsync(string role)
+    {
+        var users = await _userManager.GetUsersInRoleAsync(role);
+
+        return users.Select(u => u.ToDto()).ToArray();
     }
 }

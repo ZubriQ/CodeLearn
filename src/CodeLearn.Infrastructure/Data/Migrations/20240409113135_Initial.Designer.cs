@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeLearn.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240321170801_Initial")]
+    [Migration("20240409113135_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -41,8 +41,8 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("SubmissionType")
                         .IsRequired()
@@ -235,8 +235,8 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("FinishDateTime")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("FinishDateTime")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<DateTimeOffset>("LastModified")
                         .HasColumnType("datetimeoffset");
@@ -244,11 +244,11 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Score")
+                    b.Property<int>("Score")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("StartDateTime")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("StartDateTime")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -279,20 +279,17 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTimeOffset>("DeadlineDate")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<int>("DurationInMinutes")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("EndDateTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTimeOffset>("LastModified")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartDateTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("StudentGroupId")
                         .HasColumnType("int");
@@ -391,9 +388,6 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("Organization")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -415,9 +409,15 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<string>("UserCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("WindowsAccountName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -642,7 +642,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                 {
                     b.HasBaseType("CodeLearn.Domain.Exercises.Exercise");
 
-                    b.Property<int>("MethodReturnTypeId")
+                    b.Property<int>("MethodReturnDataTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("MethodSolutionCode")
@@ -655,7 +655,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasIndex("MethodReturnTypeId");
+                    b.HasIndex("MethodReturnDataTypeId");
 
                     b.HasDiscriminator().HasValue("MethodCoding");
                 });
@@ -692,39 +692,6 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.OwnsMany("CodeLearn.Domain.Exercises.Entities.ExerciseNote", "ExerciseNotes", b1 =>
-                        {
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
-
-                            b1.Property<string>("Decoration")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)");
-
-                            b1.Property<string>("Entry")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)");
-
-                            b1.Property<int>("ExerciseId")
-                                .HasColumnType("int");
-
-                            b1.HasKey("Id");
-
-                            b1.HasIndex("ExerciseId");
-
-                            b1.ToTable("ExerciseNote", "Test");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ExerciseId");
-                        });
-
-                    b.Navigation("ExerciseNotes");
                 });
 
             modelBuilder.Entity("CodeLearn.Domain.QuestionChoices.QuestionChoice", b =>
@@ -843,11 +810,42 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("CodeLearn.Domain.Exercises.MethodCodingExercise", b =>
                 {
-                    b.HasOne("CodeLearn.Domain.Exercises.Entities.DataType", "MethodReturnType")
+                    b.HasOne("CodeLearn.Domain.Exercises.Entities.DataType", "MethodReturnDataType")
                         .WithMany()
-                        .HasForeignKey("MethodReturnTypeId")
+                        .HasForeignKey("MethodReturnDataTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.OwnsMany("CodeLearn.Domain.Exercises.Entities.ExerciseNote", "ExerciseNotes", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<string>("Decoration")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("Entry")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<int>("ExerciseId")
+                                .HasColumnType("int");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("ExerciseId");
+
+                            b1.ToTable("ExerciseNote", "Test");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ExerciseId");
+                        });
 
                     b.OwnsMany("CodeLearn.Domain.Exercises.Entities.InputOutputExample", "InputOutputExamples", b1 =>
                         {
@@ -974,11 +972,13 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                             b1.Navigation("TestCaseParameters");
                         });
 
+                    b.Navigation("ExerciseNotes");
+
                     b.Navigation("InputOutputExamples");
 
                     b.Navigation("MethodParameters");
 
-                    b.Navigation("MethodReturnType");
+                    b.Navigation("MethodReturnDataType");
 
                     b.Navigation("TestCases");
                 });

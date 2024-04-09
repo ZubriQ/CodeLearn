@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -38,9 +39,10 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Patronymic = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Organization = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WindowsAccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StudentGroupName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EnrolmentYear = table.Column<int>(type: "int", nullable: true),
+                    UserCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -255,15 +257,15 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     ClassTesterCode = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
                     MethodToExecute = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     MethodSolutionCode = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    MethodReturnTypeId = table.Column<int>(type: "int", nullable: true),
+                    MethodReturnDataTypeId = table.Column<int>(type: "int", nullable: true),
                     IsMultipleAnswers = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Exercise", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Exercise_DataType_MethodReturnTypeId",
-                        column: x => x.MethodReturnTypeId,
+                        name: "FK_Exercise_DataType_MethodReturnDataTypeId",
+                        column: x => x.MethodReturnDataTypeId,
                         principalSchema: "Test",
                         principalTable: "DataType",
                         principalColumn: "Id",
@@ -286,8 +288,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TestId = table.Column<int>(type: "int", nullable: false),
                     StudentGroupId = table.Column<int>(type: "int", nullable: false),
-                    StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeadlineDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     DurationInMinutes = table.Column<int>(type: "int", nullable: false),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -470,9 +471,9 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TestingId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    FinishDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Score = table.Column<int>(type: "int", nullable: true),
+                    StartDateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    FinishDateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    Score = table.Column<int>(type: "int", nullable: false),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
@@ -523,7 +524,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     ExerciseId = table.Column<int>(type: "int", nullable: false),
                     TestingSessionId = table.Column<int>(type: "int", nullable: false),
                     SentDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     SubmissionType = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
                     StudentCode = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: true),
                     TestingInformation = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
@@ -614,10 +615,10 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exercise_MethodReturnTypeId",
+                name: "IX_Exercise_MethodReturnDataTypeId",
                 schema: "Test",
                 table: "Exercise",
-                column: "MethodReturnTypeId");
+                column: "MethodReturnDataTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Exercise_TestId",

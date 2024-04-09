@@ -1,4 +1,5 @@
 ﻿using CodeLearn.Application.Common.IdentityModels;
+using CodeLearn.Application.Users;
 using CodeLearn.Domain.Common.Result;
 
 namespace CodeLearn.Application.Common.Interfaces;
@@ -19,4 +20,6 @@ public interface IIdentityService
     Task<(Result Result, string JwtToken)> Login(string email, string password);
 
     Task<Result> DeleteUserAsync(string userId);
+
+    Task<UserDto[]> GetUsersInRoleAsync(string role);
 }
