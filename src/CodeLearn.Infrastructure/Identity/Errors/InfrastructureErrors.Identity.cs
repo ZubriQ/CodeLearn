@@ -8,12 +8,12 @@ public static partial class InfrastructureErrors
     {
         private static string Prefix => "Identity.";
 
-        public static readonly Error EmailAlreadyInUse = new(
-            $"{Prefix}{nameof(EmailAlreadyInUse)}",
-            "Email is already in use.");
+        public static readonly Error InvalidUserFields = new(
+            $"{Prefix}{nameof(InvalidUserFields)}",
+            "Invalid user fields.");
 
-        public static readonly Error UserNotFoundByEmail = new(
-            $"{Prefix}{nameof(UserNotFoundByEmail)}",
+        public static readonly Error UserNotFoundByUserName = new(
+            $"{Prefix}{nameof(UserNotFoundByUserName)}",
             "User does not exist.");
 
         public static readonly Error InvalidCredentials = new(

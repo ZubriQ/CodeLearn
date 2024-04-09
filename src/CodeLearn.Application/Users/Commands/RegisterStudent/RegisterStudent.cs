@@ -1,10 +1,9 @@
 ﻿using CodeLearn.Application.Common.IdentityModels;
 using FluentValidation.Results;
 
-namespace CodeLearn.Application.Authentication.Commands.RegisterStudent;
+namespace CodeLearn.Application.Users.Commands.RegisterStudent;
 
-public record RegisterStudentCommand(
-    UserCredentials Credentials, UserFullName FullName, UserStudentDetails StudentDetails)
+public record RegisterStudentCommand(UserFullName FullName, UserStudentDetails StudentDetails)
     : IRequest<OneOf<string, ValidationFailed>>;
 
 public class RegisterStudentCommandHandler(
@@ -20,14 +19,13 @@ public class RegisterStudentCommandHandler(
             return new ValidationFailed(validationResult.Errors);
         }
 
-        (var result, var userId) = await _identityService.CreateUserAsync(
-            request.Credentials, request.FullName, request.StudentDetails);
+        (var result, var userDto) = await _identityService.CreateStudentUserAsync(request.FullName, request.StudentDetails);
 
         if (result.IsFailure)
         {
-            return new ValidationFailed(new ValidationFailure("IdentityService", "CreateUserAsync Failed"));
+            return new ValidationFailed(new ValidationFailure("IdentityService", "CreateStudentUserAsync Failed"));
         }
 
-        return userId!;
+        return userDto!.Id;
     }
 }

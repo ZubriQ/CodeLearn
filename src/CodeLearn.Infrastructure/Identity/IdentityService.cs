@@ -35,61 +35,59 @@ public class IdentityService : IIdentityService
         return user.UserName;
     }
 
-    /// <summary>
-    /// Creates a User. If Student group name and Enrolment year are _null_,
-    /// we create Teacher, otherwise Student.
-    /// </summary>
-    /// <param name="credentials">User email and password.</param>
-    /// <param name="fullName">User full name.</param>
-    /// <param name="studentDetails">Student group name and enrolment year.</param>
-    /// <returns>Result information and created user Id.</returns>
-    public async Task<(Result Result, string? UserId)> CreateUserAsync(
-        UserCredentials credentials, UserFullName fullName, UserStudentDetails? studentDetails = null)
+    public async Task<(Result Result, UserDto? UserDto)> CreateStudentUserAsync(
+        UserFullName fullName, UserStudentDetails studentDetails)
     {
-        if (await _userManager.FindByEmailAsync(credentials.Email) is not null)
-        {
-            return (Result.Failure(InfrastructureErrors.Identity.EmailAlreadyInUse), null);
-        }
+        var username = await GenerateUniqueUsername(fullName.LastName, fullName.FirstName, fullName.Patronymic);
 
-        var baseUsername = $"{fullName.FirstName}{fullName.LastName}";
-
-        var username = await GenerateUniqueUsernameWithNumber(baseUsername, 1000, 9999);
+        var temporaryPassword = GenerateTemporaryPassword();
 
         var user = new ApplicationUser
         {
             UserName = username,
-            Email = credentials.Email,
             FirstName = fullName.FirstName,
             LastName = fullName.LastName,
             Patronymic = fullName.Patronymic,
             StudentGroupName = studentDetails?.StudentGroupName,
-            EnrolmentYear = studentDetails?.EnrolmentYear,
+            UserCode = studentDetails?.UserCode,
+            TemporaryPassword = temporaryPassword,
         };
 
-        var result = await _userManager.CreateAsync(user, credentials.Password);
+        var result = await _userManager.CreateAsync(user, temporaryPassword);
 
-        var userRole = (studentDetails is null)
-            ? Roles.Teacher
-            : Roles.Student;
+        if (!result.Succeeded)
+        {
+            return (Result.Failure(InfrastructureErrors.Identity.InvalidUserFields), null);
+        }
 
-        await _userManager.AddToRoleAsync(user, userRole);
+        await _userManager.AddToRoleAsync(user, Roles.Student);
 
-        return (result.ToApplicationResult(), user.Id);
+        return (Result.Success(), user.ToDto());
     }
 
-    private async Task<string> GenerateUniqueUsernameWithNumber(string baseUsername, int min, int max)
+    private async Task<string> GenerateUniqueUsername(string lastName, string firstName, string? patronymic)
     {
-        var rng = new Random();
-        string username;
+        var firstNameInitial = char.ToUpper(firstName[0]);
+        var patronymicInitial = string.IsNullOrEmpty(patronymic) ? "" : patronymic[..1];
 
-        do
+        var baseUsername = $"{lastName}{firstNameInitial}{patronymicInitial}";
+
+        var username = baseUsername;
+        int i = 1;
+
+        // Check for existing username and append a number if necessary, but only if i > 1.
+        while (await _userManager.FindByNameAsync(username) != null)
         {
-            var randomNumber = rng.Next(min, max + 1);
-            username = $"{baseUsername}{randomNumber}";
+            i++;
+            username = $"{baseUsername}{i}";
         }
-        while (await _userManager.FindByNameAsync(username) != null);
 
         return username;
+    }
+
+    private static string GenerateTemporaryPassword()
+    {
+        return Guid.NewGuid().ToString()[..8];
     }
 
     public async Task<bool> IsInRoleAsync(string userId, string role)
@@ -129,13 +127,13 @@ public class IdentityService : IIdentityService
         return result.ToApplicationResult();
     }
 
-    public async Task<(Result Result, string JwtToken)> Login(string email, string password)
+    public async Task<(Result Result, string JwtToken)> Login(string userName, string password)
     {
-        var user = await _userManager.FindByEmailAsync(email);
+        var user = await _userManager.FindByNameAsync(userName);
 
         if (user == null)
         {
-            return (Result.Failure(InfrastructureErrors.Identity.UserNotFoundByEmail), string.Empty);
+            return (Result.Failure(InfrastructureErrors.Identity.UserNotFoundByUserName), string.Empty);
         }
 
         var isSuccess = await _userManager.CheckPasswordAsync(user, password);
@@ -147,7 +145,7 @@ public class IdentityService : IIdentityService
 
         var roles = await _userManager.GetRolesAsync(user);
 
-        var tokenString = _jwtTokenGenerator.GenerateTokenString(user.Id, email, roles.FirstOrDefault()!);
+        var tokenString = _jwtTokenGenerator.GenerateTokenString(user.Id, userName, roles.FirstOrDefault()!);
 
         return (Result.Success(), tokenString);
     }

@@ -1,4 +1,4 @@
-﻿namespace CodeLearn.Contracts.Authentication;
+﻿namespace CodeLearn.Contracts.Users;
 
 public record RegisterTeacherRequest(
     string FirstName,

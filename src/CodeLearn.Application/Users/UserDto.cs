@@ -20,5 +20,5 @@ public class UserDto
 
     public string? UserCode { get; set; }
 
-    public string TemporaryPassword { get; set; }
+    public string TemporaryPassword { get; set; } = null!;
 }

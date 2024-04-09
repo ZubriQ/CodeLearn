@@ -2,17 +2,17 @@
 
 public class UserStudentDetails
 {
-    public string? StudentGroupName { get; init; }
-    public int? EnrolmentYear { get; init; }
+    public string StudentGroupName { get; init; }
+    public string UserCode { get; init; }
 
-    private UserStudentDetails(string studentGroupName, int enrolmentYear)
+    private UserStudentDetails(string studentGroupName, string userCode)
     {
         StudentGroupName = studentGroupName;
-        EnrolmentYear = enrolmentYear;
+        UserCode = userCode;
     }
 
-    public static UserStudentDetails Create(string studentGroupName, int enrolmentYear)
+    public static UserStudentDetails Create(string studentGroupName, string userCode)
     {
-        return new(studentGroupName, enrolmentYear);
+        return new(studentGroupName, userCode);
     }
 }

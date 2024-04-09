@@ -126,7 +126,6 @@ public class ApplicationDbContextInitialiser
                 UserName = "student",
                 Email = "Stud3nt@example.com",
                 StudentGroupName = "PIB",
-                EnrolmentYear = 2020,
             };
 
             var createUserResult = await _userManager.CreateAsync(student, "Stud3nt@example.com");

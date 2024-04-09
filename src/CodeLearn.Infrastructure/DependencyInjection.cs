@@ -57,6 +57,10 @@ public static class DependencyInjection
         services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         {
             options.Password.RequiredLength = 8;
+            options.Password.RequiredUniqueChars = 0;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireLowercase = false;
+            options.Password.RequireNonAlphanumeric = false;
             options.User.RequireUniqueEmail = false;
         })
             .AddEntityFrameworkStores<ApplicationDbContext>()

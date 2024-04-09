@@ -15,7 +15,6 @@ public static class ApplicationUserExtensions
             UserName = user.UserName!,
             WindowsAccountName = user.WindowsAccountName,
             StudentGroupName = user.StudentGroupName,
-            EnrolmentYear = user.EnrolmentYear,
             UserCode = user.UserCode,
             TemporaryPassword = user.TemporaryPassword,
         };

@@ -14,10 +14,10 @@ public interface IIdentityService
 
     Task<bool> AuthorizeAsync(string userId, string policyName);
 
-    Task<(Result Result, string? UserId)> CreateUserAsync(
-        UserCredentials credentials, UserFullName fullName, UserStudentDetails? studentDetails = null);
+    Task<(Result Result, UserDto? UserDto)> CreateStudentUserAsync(
+        UserFullName fullName, UserStudentDetails studentDetails);
 
-    Task<(Result Result, string JwtToken)> Login(string email, string password);
+    Task<(Result Result, string JwtToken)> Login(string userName, string password);
 
     Task<Result> DeleteUserAsync(string userId);
 
