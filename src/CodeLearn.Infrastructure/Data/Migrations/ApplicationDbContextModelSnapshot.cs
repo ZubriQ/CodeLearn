@@ -403,6 +403,10 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     b.Property<string>("StudentGroupName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TemporaryPassword")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 

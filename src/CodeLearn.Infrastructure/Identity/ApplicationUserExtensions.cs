@@ -17,6 +17,7 @@ public static class ApplicationUserExtensions
             StudentGroupName = user.StudentGroupName,
             EnrolmentYear = user.EnrolmentYear,
             UserCode = user.UserCode,
+            TemporaryPassword = user.TemporaryPassword,
         };
     }
 }

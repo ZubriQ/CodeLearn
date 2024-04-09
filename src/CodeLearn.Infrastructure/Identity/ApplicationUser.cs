@@ -17,4 +17,6 @@ public class ApplicationUser : IdentityUser
     public int? EnrolmentYear { get; set; }
 
     public string? UserCode { get; set; }
+
+    public string TemporaryPassword { get; set; } = null!;
 }
