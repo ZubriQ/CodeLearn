@@ -101,7 +101,7 @@ public class ApplicationDbContextInitialiser
                 FirstName = "AdminFirstName",
                 LastName = "AdminLastName",
                 UserName = "admin",
-                Email = "Adm1n@example.com"
+                TemporaryPassword = Guid.NewGuid().ToString()[..8],
             };
 
             var createUserResult = await _userManager.CreateAsync(adminUser, "Adm1n@example.com");
@@ -186,7 +186,9 @@ public class ApplicationDbContextInitialiser
                 ExerciseTopic.Create("Hashing"),
                 ExerciseTopic.Create("Backtracking"),
                 ExerciseTopic.Create("Geometry"),
-            };
+                ExerciseTopic.Create("Fundamentals"),
+            }
+                .OrderBy(x => x.Name);
 
             _context.ExerciseTopics.AddRange(topics);
 

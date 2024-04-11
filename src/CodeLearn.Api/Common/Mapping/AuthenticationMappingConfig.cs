@@ -12,7 +12,7 @@ public class AuthenticationMappingConfig : IRegister
         config.NewConfig<RegisterStudentRequest, RegisterStudentCommand>()
             .ConstructUsing(src => new RegisterStudentCommand(
                 UserFullName.Create(src.FirstName, src.LastName, src.Patronymic),
-                UserStudentDetails.Create(src.StudentGroupName, src.UserCode)));
+                StudentUserDetails.Create(src.StudentGroupName, src.UserCode)));
 
         //config.NewConfig<RegisterTeacherRequest, RegisterTeacherCommand>()
         //    .ConstructUsing(src => new RegisterTeacherCommand(

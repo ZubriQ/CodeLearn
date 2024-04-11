@@ -1,5 +1,6 @@
 ﻿using CodeLearn.Application.Common.IdentityModels;
 using CodeLearn.Application.Users;
+using CodeLearn.Application.Users.Commands.ImportStudentList;
 using CodeLearn.Domain.Common.Result;
 
 namespace CodeLearn.Application.Common.Interfaces;
@@ -12,14 +13,18 @@ public interface IIdentityService
 
     Task<bool> UserExistsAsync(string userId);
 
+    Task<bool> UserCodeExistsAsync(string userCode);
+
     Task<bool> AuthorizeAsync(string userId, string policyName);
-
-    Task<(Result Result, UserDto? UserDto)> CreateStudentUserAsync(
-        UserFullName fullName, UserStudentDetails studentDetails);
-
-    Task<(Result Result, string JwtToken)> Login(string userName, string password);
 
     Task<Result> DeleteUserAsync(string userId);
 
     Task<UserDto[]> GetUsersInRoleAsync(string role);
+
+    Task<(Result Result, string? userId)> CreateStudentUserAsync(
+        UserFullName fullName, StudentUserDetails details);
+
+    Task<Result> AddStudentUsersFromDtoAsync(ImportedStudentDto[] students, string studentGroup);
+
+    Task<(Result Result, string JwtToken)> Login(string userName, string password);
 }

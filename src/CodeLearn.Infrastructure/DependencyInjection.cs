@@ -5,6 +5,7 @@ using CodeLearn.Domain.Testings.ValueObjects;
 using CodeLearn.Domain.TestingSessions.ValueObjects;
 using CodeLearn.Domain.Tests.ValueObjects;
 using CodeLearn.Infrastructure.Authentication;
+using CodeLearn.Infrastructure.Services;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -67,6 +68,8 @@ public static class DependencyInjection
             .AddDefaultTokenProviders();
 
         services.AddJwtAuth(configuration);
+
+        services.AddScoped<IFileProcessingService, FileProcessingService>();
 
         return services;
     }

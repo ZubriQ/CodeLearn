@@ -1,4 +1,5 @@
-﻿using CodeLearn.Application.Users.Commands.Login;
+﻿using CodeLearn.Application.Users.Commands.ImportStudentList;
+using CodeLearn.Application.Users.Commands.Login;
 using CodeLearn.Application.Users.Commands.RegisterStudent;
 using CodeLearn.Application.Users.Queries.GetAllStudents;
 using CodeLearn.Contracts.Users;
@@ -43,6 +44,22 @@ public sealed class UsersController(ISender _sender, IMapper _mapper) : ApiContr
         return result.Match<IActionResult>(
             id => CreatedAtAction(nameof(CreateStudent), new { id }, id),
             _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed"));
+    }
+
+    [HttpPost("students/import-list")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ImportStudentList([FromForm] ImportStudentListRequest request)
+    {
+        var fileData = new FileDataDto(request.File.FileName, request.File.OpenReadStream(), request.File.ContentType);
+        var command = new ImportStudentListCommand(fileData, request.StudentGroupName);
+        var result = await _sender.Send(command);
+
+        return result.Match<IActionResult>(
+            success => CreatedAtAction(nameof(ImportStudentList), new { }, success),
+            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed"),
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Student group not found"));
     }
 
     //[HttpPost]

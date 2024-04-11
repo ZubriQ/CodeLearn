@@ -3,11 +3,13 @@ using FluentValidation.Results;
 
 namespace CodeLearn.Application.Users.Commands.RegisterStudent;
 
-public record RegisterStudentCommand(UserFullName FullName, UserStudentDetails StudentDetails)
+public record RegisterStudentCommand(UserFullName FullName, StudentUserDetails StudentDetails)
     : IRequest<OneOf<string, ValidationFailed>>;
 
 public class RegisterStudentCommandHandler(
-    IIdentityService _identityService, IValidator<RegisterStudentCommand> _validator)
+    IIdentityService _identityService,
+    IValidator<RegisterStudentCommand> _validator,
+    IApplicationDbContext _context)
     : IRequestHandler<RegisterStudentCommand, OneOf<string, ValidationFailed>>
 {
     public async Task<OneOf<string, ValidationFailed>> Handle(RegisterStudentCommand request, CancellationToken cancellationToken)
@@ -19,13 +21,15 @@ public class RegisterStudentCommandHandler(
             return new ValidationFailed(validationResult.Errors);
         }
 
-        (var result, var userDto) = await _identityService.CreateStudentUserAsync(request.FullName, request.StudentDetails);
+        (var result, var userId) = await _identityService.CreateStudentUserAsync(request.FullName, request.StudentDetails);
 
         if (result.IsFailure)
         {
             return new ValidationFailed(new ValidationFailure("IdentityService", "CreateStudentUserAsync Failed"));
         }
 
-        return userDto!.Id;
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return userId!;
     }
 }
