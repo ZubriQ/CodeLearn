@@ -1,6 +1,6 @@
 ﻿namespace CodeLearn.Application.Users.Commands.ImportStudentList;
 
-public record ImportStudentListCommand(FileDataDto File, string StudentGroup) : IRequest<OneOf<Success, BadRequest, NotFound>>;
+public record ImportStudentListCommand(FileDataDto File, string StudentGroupName) : IRequest<OneOf<Success, BadRequest, NotFound>>;
 
 public class ImportStudentListCommandHandler(
     IFileProcessingService _fileService,
@@ -10,13 +10,13 @@ public class ImportStudentListCommandHandler(
 {
     public async Task<OneOf<Success, BadRequest, NotFound>> Handle(ImportStudentListCommand request, CancellationToken cancellationToken)
     {
-        if (!IsFileFormatExcel(request.File.ContentType) || string.IsNullOrEmpty(request.StudentGroup))
+        if (!IsFileFormatExcel(request.File.ContentType) || string.IsNullOrEmpty(request.StudentGroupName))
         {
             return new BadRequest();
         }
 
         var studentGroupExists = await _context.StudentGroups
-            .AnyAsync(x => x.Name == request.StudentGroup, cancellationToken);
+            .AnyAsync(x => x.Name == request.StudentGroupName, cancellationToken);
 
         if (!studentGroupExists)
         {
@@ -24,7 +24,7 @@ public class ImportStudentListCommandHandler(
         }
 
         var importedStudentDtos = await _fileService.
-            CreateStudentDtosFromExcel(request.File.DataStream, request.StudentGroup);
+            CreateStudentDtosFromExcel(request.File.DataStream, request.StudentGroupName);
 
         if (importedStudentDtos.Length == 0)
         {
@@ -32,7 +32,7 @@ public class ImportStudentListCommandHandler(
         }
 
         var result = await _identityService
-            .AddStudentUsersFromDtoAsync(importedStudentDtos, request.StudentGroup);
+            .AddStudentUsersFromDtoAsync(importedStudentDtos, request.StudentGroupName);
 
         if (result.IsFailure)
         {

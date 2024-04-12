@@ -140,6 +140,7 @@ function StudentsPage() {
   return (
     <DashboardPageContainer>
       <div>
+        {/* Add new student */}
         <Sheet>
           <SheetTrigger asChild>
             <Button className="mb-6">Add new student</Button>
@@ -245,6 +246,7 @@ function StudentsPage() {
           </SheetContent>
         </Sheet>
 
+        {/* Import list of students */}
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="outline" className="ml-4">
