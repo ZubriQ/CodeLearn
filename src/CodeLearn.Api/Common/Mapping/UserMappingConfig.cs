@@ -1,5 +1,4 @@
-﻿using CodeLearn.Application.Common.IdentityModels;
-using CodeLearn.Application.Users;
+﻿using CodeLearn.Application.Users;
 using CodeLearn.Application.Users.Commands.Login;
 using CodeLearn.Application.Users.Commands.RegisterStudent;
 using CodeLearn.Contracts.Users;
@@ -14,9 +13,7 @@ public class UserMappingConfig : IRegister
             .Map(dest => dest.FullName, src => $"{src.LastName} {src.FirstName} {src.Patronymic}".Trim());
 
         config.NewConfig<RegisterStudentRequest, RegisterStudentCommand>()
-            .ConstructUsing(src => new RegisterStudentCommand(
-                UserFullName.Create(src.FirstName, src.LastName, src.Patronymic),
-                StudentUserDetails.Create(src.StudentGroupName, src.UserCode)));
+            .Map(dest => dest.Student, src => src);
 
         //config.NewConfig<RegisterTeacherRequest, RegisterTeacherCommand>()
         //    .ConstructUsing(src => new RegisterTeacherCommand(

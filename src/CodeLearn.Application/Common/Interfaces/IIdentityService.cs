@@ -1,6 +1,6 @@
-﻿using CodeLearn.Application.Common.IdentityModels;
-using CodeLearn.Application.Users;
+﻿using CodeLearn.Application.Users;
 using CodeLearn.Application.Users.Commands.ImportStudentList;
+using CodeLearn.Application.Users.Commands.RegisterStudent;
 using CodeLearn.Domain.Common.Result;
 
 namespace CodeLearn.Application.Common.Interfaces;
@@ -21,8 +21,7 @@ public interface IIdentityService
 
     Task<UserDto[]> GetUsersInRoleAsync(string role);
 
-    Task<(Result Result, string? userId)> CreateStudentUserAsync(
-        UserFullName fullName, StudentUserDetails details);
+    Task<(Result Result, string? userId)> CreateStudentUserAsync(RegisterStudentDto studentDto);
 
     Task<Result> AddStudentUsersFromDtoAsync(ImportedStudentDto[] students, string studentGroup);
 

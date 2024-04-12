@@ -4,28 +4,28 @@ public class RegisterStudentCommandValidator : AbstractValidator<RegisterStudent
 {
     public RegisterStudentCommandValidator()
     {
-        RuleFor(x => x.FullName)
+        RuleFor(x => x.Student)
             .NotNull();
 
-        RuleFor(x => x.FullName.FirstName)
+        RuleFor(x => x.Student.FirstName)
+            .NotNull();
+
+        RuleFor(x => x.Student.FirstName)
             .NotNull()
             .MaximumLength(50);
 
-        RuleFor(x => x.FullName.FirstName)
+        RuleFor(x => x.Student.FirstName)
             .NotNull()
             .MaximumLength(50);
 
-        RuleFor(x => x.FullName.Patronymic)
+        RuleFor(x => x.Student.Patronymic)
             .MaximumLength(50);
 
-        RuleFor(x => x.StudentDetails)
-            .NotNull();
-
-        RuleFor(x => x.StudentDetails.StudentGroupName)
+        RuleFor(x => x.Student.StudentGroupName)
             .NotEmpty()
             .MaximumLength(50);
 
-        RuleFor(x => x.StudentDetails.UserCode)
+        RuleFor(x => x.Student.UserCode)
             .NotEmpty()
             .MaximumLength(50);
     }

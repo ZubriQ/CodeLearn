@@ -1,7 +1,7 @@
-﻿using CodeLearn.Application.Common.IdentityModels;
-using CodeLearn.Application.Common.Interfaces;
+﻿using CodeLearn.Application.Common.Interfaces;
 using CodeLearn.Application.Users;
 using CodeLearn.Application.Users.Commands.ImportStudentList;
+using CodeLearn.Application.Users.Commands.RegisterStudent;
 using CodeLearn.Domain.Common.Result;
 using CodeLearn.Domain.Constants;
 using CodeLearn.Infrastructure.Identity.Errors;
@@ -97,21 +97,21 @@ public class IdentityService : IIdentityService
         return users.Select(u => u.ToDto()).ToArray();
     }
 
-    public async Task<(Result Result, string? userId)> CreateStudentUserAsync(UserFullName fullName, StudentUserDetails details)
+    public async Task<(Result Result, string? userId)> CreateStudentUserAsync(RegisterStudentDto studentDto)
     {
-        var username = await GenerateUniqueUsername(fullName.LastName, fullName.FirstName, fullName.Patronymic);
+        var username = await GenerateUniqueUsername(studentDto.LastName, studentDto.FirstName, studentDto.Patronymic);
 
         var password = GenerateTemporaryPassword();
 
         var user = new ApplicationUser
         {
+            FirstName = studentDto.FirstName,
+            LastName = studentDto.LastName,
+            Patronymic = studentDto.Patronymic,
+            UserCode = studentDto.UserCode,
+            StudentGroupName = studentDto.StudentGroupName,
             UserName = username,
-            FirstName = fullName.FirstName,
-            LastName = fullName.LastName,
-            Patronymic = fullName.Patronymic,
-            UserCode = details.UserCode,
             TemporaryPassword = password,
-            StudentGroupName = details.StudentGroupName,
         };
 
         var result = await _userManager.CreateAsync(user, password);
@@ -167,13 +167,13 @@ public class IdentityService : IIdentityService
 
             var user = new ApplicationUser
             {
-                UserName = username,
                 FirstName = student.FirstName,
                 LastName = student.LastName,
                 Patronymic = student.Patronymic,
                 UserCode = student.UserCode,
-                TemporaryPassword = password,
                 StudentGroupName = studentGroup,
+                UserName = username,
+                TemporaryPassword = password,
             };
 
             var createResult = await _userManager.CreateAsync(user, password);

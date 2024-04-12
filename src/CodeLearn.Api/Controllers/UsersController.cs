@@ -43,7 +43,9 @@ public sealed class UsersController(ISender _sender, IMapper _mapper) : ApiContr
 
         return result.Match<IActionResult>(
             id => CreatedAtAction(nameof(CreateStudent), new { id }, id),
-            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed"));
+            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed"),
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Student group not found"),
+            _ => Problem(statusCode: StatusCodes.Status409Conflict, title: "Student with given Use code already exists"));
     }
 
     [HttpPost("students/import-list")]
