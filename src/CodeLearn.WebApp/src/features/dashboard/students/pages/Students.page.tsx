@@ -25,7 +25,6 @@ import { Check, ChevronsUpDown } from 'lucide-react';
 import { Command, CommandGroup, CommandItem, CommandList } from '@/components/ui/command.tsx';
 import { cn } from '@/lib/utils.ts';
 import { Input } from '@/components/ui/input.tsx';
-import { CreateTestingRequest } from '@/api/testings/CreateTestingRequest.ts';
 import { RegisterStudentRequest } from '@/api/users/RegisterStudentRequest.ts';
 
 function StudentsPage() {
@@ -37,16 +36,23 @@ function StudentsPage() {
   const [studentGroups, setStudentGroups] = useState<StudentGroup[]>([]);
 
   // Add new student states
-  // Will go here...
   const [selectedStudentGroup, setSelectedStudentGroup] = useState<StudentGroup>();
   const [selectedStudentFirstName, setSelectedStudentFirstName] = useState<string>('');
   const [selectedStudentLastName, setSelectedStudentLastName] = useState<string>('');
   const [selectedStudentPatronymic, setSelectedStudentPatronymic] = useState<string>('');
   const [selectedStudentUserCode, setSelectedStudentUserCode] = useState<string>('');
 
+  // Import student list states
+  const [selectedImportStudentListGroup, setSelectedImportStudentListGroup] = useState<StudentGroup>();
+
   const handleSelectStudentGroup = (groupId: number) => {
     const group = studentGroups.find((t: StudentGroup) => t.id === groupId);
     setSelectedStudentGroup(group);
+  };
+
+  const handleSelectImportStudentListGroup = (groupId: number) => {
+    const group = studentGroups.find((t: StudentGroup) => t.id === groupId);
+    setSelectedImportStudentListGroup(group);
   };
 
   useEffect(() => {
@@ -101,7 +107,35 @@ function StudentsPage() {
       });
   };
 
-  const handleOnImportStudentList = async (event: React.FormEvent) => {};
+  const handleOnImportStudentList = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    // Validation
+    if (!selectedImportStudentListGroup || !event.currentTarget.excelFile.files?.length) {
+      toast({
+        title: 'Error',
+        description: 'You must select a student group and a file to import.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', event.currentTarget.excelFile.files[0]);
+    formData.append('studentGroupName', selectedImportStudentListGroup.name);
+
+    agent.Students.importList(formData)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        toast({
+          title: 'Error importing student list',
+          description: error.response?.data?.error || 'An unexpected error occurred.',
+          variant: 'destructive',
+        });
+      });
+  };
 
   return (
     <DashboardPageContainer>
@@ -218,7 +252,66 @@ function StudentsPage() {
             </Button>
           </SheetTrigger>
           <SheetContent>
-            <form onSubmit={handleOnImportStudentList}></form>
+            <form onSubmit={handleOnImportStudentList}>
+              <SheetHeader className="mb-4">
+                <SheetTitle>Import student list</SheetTitle>
+                <SheetDescription>
+                  This action will register multiple students from a given Excel file.
+                </SheetDescription>
+              </SheetHeader>
+
+              <div className="grid gap-3 py-3">
+                <Label>Student Group</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button className="justify-between" role="combobox" variant="outline">
+                      {selectedImportStudentListGroup ? selectedImportStudentListGroup.name : 'Select a student group'}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-60 rounded-lg bg-white p-0 shadow-lg">
+                    <Command>
+                      {isLoading ? (
+                        <div>Loading student groups...</div>
+                      ) : (
+                        <CommandList>
+                          <CommandGroup>
+                            {studentGroups.map((group: StudentGroup) => (
+                              <CommandItem
+                                key={group.id}
+                                onSelect={() => handleSelectImportStudentListGroup(group.id)}
+                                className="flex items-center justify-between p-2 hover:bg-gray-100"
+                              >
+                                <Check
+                                  className={cn(
+                                    'mr-2 h-4 w-4',
+                                    selectedImportStudentListGroup?.id === group.id ? 'opacity-100' : 'opacity-0',
+                                  )}
+                                />
+                                <span className="flex-1 text-left">{group.name}</span>
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      )}
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="grid gap-3 py-3">
+                <Label htmlFor="excelFile">Excel File</Label>
+                <Input type="file" id="excelFile" name="excelFile" />
+              </div>
+
+              <SheetFooter>
+                <SheetClose asChild>
+                  <Button type="submit" className="mt-8">
+                    Import
+                  </Button>
+                </SheetClose>
+              </SheetFooter>
+            </form>
           </SheetContent>
         </Sheet>
       </div>

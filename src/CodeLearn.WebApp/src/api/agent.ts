@@ -77,6 +77,11 @@ const Testings = {
 const Students = {
   list: () => requests.get('users/students').then((response) => response.students),
   create: (request: RegisterStudentRequest) => requests.post(`users/students`, request),
+  importList: (request: FormData) => {
+    return axios.post('users/students/import-list', request, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
   delete: (id: string) => requests.delete(`users/students/${id}`),
 };
 
