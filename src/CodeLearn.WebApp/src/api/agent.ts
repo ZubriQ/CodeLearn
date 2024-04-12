@@ -3,6 +3,7 @@ import { LoginCredentials } from '@/features/users/models/LoginCredentials.ts';
 import { CreateMethodCodingRequest } from '@/api/exercises/CreateMethodCodingRequest.ts';
 import { CreateQuestionRequest } from '@/api/exercises/CreateQuestionRequest.ts';
 import { CreateTestingRequest } from '@/api/testings/CreateTestingRequest.ts';
+import { RegisterStudentRequest } from '@/api/users/RegisterStudentRequest.ts';
 
 axios.defaults.baseURL = 'https://localhost:5001/api/';
 
@@ -75,7 +76,7 @@ const Testings = {
 
 const Students = {
   list: () => requests.get('users/students').then((response) => response.students),
-  // create: (request: ) => requests.post(`users/students`, request),
+  create: (request: RegisterStudentRequest) => requests.post(`users/students`, request),
   delete: (id: string) => requests.delete(`users/students/${id}`),
 };
 

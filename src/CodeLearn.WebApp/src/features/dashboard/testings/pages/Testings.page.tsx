@@ -120,7 +120,7 @@ export default function TestingsPage() {
           </SheetTrigger>
           <SheetContent>
             <form onSubmit={handleOnSubmit}>
-              <SheetHeader>
+              <SheetHeader className="mb-2">
                 <SheetTitle>Start testing</SheetTitle>
                 <SheetDescription>
                   This action will initiate testing for a student group at selected date time.
