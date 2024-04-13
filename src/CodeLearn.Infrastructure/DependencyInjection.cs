@@ -4,7 +4,6 @@ using CodeLearn.Domain.StudentGroups.ValueObjects;
 using CodeLearn.Domain.Testings.ValueObjects;
 using CodeLearn.Domain.TestingSessions.ValueObjects;
 using CodeLearn.Domain.Tests.ValueObjects;
-using CodeLearn.Infrastructure.Authentication;
 using CodeLearn.Infrastructure.Services;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -57,11 +56,12 @@ public static class DependencyInjection
 
         services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         {
-            options.Password.RequiredLength = 8;
+            options.Password.RequiredLength = 3;
             options.Password.RequiredUniqueChars = 0;
             options.Password.RequireUppercase = false;
             options.Password.RequireLowercase = false;
             options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireDigit = false;
             options.User.RequireUniqueEmail = false;
         })
             .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -130,12 +130,13 @@ public static class DependencyInjection
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!)),
-                ValidateLifetime = true
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero,
             };
         })
         .AddNegotiate();
 
-        services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+        services.AddSingleton<ITokenService, TokenService>();
 
         services.ConfigureApplicationCookie(options =>
         {

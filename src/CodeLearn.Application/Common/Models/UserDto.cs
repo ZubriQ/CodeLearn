@@ -1,4 +1,4 @@
-﻿namespace CodeLearn.Application.Users;
+﻿namespace CodeLearn.Application.Common.Models;
 
 public class UserDto
 {

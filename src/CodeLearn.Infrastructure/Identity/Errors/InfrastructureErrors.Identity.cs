@@ -19,5 +19,13 @@ public static partial class InfrastructureErrors
         public static readonly Error InvalidCredentials = new(
             $"{Prefix}{nameof(InvalidCredentials)}",
             "Invalid credentials.");
+
+        public static readonly Error InvalidTokenName = new(
+            $"{Prefix}{nameof(InvalidTokenName)}",
+            "Invalid token name.");
+
+        public static readonly Error InvalidRefreshTokenOrUser = new(
+            $"{Prefix}{nameof(InvalidRefreshTokenOrUser)}",
+            "Invalid refresh token or user.");
     }
 }

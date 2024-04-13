@@ -1,4 +1,4 @@
-﻿using CodeLearn.Application.Users;
+﻿using CodeLearn.Application.Common.Models;
 
 namespace CodeLearn.Infrastructure.Identity;
 

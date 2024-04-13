@@ -5,7 +5,6 @@ import { Navigate, type RouteObject } from 'react-router-dom';
 const HomePage = lazy(() => import('@/features/home/pages/Home.page.tsx'));
 const NotFoundPage = lazy(() => import('@/features/errors/pages/404.page.tsx'));
 const SignInPage = lazy(() => import('@/features/users/pages/SignIn.page.tsx'));
-const SignUpPage = lazy(() => import('@/features/users/pages/SignUp.page.tsx'));
 // const TestingSessionPage = lazy(() => import('@/features/testing-sessions/pages/TestingSession.page.tsx'));
 
 // For Teachers & Administrator
@@ -51,14 +50,6 @@ export const routes: RouteObject[] = [
     element: (
       <Suspense>
         <SignInPage />
-      </Suspense>
-    ),
-  },
-  {
-    path: 'sign-up',
-    element: (
-      <Suspense>
-        <SignUpPage />
       </Suspense>
     ),
   },

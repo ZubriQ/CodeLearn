@@ -1,5 +1,6 @@
-﻿using CodeLearn.Application.Users;
+﻿using CodeLearn.Application.Common.Models;
 using CodeLearn.Application.Users.Commands.Login;
+using CodeLearn.Application.Users.Commands.RefreshToken;
 using CodeLearn.Application.Users.Commands.RegisterStudent;
 using CodeLearn.Contracts.Users;
 
@@ -20,5 +21,11 @@ public class UserMappingConfig : IRegister
         //        UserFullName.Create(src.FirstName, src.LastName, src.Patronymic)));
 
         config.NewConfig<LoginRequest, LoginCommand>();
+
+        config.NewConfig<TokensDto, LoginResponse>();
+
+        config.NewConfig<RefreshTokenRequest, RefreshTokenCommand>();
+
+        config.NewConfig<TokensDto, RefreshTokenResponse>();
     }
 }

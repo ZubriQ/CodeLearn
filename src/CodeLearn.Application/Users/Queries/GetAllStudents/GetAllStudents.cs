@@ -1,4 +1,5 @@
-﻿using CodeLearn.Domain.Constants;
+﻿using CodeLearn.Application.Common.Models;
+using CodeLearn.Domain.Constants;
 
 namespace CodeLearn.Application.Users.Queries.GetAllStudents;
 

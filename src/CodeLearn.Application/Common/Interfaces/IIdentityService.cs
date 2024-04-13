@@ -1,4 +1,4 @@
-﻿using CodeLearn.Application.Users;
+﻿using CodeLearn.Application.Common.Models;
 using CodeLearn.Application.Users.Commands.ImportStudentList;
 using CodeLearn.Application.Users.Commands.RegisterStudent;
 using CodeLearn.Domain.Common.Result;
@@ -25,5 +25,7 @@ public interface IIdentityService
 
     Task<Result> AddStudentUsersFromDtoAsync(ImportedStudentDto[] students, string studentGroup);
 
-    Task<(Result Result, string JwtToken)> Login(string userName, string password);
+    Task<(Result Result, TokensDto? TokensDto)> Login(string userName, string password);
+
+    Task<(Result Result, TokensDto? TokensDto)> RefreshToken(string jwtToken, string refreshToken);
 }

@@ -17,4 +17,8 @@ public class ApplicationUser : IdentityUser
     public string? UserCode { get; set; }
 
     public string TemporaryPassword { get; set; } = null!;
+
+    public string? RefreshToken { get; set; }
+
+    public DateTimeOffset RefreshTokenExpiry { get; set; }
 }

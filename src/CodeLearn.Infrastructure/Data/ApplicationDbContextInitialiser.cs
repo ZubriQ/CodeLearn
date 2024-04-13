@@ -104,7 +104,7 @@ public class ApplicationDbContextInitialiser
                 TemporaryPassword = Guid.NewGuid().ToString()[..8],
             };
 
-            var createUserResult = await _userManager.CreateAsync(adminUser, "Adm1n@example.com");
+            var createUserResult = await _userManager.CreateAsync(adminUser, "admin");
 
             if (createUserResult.Succeeded)
             {
@@ -124,11 +124,11 @@ public class ApplicationDbContextInitialiser
                 FirstName = "firstName",
                 LastName = "lastName",
                 UserName = "student",
-                Email = "Stud3nt@example.com",
                 StudentGroupName = "PIB",
+                TemporaryPassword = Guid.NewGuid().ToString()[..8],
             };
 
-            var createUserResult = await _userManager.CreateAsync(student, "Stud3nt@example.com");
+            var createUserResult = await _userManager.CreateAsync(student, "student");
 
             if (createUserResult.Succeeded)
             {

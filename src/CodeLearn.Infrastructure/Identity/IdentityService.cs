@@ -1,5 +1,5 @@
 ﻿using CodeLearn.Application.Common.Interfaces;
-using CodeLearn.Application.Users;
+using CodeLearn.Application.Common.Models;
 using CodeLearn.Application.Users.Commands.ImportStudentList;
 using CodeLearn.Application.Users.Commands.RegisterStudent;
 using CodeLearn.Domain.Common.Result;
@@ -8,6 +8,9 @@ using CodeLearn.Infrastructure.Identity.Errors;
 using Cyrillic.Convert;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace CodeLearn.Infrastructure.Identity;
 
@@ -16,19 +19,19 @@ public class IdentityService : IIdentityService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
     private readonly IAuthorizationService _authorizationService;
-    private readonly IJwtTokenGenerator _jwtTokenGenerator;
+    private readonly ITokenService _tokenService;
     private readonly Conversion _conversion;
 
     public IdentityService(
         UserManager<ApplicationUser> userManager,
         IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
         IAuthorizationService authorizationService,
-        IJwtTokenGenerator jwtTokenGenerator)
+        ITokenService jwtTokenGenerator)
     {
         _userManager = userManager;
         _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
         _authorizationService = authorizationService;
-        _jwtTokenGenerator = jwtTokenGenerator;
+        _tokenService = jwtTokenGenerator;
         _conversion = new();
     }
 
@@ -188,26 +191,59 @@ public class IdentityService : IIdentityService
         return Result.Success();
     }
 
-    public async Task<(Result Result, string JwtToken)> Login(string userName, string password)
+    public async Task<(Result Result, TokensDto? TokensDto)> Login(string userName, string password)
     {
         var user = await _userManager.FindByNameAsync(userName);
 
         if (user == null)
         {
-            return (Result.Failure(InfrastructureErrors.Identity.UserNotFoundByUserName), string.Empty);
+            return (Result.Failure(InfrastructureErrors.Identity.UserNotFoundByUserName), null);
         }
 
         var isSuccess = await _userManager.CheckPasswordAsync(user, password);
 
         if (!isSuccess)
         {
-            return (Result.Failure(InfrastructureErrors.Identity.InvalidCredentials), string.Empty);
+            return (Result.Failure(InfrastructureErrors.Identity.InvalidCredentials), null);
         }
 
         var roles = await _userManager.GetRolesAsync(user);
+        var token = _tokenService.GenerateTokenString(user.Id, userName, roles.First());
+        var refreshToken = _tokenService.GenerateRefreshTokenString();
 
-        var tokenString = _jwtTokenGenerator.GenerateTokenString(user.Id, userName, roles.FirstOrDefault()!);
+        user.RefreshToken = refreshToken;
+        user.RefreshTokenExpiry = DateTimeOffset.UtcNow.AddHours(12);
+        await _userManager.UpdateAsync(user);
 
-        return (Result.Success(), tokenString);
+        var tokensDto = new TokensDto(token, refreshToken);
+        return (Result.Success(), tokensDto);
+    }
+
+    public async Task<(Result Result, TokensDto? TokensDto)> RefreshToken(string jwtToken, string refreshToken)
+    {
+        var principal = _tokenService.GetUsernameFromToken(jwtToken);
+
+        if (principal?.Identity?.Name is null)
+        {
+            return (Result.Failure(InfrastructureErrors.Identity.InvalidTokenName), null);
+        }
+
+        var user = await _userManager.FindByNameAsync(principal.Identity.Name);
+
+        if (user is null || user.RefreshToken != refreshToken || user.RefreshTokenExpiry < DateTimeOffset.UtcNow)
+        {
+            return (Result.Failure(InfrastructureErrors.Identity.InvalidRefreshTokenOrUser), null);
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+        var token = _tokenService.GenerateTokenString(user.Id, principal.Identity.Name, roles.First());
+        var newRefreshToken = _tokenService.GenerateRefreshTokenString();
+
+        user.RefreshToken = newRefreshToken;
+        user.RefreshTokenExpiry = DateTimeOffset.UtcNow.AddHours(12);
+        await _userManager.UpdateAsync(user);
+
+        var tokensDto = new TokensDto(token, newRefreshToken);
+        return (Result.Success(), tokensDto);
     }
 }

@@ -1,12 +1,21 @@
 // DUCKS pattern
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthState } from '@/features/users/models/AuthState.ts';
+import { getRoleFromToken } from '@/lib/utils.ts';
+
+export type AuthState = {
+  isLoading: boolean;
+  token: string | undefined;
+  refreshToken: string | undefined;
+  username: string | undefined;
+  role: string | undefined;
+};
 
 const initialState: AuthState = {
-  token: undefined,
   isLoading: false,
-  email: undefined,
-  password: undefined,
+  token: undefined,
+  refreshToken: undefined,
+  username: undefined,
+  role: undefined,
 };
 
 const authSlice = createSlice({
@@ -16,17 +25,24 @@ const authSlice = createSlice({
     loginPending: (state: AuthState) => {
       state.isLoading = true;
     },
-    loginSuccess: (state: AuthState, action: PayloadAction<{ token: string; email: string; password: string }>) => {
+    loginSuccess: (
+      state: AuthState,
+      action: PayloadAction<{
+        jwtToken: string;
+        refreshToken: string;
+        username: string;
+      }>,
+    ) => {
       state.isLoading = false;
-      state.token = action.payload.token;
-      state.email = action.payload.email;
-      state.password = action.payload.password;
+      state.token = action.payload.jwtToken;
+      state.refreshToken = action.payload.refreshToken;
+      state.username = action.payload.username;
+      state.role = getRoleFromToken(action.payload.jwtToken);
     },
     loginFailure: (state: AuthState) => {
       state.isLoading = false;
       state.token = undefined;
-      state.email = undefined;
-      state.password = undefined;
+      state.username = undefined;
     },
   },
 });

@@ -4,6 +4,7 @@ import { CreateMethodCodingRequest } from '@/api/exercises/CreateMethodCodingReq
 import { CreateQuestionRequest } from '@/api/exercises/CreateQuestionRequest.ts';
 import { CreateTestingRequest } from '@/api/testings/CreateTestingRequest.ts';
 import { RegisterStudentRequest } from '@/api/users/RegisterStudentRequest.ts';
+import { LoginResponse } from '@/api/users/LoginResponse.ts';
 
 axios.defaults.baseURL = 'https://localhost:5001/api/';
 
@@ -17,8 +18,8 @@ const requests = {
 };
 
 const Auth = {
-  login: (credentials: LoginCredentials): Promise<string> => {
-    return requests.post('auth/login', credentials);
+  login: (credentials: LoginCredentials): Promise<LoginResponse> => {
+    return requests.post('users/login', credentials);
   },
 };
 

@@ -1,5 +1,6 @@
 ﻿using CodeLearn.Application.Users.Commands.ImportStudentList;
 using CodeLearn.Application.Users.Commands.Login;
+using CodeLearn.Application.Users.Commands.RefreshToken;
 using CodeLearn.Application.Users.Commands.RegisterStudent;
 using CodeLearn.Application.Users.Queries.GetAllStudents;
 using CodeLearn.Contracts.Users;
@@ -10,7 +11,7 @@ public sealed class UsersController(ISender _sender, IMapper _mapper) : ApiContr
 {
     [HttpPost]
     [Route("login")]
-    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
@@ -20,6 +21,20 @@ public sealed class UsersController(ISender _sender, IMapper _mapper) : ApiContr
         return result.Match<IActionResult>(
             Ok,
             _ => Problem(statusCode: StatusCodes.Status403Forbidden, title: "Invalid credentials"));
+    }
+
+    [HttpPost]
+    [Route("refresh-token")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+    {
+        var command = _mapper.Map<RefreshTokenCommand>(request);
+        var result = await _sender.Send(command);
+
+        return result.Match<IActionResult>(
+            tokensDto => Ok(_mapper.Map<RefreshTokenResponse>(tokensDto)),
+            _ => Problem(statusCode: StatusCodes.Status401Unauthorized, title: "Invalid token."));
     }
 
     [HttpGet("students")]

@@ -1,19 +1,21 @@
-﻿namespace CodeLearn.Application.Users.Commands.Login;
+﻿using CodeLearn.Application.Common.Models;
 
-public record LoginCommand(string Username, string Password) : IRequest<OneOf<string, Forbid>>;
+namespace CodeLearn.Application.Users.Commands.Login;
+
+public record LoginCommand(string Username, string Password) : IRequest<OneOf<TokensDto, Forbid>>;
 
 public class LoginCommandHandler(IIdentityService _identityService)
-    : IRequestHandler<LoginCommand, OneOf<string, Forbid>>
+    : IRequestHandler<LoginCommand, OneOf<TokensDto, Forbid>>
 {
-    public async Task<OneOf<string, Forbid>> Handle(LoginCommand request, CancellationToken cancellationToken)
+    public async Task<OneOf<TokensDto, Forbid>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        (var result, var jwt) = await _identityService.Login(request.Username, request.Password);
+        (var result, var tokensDto) = await _identityService.Login(request.Username, request.Password);
 
         if (result.IsFailure)
         {
             return new Forbid();
         }
 
-        return jwt!;
+        return tokensDto!;
     }
 }
