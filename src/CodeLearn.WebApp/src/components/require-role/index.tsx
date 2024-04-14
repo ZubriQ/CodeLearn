@@ -16,7 +16,7 @@ function RequireRole({ children, allowedRoles }: RequireRoleProps) {
     return <Navigate to="/sign-in" state={{ from: location }} replace />;
   }
 
-  if (!allowedRoles.includes(role)) {
+  if (role && !allowedRoles.includes(role)) {
     // Redirect to the unauthorized or home page if they are not allowed
     return <Navigate to="/" replace />;
   }
