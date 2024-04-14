@@ -8,9 +8,6 @@ using CodeLearn.Infrastructure.Identity.Errors;
 using Cyrillic.Convert;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace CodeLearn.Infrastructure.Identity;
 

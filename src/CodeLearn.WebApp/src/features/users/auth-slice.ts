@@ -4,6 +4,7 @@ import { getRoleFromToken } from '@/lib/utils.ts';
 
 export type AuthState = {
   isLoading: boolean;
+  isAuthenticated: boolean;
   token: string | undefined;
   refreshToken: string | undefined;
   username: string | undefined;
@@ -12,6 +13,7 @@ export type AuthState = {
 
 const initialState: AuthState = {
   isLoading: false,
+  isAuthenticated: false,
   token: undefined,
   refreshToken: undefined,
   username: undefined,
@@ -24,6 +26,7 @@ const authSlice = createSlice({
   reducers: {
     loginPending: (state: AuthState) => {
       state.isLoading = true;
+      state.isAuthenticated = false;
     },
     loginSuccess: (
       state: AuthState,
@@ -38,14 +41,24 @@ const authSlice = createSlice({
       state.refreshToken = action.payload.refreshToken;
       state.username = action.payload.username;
       state.role = getRoleFromToken(action.payload.jwtToken);
+      state.isAuthenticated = true;
     },
     loginFailure: (state: AuthState) => {
       state.isLoading = false;
       state.token = undefined;
       state.username = undefined;
+      state.isAuthenticated = false;
+    },
+    logout: (state) => {
+      state.isLoading = false;
+      state.isAuthenticated = false;
+      state.token = undefined;
+      state.refreshToken = undefined;
+      state.username = undefined;
+      state.role = undefined;
     },
   },
 });
 
-export const { loginPending, loginSuccess, loginFailure } = authSlice.actions;
+export const { loginPending, loginSuccess, loginFailure, logout } = authSlice.actions;
 export default authSlice.reducer;

@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import agent from '@/api/agent.ts';
 import { loginPending, loginSuccess, loginFailure } from '@/features/users/auth-slice.ts';
 import { useAppDispatch } from '@/app/hooks.ts';
-import { useSelector } from 'react-redux';
 import { getRoleFromToken } from '@/lib/utils.ts';
 import { ROLES } from '@/constants/roles.ts';
 

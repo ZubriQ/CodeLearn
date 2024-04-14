@@ -99,16 +99,17 @@ export default function TestingsPage() {
       durationInMinutes: duration,
     };
 
-    try {
-      await agent.Testings.create(createTestingRequest);
-      location.reload();
-    } catch (error) {
-      toast({
-        title: 'Error creating testing',
-        description: error.message || 'An unexpected error occurred.',
-        variant: 'destructive',
+    agent.Testings.create(createTestingRequest)
+      .then(() => {
+        location.reload();
+      })
+      .catch((error) => {
+        toast({
+          title: 'Error creating testing',
+          description: error.message || 'An unexpected error occurred.',
+          variant: 'destructive',
+        });
       });
-    }
   };
 
   return (
@@ -116,7 +117,7 @@ export default function TestingsPage() {
       <div>
         <Sheet>
           <SheetTrigger asChild>
-            <Button className="mb-6">Assign testing to a student group</Button>
+            <Button className="mb-6">Schedule testing</Button>
           </SheetTrigger>
           <SheetContent>
             <form onSubmit={handleOnSubmit}>

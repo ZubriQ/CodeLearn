@@ -25,7 +25,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command';
 import { Card } from '@/components/ui/card.tsx';
 import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { difficulties } from '@/features/dashboard/tests/pages/Difficulties.ts';
+import { difficulties } from '@/features/dashboard/tests/enums/Difficulties.ts';
 import { ExerciseTopic } from '@/features/dashboard/tests/models/ExerciseTopic.ts';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 

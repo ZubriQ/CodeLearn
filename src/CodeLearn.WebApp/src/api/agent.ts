@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { LoginCredentials } from '@/features/users/models/LoginCredentials.ts';
+import { LoginRequest } from '@/api/users/LoginRequest.ts';
 import { CreateMethodCodingRequest } from '@/api/exercises/CreateMethodCodingRequest.ts';
 import { CreateQuestionRequest } from '@/api/exercises/CreateQuestionRequest.ts';
 import { CreateTestingRequest } from '@/api/testings/CreateTestingRequest.ts';
@@ -18,7 +18,7 @@ const requests = {
 };
 
 const Auth = {
-  login: (credentials: LoginCredentials): Promise<LoginResponse> => {
+  login: (credentials: LoginRequest): Promise<LoginResponse> => {
     return requests.post('users/login', credentials);
   },
 };

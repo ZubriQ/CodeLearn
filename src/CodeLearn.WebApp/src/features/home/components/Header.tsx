@@ -2,14 +2,15 @@ import { useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import { Bars2Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
-
-const navigation = [
-  { name: 'Tests', href: 'all-tests' },
-  { name: 'About', href: 'about' },
-];
+import { useSelector } from 'react-redux';
+import { ROLES } from '@/constants/roles.ts';
+import { RootState } from '@/app/store.ts';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const userRole = useSelector((state: RootState) => state.auth.role);
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
@@ -34,17 +35,20 @@ export default function Header() {
             <Bars2Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <div className="hidden md:flex md:gap-x-12">
-          {navigation.map((item) => (
-            <Link key={item.name} to={item.href} className="text-sm font-semibold leading-6 text-gray-900">
-              {item.name}
-            </Link>
-          ))}
-        </div>
         <div className="hidden md:flex md:flex-1 md:justify-end">
-          <Link to="sign-in" className="text-sm font-semibold leading-6 text-gray-900">
-            Sign in <span aria-hidden="true">&rarr;</span>
-          </Link>
+          {!isAuthenticated ? (
+            <Link to="sign-in" className="text-sm font-semibold leading-6 text-gray-900">
+              Sign in <span aria-hidden="true">&rarr;</span>
+            </Link>
+          ) : userRole === ROLES.STUDENT ? (
+            <Link to="curriculum" className="text-sm font-semibold leading-6 text-gray-900">
+              Curriculum <span aria-hidden="true">&rarr;</span>
+            </Link>
+          ) : (
+            <Link to="dashboard" className="text-sm font-semibold leading-6 text-gray-900">
+              Dashboard <span aria-hidden="true">&rarr;</span>
+            </Link>
+          )}
         </div>
       </nav>
 
@@ -67,24 +71,29 @@ export default function Header() {
           </div>
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
               <div className="py-6">
-                <Link
-                  to="sign-in"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Sign in
-                </Link>
+                {!isAuthenticated ? (
+                  <Link
+                    to="sign-in"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Sign in
+                  </Link>
+                ) : userRole === ROLES.STUDENT ? (
+                  <Link
+                    to="curriculum"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Curriculum
+                  </Link>
+                ) : (
+                  <Link
+                    to="dashboard"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Dashboard
+                  </Link>
+                )}
               </div>
             </div>
           </div>

@@ -1,10 +1,14 @@
 import { lazy, Suspense } from 'react';
 import { Navigate, type RouteObject } from 'react-router-dom';
+import RequireRole from '@/components/require-role';
+import { ROLES } from '@/constants/roles.ts';
+import Loading from '@/components/loading';
 
 // For Landing & etc.
 const HomePage = lazy(() => import('@/features/home/pages/Home.page.tsx'));
 const NotFoundPage = lazy(() => import('@/features/errors/pages/404.page.tsx'));
 const SignInPage = lazy(() => import('@/features/users/pages/SignIn.page.tsx'));
+const SignOutPage = lazy(() => import('@/features/users/pages/SignOut.page.tsx'));
 // const TestingSessionPage = lazy(() => import('@/features/testing-sessions/pages/TestingSession.page.tsx'));
 
 // For Teachers & Administrator
@@ -54,10 +58,20 @@ export const routes: RouteObject[] = [
     ),
   },
   {
-    path: 'dashboard',
+    path: 'sign-out',
     element: (
       <Suspense>
-        <DashboardLayout />
+        <SignOutPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: 'dashboard',
+    element: (
+      <Suspense fallback={<Loading />}>
+        <RequireRole allowedRoles={[ROLES.TEACHER, ROLES.ADMIN]}>
+          <DashboardLayout />
+        </RequireRole>
       </Suspense>
     ),
     children: [
@@ -142,8 +156,10 @@ export const routes: RouteObject[] = [
   {
     path: 'curriculum',
     element: (
-      <Suspense>
-        <CurriculumLayout />
+      <Suspense fallback={<Loading />}>
+        <RequireRole allowedRoles={[ROLES.STUDENT]}>
+          <CurriculumLayout />
+        </RequireRole>
       </Suspense>
     ),
     children: [

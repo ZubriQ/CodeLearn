@@ -21,11 +21,11 @@ import { Textarea } from '@/components/ui/textarea.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Card } from '@/components/ui/card.tsx';
 import { toast } from '@/components/ui/use-toast.ts';
-import { difficulties } from '@/features/dashboard/tests/pages/Difficulties.ts';
+import { difficulties } from '@/features/dashboard/tests/enums/Difficulties.ts';
 import { DataType } from '@/features/dashboard/tests/models/DataType.ts';
 import { ExerciseTopic } from '@/features/dashboard/tests/models/ExerciseTopic.ts';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
-import { decorations } from '@/features/dashboard/tests/pages/Decorations.ts';
+import { decorations } from '@/features/dashboard/tests/enums/Decorations.ts';
 import Combobox from '@/components/ui/combobox.tsx';
 
 const methodParameterSchema = z.object({

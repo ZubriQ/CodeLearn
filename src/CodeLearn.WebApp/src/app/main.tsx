@@ -1,4 +1,3 @@
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import '@/styles/tailwind.css';
@@ -27,8 +26,4 @@ const router = createBrowserRouter([
   },
 ]);
 
-root.render(
-  <StrictMode>
-    <RouterProvider router={router} fallbackElement={<Loading />} />
-  </StrictMode>,
-);
+root.render(<RouterProvider router={router} fallbackElement={<Loading />} />);

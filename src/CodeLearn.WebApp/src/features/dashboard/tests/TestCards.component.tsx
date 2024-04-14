@@ -20,16 +20,13 @@ function TestCards(props: TestCardsProps) {
   }
 
   return (
-    <ul className="mx-auto grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+    <ul className="mx-auto grid min-w-80 grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
       {props.tests.map((test) => {
         const handleCardClick = () => navigate(`/dashboard/tests/${test.id}`);
 
         return (
           <li key={test.id}>
-            <Card
-              className="min-w-80 cursor-pointer transition-colors duration-500 hover:bg-zinc-100"
-              onClick={handleCardClick}
-            >
+            <Card className="cursor-pointer transition-colors duration-500 hover:bg-zinc-100" onClick={handleCardClick}>
               <CardHeader>
                 <CardTitle>{test.title}</CardTitle>
                 <CardDescription>{test.description}</CardDescription>
