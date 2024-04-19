@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react';
 import { Navigate, type RouteObject } from 'react-router-dom';
 import RequireRole from '@/components/require-role';
 import { ROLES } from '@/constants/roles.ts';
-import Loading from '@/components/loading';
 
 // For Landing & etc.
 const HomePage = lazy(() => import('@/features/home/pages/Home.page.tsx'));
@@ -68,7 +67,7 @@ export const routes: RouteObject[] = [
   {
     path: 'dashboard',
     element: (
-      <Suspense fallback={<Loading />}>
+      <Suspense>
         <RequireRole allowedRoles={[ROLES.TEACHER, ROLES.ADMIN]}>
           <DashboardLayout />
         </RequireRole>
@@ -156,7 +155,7 @@ export const routes: RouteObject[] = [
   {
     path: 'curriculum',
     element: (
-      <Suspense fallback={<Loading />}>
+      <Suspense>
         <RequireRole allowedRoles={[ROLES.STUDENT]}>
           <CurriculumLayout />
         </RequireRole>
