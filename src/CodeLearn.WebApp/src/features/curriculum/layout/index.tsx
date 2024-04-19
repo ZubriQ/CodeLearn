@@ -8,12 +8,12 @@ const sections: SideMenuLinkGroup[] = [
     title: 'Testings',
     links: [
       { name: 'Testing list', href: '/curriculum/testings', id: 1 },
-      { name: 'Testing Sessions', href: '/curriculum/testing-sessions', id: 2 },
+      { name: 'Testing sessions', href: '/curriculum/testing-sessions', id: 2 },
     ],
   },
   {
     id: 2,
-    links: [{ name: 'Sign out', href: '/sign-out', id: 5, icon: <ArrowLeftStartOnRectangleIcon /> }],
+    links: [{ name: 'Sign out', href: '/sign-out', id: 3, icon: <ArrowLeftStartOnRectangleIcon /> }],
   },
 ];
 

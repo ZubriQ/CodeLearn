@@ -102,7 +102,7 @@ const Students = {
 };
 
 const TestingSessions = {
-  create: (request) => requests.post(`testing-sessions`, request),
+  create: (request: { testingId: number }) => requests.post(`testing-sessions`, request),
   getById: (id: number) => requests.get(`testing-sessions/${id}`),
 };
 
