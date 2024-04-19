@@ -1,4 +1,5 @@
 ﻿using CodeLearn.Application.Testings.Commands.CreateTesting;
+using CodeLearn.Application.Testings.Queries.GetAllMyTestings;
 using CodeLearn.Application.Testings.Queries.GetAllTestings;
 using CodeLearn.Contracts.Testings;
 
@@ -14,6 +15,23 @@ public sealed class TestingsController(ISender _sender, IMapper _mapper) : ApiCo
         var mappedData = response.Select(_mapper.Map<TestingResponse>).ToArray();
 
         return Ok(new TestingResponseCollection(mappedData));
+    }
+
+    [HttpGet("personal")]
+    [ProducesResponseType(typeof(TestingResponseCollection), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAllPersonal()
+    {
+        var username = User.Identity!.Name;
+        if (string.IsNullOrEmpty(username))
+        {
+            return Unauthorized();
+        }
+
+        var response = await _sender.Send(new GetAllTestingsByUsernameQuery(username!));
+
+        return response.Match(
+            testings => Ok(testings.Select(_mapper.Map<TestingResponse>)),
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Student group not found."));
     }
 
     [HttpPost]

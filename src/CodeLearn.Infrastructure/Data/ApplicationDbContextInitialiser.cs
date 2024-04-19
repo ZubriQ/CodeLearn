@@ -70,6 +70,7 @@ public class ApplicationDbContextInitialiser
         await SeedExerciseTopics();
         await EnsureAdministratorExists();
         await EnsureTestStudentExistExists();
+        await EnsureTestTeacherExistExists();
     }
 
     private async Task SeedDefaultRoles()
@@ -133,6 +134,29 @@ public class ApplicationDbContextInitialiser
             if (createUserResult.Succeeded)
             {
                 await _userManager.AddToRoleAsync(student, Roles.Student);
+            }
+        }
+    }
+
+    private async Task EnsureTestTeacherExistExists()
+    {
+        var studentUsers = await _userManager.GetUsersInRoleAsync(Roles.Teacher);
+
+        if (!studentUsers.Any())
+        {
+            var teacher = new ApplicationUser
+            {
+                FirstName = "firstName",
+                LastName = "lastName",
+                UserName = "teacher",
+                TemporaryPassword = Guid.NewGuid().ToString()[..8],
+            };
+
+            var createUserResult = await _userManager.CreateAsync(teacher, "teacher");
+
+            if (createUserResult.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(teacher, Roles.Teacher);
             }
         }
     }

@@ -243,4 +243,11 @@ public class IdentityService : IIdentityService
         var tokensDto = new TokensDto(token, newRefreshToken);
         return (Result.Success(), tokensDto);
     }
+
+    public async Task<string?> GetStudentGroupNameByUsernameAsync(string userName)
+    {
+        var user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == userName);
+
+        return user?.StudentGroupName;
+    }
 }

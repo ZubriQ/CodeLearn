@@ -28,4 +28,6 @@ public interface IIdentityService
     Task<(Result Result, TokensDto? TokensDto)> Login(string userName, string password);
 
     Task<(Result Result, TokensDto? TokensDto)> RefreshToken(string jwtToken, string refreshToken);
+
+    Task<string?> GetStudentGroupNameByUsernameAsync(string userName);
 }
