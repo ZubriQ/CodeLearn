@@ -17,9 +17,10 @@ public sealed class TestingsController(ISender _sender, IMapper _mapper) : ApiCo
         return Ok(new TestingResponseCollection(mappedData));
     }
 
-    [HttpGet("personal")]
+    [HttpGet("for-student")]
     [ProducesResponseType(typeof(TestingResponseCollection), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAllPersonal()
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllForStudent()
     {
         var username = User.Identity!.Name;
         if (string.IsNullOrEmpty(username))
@@ -27,10 +28,14 @@ public sealed class TestingsController(ISender _sender, IMapper _mapper) : ApiCo
             return Unauthorized();
         }
 
-        var response = await _sender.Send(new GetAllTestingsByUsernameQuery(username!));
+        var response = await _sender.Send(new GetAllTestingsByUsernameQuery(username));
 
         return response.Match(
-            testings => Ok(testings.Select(_mapper.Map<TestingResponse>)),
+            testingDtos =>
+            {
+                var mappedData = testingDtos.Select(_mapper.Map<TestingResponse>).ToArray();
+                return Ok(new TestingResponseCollection(mappedData));
+            },
             _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Student group not found."));
     }
 

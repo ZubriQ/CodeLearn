@@ -5,8 +5,22 @@ import { CreateQuestionRequest } from '@/api/exercises/CreateQuestionRequest.ts'
 import { CreateTestingRequest } from '@/api/testings/CreateTestingRequest.ts';
 import { RegisterStudentRequest } from '@/api/users/RegisterStudentRequest.ts';
 import { LoginResponse } from '@/api/users/LoginResponse.ts';
+import { store } from '@/app/store.ts';
 
 axios.defaults.baseURL = 'https://localhost:5001/api/';
+
+axios.interceptors.request.use(
+  (config) => {
+    const token = store.getState().auth.token;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
 
 const responseBody = (response: AxiosResponse) => response.data;
 
@@ -71,6 +85,7 @@ const DataTypes = {
 
 const Testings = {
   list: () => requests.get('testings').then((response) => response.testings),
+  listForStudent: () => requests.get('testings/for-student').then((response) => response.testings),
   create: (request: CreateTestingRequest) => requests.post(`testings`, request),
   delete: (id: number) => requests.delete(`testings/${id}`),
 };
@@ -84,6 +99,11 @@ const Students = {
     });
   },
   delete: (id: string) => requests.delete(`users/students/${id}`),
+};
+
+const TestingSessions = {
+  create: (request) => requests.post(`testing-sessions`, request),
+  getById: (id: number) => requests.get(`testing-sessions/${id}`),
 };
 
 // const TestErrors = {
@@ -103,6 +123,7 @@ const agent = {
   DataTypes,
   Testings,
   Students,
+  TestingSessions,
   // TestErrors,
 };
 

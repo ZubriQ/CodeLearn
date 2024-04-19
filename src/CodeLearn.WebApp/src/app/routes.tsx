@@ -26,7 +26,7 @@ const TestingsPage = lazy(() => import('@/features/dashboard/testings/pages/Test
 
 // For Students
 const CurriculumLayout = lazy(() => import('@/features/curriculum/layout'));
-const StudentTestsPage = lazy(() => import('@/features/curriculum/pages/Tests.page.tsx'));
+const StudentTestingsPage = lazy(() => import('@/features/curriculum/pages/Testings.page.tsx'));
 
 // Students are tested on this page
 const TestingSessionPage = lazy(() => import('@/features/testing-session/pages/TestingSession.page.tsx'));
@@ -164,13 +164,13 @@ export const routes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <Navigate to="tests" />,
+        element: <Navigate to="testings" />,
       },
       {
-        path: 'tests',
+        path: 'testings',
         element: (
           <Suspense>
-            <StudentTestsPage />
+            <StudentTestingsPage />
           </Suspense>
         ),
       },
