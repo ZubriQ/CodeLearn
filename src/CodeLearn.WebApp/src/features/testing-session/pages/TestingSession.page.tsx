@@ -37,6 +37,15 @@ export default function TestingSessionPage() {
 
         const test = await agent.Tests.getByIdWithExerciseIds(testing.testId);
         setTest(test);
+
+        // Setup first exercise
+        if (test.methodCodingExercises.length > 0) {
+          const firstMethodCodingExercise = await agent.Exercises.getMethodCodingById(test.methodCodingExercises[0]);
+          setCurrentExercise(firstMethodCodingExercise);
+        } else if (test.questionExercises.length > 0) {
+          const firstQuestionExercise = await agent.Exercises.getQuestionById(test.questionExercises[0]);
+          setCurrentExercise(firstQuestionExercise);
+        }
       } catch (error) {
         toast({
           title: 'Error fetching data',
@@ -52,6 +61,7 @@ export default function TestingSessionPage() {
   console.log(testingSession);
   console.log(testing);
   console.log(test);
+  console.log(currentExercise);
 
   return (
     <div className="flex h-screen flex-col bg-zinc-50 p-4">

@@ -74,7 +74,8 @@ const Exercises = {
     requests.post(`tests/${testId}/question-exercises`, request),
   createMethodCoding: (testId: number, request: CreateMethodCodingRequest) =>
     requests.post(`tests/${testId}/method-coding-exercises`, request),
-  getMethodCodingById: (id: number) => requests.get(`testings/${id}`),
+  getMethodCodingById: (id: number) => requests.get(`exercises/method-coding/${id}`),
+  getQuestionById: (id: number) => requests.get(`exercises/question/${id}`),
 };
 
 const ExerciseTopics = {
