@@ -1,10 +1,10 @@
-﻿using CodeLearn.Application.Exercises.Commands.CreateMethodCodingExercise;
+﻿using CodeLearn.Application.Exercises.MethodCodingExercises.Commands.CreateMethodCodingExercise;
 using CodeLearn.Contracts.Exercises.MethodCoding;
 using CodeLearn.Domain.Exercises;
 
 namespace CodeLearn.Api.Common.Mapping;
 
-public class CodingMethodExerciseMappingConfig : IRegister
+public class MethodCodingExerciseMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
@@ -16,6 +16,7 @@ public class CodingMethodExerciseMappingConfig : IRegister
             .Map(dest => dest.Id, src => src.Id.Value);
 
         config.NewConfig<MethodCodingExercise, StudentMethodCodingExerciseResponse>()
+            .Map(dest => dest.TestId, src => src.TestId.Value)
             .Map(dest => dest.Id, src => src.Id.Value);
     }
 }

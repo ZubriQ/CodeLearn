@@ -6,7 +6,7 @@ using CodeLearn.Domain.ExerciseTopics.ValueObjects;
 using CodeLearn.Domain.Tests.ValueObjects;
 using FluentValidation.Results;
 
-namespace CodeLearn.Application.Exercises.Commands.CreateMethodCodingExercise;
+namespace CodeLearn.Application.Exercises.MethodCodingExercises.Commands.CreateMethodCodingExercise;
 
 public record ExerciseNoteModel(string Entry, string Decoration);
 

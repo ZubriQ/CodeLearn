@@ -1,7 +1,7 @@
 ﻿using CodeLearn.Domain.Exercises;
 using CodeLearn.Domain.Tests.ValueObjects;
 
-namespace CodeLearn.Application.Exercises.Queries.GetAllQuestionExercisesByTestId;
+namespace CodeLearn.Application.Exercises.QuestionExercises.Queries.GetAllQuestionExercisesByTestId;
 
 public record GetAllQuestionExercisesByTestIdQuery(int TestId) : IRequest<OneOf<QuestionExercise[], NotFound, BadRequest>>;
 

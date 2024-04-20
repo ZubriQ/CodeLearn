@@ -1,27 +1,27 @@
 ﻿using CodeLearn.Domain.Exercises;
 using CodeLearn.Domain.Exercises.Enums;
+using CodeLearn.Domain.ExerciseTopics.ValueObjects;
 using CodeLearn.Domain.QuestionChoices;
 using CodeLearn.Domain.Tests.ValueObjects;
 using FluentValidation.Results;
 
-namespace CodeLearn.Application.Exercises.Commands.CreateQuestionExercise;
-
-public record AnswerDto(string Text, bool IsCorrect);
+namespace CodeLearn.Application.Exercises.QuestionExercises.Commands.CreateQuestionExercise;
 
 public record CreateQuestionExerciseCommand(
     int TestId,
     string Title,
     string Description,
     string Difficulty,
+    int[] ExerciseTopics,
     List<AnswerDto> Answers)
-    : IRequest<OneOf<int, ValidationFailed>>;
+    : IRequest<OneOf<int, ValidationFailed, NotFound>>;
 
 public class CreateQuestionExerciseCommandHandler(
     IApplicationDbContext _context,
     IValidator<CreateQuestionExerciseCommand> _validator)
-    : IRequestHandler<CreateQuestionExerciseCommand, OneOf<int, ValidationFailed>>
+    : IRequestHandler<CreateQuestionExerciseCommand, OneOf<int, ValidationFailed, NotFound>>
 {
-    public async Task<OneOf<int, ValidationFailed>> Handle(CreateQuestionExerciseCommand request, CancellationToken cancellationToken)
+    public async Task<OneOf<int, ValidationFailed, NotFound>> Handle(CreateQuestionExerciseCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
@@ -42,9 +42,24 @@ public class CreateQuestionExerciseCommandHandler(
             request.Title,
             request.Description,
             difficultyEnum,
-            true); // TODO: handle multiple answers
+            false);
 
         AddQuestionChoicesToExercise(request, questionExercise);
+
+        questionExercise.DetermineMultipleAnswers();
+
+        foreach (var topicId in request.ExerciseTopics) // Add Topics
+        {
+            var topic = await _context.ExerciseTopics
+                .FirstOrDefaultAsync(x => x.Id == ExerciseTopicId.Create(topicId), cancellationToken);
+
+            if (topic is null)
+            {
+                return new NotFound();
+            }
+
+            questionExercise.AddTopic(topic);
+        }
 
         _context.QuestionExercises.Add(questionExercise);
 

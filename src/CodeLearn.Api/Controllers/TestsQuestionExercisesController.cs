@@ -1,5 +1,5 @@
-﻿using CodeLearn.Application.Exercises.Commands.CreateQuestionExercise;
-using CodeLearn.Application.Exercises.Queries.GetAllQuestionExercisesByTestId;
+﻿using CodeLearn.Application.Exercises.QuestionExercises.Commands.CreateQuestionExercise;
+using CodeLearn.Application.Exercises.QuestionExercises.Queries.GetAllQuestionExercisesByTestId;
 using CodeLearn.Contracts.Exercises.Question;
 using CodeLearn.Domain.Constants;
 using System.Security.Claims;
@@ -49,6 +49,7 @@ public sealed class TestsQuestionExercisesController(ISender _sender, IMapper _m
 
         return result.Match(
             id => CreatedAtAction(nameof(Create), new { id }, id),
-            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."));
+            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."),
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Exercise topic not found."));
     }
 }

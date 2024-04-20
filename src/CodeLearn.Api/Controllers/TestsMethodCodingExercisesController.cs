@@ -1,5 +1,5 @@
-﻿using CodeLearn.Application.Exercises.Commands.CreateMethodCodingExercise;
-using CodeLearn.Application.Exercises.Queries.GetAllMethodCodingExercisesByTestId;
+﻿using CodeLearn.Application.Exercises.MethodCodingExercises.Commands.CreateMethodCodingExercise;
+using CodeLearn.Application.Exercises.MethodCodingExercises.Queries.GetAllMethodCodingExercisesByTestId;
 using CodeLearn.Contracts.Exercises.MethodCoding;
 using CodeLearn.Domain.Constants;
 using System.Security.Claims;

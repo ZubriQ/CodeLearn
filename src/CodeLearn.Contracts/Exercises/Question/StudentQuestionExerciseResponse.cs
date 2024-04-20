@@ -1,4 +1,6 @@
-﻿namespace CodeLearn.Contracts.Exercises.Question;
+﻿using CodeLearn.Contracts.Exercises.MethodCoding.Dto;
+
+namespace CodeLearn.Contracts.Exercises.Question;
 
 public record StudentQuestionChoiceResponseDto(
     int Id,
@@ -11,4 +13,5 @@ public record StudentQuestionExerciseResponse(
     string Description,
     string Difficulty,
     bool IsMultipleAnswers,
+    ExerciseTopicResponseDto[] ExerciseTopics,
     StudentQuestionChoiceResponseDto[] QuestionChoices);

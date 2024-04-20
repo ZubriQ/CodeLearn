@@ -37,4 +37,10 @@ public sealed class QuestionExercise : Exercise
     {
         _questionChoices.Add(questionChoice);
     }
+
+    public void DetermineMultipleAnswers()
+    {
+        int correctAnswersCount = _questionChoices.Count(choice => choice.IsCorrect);
+        IsMultipleAnswers = correctAnswersCount > 1;
+    }
 }

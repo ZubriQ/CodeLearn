@@ -1,4 +1,4 @@
-﻿using CodeLearn.Application.Exercises.Commands.CreateQuestionExercise;
+﻿using CodeLearn.Application.Exercises.QuestionExercises.Commands.CreateQuestionExercise;
 using CodeLearn.Contracts.Exercises.Question;
 using CodeLearn.Domain.Exercises;
 

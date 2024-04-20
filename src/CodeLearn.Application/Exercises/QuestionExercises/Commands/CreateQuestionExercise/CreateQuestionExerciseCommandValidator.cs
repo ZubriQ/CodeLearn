@@ -1,4 +1,4 @@
-﻿namespace CodeLearn.Application.Exercises.Commands.CreateQuestionExercise;
+﻿namespace CodeLearn.Application.Exercises.QuestionExercises.Commands.CreateQuestionExercise;
 
 public class CreateQuestionExerciseCommandValidator : AbstractValidator<CreateQuestionExerciseCommand>
 {

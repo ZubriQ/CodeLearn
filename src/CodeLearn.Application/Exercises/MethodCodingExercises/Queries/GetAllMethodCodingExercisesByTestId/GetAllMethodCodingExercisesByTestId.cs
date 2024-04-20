@@ -1,7 +1,7 @@
 ﻿using CodeLearn.Domain.Exercises;
 using CodeLearn.Domain.Tests.ValueObjects;
 
-namespace CodeLearn.Application.Exercises.Queries.GetAllMethodCodingExercisesByTestId;
+namespace CodeLearn.Application.Exercises.MethodCodingExercises.Queries.GetAllMethodCodingExercisesByTestId;
 
 public record GetAllMethodCodingExercisesByTestIdQuery(int TestId) : IRequest<OneOf<MethodCodingExercise[], NotFound, BadRequest>>;
 

@@ -1,4 +1,4 @@
-﻿namespace CodeLearn.Application.Exercises.Commands.CreateMethodCodingExercise;
+﻿namespace CodeLearn.Application.Exercises.MethodCodingExercises.Commands.CreateMethodCodingExercise;
 
 public class CreateMethodCodingExerciseCommandValidator : AbstractValidator<CreateMethodCodingExerciseCommand>
 {
