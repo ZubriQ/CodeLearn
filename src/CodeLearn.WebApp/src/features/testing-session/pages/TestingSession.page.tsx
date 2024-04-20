@@ -1,11 +1,58 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, RotateCw } from 'lucide-react';
+import { CodeBracketIcon, CommandLineIcon } from '@heroicons/react/24/outline';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
-import { CodeBracketIcon, CommandLineIcon } from '@heroicons/react/24/outline';
 import { Button } from '@/components/ui/button.tsx';
-import { ChevronLeft, ChevronRight, RotateCw } from 'lucide-react';
 import { Badge } from '@/components/ui/badge.tsx';
+import { TestingSession } from '@/features/dashboard/testing-sessions/TestingSession.ts';
+import { QuestionExercise } from '@/features/testing-session/models/QuestionExercise.ts';
+import { MethodCodingExercise } from '@/features/testing-session/models/MethodCodingExercise.ts';
+import agent from '@/api/agent.ts';
+import { toast } from '@/components/ui/use-toast.ts';
 
 export default function TestingSessionPage() {
+  const { id } = useParams<{ id?: string }>();
+
+  const [testingSession, setTestingSession] = useState<TestingSession>();
+  const [testing, setTesting] = useState();
+  const [test, setTest] = useState();
+  const [currentExercise, setCurrentExercise] = useState<QuestionExercise | MethodCodingExercise | undefined>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const testId = parseInt(id!, 10);
+
+        if (!id) {
+          return;
+        }
+
+        const testingSession = await agent.TestingSessions.getById(testId);
+        setTestingSession(testingSession);
+
+        const testing = await agent.Testings.getById(testingSession.testingId);
+        setTesting(testing);
+
+        const test = await agent.Tests.getByIdWithExerciseIds(testing.testId);
+        setTest(test);
+      } catch (error) {
+        toast({
+          title: 'Error fetching data',
+          description: error.message || 'An unexpected error occurred.',
+          variant: 'destructive',
+        });
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+  console.log(testingSession);
+  console.log(testing);
+  console.log(test);
+
   return (
     <div className="flex h-screen flex-col bg-zinc-50 p-4">
       <div className="mb-4">

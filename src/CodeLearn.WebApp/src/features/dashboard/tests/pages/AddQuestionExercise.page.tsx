@@ -26,7 +26,7 @@ import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@
 import { Card } from '@/components/ui/card.tsx';
 import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { difficulties } from '@/features/dashboard/tests/enums/Difficulties.ts';
-import { ExerciseTopic } from '@/features/dashboard/tests/models/ExerciseTopic.ts';
+import { ExerciseTopic } from '@/features/testing-session/models/ExerciseTopic.ts';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 
 const answerSchema = z.object({

@@ -1,12 +1,25 @@
 ﻿using CodeLearn.Application.Testings.Commands.CreateTesting;
 using CodeLearn.Application.Testings.Queries.GetAllMyTestings;
 using CodeLearn.Application.Testings.Queries.GetAllTestings;
+using CodeLearn.Application.Testings.Queries.GetTestingById;
 using CodeLearn.Contracts.Testings;
 
 namespace CodeLearn.Api.Controllers;
 
 public sealed class TestingsController(ISender _sender, IMapper _mapper) : ApiControllerBase
 {
+    [HttpGet("{testingId:int}")]
+    [ProducesResponseType(typeof(TestingResponseForTestingSession), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetById(int testingId)
+    {
+        var result = await _sender.Send(new GetTestingByIdQuery(testingId));
+
+        return result.Match(
+            testing => Ok(_mapper.Map<TestingResponseForTestingSession>(testing)),
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Testing not found."));
+    }
+
     [HttpGet]
     [ProducesResponseType(typeof(TestingResponseCollection), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()

@@ -56,6 +56,7 @@ const Tests = {
   list: () => requests.get('tests').then((response) => response.tests),
   getById: (id: number) => requests.get(`tests/${id}`),
   getByIdWithExercises: (id: number) => requests.get(`tests/${id}/with-exercises`),
+  getByIdWithExerciseIds: (id: number) => requests.get(`tests/${id}/with-exercise-ids`),
   create: (request: { title: string; description: string }) => requests.post(`tests`, request),
   update: (
     id: number,
@@ -73,6 +74,7 @@ const Exercises = {
     requests.post(`tests/${testId}/question-exercises`, request),
   createMethodCoding: (testId: number, request: CreateMethodCodingRequest) =>
     requests.post(`tests/${testId}/method-coding-exercises`, request),
+  getMethodCodingById: (id: number) => requests.get(`testings/${id}`),
 };
 
 const ExerciseTopics = {
@@ -84,6 +86,7 @@ const DataTypes = {
 };
 
 const Testings = {
+  getById: (id: number) => requests.get(`testings/${id}`),
   list: () => requests.get('testings').then((response) => response.testings),
   listForStudent: () => requests.get('testings/for-student').then((response) => response.testings),
   create: (request: CreateTestingRequest) => requests.post(`testings`, request),
@@ -93,12 +96,12 @@ const Testings = {
 const Students = {
   list: () => requests.get('users/students').then((response) => response.students),
   create: (request: RegisterStudentRequest) => requests.post(`users/students`, request),
+  delete: (id: string) => requests.delete(`users/students/${id}`),
   importList: (request: FormData) => {
     return axios.post('users/students/import-list', request, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   },
-  delete: (id: string) => requests.delete(`users/students/${id}`),
 };
 
 const TestingSessions = {

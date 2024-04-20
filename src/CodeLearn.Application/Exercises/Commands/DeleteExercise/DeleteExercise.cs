@@ -1,6 +1,6 @@
 ﻿using CodeLearn.Domain.Exercises.ValueObjects;
 
-namespace CodeLearn.Application.Exercises.Commands.DeleteExerecise;
+namespace CodeLearn.Application.Exercises.Commands.DeleteExercise;
 
 public record DeleteExerciseCommand(int Id) : IRequest<OneOf<Success, NotFound, BadRequest>>;
 

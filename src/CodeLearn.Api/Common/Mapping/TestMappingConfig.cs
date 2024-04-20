@@ -1,5 +1,6 @@
 ﻿using CodeLearn.Application.Tests.Commands.CreateTest;
 using CodeLearn.Application.Tests.Commands.UpdateTest;
+using CodeLearn.Application.Tests.Queries.GetTestByIdWithExerciseIds;
 using CodeLearn.Application.Tests.Queries.GetTestByIdWithExercises;
 using CodeLearn.Contracts.Tests;
 using CodeLearn.Domain.Tests;
@@ -32,5 +33,7 @@ public class TestMappingConfig : IRegister
             .Map(dest => dest.QuestionExercises, src => src.QuestionExercises
                 .Select(x => new ExerciseResponseDto(x.Id.Value, x.Title, x.Description, x.Difficulty.ToString()))
                 .ToArray());
+
+        config.NewConfig<TestWithExerciseIdsDto, TestWithExerciseIdsResponse>();
     }
 }

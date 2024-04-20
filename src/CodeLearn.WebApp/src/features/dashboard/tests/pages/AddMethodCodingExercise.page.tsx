@@ -23,7 +23,7 @@ import { Card } from '@/components/ui/card.tsx';
 import { toast } from '@/components/ui/use-toast.ts';
 import { difficulties } from '@/features/dashboard/tests/enums/Difficulties.ts';
 import { DataType } from '@/features/dashboard/tests/models/DataType.ts';
-import { ExerciseTopic } from '@/features/dashboard/tests/models/ExerciseTopic.ts';
+import { ExerciseTopic } from '@/features/testing-session/models/ExerciseTopic.ts';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { decorations } from '@/features/dashboard/tests/enums/Decorations.ts';
 import Combobox from '@/components/ui/combobox.tsx';
@@ -623,7 +623,7 @@ function AddMethodCodingExercisePage() {
                   {testCasesArray.fields.length >= 8 || (
                     <Card className="mt-4 flex items-center justify-center border-dashed bg-transparent px-4 py-10">
                       <Button
-                        className="mb-4 mt-4 flex w-full space-x-2 sm:w-fit"
+                        className="w-fit content-center"
                         type="button"
                         onClick={() =>
                           testCasesArray.append({

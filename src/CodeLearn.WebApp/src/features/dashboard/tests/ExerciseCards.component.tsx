@@ -7,7 +7,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import NoItemsCard from '@/components/no-items-card';
 import { toast } from '@/components/ui/use-toast.ts';
 import agent from '@/api/agent.ts';
-import { ExerciseType } from '@/features/dashboard/tests/models/ExerciseType.ts';
+import { ExerciseType } from '@/features/testing-session/models/ExerciseType.ts';
 
 type ExerciseCardsProps = {
   exercises: ExerciseDetails[];

@@ -34,7 +34,7 @@ const adminSections: SideMenuLinkGroup[] = [
   },
   {
     id: 4,
-    links: [{ name: 'Logout', href: '/sign-out', id: 5, icon: <ArrowLeftStartOnRectangleIcon /> }],
+    links: [{ name: 'Sign out', href: '/sign-out', id: 5, icon: <ArrowLeftStartOnRectangleIcon /> }],
   },
 ];
 
@@ -57,7 +57,7 @@ const teacherSections: SideMenuLinkGroup[] = [
   },
   {
     id: 3,
-    links: [{ name: 'Logout', href: '/sign-out', id: 5, icon: <ArrowLeftStartOnRectangleIcon /> }],
+    links: [{ name: 'Sign out', href: '/sign-out', id: 5, icon: <ArrowLeftStartOnRectangleIcon /> }],
   },
 ];
 

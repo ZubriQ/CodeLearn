@@ -4,13 +4,11 @@ namespace CodeLearn.Contracts.Exercises.MethodCoding;
 
 public record StudentMethodCodingExerciseResponse(
     int Id,
+    int TestId,
     string Title,
     string Description,
     string Difficulty,
-    string MethodToExecute,
     string MethodSolutionCode,
-    int MethodReturnDataTypeId,
     ExerciseTopicResponseDto[] ExerciseTopics,
     ExerciseNoteResponseDto[] ExerciseNotes,
-    InputOutputExampleResponseDto[] InputOutputExamples,
-    MethodParameterResponseDto[] MethodParameters);
+    InputOutputExampleResponseDto[] InputOutputExamples);

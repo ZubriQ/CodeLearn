@@ -1,8 +1,9 @@
 export type TestingSession = {
   id: number;
-  testId: string;
-  studentGroupId: string;
-  endDateTime: Date;
+  testingId: number;
+  status: string;
   startDateTime: Date;
+  finishDateTime: Date;
   durationInMinutes: number;
+  score: number;
 };
