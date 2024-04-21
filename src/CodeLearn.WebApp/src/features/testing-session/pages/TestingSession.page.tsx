@@ -99,12 +99,12 @@ export default function TestingSessionPage() {
     <div className="flex h-screen flex-col bg-zinc-50 p-4">
       <div className="mb-4 flex flex-wrap items-center space-x-2">
         {/* Row for Questions */}
-        <div className="flex flex-wrap items-center space-x-2 space-y-1">
+        <div className="flex flex-wrap items-center space-x-1.5 space-y-1">
           <span className="whitespace-nowrap">Questions:</span>
           {test?.questionExercises.map((questionId, index) => (
             <Button
               key={questionId}
-              className="h-8 w-8 rounded-md"
+              className="size-7 rounded-md p-0 text-xs"
               variant="outline"
               onClick={() => fetchAndSetQuestionExercise(questionId)}
             >
@@ -114,12 +114,12 @@ export default function TestingSessionPage() {
         </div>
 
         {/* Row for Exercises */}
-        <div className="flex flex-wrap items-center space-x-2 space-y-1">
+        <div className="flex flex-wrap items-center space-x-1.5 space-y-1">
           <span className="whitespace-nowrap">Exercises:</span>
           {test?.methodCodingExercises.map((exerciseId, index) => (
             <Button
               key={exerciseId}
-              className="h-8 w-8 rounded-md"
+              className="size-7 rounded-md p-0 text-xs"
               variant="outline"
               onClick={() => fetchAndSetMethodCodingExercise(exerciseId)}
             >
