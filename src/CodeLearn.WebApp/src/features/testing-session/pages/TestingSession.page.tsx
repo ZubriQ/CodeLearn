@@ -11,6 +11,9 @@ import { QuestionExercise } from '@/features/testing-session/models/QuestionExer
 import { MethodCodingExercise } from '@/features/testing-session/models/MethodCodingExercise.ts';
 import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
+import Loading from '@/components/loading';
+import Note from '@/features/testing-session/components/Note.component.tsx';
+import ExerciseDifficulty from '@/features/testing-session/components/DifficultyBadge.component.tsx';
 
 export default function TestingSessionPage() {
   const { id } = useParams<{ id?: string }>();
@@ -19,6 +22,7 @@ export default function TestingSessionPage() {
   const [testing, setTesting] = useState();
   const [test, setTest] = useState();
   const [currentExercise, setCurrentExercise] = useState<QuestionExercise | MethodCodingExercise | undefined>();
+  const [currentExerciseNumber, setCurrentExerciseNumber] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,53 +67,63 @@ export default function TestingSessionPage() {
   console.log(test);
   console.log(currentExercise);
 
+  function isMethodCodingExercise(exercise: QuestionExercise | MethodCodingExercise): exercise is MethodCodingExercise {
+    return (exercise as MethodCodingExercise).methodSolutionCode !== undefined;
+  }
+
+  const fetchAndSetQuestionExercise = async (questionId: number) => {
+    try {
+      const questionExercise = await agent.Exercises.getQuestionById(questionId);
+      const index = test.questionExercises.indexOf(questionId);
+      setCurrentExercise(questionExercise);
+      setCurrentExerciseNumber(index + 1); // Set by index + 1
+    } catch (error) {}
+  };
+
+  const fetchAndSetMethodCodingExercise = async (exerciseId: number) => {
+    try {
+      const methodCodingExercise = await agent.Exercises.getMethodCodingById(exerciseId);
+      const index = test.methodCodingExercises.indexOf(exerciseId);
+      setCurrentExercise(methodCodingExercise);
+      setCurrentExerciseNumber(index + 1);
+    } catch (error) {}
+  };
+
+  if (currentExercise === undefined) {
+    return <Loading />;
+  }
+
   return (
     <div className="flex h-screen flex-col bg-zinc-50 p-4">
       <div className="mb-4">
         {/* Row for green boxes with text */}
         <div className="-mt-1 mb-2 flex flex-wrap items-center space-x-2 space-y-1">
           <span className="whitespace-nowrap font-medium">Questions</span>
-          <Button className="h-8 w-8 rounded-md" variant="outline">
-            1
-          </Button>
-          <Button className="h-8 w-8 rounded-md" variant="outline">
-            2
-          </Button>
-          <Button className="h-8 w-8 rounded-md" variant="outline">
-            3
-          </Button>
-          <Button className="h-8 w-8 rounded-md" variant="outline">
-            4
-          </Button>
-          <Button className="h-8 w-8 rounded-md" variant="outline">
-            5
-          </Button>
-          <Button className="h-8 w-8 rounded-md" variant="outline">
-            6
-          </Button>
-          <Button className="h-8 w-8 rounded-md" variant="outline">
-            7
-          </Button>
-          <Button className="h-8 w-8 rounded-md" variant="outline">
-            8
-          </Button>
+          {test?.questionExercises.map((questionId, index) => (
+            <Button
+              key={questionId}
+              className="h-8 w-8 rounded-md"
+              variant="outline"
+              onClick={() => fetchAndSetQuestionExercise(questionId)}
+            >
+              {index + 1}
+            </Button>
+          ))}
         </div>
 
         {/* Row for blue boxes with text */}
         <div className="-mt-1 flex flex-wrap items-center space-x-2 space-y-1">
           <span className="whitespace-nowrap font-medium">Exercises</span>
-          <Button className="h-8 w-8 rounded-md" variant="outline">
-            1
-          </Button>
-          <Button className="h-8 w-8 rounded-md" variant="outline">
-            2
-          </Button>
-          <Button className="h-8 w-8 rounded-md" variant="outline">
-            3
-          </Button>
-          <Button className="h-8 w-8 rounded-md" variant="outline">
-            4
-          </Button>
+          {test?.methodCodingExercises.map((exerciseId, index) => (
+            <Button
+              key={exerciseId}
+              className="h-8 w-8 rounded-md"
+              variant="outline"
+              onClick={() => fetchAndSetMethodCodingExercise(exerciseId)}
+            >
+              {index + 1}
+            </Button>
+          ))}
         </div>
       </div>
 
@@ -124,54 +138,54 @@ export default function TestingSessionPage() {
                 Remaining time
               </Badge>
               <Badge variant="secondary" className="truncate">
-                Exercise 1
+                {isMethodCodingExercise(currentExercise)
+                  ? `Exercise ${currentExerciseNumber}`
+                  : `Question ${currentExerciseNumber}`}
               </Badge>
-              <Badge variant="secondary" className="truncate">
-                Exercise difficulty
-              </Badge>
-              <Badge variant="secondary" className="truncate">
-                Topic 1
-              </Badge>
-              <Badge variant="secondary" className="truncate">
-                Topic 2
-              </Badge>
-              <Badge variant="secondary" className="truncate">
-                Topic 3
-              </Badge>
+
+              <ExerciseDifficulty difficulty={currentExercise.difficulty} />
+
+              {currentExercise.exerciseTopics.map((topic, index) => (
+                <Badge key={index} variant="secondary" className="truncate">
+                  {topic.name}
+                </Badge>
+              ))}
             </div>
 
             {/* Exercise description and related content */}
             <div className="space-y-3 overflow-auto rounded-xl border bg-zinc-100 p-4">
-              <h2 className="text-2xl font-semibold">Exercise Title</h2>
+              <h2 className="text-2xl font-semibold">{currentExercise.title}</h2>
 
-              <p className="text-sm leading-6">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum.
-              </p>
+              <p className="text-sm leading-6">{currentExercise.description}</p>
 
-              <div>
-                <h3 className="font-semibold">Example 1:</h3>
-                <pre className="rounded bg-zinc-200/70 p-2">...</pre>
-              </div>
-              <div>
-                <h3 className="font-semibold">Example 2:</h3>
-                <pre className="rounded bg-zinc-200/70 p-2">...</pre>
-              </div>
-              <div>
-                <h3 className="font-semibold">Example 3:</h3>
-                <pre className="rounded bg-zinc-200/70 p-2">...</pre>
-              </div>
+              {isMethodCodingExercise(currentExercise) && (
+                <>
+                  {currentExercise.inputOutputExamples.map((example, index) => (
+                    <div key={index}>
+                      <h3 className="font-semibold">Example {index + 1}:</h3>
+                      <div className="rounded bg-zinc-200/70 p-2">
+                        <p className="px-2">
+                          <b>Input:</b> {example.input}
+                        </p>
+                        <p className="px-2">
+                          <b>Output:</b> {example.output}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
 
-              <div>
-                <h3 className="font-semibold">Notes:</h3>
-                <ul className="list-inside list-disc ">
-                  <li>Note 1...</li>
-                  <li>Note 2...</li>
-                </ul>
-              </div>
+                  {currentExercise.exerciseNotes && (
+                    <div>
+                      <h3 className="font-semibold">Notes:</h3>
+                      <ul className="list-inside space-y-1">
+                        {currentExercise.exerciseNotes.map((note, index) => (
+                          <Note key={index} decoration={note.decoration} entry={note.entry} />
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           </div>
         </ResizablePanel>
@@ -190,7 +204,7 @@ export default function TestingSessionPage() {
             {/* Textarea container */}
             <div className="mt-4 flex h-full flex-col">
               {/* Stretch the textarea to fill the container */}
-              <Textarea className="mb-9 flex-1 resize-none rounded-sm" />
+              <Textarea className="mb-9 flex-1 resize-none rounded-sm">{currentExercise.methodSolutionCode}</Textarea>
             </div>
           </div>
 

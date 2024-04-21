@@ -50,7 +50,6 @@ export default function AddQuestionExercisePage() {
   const navigate = useNavigate();
   const [exerciseTopics, setExerciseTopics] = useState<ExerciseTopic[] | undefined>(undefined);
 
-  console.log(exerciseTopics);
   useEffect(() => {
     setCurrentPageTitle('Test > Add question exercise');
 
