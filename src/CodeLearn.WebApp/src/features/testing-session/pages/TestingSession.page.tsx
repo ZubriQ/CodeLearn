@@ -13,7 +13,9 @@ import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import Loading from '@/components/loading';
 import Note from '@/features/testing-session/components/Note.component.tsx';
-import ExerciseDifficulty from '@/features/testing-session/components/DifficultyBadge.component.tsx';
+import Timer from '@/features/testing-session/components/Timer.component.tsx';
+import ExerciseDifficultyBadge from '@/features/testing-session/components/ExerciseDifficultyBadge.component.tsx';
+import TopicsBadge from '@/features/testing-session/components/TopicsBadge.component.tsx';
 
 export default function TestingSessionPage() {
   const { id } = useParams<{ id?: string }>();
@@ -95,10 +97,10 @@ export default function TestingSessionPage() {
 
   return (
     <div className="flex h-screen flex-col bg-zinc-50 p-4">
-      <div className="mb-4">
-        {/* Row for green boxes with text */}
-        <div className="-mt-1 mb-2 flex flex-wrap items-center space-x-2 space-y-1">
-          <span className="whitespace-nowrap font-medium">Questions</span>
+      <div className="mb-4 flex flex-wrap items-center space-x-2">
+        {/* Row for Questions */}
+        <div className="flex flex-wrap items-center space-x-2 space-y-1">
+          <span className="whitespace-nowrap">Questions:</span>
           {test?.questionExercises.map((questionId, index) => (
             <Button
               key={questionId}
@@ -111,9 +113,9 @@ export default function TestingSessionPage() {
           ))}
         </div>
 
-        {/* Row for blue boxes with text */}
-        <div className="-mt-1 flex flex-wrap items-center space-x-2 space-y-1">
-          <span className="whitespace-nowrap font-medium">Exercises</span>
+        {/* Row for Exercises */}
+        <div className="flex flex-wrap items-center space-x-2 space-y-1">
+          <span className="whitespace-nowrap">Exercises:</span>
           {test?.methodCodingExercises.map((exerciseId, index) => (
             <Button
               key={exerciseId}
@@ -132,24 +134,20 @@ export default function TestingSessionPage() {
         {/* Left panel for exercise descriptions */}
         <ResizablePanel defaultSize={50} maxSize={60} className="overflow-auto">
           <div className="grid h-full grid-rows-[auto_1fr] gap-2">
-            {/* Exercise number, Exercise difficulty, Testing time left, Topics */}
             <div className="space-x-2 space-y-1">
-              <Badge variant="secondary" className="truncate">
-                Remaining time
+              <Badge variant="outline" className="w-[68px]">
+                {testingSession && <Timer finishDateTime={testingSession.finishDateTime} />}
               </Badge>
-              <Badge variant="secondary" className="truncate">
+
+              <Badge variant="outline" className="truncate">
                 {isMethodCodingExercise(currentExercise)
                   ? `Exercise ${currentExerciseNumber}`
                   : `Question ${currentExerciseNumber}`}
               </Badge>
 
-              <ExerciseDifficulty difficulty={currentExercise.difficulty} />
+              <ExerciseDifficultyBadge difficulty={currentExercise.difficulty} />
 
-              {currentExercise.exerciseTopics.map((topic, index) => (
-                <Badge key={index} variant="secondary" className="truncate">
-                  {topic.name}
-                </Badge>
-              ))}
+              <TopicsBadge topics={currentExercise.exerciseTopics} />
             </div>
 
             {/* Exercise description and related content */}

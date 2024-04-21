@@ -6,7 +6,7 @@ interface ExerciseDifficultyProps {
   difficulty: ExerciseDifficulty;
 }
 
-const ExerciseDifficultyComponent: React.FC<ExerciseDifficultyProps> = ({ difficulty }) => {
+const ExerciseDifficultyBadge: React.FC<ExerciseDifficultyProps> = ({ difficulty }) => {
   let badgeColorClass = '';
 
   switch (difficulty) {
@@ -30,4 +30,4 @@ const ExerciseDifficultyComponent: React.FC<ExerciseDifficultyProps> = ({ diffic
   );
 };
 
-export default ExerciseDifficultyComponent;
+export default ExerciseDifficultyBadge;
