@@ -57,6 +57,14 @@ const teacherSections: SideMenuLinkGroup[] = [
   },
   {
     id: 3,
+    title: 'User Management',
+    links: [
+      { name: 'Student Groups', href: '/dashboard/student-groups', id: 1 },
+      { name: 'Students', href: '/dashboard/students', id: 2 },
+    ],
+  },
+  {
+    id: 4,
     links: [{ name: 'Sign out', href: '/sign-out', id: 5, icon: <ArrowLeftStartOnRectangleIcon /> }],
   },
 ];

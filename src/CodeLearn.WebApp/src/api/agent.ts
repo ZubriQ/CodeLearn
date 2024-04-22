@@ -108,6 +108,7 @@ const Students = {
 const TestingSessions = {
   create: (request: { testingId: number }) => requests.post(`testing-sessions`, request),
   getById: (id: number) => requests.get(`testing-sessions/${id}`),
+  listForCurriculum: () => requests.get('testing-sessions/my-sessions').then((response) => response.testingSessions),
 };
 
 // const TestErrors = {

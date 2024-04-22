@@ -21,9 +21,10 @@ public sealed class TestingSessionsController(ISender _sender, IMapper _mapper) 
     }
 
     [HttpGet("my-sessions")]
-    [ProducesResponseType(typeof(TestingSessionResponseCollection), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(StudentTestingSessionResponseCollection), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllUserTestingSessions()
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllForStudentCurriculum()
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value!;
         var query = new GetAllMyTestingSessionsQuery(userId);
@@ -32,11 +33,11 @@ public sealed class TestingSessionsController(ISender _sender, IMapper _mapper) 
         return response.Match(
             testingSessions =>
             {
-                var mappedData = testingSessions.Select(_mapper.Map<TestingSessionResponse>).ToArray();
-                return Ok(new TestingSessionResponseCollection(mappedData));
+                var mappedData = testingSessions.Select(_mapper.Map<StudentTestingSessionResponse>).ToArray();
+                return Ok(new StudentTestingSessionResponseCollection(mappedData));
             },
             _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."),
-            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "User not found."));
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Not found."));
     }
 
     [HttpPost]
