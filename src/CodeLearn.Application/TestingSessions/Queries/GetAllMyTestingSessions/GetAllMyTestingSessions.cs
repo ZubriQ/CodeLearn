@@ -53,6 +53,7 @@ public class GetAllMyTestingSessionsQueryHandler(
                   FinishDateTime = ts.TestingSession.FinishDateTime,
                   Score = ts.TestingSession.Score
               })
+        .OrderByDescending(x => x.FinishDateTime)
         .ToArrayAsync(cancellationToken);
 
         return testingSessionsDto.Length == 0 ? [] : testingSessionsDto;
