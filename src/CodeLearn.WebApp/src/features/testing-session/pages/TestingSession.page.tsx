@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, RotateCw } from 'lucide-react';
-import { CodeBracketIcon, CommandLineIcon } from '@heroicons/react/24/outline';
+import agent from '@/api/agent.ts';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable.tsx';
-import { Textarea } from '@/components/ui/textarea.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Badge } from '@/components/ui/badge.tsx';
-import { TestingSession } from '@/features/dashboard/testing-sessions/TestingSession.ts';
-import { QuestionExercise } from '@/features/testing-session/models/QuestionExercise.ts';
-import { MethodCodingExercise } from '@/features/testing-session/models/MethodCodingExercise.ts';
-import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import Loading from '@/components/loading';
+import { TestingSession } from '@/features/dashboard/testing-sessions/TestingSession.ts';
+import { QuestionExercise } from '@/features/testing-session/models/QuestionExercise.ts';
 import Note from '@/features/testing-session/components/Note.component.tsx';
 import Timer from '@/features/testing-session/components/Timer.component.tsx';
 import ExerciseDifficultyBadge from '@/features/testing-session/components/ExerciseDifficultyBadge.component.tsx';
 import TopicsBadge from '@/features/testing-session/components/TopicsBadge.component.tsx';
+import MethodCodingExercise from '@/features/testing-session/components/MethodCodingExercise.component.tsx';
+import { CodeBracketIcon, CommandLineIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
+import { Textarea } from '@/components/ui/textarea.tsx';
+import { ChevronLeft, ChevronRight, RotateCw } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox.tsx';
 
 export default function TestingSessionPage() {
   const { id } = useParams<{ id?: string }>();
@@ -23,8 +24,79 @@ export default function TestingSessionPage() {
   const [testingSession, setTestingSession] = useState<TestingSession>();
   const [testing, setTesting] = useState();
   const [test, setTest] = useState();
+
   const [currentExercise, setCurrentExercise] = useState<QuestionExercise | MethodCodingExercise | undefined>();
   const [currentExerciseNumber, setCurrentExerciseNumber] = useState(1);
+  const [currentExerciseType, setCurrentExerciseType] = useState<'question' | 'method'>('question');
+
+  const [methodSolutionCode, setMethodSolutionCode] = useState<string>('');
+  const [initialMethodSolutionCode, setInitialMethodSolutionCode] = useState<string>('');
+  const [outputTextareaValue, setOutputTextareaValue] = useState<string>('');
+
+  // Questions
+  // Initialize selectedChoices state with an empty array
+  const [selectedChoices, setSelectedChoices] = useState<number[]>([]);
+
+  const isSelected = (choiceId: number) => {
+    console.log('Selected choices:', selectedChoices);
+    return selectedChoices.includes(choiceId);
+  };
+
+  const toggleCheckbox = (choiceId) => {
+    setSelectedChoices((prevSelectedChoices) => {
+      if (prevSelectedChoices.includes(choiceId)) {
+        // If the choice is already selected, remove it from the array
+        return prevSelectedChoices.filter((id) => id !== choiceId);
+      } else {
+        // If the choice is not selected, add it to the array
+        return [...prevSelectedChoices, choiceId];
+      }
+    });
+  };
+
+  const handleNext = async () => {
+    if (currentExerciseType === 'question') {
+      if (currentExerciseNumber < test.questionExercises.length) {
+        // Fetch and set the next question exercise
+        await fetchAndSetQuestionExercise(test.questionExercises[currentExerciseNumber]);
+      } else if (test.methodCodingExercises.length > 0) {
+        // Switch to the first method coding exercise
+        setCurrentExerciseType('method');
+        await fetchAndSetMethodCodingExercise(test.methodCodingExercises[0]);
+      }
+    } else {
+      if (currentExerciseNumber < test.methodCodingExercises.length) {
+        // Fetch and set the next method coding exercise
+        await fetchAndSetMethodCodingExercise(test.methodCodingExercises[currentExerciseNumber]);
+      } else if (test.questionExercises.length > 0) {
+        // Switch to the first question exercise
+        setCurrentExerciseType('question');
+        await fetchAndSetQuestionExercise(test.questionExercises[0]);
+      }
+    }
+  };
+
+  const handleBack = async () => {
+    if (currentExerciseType === 'question') {
+      if (currentExerciseNumber > 1) {
+        // Fetch and set the previous question exercise
+        await fetchAndSetQuestionExercise(test.questionExercises[currentExerciseNumber - 2]);
+      } else if (test.methodCodingExercises.length > 0) {
+        // Switch to the last method coding exercise
+        setCurrentExerciseType('method');
+        await fetchAndSetMethodCodingExercise(test.methodCodingExercises[test.methodCodingExercises.length - 1]);
+      }
+    } else {
+      if (currentExerciseNumber > 1) {
+        // Fetch and set the previous method coding exercise
+        await fetchAndSetMethodCodingExercise(test.methodCodingExercises[currentExerciseNumber - 2]);
+      } else if (test.questionExercises.length > 0) {
+        // Switch to the last question exercise
+        setCurrentExerciseType('question');
+        await fetchAndSetQuestionExercise(test.questionExercises[test.questionExercises.length - 1]);
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +120,7 @@ export default function TestingSessionPage() {
         if (test.methodCodingExercises.length > 0) {
           const firstMethodCodingExercise = await agent.Exercises.getMethodCodingById(test.methodCodingExercises[0]);
           setCurrentExercise(firstMethodCodingExercise);
+          setMethodSolutionCode(firstMethodCodingExercise.methodSolutionCode);
         } else if (test.questionExercises.length > 0) {
           const firstQuestionExercise = await agent.Exercises.getQuestionById(test.questionExercises[0]);
           setCurrentExercise(firstQuestionExercise);
@@ -64,10 +137,11 @@ export default function TestingSessionPage() {
     fetchData();
   }, [id]);
 
-  console.log(testingSession);
-  console.log(testing);
-  console.log(test);
-  console.log(currentExercise);
+  // console.log(testingSession);
+  // console.log(testing);
+  // console.log(test);
+  // console.log(currentExercise);
+  console.log(selectedChoices);
 
   function isMethodCodingExercise(exercise: QuestionExercise | MethodCodingExercise): exercise is MethodCodingExercise {
     return (exercise as MethodCodingExercise).methodSolutionCode !== undefined;
@@ -78,7 +152,7 @@ export default function TestingSessionPage() {
       const questionExercise = await agent.Exercises.getQuestionById(questionId);
       const index = test.questionExercises.indexOf(questionId);
       setCurrentExercise(questionExercise);
-      setCurrentExerciseNumber(index + 1); // Set by index + 1
+      setCurrentExerciseNumber(index + 1);
     } catch (error) {}
   };
 
@@ -88,8 +162,16 @@ export default function TestingSessionPage() {
       const index = test.methodCodingExercises.indexOf(exerciseId);
       setCurrentExercise(methodCodingExercise);
       setCurrentExerciseNumber(index + 1);
+
+      setInitialMethodSolutionCode(methodCodingExercise.methodSolutionCode);
     } catch (error) {}
   };
+
+  const handleReset = () => {
+    setMethodSolutionCode(initialMethodSolutionCode);
+  };
+
+  const handleSendMethodCodingSolution = () => {};
 
   if (currentExercise === undefined) {
     return <Loading />;
@@ -190,54 +272,58 @@ export default function TestingSessionPage() {
 
         <ResizableHandle withHandle className="mx-2" />
 
-        {/* Right panel for the code input */}
+        {/* Right panel for the code input/output or questions */}
         <ResizablePanel defaultSize={50} minSize={40} className="flex h-full flex-col">
-          {/* Solution */}
-          <div className="mb-4 flex-1 overflow-hidden rounded-xl border bg-white p-4">
-            {/* Header */}
-            <div className="-mx-4 -mt-4 flex items-center rounded-t-lg bg-green-600 p-1.5 text-white">
-              <CodeBracketIcon width="20" height="20" className="mx-2" />
-              <p className="font-semibold">Solution</p>
-            </div>
-            {/* Textarea container */}
-            <div className="mt-4 flex h-full flex-col">
-              {/* Stretch the textarea to fill the container */}
-              <Textarea className="mb-9 flex-1 resize-none rounded-sm">{currentExercise.methodSolutionCode}</Textarea>
-            </div>
-          </div>
+          {isMethodCodingExercise(currentExercise) ? (
+            <MethodCodingExercise
+              methodSolutionCode={methodSolutionCode}
+              onMethodSolutionCodeChange={setMethodSolutionCode}
+              handleBack={handleBack}
+              handleReset={handleReset}
+              handleSendMethodCodingSolution={handleSendMethodCodingSolution}
+              handleNext={handleNext}
+              outputTextareaValue={outputTextareaValue}
+            />
+          ) : (
+            <>
+              {/* Questions */}
+              <div className="flex h-full flex-col rounded-xl border bg-white px-4">
+                <div className="-mx-4 flex items-center rounded-t-lg bg-green-600 p-1.5 text-white">
+                  <QuestionMarkCircleIcon width="20" height="20" className="mx-2" />
+                  <p className="font-semibold">Choose answers</p>
+                </div>
 
-          {/* Output */}
-          <div className="flex-none rounded-xl border bg-white px-4">
-            {/* Header */}
-            <div className="-mx-4 flex items-center rounded-t-lg bg-green-600 p-1.5 text-white">
-              <CommandLineIcon width="20" height="20" className="mx-2" />
-              <p className="font-semibold">Output</p>
-            </div>
-            <div className="mt-4 flex flex-col">
-              {/* Stretch the textarea to fill the container */}
-              <Textarea className="h-28 resize-none rounded-sm" readOnly={true} />
-            </div>
-            {/* Buttons at the bottom */}
-            <div className="mb-4 mt-4 flex flex-wrap justify-between gap-2 space-x-2">
-              <div className="flex space-x-2">
-                <Button variant="outline">
-                  <ChevronLeft width="18" className="-ml-1" />
-                  Back
-                </Button>
-                <Button variant="secondary" className="hover:bg-zinc-200">
-                  <RotateCw width="16" className="-ml-1 mr-2" />
-                  Reset
-                </Button>
+                {/* Answers */}
+                <div className="mt-4 flex-grow bg-zinc-300">
+                  {currentExercise.questionChoices.map((choice) => (
+                    <div key={choice.id} className="flex items-center space-x-2 border-b px-4 py-2">
+                      {/*<Checkbox onChange={() => toggleCheckbox(choice.id)} />*/}
+                      <input type="checkbox" onClick={() => toggleCheckbox(choice.id)} />
+                      <p>{choice.text}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mb-4 mt-4 flex flex-wrap justify-between gap-2 space-x-2">
+                  <div className="flex space-x-2">
+                    <Button variant="outline" onClick={handleBack}>
+                      <ChevronLeft width="18" className="-ml-1" />
+                      Back
+                    </Button>
+                  </div>
+                  <div className="flex space-x-2">
+                    <Button className="bg-green-600 hover:bg-green-700" onClick={handleSendMethodCodingSolution}>
+                      Send
+                    </Button>
+                    <Button variant="outline" onClick={handleNext}>
+                      Next
+                      <ChevronRight width="18" className="-mr-1" />
+                    </Button>
+                  </div>
+                </div>
               </div>
-              <div className="flex space-x-2">
-                <Button className="bg-green-600 hover:bg-green-700">Attempt</Button>
-                <Button variant="outline">
-                  Next
-                  <ChevronRight width="18" className="-mr-1" />
-                </Button>
-              </div>
-            </div>
-          </div>
+            </>
+          )}
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
