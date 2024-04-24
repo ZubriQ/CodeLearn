@@ -13,7 +13,7 @@ interface MethodCodingExerciseProps {
   outputTextareaValue: string;
 }
 
-export default function MethodCodingExercise({
+export default function MethodCodingExerciseBlock({
   methodSolutionCode,
   onMethodSolutionCodeChange,
   handleBack,
@@ -26,8 +26,8 @@ export default function MethodCodingExercise({
     <>
       <div className="mb-4 flex-1 overflow-hidden rounded-xl border bg-white p-4">
         <div className="-mx-4 -mt-4 flex items-center rounded-t-lg bg-green-600 p-1.5 text-white">
-          <CodeBracketIcon width="20" height="20" className="mx-2" />
-          <p className="font-semibold">Solution</p>
+          <CodeBracketIcon width="20" height="20" className="mx-2 min-w-5" />
+          <p className="truncate font-semibold">Solution</p>
         </div>
         <div className="mt-4 flex h-full flex-col">
           <Textarea
@@ -40,8 +40,8 @@ export default function MethodCodingExercise({
 
       <div className="flex-none rounded-xl border bg-white px-4">
         <div className="-mx-4 flex items-center rounded-t-lg bg-green-600 p-1.5 text-white">
-          <CommandLineIcon width="20" height="20" className="mx-2" />
-          <p className="font-semibold">Output</p>
+          <CommandLineIcon width="20" height="20" className="mx-2 min-w-5" />
+          <p className="truncate font-semibold">Output</p>
         </div>
         <div className="mt-4 flex flex-col">
           <Textarea className="h-28 resize-none rounded-sm" readOnly={true} value={outputTextareaValue} />

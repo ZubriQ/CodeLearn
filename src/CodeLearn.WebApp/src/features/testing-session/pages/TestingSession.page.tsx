@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
 import agent from '@/api/agent.ts';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable.tsx';
 import { Button } from '@/components/ui/button.tsx';
@@ -12,14 +14,14 @@ import Note from '@/features/testing-session/components/Note.component.tsx';
 import Timer from '@/features/testing-session/components/Timer.component.tsx';
 import ExerciseDifficultyBadge from '@/features/testing-session/components/ExerciseDifficultyBadge.component.tsx';
 import TopicsBadge from '@/features/testing-session/components/TopicsBadge.component.tsx';
-import MethodCodingExercise from '@/features/testing-session/components/MethodCodingExercise.component.tsx';
-import { CodeBracketIcon, CommandLineIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
-import { Textarea } from '@/components/ui/textarea.tsx';
-import { ChevronLeft, ChevronRight, RotateCw } from 'lucide-react';
-import { Checkbox } from '@/components/ui/checkbox.tsx';
+import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
+import { setSelectedChoices } from '@/features/testing-session/testing-session-slice.ts';
+import MethodCodingExerciseBlock from '@/features/testing-session/components/MethodCodingExerciseBlock.component.tsx';
+import { MethodCodingExercise } from '@/features/testing-session/models/MethodCodingExercise.ts';
 
 export default function TestingSessionPage() {
   const { id } = useParams<{ id?: string }>();
+  const dispatch = useDispatch();
 
   const [testingSession, setTestingSession] = useState<TestingSession>();
   const [testing, setTesting] = useState();
@@ -34,24 +36,32 @@ export default function TestingSessionPage() {
   const [outputTextareaValue, setOutputTextareaValue] = useState<string>('');
 
   // Questions
-  // Initialize selectedChoices state with an empty array
-  const [selectedChoices, setSelectedChoices] = useState<number[]>([]);
-
+  const selectedChoices = useSelector((state) =>
+    currentExercise ? state.exercise.selectedChoices[currentExercise.id] || [] : [],
+  );
   const isSelected = (choiceId: number) => {
-    console.log('Selected choices:', selectedChoices);
     return selectedChoices.includes(choiceId);
   };
-
-  const toggleCheckbox = (choiceId) => {
-    setSelectedChoices((prevSelectedChoices) => {
-      if (prevSelectedChoices.includes(choiceId)) {
-        // If the choice is already selected, remove it from the array
-        return prevSelectedChoices.filter((id) => id !== choiceId);
-      } else {
-        // If the choice is not selected, add it to the array
-        return [...prevSelectedChoices, choiceId];
-      }
-    });
+  const toggleCheckbox = (choiceId: number) => {
+    if (currentExercise && currentExercise.isMultipleAnswers) {
+      // If multiple answers are allowed, toggle the selection of the checkbox
+      dispatch(
+        setSelectedChoices({
+          exerciseId: currentExercise.id,
+          choices: selectedChoices.includes(choiceId)
+            ? selectedChoices.filter((id) => id !== choiceId) // Remove the choiceId if it's already selected
+            : [...selectedChoices, choiceId], // Add the choiceId if it's not selected
+        }),
+      );
+    } else {
+      // If multiple answers are not allowed, set the selectedChoices to only this choiceId
+      dispatch(
+        setSelectedChoices({
+          exerciseId: currentExercise.id,
+          choices: [choiceId],
+        }),
+      );
+    }
   };
 
   const handleNext = async () => {
@@ -75,7 +85,6 @@ export default function TestingSessionPage() {
       }
     }
   };
-
   const handleBack = async () => {
     if (currentExerciseType === 'question') {
       if (currentExerciseNumber > 1) {
@@ -172,6 +181,33 @@ export default function TestingSessionPage() {
   };
 
   const handleSendMethodCodingSolution = () => {};
+
+  const handleSendQuestionChoices = async () => {
+    const testingSessionId = parseInt(id, 10);
+
+    const requestPayload = {
+      exerciseId: currentExercise.id,
+      selectedAnswers: selectedChoices,
+    };
+
+    try {
+      await agent.ExerciseSubmissions.createQuestionSubmission(testingSessionId, requestPayload);
+
+      // TODO: Handle success
+      toast({
+        title: 'Submission successful',
+        description: 'Your answer has been submitted.',
+        variant: 'default',
+      });
+    } catch (error) {
+      // Handle errors
+      toast({
+        title: 'Submission failed',
+        description: error.message || 'An unexpected error occurred.',
+        variant: 'destructive',
+      });
+    }
+  };
 
   if (currentExercise === undefined) {
     return <Loading />;
@@ -275,7 +311,7 @@ export default function TestingSessionPage() {
         {/* Right panel for the code input/output or questions */}
         <ResizablePanel defaultSize={50} minSize={40} className="flex h-full flex-col">
           {isMethodCodingExercise(currentExercise) ? (
-            <MethodCodingExercise
+            <MethodCodingExerciseBlock
               methodSolutionCode={methodSolutionCode}
               onMethodSolutionCodeChange={setMethodSolutionCode}
               handleBack={handleBack}
@@ -289,16 +325,21 @@ export default function TestingSessionPage() {
               {/* Questions */}
               <div className="flex h-full flex-col rounded-xl border bg-white px-4">
                 <div className="-mx-4 flex items-center rounded-t-lg bg-green-600 p-1.5 text-white">
-                  <QuestionMarkCircleIcon width="20" height="20" className="mx-2" />
-                  <p className="font-semibold">Choose answers</p>
+                  <QuestionMarkCircleIcon width="20" height="20" className="mx-2 min-w-5" />
+                  <p className="truncate font-semibold">
+                    {currentExercise.isMultipleAnswers ? 'Select at least 2 answers' : 'Select correct answer'}
+                  </p>
                 </div>
 
                 {/* Answers */}
-                <div className="mt-4 flex-grow bg-zinc-300">
+                <div className="mt-4 flex-grow">
                   {currentExercise.questionChoices.map((choice) => (
-                    <div key={choice.id} className="flex items-center space-x-2 border-b px-4 py-2">
-                      {/*<Checkbox onChange={() => toggleCheckbox(choice.id)} />*/}
-                      <input type="checkbox" onClick={() => toggleCheckbox(choice.id)} />
+                    <div key={choice.id} className="flex items-center space-x-2 px-2 pb-4">
+                      <input
+                        type="checkbox"
+                        checked={isSelected(choice.id)}
+                        onChange={() => toggleCheckbox(choice.id)}
+                      />
                       <p>{choice.text}</p>
                     </div>
                   ))}
@@ -312,7 +353,7 @@ export default function TestingSessionPage() {
                     </Button>
                   </div>
                   <div className="flex space-x-2">
-                    <Button className="bg-green-600 hover:bg-green-700" onClick={handleSendMethodCodingSolution}>
+                    <Button className="bg-green-600 hover:bg-green-700" onClick={handleSendQuestionChoices}>
                       Send
                     </Button>
                     <Button variant="outline" onClick={handleNext}>

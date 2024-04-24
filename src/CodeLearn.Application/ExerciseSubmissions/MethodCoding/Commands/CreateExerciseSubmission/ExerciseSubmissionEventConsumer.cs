@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.Logging;
 
-namespace CodeLearn.Application.ExerciseSubmissions.Commands.CreateExerciseSubmission;
+namespace CodeLearn.Application.ExerciseSubmissions.MethodCoding.Commands.CreateExerciseSubmission;
 
 public sealed class ExerciseSubmissionEventConsumer(ILogger<ExerciseSubmissionEventConsumer> logger)
     : IConsumer<CodeExeciseSubmissionCreatedEvent>

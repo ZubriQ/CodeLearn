@@ -111,6 +111,11 @@ const TestingSessions = {
   listForCurriculum: () => requests.get('testing-sessions/my-sessions').then((response) => response.testingSessions),
 };
 
+const ExerciseSubmissions = {
+  createQuestionSubmission: (testingSessionId: number, request: CreateQuestionExerciseSubmissionRequest) =>
+    requests.post(`testing-sessions/${testingSessionId}/exercise-submissions`, request),
+};
+
 // const TestErrors = {
 //   get400Error: () => requests.get('buggy/bad-request'),
 //   get401Error: () => requests.get('buggy/unauthorised'),
@@ -129,6 +134,7 @@ const agent = {
   Testings,
   Students,
   TestingSessions,
+  ExerciseSubmissions,
   // TestErrors,
 };
 

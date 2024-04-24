@@ -1,4 +1,4 @@
-﻿namespace CodeLearn.Application.ExerciseSubmissions.Commands.CreateExerciseSubmission;
+﻿namespace CodeLearn.Application.ExerciseSubmissions.MethodCoding.Commands.CreateExerciseSubmission;
 
 public record CodeExeciseSubmissionCreatedEvent
 {

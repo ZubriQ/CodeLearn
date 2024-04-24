@@ -9,7 +9,7 @@ public sealed class CodeExerciseSubmission : ExerciseSubmission
     private CodeExerciseSubmission(
         ExerciseId exerciseId,
         TestingSessionId testingSessionId,
-        DateTime sentDateTime,
+        DateTimeOffset sentDateTime,
         SubmissionTestStatus status,
         string studentCode,
         string testingInformation,
@@ -24,7 +24,7 @@ public sealed class CodeExerciseSubmission : ExerciseSubmission
     public static CodeExerciseSubmission Create(
         ExerciseId exerciseId,
         TestingSessionId testingSessionId,
-        DateTime sentDateTime,
+        DateTimeOffset sentDateTime,
         string studentCode,
         string testingInformation,
         int runtimeInMilliseconds)

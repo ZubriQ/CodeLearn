@@ -27,34 +27,29 @@ public class GetAllMyTestingSessionsQueryHandler(
             return new NotFound();
         }
 
-        //var testingSessions = await _context.TestingSessions
-        //    .AsNoTracking()
-        //    .Where(x => x.CreatedBy == request.UserId)
-        //    .ToArrayAsync(cancellationToken);
-
         var testingSessionsDto = await _context.TestingSessions
-        .AsNoTracking()
-        .Where(x => x.CreatedBy == request.UserId)
-        .Join(_context.Testings,
-              ts => ts.TestingId,
-              t => t.Id,
-              (ts, t) => new { TestingSession = ts, Testing = t })
-        .Join(_context.Tests,
-              ts => ts.Testing.TestId,
-              t => t.Id,
-              (ts, t) => new StudentTestingSessionDto
-              {
-                  Id = ts.TestingSession.Id.Value,
-                  TestingId = ts.TestingSession.TestingId.Value,
-                  TestId = ts.Testing.TestId.Value,
-                  TestTitle = t.Title,
-                  Status = ts.TestingSession.Status,
-                  StartDateTime = ts.TestingSession.StartDateTime,
-                  FinishDateTime = ts.TestingSession.FinishDateTime,
-                  Score = ts.TestingSession.Score
-              })
-        .OrderByDescending(x => x.FinishDateTime)
-        .ToArrayAsync(cancellationToken);
+            .AsNoTracking()
+            .Where(x => x.CreatedBy == request.UserId)
+            .Join(_context.Testings,
+                  ts => ts.TestingId,
+                  t => t.Id,
+                  (ts, t) => new { TestingSession = ts, Testing = t })
+            .Join(_context.Tests,
+                  ts => ts.Testing.TestId,
+                  t => t.Id,
+                  (ts, t) => new StudentTestingSessionDto
+                  {
+                      Id = ts.TestingSession.Id.Value,
+                      TestingId = ts.TestingSession.TestingId.Value,
+                      TestId = ts.Testing.TestId.Value,
+                      TestTitle = t.Title,
+                      Status = ts.TestingSession.Status,
+                      StartDateTime = ts.TestingSession.StartDateTime,
+                      FinishDateTime = ts.TestingSession.FinishDateTime,
+                      Score = ts.TestingSession.Score
+                  })
+            .OrderByDescending(x => x.FinishDateTime)
+            .ToArrayAsync(cancellationToken);
 
         return testingSessionsDto.Length == 0 ? [] : testingSessionsDto;
     }

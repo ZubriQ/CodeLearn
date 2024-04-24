@@ -8,14 +8,14 @@ public sealed class ChoiceExerciseSubmission : ExerciseSubmission
     private ChoiceExerciseSubmission(
         ExerciseId exerciseId,
         TestingSessionId testingSessionId,
-        DateTime sentDateTime,
+        DateTimeOffset sentDateTime,
         SubmissionTestStatus status)
         : base(exerciseId, testingSessionId, sentDateTime, status) { }
 
     public static ChoiceExerciseSubmission Create(
         ExerciseId exerciseId,
         TestingSessionId testingSessionId,
-        DateTime sentDateTime)
+        DateTimeOffset sentDateTime)
     {
         return new ChoiceExerciseSubmission(
             exerciseId,
@@ -24,5 +24,8 @@ public sealed class ChoiceExerciseSubmission : ExerciseSubmission
             SubmissionTestStatus.Untested);
     }
 
-    // TODO: Add answer (choice) method?
+    public void AddChoice(QuestionChoice choice)
+    {
+        _choices.Add(choice);
+    }
 }

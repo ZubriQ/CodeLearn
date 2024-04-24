@@ -1,5 +1,5 @@
 ﻿using CodeLearn.Application.Common.Interfaces;
-using CodeLearn.Application.ExerciseSubmissions.Commands.CreateExerciseSubmission;
+using CodeLearn.Application.ExerciseSubmissions.MethodCoding.Commands.CreateExerciseSubmission;
 using CodeLearn.Domain.StudentGroups.ValueObjects;
 using CodeLearn.Domain.Testings.ValueObjects;
 using CodeLearn.Domain.TestingSessions.ValueObjects;
