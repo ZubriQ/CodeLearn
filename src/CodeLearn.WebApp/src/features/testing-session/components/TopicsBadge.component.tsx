@@ -22,11 +22,11 @@ const TopicsBadge: React.FC<TopicsBadgeProps> = ({ topics }) => {
       <button onClick={toggleTopics} className="topics-badge">
         {showTopics ? (
           <Badge variant="secondary">
-            Topics <ChevronLeftIcon width={14} height={14} className="mt-0.5" />
+            Topics <ChevronRightIcon width={14} height={14} className="mt-0.5" />
           </Badge>
         ) : (
           <Badge variant="secondary">
-            Topics <ChevronRightIcon width={14} height={14} className="mt-0.5" />
+            Topics <ChevronLeftIcon width={14} height={14} className="mt-0.5" />
           </Badge>
         )}
       </button>

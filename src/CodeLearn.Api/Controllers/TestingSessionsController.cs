@@ -1,5 +1,6 @@
 ﻿using CodeLearn.Application.TestingSessions.Commands.CreateTestingSession;
 using CodeLearn.Application.TestingSessions.Queries.GetAllMyTestingSessions;
+using CodeLearn.Application.TestingSessions.Queries.GetAnsweredQuestionExercisesById;
 using CodeLearn.Application.TestingSessions.Queries.GetTestingSessionById;
 using CodeLearn.Contracts.TestingSessions;
 using System.Security.Claims;
@@ -53,5 +54,17 @@ public sealed class TestingSessionsController(ISender _sender, IMapper _mapper) 
             id => CreatedAtAction(nameof(Create), new { id }, id),
             _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."),
             _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Testing not found."));
+    }
+
+    [HttpGet("{testingSessionId:int}/answered-questions")]
+    [ProducesResponseType(typeof(int[]), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAnsweredQuestionsById(int testingSessionId)
+    {
+        var result = await _sender.Send(new GetAnsweredQuestionExercisesByIdQuery(testingSessionId));
+
+        return result.Match(
+            Ok,
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Testing session not found."));
     }
 }

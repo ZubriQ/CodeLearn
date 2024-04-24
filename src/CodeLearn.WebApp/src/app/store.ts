@@ -3,6 +3,7 @@ import storage from 'redux-persist/lib/storage';
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer, { AuthState } from '@/features/users/auth-slice.ts';
 import exerciseReducer, { ExerciseState } from '@/features/testing-session/testing-session-slice.ts';
+import answeredQuestionsReducer from '@/features/testing-session/answered-questions-slice.ts';
 
 export type RootState = {
   auth: AuthState;
@@ -21,6 +22,7 @@ const persistedReducer = persistReducer(persistConfig, authReducer);
 const rootReducer = combineReducers({
   auth: persistedReducer,
   exercise: exerciseReducer,
+  answeredQuestions: answeredQuestionsReducer,
 });
 
 export const store = configureStore({

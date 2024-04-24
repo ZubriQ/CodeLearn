@@ -18,6 +18,7 @@ import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import { setSelectedChoices } from '@/features/testing-session/testing-session-slice.ts';
 import MethodCodingExerciseBlock from '@/features/testing-session/components/MethodCodingExerciseBlock.component.tsx';
 import { MethodCodingExercise } from '@/features/testing-session/models/MethodCodingExercise.ts';
+import { setAnsweredQuestions } from '@/features/testing-session/answered-questions-slice.ts';
 
 export default function TestingSessionPage() {
   const { id } = useParams<{ id?: string }>();
@@ -34,6 +35,10 @@ export default function TestingSessionPage() {
   const [methodSolutionCode, setMethodSolutionCode] = useState<string>('');
   const [initialMethodSolutionCode, setInitialMethodSolutionCode] = useState<string>('');
   const [outputTextareaValue, setOutputTextareaValue] = useState<string>('');
+
+  const answeredQuestions = useSelector((state) => state.answeredQuestions);
+  const isAnswered = (questionExerciseId: number) => answeredQuestions.includes(questionExerciseId);
+  const isCurrentQuestionAnswered = isAnswered(currentExercise);
 
   // Questions
   const selectedChoices = useSelector((state) =>
@@ -134,6 +139,20 @@ export default function TestingSessionPage() {
           const firstQuestionExercise = await agent.Exercises.getQuestionById(test.questionExercises[0]);
           setCurrentExercise(firstQuestionExercise);
         }
+
+        // Setup already answered questions
+        const fetchAnsweredQuestions = async () => {
+          try {
+            const answeredQuestions = await agent.TestingSessions.getAnsweredQuestionsById(id);
+            dispatch(setAnsweredQuestions(answeredQuestions));
+          } catch (error) {
+            console.error('Failed to fetch answered questions:', error);
+          }
+        };
+
+        if (id) {
+          fetchAnsweredQuestions();
+        }
       } catch (error) {
         toast({
           title: 'Error fetching data',
@@ -151,6 +170,7 @@ export default function TestingSessionPage() {
   // console.log(test);
   // console.log(currentExercise);
   console.log(selectedChoices);
+  console.log(answeredQuestions);
 
   function isMethodCodingExercise(exercise: QuestionExercise | MethodCodingExercise): exercise is MethodCodingExercise {
     return (exercise as MethodCodingExercise).methodSolutionCode !== undefined;
@@ -192,13 +212,7 @@ export default function TestingSessionPage() {
 
     try {
       await agent.ExerciseSubmissions.createQuestionSubmission(testingSessionId, requestPayload);
-
-      // TODO: Handle success
-      toast({
-        title: 'Submission successful',
-        description: 'Your answer has been submitted.',
-        variant: 'default',
-      });
+      dispatch(setAnsweredQuestions([...answeredQuestions, currentExercise.id]));
     } catch (error) {
       // Handle errors
       toast({
@@ -222,8 +236,8 @@ export default function TestingSessionPage() {
           {test?.questionExercises.map((questionId, index) => (
             <Button
               key={questionId}
-              className="size-7 rounded-md p-0 text-xs"
-              variant="outline"
+              className={`size-7 rounded-md p-0 text-xs`}
+              variant={`${isAnswered(questionId) ? 'default' : 'outline'}`}
               onClick={() => fetchAndSetQuestionExercise(questionId)}
             >
               {index + 1}
@@ -339,6 +353,8 @@ export default function TestingSessionPage() {
                         type="checkbox"
                         checked={isSelected(choice.id)}
                         onChange={() => toggleCheckbox(choice.id)}
+                        disabled={isAnswered(currentExercise.id)}
+                        className="border-zinc-900 accent-neutral-900"
                       />
                       <p>{choice.text}</p>
                     </div>
@@ -353,7 +369,11 @@ export default function TestingSessionPage() {
                     </Button>
                   </div>
                   <div className="flex space-x-2">
-                    <Button className="bg-green-600 hover:bg-green-700" onClick={handleSendQuestionChoices}>
+                    <Button
+                      className="bg-green-600 hover:bg-green-700"
+                      disabled={isAnswered(currentExercise.id)}
+                      onClick={handleSendQuestionChoices}
+                    >
                       Send
                     </Button>
                     <Button variant="outline" onClick={handleNext}>

@@ -37,6 +37,8 @@ public class CreateQuestionExerciseSubmissionCommandHandler(
             return new NotFound();
         }
 
+        // TODO: check for conflict if already exists
+
         var exerciseSubmission = ChoiceExerciseSubmission.Create(
                 ExerciseId.Create(request.ExerciseId),
                 TestingSessionId.Create(request.TestingSessionId),
