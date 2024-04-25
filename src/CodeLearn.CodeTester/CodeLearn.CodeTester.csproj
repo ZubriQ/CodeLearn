@@ -14,4 +14,8 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.9.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CodeLearn.Domain\CodeLearn.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

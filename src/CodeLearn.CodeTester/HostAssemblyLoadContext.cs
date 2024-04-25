@@ -1,26 +1,21 @@
 ﻿using System.Reflection;
 using System.Runtime.Loader;
 
-namespace CodeLearn.Lib
+namespace CodeLearn.CodeTester;
+
+internal class HostAssemblyLoadContext(string pluginPath) : AssemblyLoadContext(isCollectible: true)
 {
-    internal class HostAssemblyLoadContext : AssemblyLoadContext
+    private readonly AssemblyDependencyResolver _resolver = new(pluginPath);
+
+    protected override Assembly? Load(AssemblyName name)
     {
-        private readonly AssemblyDependencyResolver _resolver;
-
-        public HostAssemblyLoadContext(string pluginPath) : base(isCollectible: true)
+        var assemblyPath = _resolver.ResolveAssemblyToPath(name);
+        if (assemblyPath == null)
         {
-            _resolver = new AssemblyDependencyResolver(pluginPath);
-        }
-
-        protected override Assembly? Load(AssemblyName name)
-        {
-            string? assemblyPath = _resolver.ResolveAssemblyToPath(name);
-            if (assemblyPath != null)
-            {
-                Console.WriteLine($"Loading assembly {assemblyPath} into the HostAssemblyLoadContext");
-                return LoadFromAssemblyPath(assemblyPath);
-            }
             return null;
         }
+        
+        Console.WriteLine($"Loading assembly {assemblyPath} into the HostAssemblyLoadContext");
+        return LoadFromAssemblyPath(assemblyPath);
     }
 }
