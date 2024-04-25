@@ -150,7 +150,7 @@ export default function TestingSessionPage() {
         };
 
         if (id) {
-          fetchAnsweredQuestions();
+          await fetchAnsweredQuestions();
         }
       } catch (error) {
         toast({
