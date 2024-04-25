@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeLearn.Contracts", "src\
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F83975F9-9744-43D1-BA25-23480DC4A3FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeLearn.CodeTester", "src\CodeLearn.CodeTester\CodeLearn.CodeTester.csproj", "{554266B4-F759-4E07-90D6-76AA70B8D342}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{F83975F9-9744-43D1-BA25-23480DC4A3FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F83975F9-9744-43D1-BA25-23480DC4A3FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F83975F9-9744-43D1-BA25-23480DC4A3FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{554266B4-F759-4E07-90D6-76AA70B8D342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{554266B4-F759-4E07-90D6-76AA70B8D342}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{554266B4-F759-4E07-90D6-76AA70B8D342}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{554266B4-F759-4E07-90D6-76AA70B8D342}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,5 +63,6 @@ Global
 		{67FC104B-2F98-4A1C-A4F5-57324B628A5E} = {50054D0B-FB95-4508-A02B-874B18275C22}
 		{73B0DF63-1EDF-4546-8668-DCD8FBDF4B9A} = {50054D0B-FB95-4508-A02B-874B18275C22}
 		{D87662D8-3377-486B-86D5-E98229B175EE} = {50054D0B-FB95-4508-A02B-874B18275C22}
+		{554266B4-F759-4E07-90D6-76AA70B8D342} = {50054D0B-FB95-4508-A02B-874B18275C22}
 	EndGlobalSection
 EndGlobal
