@@ -5,14 +5,14 @@ using CodeLearn.Domain.TestingSessions.ValueObjects;
 namespace CodeLearn.Application.ExerciseSubmissions.Question.Commands.CreateQuestionExerciseSubmission;
 
 public record CreateQuestionExerciseSubmissionCommand(int TestingSessionId, int ExerciseId, int[] SelectedAnswers) 
-    : IRequest<OneOf<long, ValidationFailed, NotFound>>;
+    : IRequest<OneOf<long, ValidationFailed, NotFound, Conflict>>;
 
 public class CreateQuestionExerciseSubmissionCommandHandler(
     IApplicationDbContext _context,
     IValidator<CreateQuestionExerciseSubmissionCommand> _validator)
-    : IRequestHandler<CreateQuestionExerciseSubmissionCommand, OneOf<long, ValidationFailed, NotFound>>
+    : IRequestHandler<CreateQuestionExerciseSubmissionCommand, OneOf<long, ValidationFailed, NotFound, Conflict>>
 {
-    public async Task<OneOf<long, ValidationFailed, NotFound>> Handle(CreateQuestionExerciseSubmissionCommand request, CancellationToken cancellationToken)
+    public async Task<OneOf<long, ValidationFailed, NotFound, Conflict>> Handle(CreateQuestionExerciseSubmissionCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
@@ -37,7 +37,14 @@ public class CreateQuestionExerciseSubmissionCommandHandler(
             return new NotFound();
         }
 
-        // TODO: check for conflict if already exists
+        var submissionAlreadyExists = await _context.ChoiceExerciseSubmissions
+            .AnyAsync(x => x.ExerciseId == ExerciseId.Create(request.ExerciseId)
+                           && x.TestingSessionId == TestingSessionId.Create(request.TestingSessionId), cancellationToken);
+        
+        if (submissionAlreadyExists)
+        {
+            return new Conflict();
+        }
 
         var exerciseSubmission = ChoiceExerciseSubmission.Create(
                 ExerciseId.Create(request.ExerciseId),

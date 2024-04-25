@@ -114,7 +114,7 @@ const TestingSessions = {
 
 const ExerciseSubmissions = {
   createQuestionSubmission: (testingSessionId: number, request: CreateQuestionExerciseSubmissionRequest) =>
-    requests.post(`testing-sessions/${testingSessionId}/exercise-submissions`, request),
+    requests.post(`testing-sessions/${testingSessionId}/exercise-submissions/question`, request),
 };
 
 // const TestErrors = {

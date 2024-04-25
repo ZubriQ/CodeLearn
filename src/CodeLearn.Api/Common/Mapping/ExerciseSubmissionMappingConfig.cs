@@ -1,5 +1,8 @@
-﻿using CodeLearn.Application.ExerciseSubmissions.Question.Commands.CreateQuestionExerciseSubmission;
+﻿using CodeLearn.Application.ExerciseSubmissions.MethodCoding.Commands.CreateMethodCodingExerciseSubmission;
+using CodeLearn.Application.ExerciseSubmissions.Question.Commands.CreateQuestionExerciseSubmission;
 using CodeLearn.Application.ExerciseSubmissions.Question.Commands.CreateQuestionExerciseSubmissions;
+using CodeLearn.Contracts.Exercises.MethodCoding;
+using CodeLearn.Contracts.ExerciseSubmissions.MethodCoding;
 using CodeLearn.Contracts.ExerciseSubmissions.Question;
 
 namespace CodeLearn.Api.Common.Mapping;
@@ -13,8 +16,8 @@ public class ExerciseSubmissionMappingConfig : IRegister
                 .Map(dest => dest.TestingSessionId, src => src.TestingSessionId)
                 .Map(dest => dest, src => src.Request);
 
-        config.NewConfig<(int TestingSessionId, QuestionExerciseSubmissionRequest Request),
-            CreateQuestionExerciseSubmissionCommand>()
+        config.NewConfig<(int TestingSessionId, MethodCodingExerciseSubmissionRequest Request),
+            CreateMethodCodingExerciseSubmissionCommand>()
                 .Map(dest => dest.TestingSessionId, src => src.TestingSessionId)
                 .Map(dest => dest, src => src.Request);
     }

@@ -38,7 +38,6 @@ export default function TestingSessionPage() {
 
   const answeredQuestions = useSelector((state) => state.answeredQuestions);
   const isAnswered = (questionExerciseId: number) => answeredQuestions.includes(questionExerciseId);
-  const isCurrentQuestionAnswered = isAnswered(currentExercise);
 
   // Questions
   const selectedChoices = useSelector((state) =>
@@ -338,7 +337,7 @@ export default function TestingSessionPage() {
             <>
               {/* Questions */}
               <div className="flex h-full flex-col rounded-xl border bg-white px-4">
-                <div className="-mx-4 flex items-center rounded-t-lg bg-green-600 p-1.5 text-white">
+                <div className="-mx-4 flex items-center rounded-t-xl bg-green-600 p-1.5 text-white">
                   <QuestionMarkCircleIcon width="20" height="20" className="mx-2 min-w-5" />
                   <p className="truncate font-semibold">
                     {currentExercise.isMultipleAnswers ? 'Select at least 2 answers' : 'Select correct answer'}
@@ -354,7 +353,7 @@ export default function TestingSessionPage() {
                         checked={isSelected(choice.id)}
                         onChange={() => toggleCheckbox(choice.id)}
                         disabled={isAnswered(currentExercise.id)}
-                        className="border-zinc-900 accent-neutral-900"
+                        className="size-4 cursor-pointer accent-neutral-900"
                       />
                       <p>{choice.text}</p>
                     </div>

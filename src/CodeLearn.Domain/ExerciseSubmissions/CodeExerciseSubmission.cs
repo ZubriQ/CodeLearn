@@ -21,13 +21,18 @@ public sealed class CodeExerciseSubmission : ExerciseSubmission
         RuntimeInMilliseconds = runtimeInMilliseconds;
     }
 
+    /// <summary>
+    /// Student attempts to solve a method coding exercise.
+    /// </summary>
+    /// <param name="exerciseId">Method coding exercise Id.</param>
+    /// <param name="testingSessionId">Testing session Id.</param>
+    /// <param name="sentDateTime">DateTime attempt created.</param>
+    /// <param name="studentCode">Written solution.</param>
     public static CodeExerciseSubmission Create(
         ExerciseId exerciseId,
         TestingSessionId testingSessionId,
         DateTimeOffset sentDateTime,
-        string studentCode,
-        string testingInformation,
-        int runtimeInMilliseconds)
+        string studentCode)
     {
         return new CodeExerciseSubmission(
             exerciseId,
@@ -35,7 +40,7 @@ public sealed class CodeExerciseSubmission : ExerciseSubmission
             sentDateTime,
             SubmissionTestStatus.Untested,
             studentCode,
-            testingInformation,
-            runtimeInMilliseconds);
+            string.Empty,
+            0);
     }
 }
