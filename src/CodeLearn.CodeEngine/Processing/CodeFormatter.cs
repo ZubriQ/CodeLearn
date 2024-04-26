@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace CodeLearn.CodeTester.Processing;
+namespace CodeLearn.CodeEngine.Processing;
 
 public class CodeFormatter
 {
@@ -13,7 +13,7 @@ public class CodeFormatter
     {
         _header = CodeInitializer.GetHeaderCode(className);
         var namespaces = FormatNamespaces();
-        
+
         return string.Concat(namespaces, _header, code, _footer);
     }
 
@@ -22,7 +22,7 @@ public class CodeFormatter
         StringBuilder sb = new();
         foreach (var namespaceString in _defaultNamespaces)
             sb.Append($"using {namespaceString};{Environment.NewLine}");
-        
+
         return sb.ToString();
     }
 }

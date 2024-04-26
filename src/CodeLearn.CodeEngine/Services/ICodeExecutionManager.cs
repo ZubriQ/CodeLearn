@@ -1,6 +1,6 @@
-﻿using CodeLearn.CodeTester.Models;
+﻿using CodeLearn.CodeEngine.Models;
 
-namespace CodeLearn.CodeTester.Services;
+namespace CodeLearn.CodeEngine.Services;
 
 public interface ICodeExecutionManager
 {

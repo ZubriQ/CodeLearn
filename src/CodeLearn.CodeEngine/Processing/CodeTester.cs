@@ -1,8 +1,8 @@
-﻿using System.Reflection;
+﻿using CodeLearn.CodeEngine.Models;
+using System.Reflection;
 using System.Runtime.CompilerServices;
-using CodeLearn.CodeTester.Models;
 
-namespace CodeLearn.CodeTester.Processing;
+namespace CodeLearn.CodeEngine.Processing;
 
 public class CodeTester
 {
@@ -42,12 +42,12 @@ public class CodeTester
     public bool Test(CodeExercise exercise)
     {
         Exercise = exercise;
-        
+
         try
         {
             GetMethodFromAssembly();
-            var isSuccess = TestMethodTestCases();
-            
+            var isSuccess = TestMethodWithTestCases();
+
             UnloadAndFinalize();
             return isSuccess;
         }
@@ -62,53 +62,56 @@ public class CodeTester
         _assemblyLoader = new HostAssemblyLoadContext(CodeCompiler.AssemblyPath);
         _methodDllAssembly = _assemblyLoader.LoadFromAssemblyPath(CodeCompiler.AssemblyPath);
         _type = _methodDllAssembly.GetTypes().FirstOrDefault(t => t.Name == ClassName);
-            
+
         if (_type == null || string.IsNullOrEmpty(MethodName))
         {
             return;
         }
-            
+
         _classInstance = Activator.CreateInstance(_type, null);
         _method = _type.GetMethod(MethodName, BindingFlags.Public | BindingFlags.Static);
     }
-    
+
     // TODO: optimize
-    private bool TestMethodTestCases()
+    private bool TestMethodWithTestCases()
     {
         var success = false;
-            
-        if (_method != null)
+
+        if (_method == null)
         {
-            var parametersArray = new object[ParametersLength];
+            return success;
+        }
 
-            var methodParameters = Exercise.MethodParameters.ToArray();
+        var parametersArray = new object[ParametersLength];
 
-            foreach (var testCase in Exercise.TestCases)
+        var methodParameters = Exercise.MethodParameters.ToArray();
+
+        foreach (var testCase in Exercise.TestCases)
+        {
+            var testCaseParameters = testCase.TestCaseParameters.ToArray();
+
+            for (var p = 0; p < methodParameters.Length; p++)
             {
-                var testCaseParameters = testCase.TestCaseParameters.ToArray();
+                var paramType = Type.GetType(methodParameters[p].SystemName);
+                var convertedType = Convert.ChangeType(testCaseParameters[p].Value, paramType!);
+                parametersArray[p] = convertedType;
+            }
+            dynamic? methodResult = _method.Invoke(_classInstance,
+                ParametersLength == 0 ? null : parametersArray);
 
-                for (var p = 0; p < methodParameters.Length; p++)
-                {
-                    var paramType = Type.GetType(methodParameters[p].SystemName);
-                    var convertedType = Convert.ChangeType(testCaseParameters[p].Value, paramType!);
-                    parametersArray[p] = convertedType;
-                }
-                dynamic? methodResult = _method.Invoke(_classInstance,
-                    ParametersLength == 0 ? null : parametersArray);
+            var testResultType = Type.GetType(Exercise.MethodReturnTypeSystemName);
+            dynamic testResult = Convert.ChangeType(testCase.CorrectOutputValue, testResultType!);
 
-                var testResultType = Type.GetType(Exercise.MethodReturnTypeSystemName);
-                dynamic testResult = Convert.ChangeType(testCase.CorrectOutputValue, testResultType!);
-
-                if (methodResult == testResult)
-                {
-                    success = true;
-                }
-                else
-                {
-                    return false;
-                }
+            if (methodResult == testResult)
+            {
+                success = true;
+            }
+            else
+            {
+                return false;
             }
         }
+
         return success;
     }
 

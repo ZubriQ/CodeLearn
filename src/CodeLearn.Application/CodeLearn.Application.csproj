@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CodeLearn.CodeTester\CodeLearn.CodeTester.csproj" />
+    <ProjectReference Include="..\CodeLearn.CodeEngine\CodeLearn.CodeEngine.csproj" />
     <ProjectReference Include="..\CodeLearn.Domain\CodeLearn.Domain.csproj" />
   </ItemGroup>
 

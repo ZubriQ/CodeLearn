@@ -1,9 +1,9 @@
-namespace CodeLearn.CodeTester.Models;
+namespace CodeLearn.CodeEngine.Models;
 
 public class CodeExercise
 {
     public string ClassName { get; set; } = string.Empty;
-    
+
     public string StudentCode { get; set; } = string.Empty;
     public string MethodToExecute { get; set; } = string.Empty;
     public string MethodReturnTypeSystemName { get; set; } = string.Empty;

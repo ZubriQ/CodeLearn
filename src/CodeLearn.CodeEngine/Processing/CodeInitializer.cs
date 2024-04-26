@@ -1,4 +1,4 @@
-﻿namespace CodeLearn.CodeTester.Processing;
+﻿namespace CodeLearn.CodeEngine.Processing;
 
 /// <summary>
 /// Initializes initial data.

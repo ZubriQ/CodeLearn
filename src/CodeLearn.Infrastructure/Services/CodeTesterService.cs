@@ -1,6 +1,6 @@
 ﻿using CodeLearn.Application.Common.Interfaces;
-using CodeLearn.CodeTester.Models;
-using CodeLearn.CodeTester.Services;
+using CodeLearn.CodeEngine.Models;
+using CodeLearn.CodeEngine.Services;
 using CodeLearn.Domain.Exercises;
 
 namespace CodeLearn.Infrastructure.Services;

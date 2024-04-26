@@ -1,7 +1,7 @@
-﻿using CodeLearn.CodeTester.Models;
-using CodeLearn.CodeTester.Processing;
+﻿using CodeLearn.CodeEngine.Models;
+using CodeLearn.CodeEngine.Processing;
 
-namespace CodeLearn.CodeTester.Services;
+namespace CodeLearn.CodeEngine.Services;
 
 public class CodeExecutionManager(CodeFormatter formatter, CodeCompiler compiler, Processing.CodeTester tester) : ICodeExecutionManager
 {

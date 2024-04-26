@@ -1,4 +1,4 @@
-namespace CodeLearn.CodeTester.Models;
+namespace CodeLearn.CodeEngine.Models;
 
 public class TestCase
 {

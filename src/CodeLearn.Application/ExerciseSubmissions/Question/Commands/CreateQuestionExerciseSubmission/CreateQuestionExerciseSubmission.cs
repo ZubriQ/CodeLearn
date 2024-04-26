@@ -4,7 +4,7 @@ using CodeLearn.Domain.TestingSessions.ValueObjects;
 
 namespace CodeLearn.Application.ExerciseSubmissions.Question.Commands.CreateQuestionExerciseSubmission;
 
-public record CreateQuestionExerciseSubmissionCommand(int TestingSessionId, int ExerciseId, int[] SelectedAnswers) 
+public record CreateQuestionExerciseSubmissionCommand(int TestingSessionId, int ExerciseId, int[] SelectedAnswers)
     : IRequest<OneOf<long, ValidationFailed, NotFound, Conflict>>;
 
 public class CreateQuestionExerciseSubmissionCommandHandler(
@@ -40,7 +40,7 @@ public class CreateQuestionExerciseSubmissionCommandHandler(
         var submissionAlreadyExists = await _context.ChoiceExerciseSubmissions
             .AnyAsync(x => x.ExerciseId == ExerciseId.Create(request.ExerciseId)
                            && x.TestingSessionId == TestingSessionId.Create(request.TestingSessionId), cancellationToken);
-        
+
         if (submissionAlreadyExists)
         {
             return new Conflict();

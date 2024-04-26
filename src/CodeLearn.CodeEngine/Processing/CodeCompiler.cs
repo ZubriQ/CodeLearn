@@ -1,8 +1,9 @@
-﻿using System.Reflection;
+﻿using CodeLearn.CodeEngine.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using System.Reflection;
 
-namespace CodeLearn.CodeTester.Processing;
+namespace CodeLearn.CodeEngine.Processing;
 
 public class CodeCompiler
 {
@@ -19,7 +20,7 @@ public class CodeCompiler
         return Uri.UnescapeDataString(uri.Path);
     }
 
-    private static readonly string RuntimePath = 
+    private static readonly string RuntimePath =
         Path.GetDirectoryName(typeof(object).GetTypeInfo().Assembly.Location) + @"\{0}.dll";
 
     private static readonly IEnumerable<MetadataReference> DefaultReferences = new[]
@@ -45,14 +46,20 @@ public class CodeCompiler
                 references: DefaultReferences,
                 options: options);
 
-            _assemblyDirectory = Path.GetDirectoryName(GetPath())!;
+            // Analyze code for infinite loops and recursion
+            var codeAnalyzer = new CodeAnalyzer(tree, compilation);
+            var (hasInfiniteLoop, hasRecursion) = codeAnalyzer.AnalyzeForInfiniteLoopsOrRecursion();
 
+            if (hasInfiniteLoop || hasRecursion) 
+            {
+                return false;
+            }
+
+            _assemblyDirectory = Path.GetDirectoryName(GetPath())!;
             _dllFileName = Guid.NewGuid() + ".dll";
 
             var buildConfigurationDirectory = Path.Combine("bin", "Debug", "net8.0"); // TODO: or "Release"
-            
             var dllPath = Path.Combine(buildConfigurationDirectory, _dllFileName);
-
             var result = compilation.Emit(dllPath);
 
             return result.Success;

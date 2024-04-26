@@ -14,7 +14,7 @@ public record CreateMethodCodingExerciseSubmissionCommand(
 public class CreateMethodCodingExerciseSubmissionCommandHandler(
     IApplicationDbContext _context,
     IValidator<CreateMethodCodingExerciseSubmissionCommand> _validator,
-    ICodeTesterService _codeTesterService) 
+    ICodeTesterService _codeTesterService)
     : IRequestHandler<CreateMethodCodingExerciseSubmissionCommand, OneOf<string, ValidationFailed, NotFound>>
 {
     public async Task<OneOf<string, ValidationFailed, NotFound>> Handle(CreateMethodCodingExerciseSubmissionCommand request, CancellationToken cancellationToken)
@@ -56,16 +56,35 @@ public class CreateMethodCodingExerciseSubmissionCommandHandler(
         await _context.SaveChangesAsync(cancellationToken);
 
         // Test method coding exercise submission
-
-        var testingResult = await _codeTesterService.TestMethodAsync(exercise, request.MethodSolutionCode);
-
-        if (testingResult)
+        var testingTask = Task.Run(async () =>
         {
-            submission.SetStatus(SubmissionTestStatus.Solved);
+            try
+            {
+                var testingResult = await _codeTesterService.TestMethodAsync(exercise, request.MethodSolutionCode);
+                return testingResult;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }, cancellationToken);
+
+        // Wait for the testing task to complete, with a timeout to prevent indefinite waiting
+        if (await Task.WhenAny(testingTask, Task.Delay(TimeSpan.FromSeconds(2), cancellationToken)) == testingTask)
+        {
+            var testingResult = await testingTask;
+            if (testingResult)
+            {
+                submission.SetStatus(SubmissionTestStatus.Solved);
+            }
+            else
+            {
+                submission.SetStatus(SubmissionTestStatus.Unsolved);
+            }
         }
         else
         {
-            submission.SetStatus(SubmissionTestStatus.Unsolved);
+            submission.SetStatus(SubmissionTestStatus.Timeout);
         }
 
         await _context.SaveChangesAsync(cancellationToken);

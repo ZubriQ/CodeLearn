@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.Loader;
 
-namespace CodeLearn.CodeTester;
+namespace CodeLearn.CodeEngine;
 
 internal class HostAssemblyLoadContext(string pluginPath) : AssemblyLoadContext(isCollectible: true)
 {
@@ -14,7 +14,7 @@ internal class HostAssemblyLoadContext(string pluginPath) : AssemblyLoadContext(
         {
             return null;
         }
-        
+
         Console.WriteLine($"Loading assembly {assemblyPath} into the HostAssemblyLoadContext");
         return LoadFromAssemblyPath(assemblyPath);
     }

@@ -1,7 +1,5 @@
 ﻿using CodeLearn.Application.ExerciseSubmissions.MethodCoding.Commands.CreateMethodCodingExerciseSubmission;
-using CodeLearn.Application.ExerciseSubmissions.Question.Commands.CreateQuestionExerciseSubmission;
 using CodeLearn.Application.ExerciseSubmissions.Question.Commands.CreateQuestionExerciseSubmissions;
-using CodeLearn.Contracts.Exercises.MethodCoding;
 using CodeLearn.Contracts.ExerciseSubmissions.MethodCoding;
 using CodeLearn.Contracts.ExerciseSubmissions.Question;
 
