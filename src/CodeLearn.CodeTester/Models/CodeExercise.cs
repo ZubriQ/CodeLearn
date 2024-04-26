@@ -1,6 +1,6 @@
 namespace CodeLearn.CodeTester.Models;
 
-public class Exercise
+public class CodeExercise
 {
     public string ClassName { get; set; } = string.Empty;
     

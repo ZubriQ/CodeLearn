@@ -42,6 +42,7 @@ public sealed class TestsMethodCodingExercisesController(ISender _sender, IMappe
     [HttpPost]
     [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Create(int testId, MethodCodingExerciseRequest request)
     {
         var command = _mapper.Map<CreateMethodCodingExerciseCommand>((testId, request));
@@ -49,7 +50,7 @@ public sealed class TestsMethodCodingExercisesController(ISender _sender, IMappe
 
         return result.Match(
             id => CreatedAtAction(nameof(Create), new { id }, id),
-            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Not found."),
-            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."));
+            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."),
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Not found."));
     }
 }

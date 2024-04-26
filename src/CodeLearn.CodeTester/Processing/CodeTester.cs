@@ -12,7 +12,7 @@ public class CodeTester
     private object? _classInstance;
     private MethodInfo? _method;
 
-    public Exercise Exercise { get; private set; } = null!;
+    public CodeExercise Exercise { get; private set; } = null!;
     public string ClassName => Exercise.ClassName;
     public string MethodName => Exercise.MethodToExecute;
 
@@ -39,7 +39,7 @@ public class CodeTester
     /// </summary>
     /// <returns>Returns true if there were no exceptions.</returns>
     [MethodImpl(MethodImplOptions.NoInlining)]
-    public bool Test(Exercise exercise)
+    public bool Test(CodeExercise exercise)
     {
         Exercise = exercise;
         
@@ -51,7 +51,7 @@ public class CodeTester
             UnloadAndFinalize();
             return isSuccess;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             return false;
         }

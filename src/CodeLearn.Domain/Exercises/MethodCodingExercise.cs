@@ -13,7 +13,6 @@ public sealed class MethodCodingExercise : Exercise
     private readonly IList<TestCase> _testCases = [];
     public IReadOnlyList<TestCase> TestCases => _testCases.AsReadOnly();
 
-
     private readonly IList<ExerciseNote> _exerciseNotes = [];
     public IReadOnlyList<ExerciseNote> ExerciseNotes => _exerciseNotes.AsReadOnly();
 

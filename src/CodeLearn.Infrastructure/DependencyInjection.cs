@@ -1,5 +1,6 @@
 ﻿using CodeLearn.Application.Common.Interfaces;
 using CodeLearn.Application.ExerciseSubmissions.MethodCoding.Commands.CreateExerciseSubmission;
+using CodeLearn.CodeTester.Processing;
 using CodeLearn.Domain.StudentGroups.ValueObjects;
 using CodeLearn.Domain.Testings.ValueObjects;
 using CodeLearn.Domain.TestingSessions.ValueObjects;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using CodeLearn.CodeTester.Services;
 
 namespace CodeLearn.Infrastructure;
 
@@ -70,6 +72,8 @@ public static class DependencyInjection
         services.AddJwtAuth(configuration);
 
         services.AddScoped<IFileProcessingService, FileProcessingService>();
+
+        services.AddCodeTesterService();
 
         return services;
     }
@@ -148,6 +152,24 @@ public static class DependencyInjection
         });
 
         services.AddAuthorization();
+
+        return services;
+    }
+
+    private static IServiceCollection AddCodeTesterService(this IServiceCollection services)
+    {
+        // TODO: More clean way / Dependency inversion
+        services.AddScoped<CodeFormatter>();
+        services.AddScoped<CodeCompiler>();
+        services.AddScoped<CodeTester.Processing.CodeTester>();
+
+        services.AddScoped<ICodeExecutionManager>(sp =>
+        new CodeExecutionManager(sp.GetRequiredService<CodeFormatter>(),
+                                 sp.GetRequiredService<CodeCompiler>(),
+                                 sp.GetRequiredService<CodeTester.Processing.CodeTester>()));
+
+        services.AddScoped<ICodeTesterService>(sp =>
+            new CodeTesterService(sp.GetRequiredService<ICodeExecutionManager>()));
 
         return services;
     }

@@ -14,7 +14,7 @@ public class CreateMethodCodingExerciseCommandValidator : AbstractValidator<Crea
 
         RuleFor(x => x.Description)
             .NotEmpty()
-            .MaximumLength(50);
+            .MaximumLength(300);
 
         // TODO: Add the rest props validation
     }

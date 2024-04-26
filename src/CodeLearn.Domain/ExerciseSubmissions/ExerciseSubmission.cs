@@ -11,4 +11,9 @@ public abstract class ExerciseSubmission(
     public TestingSessionId TestingSessionId { get; private set; } = testingSessionId;
     public DateTimeOffset SentDateTime { get; private set; } = sentDateTime;
     public SubmissionTestStatus Status { get; private set; } = status;
+
+    public void SetStatus(SubmissionTestStatus status)
+    {
+        Status = status;
+    }
 }
