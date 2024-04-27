@@ -1,4 +1,6 @@
-﻿using CodeLearn.CodeEngine.Models;
+﻿using CodeLearn.CodeEngine.Errors;
+using CodeLearn.CodeEngine.Models;
+using CodeLearn.Domain.Common.Result;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -39,21 +41,22 @@ public class CodeTester
     /// </summary>
     /// <returns>Returns true if there were no exceptions.</returns>
     [MethodImpl(MethodImplOptions.NoInlining)]
-    public bool Test(CodeExercise exercise)
+    public Result Test(CodeExercise exercise)
     {
         Exercise = exercise;
 
         try
         {
             GetMethodFromAssembly();
-            var isSuccess = TestMethodWithTestCases();
+            var result = TestMethodWithTestCases();
 
             UnloadAndFinalize();
-            return isSuccess;
+            return result;
         }
         catch (Exception ex)
         {
-            return false;
+            return Result.Failure(new Domain.Common.Errors.Error(
+                "CodeEngine.CodeTester.Test", $"Unexpected error: {ex.Message}"));
         }
     }
 
@@ -73,13 +76,11 @@ public class CodeTester
     }
 
     // TODO: optimize
-    private bool TestMethodWithTestCases()
+    private Result TestMethodWithTestCases()
     {
-        var success = false;
-
         if (_method == null)
         {
-            return success;
+            return Result.Failure(CodeEngineErrors.CodeTesting.MethodNotFound);
         }
 
         var parametersArray = new object[ParametersLength];
@@ -102,17 +103,13 @@ public class CodeTester
             var testResultType = Type.GetType(Exercise.MethodReturnTypeSystemName);
             dynamic testResult = Convert.ChangeType(testCase.CorrectOutputValue, testResultType!);
 
-            if (methodResult == testResult)
+            if (methodResult != testResult)
             {
-                success = true;
-            }
-            else
-            {
-                return false;
+                return Result.Failure(CodeEngineErrors.CodeTesting.TestCasesFailed);
             }
         }
 
-        return success;
+        return Result.Success();
     }
 
     private void UnloadAndFinalize()

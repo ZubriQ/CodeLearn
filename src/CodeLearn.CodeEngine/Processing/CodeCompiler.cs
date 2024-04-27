@@ -1,4 +1,6 @@
 ﻿using CodeLearn.CodeEngine.Analyzers;
+using CodeLearn.CodeEngine.Errors;
+using CodeLearn.Domain.Common.Result;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using System.Reflection;
@@ -35,7 +37,7 @@ public class CodeCompiler
     };
 
     /// <returns>Returns true if .cs file code compiles successfully.</returns>
-    public bool Compile(string formattedCode)
+    public Result Compile(string formattedCode)
     {
         try
         {
@@ -46,13 +48,17 @@ public class CodeCompiler
                 references: DefaultReferences,
                 options: options);
 
-            // Analyze code for infinite loops and recursion
             var codeAnalyzer = new CodeAnalyzer(tree, compilation);
             var (hasInfiniteLoop, hasRecursion) = codeAnalyzer.AnalyzeForInfiniteLoopsOrRecursion();
 
-            if (hasInfiniteLoop || hasRecursion) 
+            if (hasInfiniteLoop)
             {
-                return false;
+                return Result.Failure(CodeEngineErrors.Compilation.InfiniteLoopDetected);
+            }
+
+            if (hasRecursion)
+            {
+                return Result.Failure(CodeEngineErrors.Compilation.RecursionDetected);
             }
 
             _assemblyDirectory = Path.GetDirectoryName(GetPath())!;
@@ -62,11 +68,11 @@ public class CodeCompiler
             var dllPath = Path.Combine(buildConfigurationDirectory, _dllFileName);
             var result = compilation.Emit(dllPath);
 
-            return result.Success;
+            return Result.Success();
         }
         catch (Exception)
         {
-            return false;
+            return Result.Failure(CodeEngineErrors.Compilation.MethodCompilationFailed);
         }
     }
 }

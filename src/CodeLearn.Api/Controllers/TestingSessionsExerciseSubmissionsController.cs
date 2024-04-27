@@ -42,7 +42,7 @@ public sealed class TestingSessionsExerciseSubmissionsController(IMapper _mapper
     }
 
     [HttpPost("method-coding")]
-    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(MethodCodingExerciseSubmissionResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateMethodCodingSubmission(
         int testingSessionId, [FromBody] MethodCodingExerciseSubmissionRequest request)
@@ -51,7 +51,7 @@ public sealed class TestingSessionsExerciseSubmissionsController(IMapper _mapper
         var result = await _sender.Send(command);
 
         return result.Match(
-            Ok,
+            result => Ok(_mapper.Map<MethodCodingExerciseSubmissionResponse>(result)),
             _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."),
             _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Not found."));
     }

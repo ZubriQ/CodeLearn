@@ -1,4 +1,5 @@
-﻿using CodeLearn.Domain.Exercises.ValueObjects;
+﻿using CodeLearn.Domain.Common.Result;
+using CodeLearn.Domain.Exercises.ValueObjects;
 using CodeLearn.Domain.ExerciseSubmissions;
 using CodeLearn.Domain.ExerciseSubmissions.Enums;
 using CodeLearn.Domain.TestingSessions.ValueObjects;
@@ -9,15 +10,15 @@ public record CreateMethodCodingExerciseSubmissionCommand(
     int TestingSessionId,
     int ExerciseId,
     string MethodSolutionCode)
-    : IRequest<OneOf<string, ValidationFailed, NotFound>>;
+    : IRequest<OneOf<Result, ValidationFailed, NotFound>>;
 
 public class CreateMethodCodingExerciseSubmissionCommandHandler(
     IApplicationDbContext _context,
     IValidator<CreateMethodCodingExerciseSubmissionCommand> _validator,
     ICodeTesterService _codeTesterService)
-    : IRequestHandler<CreateMethodCodingExerciseSubmissionCommand, OneOf<string, ValidationFailed, NotFound>>
+    : IRequestHandler<CreateMethodCodingExerciseSubmissionCommand, OneOf<Result, ValidationFailed, NotFound>>
 {
-    public async Task<OneOf<string, ValidationFailed, NotFound>> Handle(CreateMethodCodingExerciseSubmissionCommand request, CancellationToken cancellationToken)
+    public async Task<OneOf<Result, ValidationFailed, NotFound>> Handle(CreateMethodCodingExerciseSubmissionCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
@@ -56,24 +57,26 @@ public class CreateMethodCodingExerciseSubmissionCommandHandler(
         await _context.SaveChangesAsync(cancellationToken);
 
         // Test method coding exercise submission
+        Result testingResult = null!;
+
         var testingTask = Task.Run(async () =>
         {
             try
             {
-                var testingResult = await _codeTesterService.TestMethodAsync(exercise, request.MethodSolutionCode);
-                return testingResult;
+                var result = await _codeTesterService.TestMethodAsync(exercise, request.MethodSolutionCode);
+                testingResult = result.IsSuccess ? Result.Success() : Result.Failure(result.Error);
             }
             catch (Exception)
             {
-                return false;
+                testingResult = Result.Failure(ApplicationErrors.ExerciseSubmissions.UnexpectedCodeTesterServiceException);
             }
         }, cancellationToken);
 
         // Wait for the testing task to complete, with a timeout to prevent indefinite waiting
-        if (await Task.WhenAny(testingTask, Task.Delay(TimeSpan.FromSeconds(2), cancellationToken)) == testingTask)
+        var completedTask = await Task.WhenAny(testingTask, Task.Delay(TimeSpan.FromSeconds(2), cancellationToken));
+        if (completedTask == testingTask)
         {
-            var testingResult = await testingTask;
-            if (testingResult)
+            if (testingResult.IsSuccess)
             {
                 submission.SetStatus(SubmissionTestStatus.Solved);
             }
@@ -84,11 +87,14 @@ public class CreateMethodCodingExerciseSubmissionCommandHandler(
         }
         else
         {
+            testingResult = Result.Failure(ApplicationErrors.ExerciseSubmissions.TestingTimeout);
             submission.SetStatus(SubmissionTestStatus.Timeout);
         }
 
+        submission.SetTestingInformation(testingResult);
+
         await _context.SaveChangesAsync(cancellationToken);
 
-        return submission.Status.ToString();
+        return testingResult;
     }
 }

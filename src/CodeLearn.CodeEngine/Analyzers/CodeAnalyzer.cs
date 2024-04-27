@@ -3,6 +3,10 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace CodeLearn.CodeEngine.Analyzers;
 
+/// <summary>
+/// Analyzers' entry point;
+/// gathers all analyzers and checks code
+/// </summary>
 public class CodeAnalyzer(SyntaxTree tree, CSharpCompilation compilation)
 {
     private readonly SemanticModel _model = compilation.GetSemanticModel(tree);

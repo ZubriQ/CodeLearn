@@ -1,22 +1,24 @@
 ﻿using CodeLearn.CodeEngine.Models;
 using CodeLearn.CodeEngine.Processing;
+using CodeLearn.Domain.Common.Result;
 
 namespace CodeLearn.CodeEngine.Services;
 
-public class CodeExecutionManager(CodeFormatter formatter, CodeCompiler compiler, Processing.CodeTester tester) : ICodeExecutionManager
+public class CodeExecutionManager(CodeFormatter formatter, CodeCompiler compiler, CodeTester tester) : ICodeExecutionManager
 {
-    public async Task<bool> ExecuteAsync(CodeExercise exercise)
+    public async Task<Result> ExecuteAsync(CodeExercise exercise)
     {
         var formattedCode = formatter.Format(exercise.StudentCode, exercise.ClassName);
-        var isCompiled = compiler.Compile(formattedCode);
 
-        if (!isCompiled)
+        var compilationResult = compiler.Compile(formattedCode!);
+
+        if (compilationResult.IsFailure)
         {
-            return false;
+            return compilationResult;
         }
 
-        var isSuccess = tester.Test(exercise);
+        var testingResult = tester.Test(exercise);
 
-        return isSuccess;
+        return testingResult;
     }
 }

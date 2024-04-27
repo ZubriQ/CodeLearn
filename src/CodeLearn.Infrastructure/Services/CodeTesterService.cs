@@ -1,13 +1,14 @@
 ﻿using CodeLearn.Application.Common.Interfaces;
 using CodeLearn.CodeEngine.Models;
 using CodeLearn.CodeEngine.Services;
+using CodeLearn.Domain.Common.Result;
 using CodeLearn.Domain.Exercises;
 
 namespace CodeLearn.Infrastructure.Services;
 
 public class CodeTesterService(ICodeExecutionManager _executionManager) : ICodeTesterService
 {
-    public async Task<bool> TestMethodAsync(MethodCodingExercise methodCodingExercise, string studentCode)
+    public async Task<Result> TestMethodAsync(MethodCodingExercise methodCodingExercise, string studentCode)
     {
         var exercise = ConvertToExercise(methodCodingExercise, studentCode);
         return await _executionManager.ExecuteAsync(exercise);

@@ -4,11 +4,15 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CodeLearn.CodeEngine.Analyzers;
 
+/// <summary>
+/// Checks code for infinite loops and recursions
+/// But does not cover all loop cases
+/// </summary>
 public class InfiniteLoopAnalyzer : CSharpSyntaxWalker
 {
     private readonly SemanticModel _semanticModel;
-    private readonly HashSet<SyntaxNode> _visitedNodes = new HashSet<SyntaxNode>();
-    private readonly HashSet<string> _visitedMethods = new HashSet<string>();
+    private readonly HashSet<SyntaxNode> _visitedNodes = [];
+    private readonly HashSet<string> _visitedMethods = [];
 
     public bool HasInfiniteLoop { get; private set; } = false;
     public bool HasRecursion { get; private set; } = false;
@@ -18,16 +22,10 @@ public class InfiniteLoopAnalyzer : CSharpSyntaxWalker
         _semanticModel = semanticModel;
     }
 
-    private static bool IsAlwaysTrue(ExpressionSyntax condition)
-    {
-        if (condition is LiteralExpressionSyntax literal && literal.Kind() == SyntaxKind.TrueLiteralExpression)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
+    /// <summary>
+    /// Checks if a 'while' loop is infinite
+    /// Currently does not cover all cases
+    /// </summary>
     public override void VisitWhileStatement(WhileStatementSyntax node)
     {
         if (!_visitedNodes.Contains(node))
@@ -43,6 +41,10 @@ public class InfiniteLoopAnalyzer : CSharpSyntaxWalker
         base.VisitWhileStatement(node);
     }
 
+    /// <summary>
+    /// Checks if a 'for' loop is infinite
+    /// Currently does not cover all cases
+    /// </summary>
     public override void VisitForStatement(ForStatementSyntax node)
     {
         if (!_visitedNodes.Contains(node))
@@ -63,6 +65,22 @@ public class InfiniteLoopAnalyzer : CSharpSyntaxWalker
         base.VisitForStatement(node);
     }
 
+    /// <summary>
+    /// For for-while loops
+    /// </summary>
+    private static bool IsAlwaysTrue(ExpressionSyntax condition)
+    {
+        if (condition is LiteralExpressionSyntax literal && literal.Kind() == SyntaxKind.TrueLiteralExpression)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// For recursion check
+    /// </summary>
     public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
     {
         if (!_visitedNodes.Contains(node))
@@ -75,6 +93,9 @@ public class InfiniteLoopAnalyzer : CSharpSyntaxWalker
         }
     }
 
+    /// <summary>
+    /// For recursion check
+    /// </summary>
     public override void VisitInvocationExpression(InvocationExpressionSyntax node)
     {
         var methodName = GetInvokedMethodName(node);
@@ -86,6 +107,9 @@ public class InfiniteLoopAnalyzer : CSharpSyntaxWalker
         base.VisitInvocationExpression(node);
     }
 
+    /// <summary>
+    /// For recursion check
+    /// </summary>
     private static string? GetInvokedMethodName(InvocationExpressionSyntax node)
     {
         if (node.Expression is IdentifierNameSyntax identifierName)

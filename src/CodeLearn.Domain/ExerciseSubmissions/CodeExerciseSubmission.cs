@@ -43,4 +43,9 @@ public sealed class CodeExerciseSubmission : ExerciseSubmission
             string.Empty,
             0);
     }
+
+    public void SetTestingInformation(Result testingResult)
+    {
+        TestingInformation = testingResult.Error.Message;
+    }
 }
