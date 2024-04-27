@@ -1,6 +1,6 @@
 ﻿using CodeLearn.Application.TestingSessions.Commands.CreateTestingSession;
 using CodeLearn.Application.TestingSessions.Queries.GetAllMyTestingSessions;
-using CodeLearn.Application.TestingSessions.Queries.GetAnsweredQuestionExercisesById;
+using CodeLearn.Application.TestingSessions.Queries.GetCompletedExerciseIdsById;
 using CodeLearn.Application.TestingSessions.Queries.GetTestingSessionById;
 using CodeLearn.Contracts.TestingSessions;
 using System.Security.Claims;
@@ -56,12 +56,12 @@ public sealed class TestingSessionsController(ISender _sender, IMapper _mapper) 
             _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Testing not found."));
     }
 
-    [HttpGet("{testingSessionId:int}/answered-questions")]
+    [HttpGet("{testingSessionId:int}/completed-exercises")]
     [ProducesResponseType(typeof(int[]), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAnsweredQuestionsById(int testingSessionId)
     {
-        var result = await _sender.Send(new GetAnsweredQuestionExercisesByIdQuery(testingSessionId));
+        var result = await _sender.Send(new GetCompletedExerciseIdsByIdQuery(testingSessionId));
 
         return result.Match(
             Ok,
