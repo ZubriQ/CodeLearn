@@ -4,6 +4,7 @@ import { Textarea } from '@/components/ui/textarea.tsx';
 import { Button } from '@/components/ui/button.tsx';
 
 interface MethodCodingExerciseProps {
+  isExerciseCompleted: boolean;
   methodSolutionCode: string;
   onMethodSolutionCodeChange: (value: string) => void;
   handleBack: () => void;
@@ -14,6 +15,7 @@ interface MethodCodingExerciseProps {
 }
 
 export default function MethodCodingExerciseBlock({
+  isExerciseCompleted,
   methodSolutionCode,
   onMethodSolutionCodeChange,
   handleBack,
@@ -44,7 +46,7 @@ export default function MethodCodingExerciseBlock({
           <p className="truncate font-semibold">Output</p>
         </div>
         <div className="mt-4 flex flex-col">
-          <Textarea className="h-28 resize-none rounded-sm" readOnly={true} value={outputTextareaValue} />
+          <Textarea className="h-24 resize-none rounded-sm" readOnly={true} value={outputTextareaValue} />
         </div>
         <div className="mb-4 mt-4 flex flex-wrap justify-between gap-2 space-x-2">
           <div className="flex space-x-2">
@@ -52,14 +54,23 @@ export default function MethodCodingExerciseBlock({
               <ChevronLeft width="18" className="-ml-1" />
               Back
             </Button>
-            <Button variant="secondary" className="hover:bg-zinc-200" onClick={handleReset}>
+            <Button
+              variant="secondary"
+              className="hover:bg-zinc-200"
+              disabled={isExerciseCompleted}
+              onClick={handleReset}
+            >
               <RotateCw width="16" className="-ml-1 mr-2" />
               Reset
             </Button>
           </div>
           <div className="flex space-x-2">
-            <Button className="bg-green-600 hover:bg-green-700" onClick={handleSendMethodCodingSolution}>
-              Attempt
+            <Button
+              className="bg-green-600 hover:bg-green-700"
+              disabled={isExerciseCompleted}
+              onClick={handleSendMethodCodingSolution}
+            >
+              {isExerciseCompleted ? 'Completed' : 'Attempt'}
             </Button>
             <Button variant="outline" onClick={handleNext}>
               Next

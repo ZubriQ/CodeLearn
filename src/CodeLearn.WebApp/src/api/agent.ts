@@ -1,11 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
+import { store } from '@/app/store.ts';
 import { LoginRequest } from '@/api/users/LoginRequest.ts';
 import { CreateMethodCodingRequest } from '@/api/exercises/CreateMethodCodingRequest.ts';
 import { CreateQuestionRequest } from '@/api/exercises/CreateQuestionRequest.ts';
 import { CreateTestingRequest } from '@/api/testings/CreateTestingRequest.ts';
 import { RegisterStudentRequest } from '@/api/users/RegisterStudentRequest.ts';
 import { LoginResponse } from '@/api/users/LoginResponse.ts';
-import { store } from '@/app/store.ts';
+import { CreateMethodCodingExerciseSubmissionRequest } from '@/api/exercise-submissions/CreateMethodCodingExerciseSubmissionRequest.ts';
+import { CreateQuestionExerciseSubmissionRequest } from '@/api/exercise-submissions/CreateQuestionExerciseSubmissionsRequest.ts';
 
 axios.defaults.baseURL = 'https://localhost:5001/api/';
 
@@ -115,6 +117,8 @@ const TestingSessions = {
 const ExerciseSubmissions = {
   createQuestionSubmission: (testingSessionId: number, request: CreateQuestionExerciseSubmissionRequest) =>
     requests.post(`testing-sessions/${testingSessionId}/exercise-submissions/question`, request),
+  createMethodCodingSubmission: (testingSessionId: number, request: CreateMethodCodingExerciseSubmissionRequest) =>
+    requests.post(`testing-sessions/${testingSessionId}/exercise-submissions/method-coding`, request),
 };
 
 // const TestErrors = {

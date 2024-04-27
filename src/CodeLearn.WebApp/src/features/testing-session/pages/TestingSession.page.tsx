@@ -37,7 +37,7 @@ export default function TestingSessionPage() {
   const [outputTextareaValue, setOutputTextareaValue] = useState<string>('');
 
   const completedExercises = useSelector((state) => state.completedExercises);
-  const isAnswered = (questionExerciseId: number) => completedExercises.includes(questionExerciseId);
+  const isCompleted = (exerciseId: number) => completedExercises.includes(exerciseId);
 
   // Questions
   const selectedChoices = useSelector((state) =>
@@ -199,7 +199,27 @@ export default function TestingSessionPage() {
     setMethodSolutionCode(initialMethodSolutionCode);
   };
 
-  const handleSendMethodCodingSolution = () => {};
+  const handleSendMethodCodingSolution = async () => {
+    const testingSessionId = parseInt(id, 10);
+
+    const requestPayload = {
+      exerciseId: currentExercise.id,
+      methodSolutionCode: methodSolutionCode,
+    };
+
+    try {
+      const response = await agent.ExerciseSubmissions.createMethodCodingSubmission(testingSessionId, requestPayload);
+      setOutputTextareaValue(response.testingInfoOutput);
+      dispatch(setCompletedExercises([...completedExercises, currentExercise.id]));
+    } catch (error) {
+      // Handle errors
+      toast({
+        title: 'Submission failed',
+        description: error.message || 'An unexpected error occurred.',
+        variant: 'destructive',
+      });
+    }
+  };
 
   const handleSendQuestionChoices = async () => {
     const testingSessionId = parseInt(id, 10);
@@ -232,12 +252,12 @@ export default function TestingSessionPage() {
         {/* Row for Questions */}
         <div className="flex flex-wrap items-center space-x-1.5 space-y-1">
           <span className="whitespace-nowrap">Questions:</span>
-          {test?.questionExercises.map((questionId, index) => (
+          {test?.questionExercises.map((exerciseId, index) => (
             <Button
-              key={questionId}
+              key={exerciseId}
               className={`size-7 rounded-md p-0 text-xs`}
-              variant={`${isAnswered(questionId) ? 'default' : 'outline'}`}
-              onClick={() => fetchAndSetQuestionExercise(questionId)}
+              variant={`${isCompleted(exerciseId) ? 'default' : 'outline'}`}
+              onClick={() => fetchAndSetQuestionExercise(exerciseId)}
             >
               {index + 1}
             </Button>
@@ -251,7 +271,7 @@ export default function TestingSessionPage() {
             <Button
               key={exerciseId}
               className="size-7 rounded-md p-0 text-xs"
-              variant="outline"
+              variant={`${isCompleted(exerciseId) ? 'default' : 'outline'}`}
               onClick={() => fetchAndSetMethodCodingExercise(exerciseId)}
             >
               {index + 1}
@@ -325,6 +345,7 @@ export default function TestingSessionPage() {
         <ResizablePanel defaultSize={50} minSize={40} className="flex h-full flex-col">
           {isMethodCodingExercise(currentExercise) ? (
             <MethodCodingExerciseBlock
+              isExerciseCompleted={isCompleted(currentExercise.id)}
               methodSolutionCode={methodSolutionCode}
               onMethodSolutionCodeChange={setMethodSolutionCode}
               handleBack={handleBack}
@@ -352,7 +373,7 @@ export default function TestingSessionPage() {
                         type="checkbox"
                         checked={isSelected(choice.id)}
                         onChange={() => toggleCheckbox(choice.id)}
-                        disabled={isAnswered(currentExercise.id)}
+                        disabled={isCompleted(currentExercise.id)}
                         className="size-4 cursor-pointer accent-neutral-900"
                       />
                       <p>{choice.text}</p>
@@ -370,10 +391,10 @@ export default function TestingSessionPage() {
                   <div className="flex space-x-2">
                     <Button
                       className="bg-green-600 hover:bg-green-700"
-                      disabled={isAnswered(currentExercise.id)}
+                      disabled={isCompleted(currentExercise.id)}
                       onClick={handleSendQuestionChoices}
                     >
-                      Send
+                      {isCompleted(currentExercise.id) ? 'Completed' : 'Answer'}
                     </Button>
                     <Button variant="outline" onClick={handleNext}>
                       Next

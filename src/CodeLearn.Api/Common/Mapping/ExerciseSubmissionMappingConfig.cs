@@ -1,5 +1,5 @@
 ﻿using CodeLearn.Application.ExerciseSubmissions.MethodCoding.Commands.CreateMethodCodingExerciseSubmission;
-using CodeLearn.Application.ExerciseSubmissions.Question.Commands.CreateQuestionExerciseSubmissions;
+using CodeLearn.Application.ExerciseSubmissions.Question.Commands.CreateQuestionExerciseSubmission;
 using CodeLearn.Contracts.ExerciseSubmissions.MethodCoding;
 using CodeLearn.Contracts.ExerciseSubmissions.Question;
 using CodeLearn.Domain.Common.Result;
@@ -10,8 +10,8 @@ public class ExerciseSubmissionMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<(int TestingSessionId, QuestionExerciseSubmissionsRequest Request),
-            CreateQuestionExerciseSubmissionsCommand>()
+        config.NewConfig<(int TestingSessionId, QuestionExerciseSubmissionRequest Request),
+            CreateQuestionExerciseSubmissionCommand>()
                 .Map(dest => dest.TestingSessionId, src => src.TestingSessionId)
                 .Map(dest => dest, src => src.Request);
 
