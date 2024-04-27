@@ -8,14 +8,9 @@ using System.Text;
 
 namespace CodeLearn.Infrastructure.Services;
 
-public class TokenService : ITokenService
+public class TokenService(IConfiguration configuration) : ITokenService
 {
-    private readonly IConfiguration _configuration;
-
-    public TokenService(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
+    private readonly IConfiguration _configuration = configuration;
 
     public string GenerateTokenString(string userId, string username, string role, string? windowsAccountName = null)
     {

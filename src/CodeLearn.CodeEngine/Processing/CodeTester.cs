@@ -1,4 +1,5 @@
 ﻿using CodeLearn.CodeEngine.Errors;
+using CodeLearn.CodeEngine.Interfaces;
 using CodeLearn.CodeEngine.Models;
 using CodeLearn.Domain.Common.Result;
 using System.Reflection;
@@ -6,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace CodeLearn.CodeEngine.Processing;
 
-public class CodeTester
+public class CodeTester : ICodeTester
 {
     private HostAssemblyLoadContext? _assemblyLoader;
     private Assembly? _methodDllAssembly;

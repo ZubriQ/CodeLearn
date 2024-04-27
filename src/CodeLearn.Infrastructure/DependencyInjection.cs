@@ -1,5 +1,6 @@
 ﻿using CodeLearn.Application.Common.Interfaces;
 using CodeLearn.Application.ExerciseSubmissions.MethodCoding.Commands.CreateExerciseSubmission;
+using CodeLearn.CodeEngine.Interfaces;
 using CodeLearn.CodeEngine.Processing;
 using CodeLearn.Domain.StudentGroups.ValueObjects;
 using CodeLearn.Domain.Testings.ValueObjects;
@@ -157,15 +158,11 @@ public static class DependencyInjection
 
     private static IServiceCollection AddCodeTesterService(this IServiceCollection services)
     {
-        // TODO: More clean way / Dependency inversion
-        services.AddScoped<CodeFormatter>();
-        services.AddScoped<CodeCompiler>();
-        services.AddScoped<CodeTester>();
+        services.AddScoped<ICodeFormatter, CodeFormatter>();
+        services.AddScoped<ICodeCompiler, CodeCompiler>();
+        services.AddScoped<ICodeTester, CodeTester>();
 
-        services.AddScoped<ICodeTesterService>(sp =>
-        new CodeTesterService(sp.GetRequiredService<CodeFormatter>(),
-                                 sp.GetRequiredService<CodeCompiler>(),
-                                 sp.GetRequiredService<CodeTester>()));
+        services.AddScoped<ICodeTesterService, CodeTesterService>();
 
         return services;
     }

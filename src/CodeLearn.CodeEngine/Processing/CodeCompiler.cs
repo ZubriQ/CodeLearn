@@ -1,5 +1,6 @@
 ﻿using CodeLearn.CodeEngine.Analyzers;
 using CodeLearn.CodeEngine.Errors;
+using CodeLearn.CodeEngine.Interfaces;
 using CodeLearn.Domain.Common.Result;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -7,7 +8,7 @@ using System.Reflection;
 
 namespace CodeLearn.CodeEngine.Processing;
 
-public class CodeCompiler
+public class CodeCompiler : ICodeCompiler
 {
     private static string _assemblyDirectory = "";
     private static string _dllFileName = "";

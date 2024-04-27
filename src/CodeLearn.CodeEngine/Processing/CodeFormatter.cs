@@ -1,8 +1,9 @@
-﻿using System.Text;
+﻿using CodeLearn.CodeEngine.Interfaces;
+using System.Text;
 
 namespace CodeLearn.CodeEngine.Processing;
 
-public class CodeFormatter
+public class CodeFormatter : ICodeFormatter
 {
     private readonly IEnumerable<string> _defaultNamespaces = CodeInitializer.GetDefaultNamespaces();
     private string _header = "";
