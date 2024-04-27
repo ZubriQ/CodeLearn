@@ -18,7 +18,7 @@ import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import { setSelectedChoices } from '@/features/testing-session/testing-session-slice.ts';
 import MethodCodingExerciseBlock from '@/features/testing-session/components/MethodCodingExerciseBlock.component.tsx';
 import { MethodCodingExercise } from '@/features/testing-session/models/MethodCodingExercise.ts';
-import { setAnsweredQuestions } from '@/features/testing-session/answered-questions-slice.ts';
+import { setCompletedExercises } from '@/features/testing-session/completed-exercise-ids-slice.ts';
 
 export default function TestingSessionPage() {
   const { id } = useParams<{ id?: string }>();
@@ -36,8 +36,8 @@ export default function TestingSessionPage() {
   const [initialMethodSolutionCode, setInitialMethodSolutionCode] = useState<string>('');
   const [outputTextareaValue, setOutputTextareaValue] = useState<string>('');
 
-  const answeredQuestions = useSelector((state) => state.answeredQuestions);
-  const isAnswered = (questionExerciseId: number) => answeredQuestions.includes(questionExerciseId);
+  const completedExercises = useSelector((state) => state.completedExercises);
+  const isAnswered = (questionExerciseId: number) => completedExercises.includes(questionExerciseId);
 
   // Questions
   const selectedChoices = useSelector((state) =>
@@ -140,17 +140,17 @@ export default function TestingSessionPage() {
         }
 
         // Setup already answered questions
-        const fetchAnsweredQuestions = async () => {
+        const fetchCompletedExercises = async () => {
           try {
-            const answeredQuestions = await agent.TestingSessions.getAnsweredQuestionsById(id);
-            dispatch(setAnsweredQuestions(answeredQuestions));
+            const completedExercises = await agent.TestingSessions.getCompletedExerciseIdsById(id);
+            dispatch(setCompletedExercises(completedExercises));
           } catch (error) {
             console.error('Failed to fetch answered questions:', error);
           }
         };
 
         if (id) {
-          await fetchAnsweredQuestions();
+          await fetchCompletedExercises();
         }
       } catch (error) {
         toast({
@@ -169,7 +169,7 @@ export default function TestingSessionPage() {
   // console.log(test);
   // console.log(currentExercise);
   console.log(selectedChoices);
-  console.log(answeredQuestions);
+  console.log(completedExercises);
 
   function isMethodCodingExercise(exercise: QuestionExercise | MethodCodingExercise): exercise is MethodCodingExercise {
     return (exercise as MethodCodingExercise).methodSolutionCode !== undefined;
@@ -211,7 +211,7 @@ export default function TestingSessionPage() {
 
     try {
       await agent.ExerciseSubmissions.createQuestionSubmission(testingSessionId, requestPayload);
-      dispatch(setAnsweredQuestions([...answeredQuestions, currentExercise.id]));
+      dispatch(setCompletedExercises([...completedExercises, currentExercise.id]));
     } catch (error) {
       // Handle errors
       toast({
