@@ -6,19 +6,12 @@ using CodeLearn.Domain.Exercises;
 
 namespace CodeLearn.Infrastructure.Services;
 
-public class CodeTesterService : ICodeTesterService
+public class CodeTesterService(ICodeFormatter formatter, ICodeCompiler compiler, ICodeTester tester) : ICodeTesterService
 {
-    private readonly ICodeFormatter _formatter;
-    private readonly ICodeCompiler _compiler;
-    private readonly ICodeTester _tester;
-
-    public CodeTesterService(ICodeFormatter formatter, ICodeCompiler compiler, ICodeTester tester)
-    {
-        _formatter = formatter;
-        _compiler = compiler;
-        _tester = tester;
-    }
-
+    private readonly ICodeFormatter _formatter = formatter;
+    private readonly ICodeCompiler _compiler = compiler;
+    private readonly ICodeTester _tester = tester;
+    
     public async Task<Result> TestMethodAsync(MethodCodingExercise methodCodingExercise, string studentCode)
     {
         var exercise = ConvertToExercise(methodCodingExercise, studentCode);
