@@ -35,7 +35,7 @@ public sealed class TestingsController(ISender _sender, IMapper _mapper) : ApiCo
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllForStudent()
     {
-        var username = User.Identity!.Name;
+        var username = User.Identity?.Name;
         if (string.IsNullOrEmpty(username))
         {
             return Unauthorized();

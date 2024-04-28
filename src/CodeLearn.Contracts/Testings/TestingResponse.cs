@@ -7,4 +7,5 @@ public record TestingResponse(
     int StudentGroupId,
     string StudentGroupName,
     DateTimeOffset DeadlineDate,
-    int DurationInMinutes);
+    int DurationInMinutes,
+    string Status);

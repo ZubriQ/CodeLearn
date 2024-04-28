@@ -3,14 +3,14 @@ using CodeLearn.Domain.TestingSessions;
 
 namespace CodeLearn.Application.TestingSessions.Commands.CreateTestingSession;
 
-public record CreateTestingSessionCommand(int TestingId) : IRequest<OneOf<int, ValidationFailed, NotFound>>;
+public record CreateTestingSessionCommand(int TestingId, string UserId) : IRequest<OneOf<int, ValidationFailed, NotFound, Conflict>>;
 
 public class CreateTestingSessionCommandHandler(
     IApplicationDbContext _context,
     IValidator<CreateTestingSessionCommand> _validator)
-    : IRequestHandler<CreateTestingSessionCommand, OneOf<int, ValidationFailed, NotFound>>
+    : IRequestHandler<CreateTestingSessionCommand, OneOf<int, ValidationFailed, NotFound, Conflict>>
 {
-    public async Task<OneOf<int, ValidationFailed, NotFound>> Handle(CreateTestingSessionCommand request, CancellationToken cancellationToken)
+    public async Task<OneOf<int, ValidationFailed, NotFound, Conflict>> Handle(CreateTestingSessionCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
@@ -25,6 +25,15 @@ public class CreateTestingSessionCommandHandler(
         if (testing is null)
         {
             return new NotFound();
+        }
+
+        var testingSessionExists = await _context.TestingSessions
+            .AnyAsync(x => x.TestingId == TestingId.Create(request.TestingId) && x.CreatedBy == request.UserId,
+                      cancellationToken);
+
+        if (testingSessionExists)
+        {
+            return new Conflict();
         }
 
         var currentDateTime = DateTimeOffset.UtcNow;

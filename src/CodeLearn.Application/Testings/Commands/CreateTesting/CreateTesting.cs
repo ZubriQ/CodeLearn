@@ -1,5 +1,6 @@
 ﻿using CodeLearn.Domain.StudentGroups.ValueObjects;
 using CodeLearn.Domain.Testings;
+using CodeLearn.Domain.Testings.Enums;
 using CodeLearn.Domain.Tests.ValueObjects;
 
 namespace CodeLearn.Application.Testings.Commands.CreateTesting;
@@ -8,7 +9,8 @@ public record CreateTestingCommand(
     int TestId,
     int StudentGroupId,
     DateTimeOffset DeadlineDate,
-    int DurationInMinutes)
+    int DurationInMinutes,
+    string Status)
     : IRequest<OneOf<int, ValidationFailed, NotFound>>;
 
 public class CreateTestingCommandHandler(
@@ -45,7 +47,8 @@ public class CreateTestingCommandHandler(
             TestId.Create(request.TestId),
             StudentGroupId.Create(request.StudentGroupId),
             request.DeadlineDate,
-            request.DurationInMinutes);
+            request.DurationInMinutes,
+            TestingStatus.Open); // TODO: assign sent status from the request
 
         _context.Testings.Add(testing);
 

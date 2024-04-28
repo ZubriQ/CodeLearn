@@ -7,4 +7,5 @@ public record TestingDto(
     int StudentGroupId,
     string? StudentGroupName,
     DateTimeOffset DeadlineDate,
-    int DurationInMinutes);
+    int DurationInMinutes,
+    string Status);

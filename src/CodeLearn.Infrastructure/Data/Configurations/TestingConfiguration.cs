@@ -1,5 +1,6 @@
 ﻿using CodeLearn.Domain.StudentGroups;
 using CodeLearn.Domain.Testings;
+using CodeLearn.Domain.Testings.Enums;
 using CodeLearn.Domain.Testings.ValueObjects;
 using CodeLearn.Domain.Tests;
 
@@ -46,5 +47,13 @@ public sealed class TestingConfiguration : IEntityTypeConfiguration<Testing>
         builder
             .Property(t => t.DurationInMinutes)
             .IsRequired();
+
+        builder
+            .Property(ts => ts.Status)
+            .HasMaxLength(20)
+            .IsRequired()
+            .HasConversion(
+                status => status.ToString(),
+                value => (TestingStatus)Enum.Parse(typeof(TestingStatus), value));
     }
 }

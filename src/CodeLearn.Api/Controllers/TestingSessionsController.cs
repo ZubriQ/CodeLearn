@@ -47,13 +47,15 @@ public sealed class TestingSessionsController(ISender _sender, IMapper _mapper) 
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Create(TestingSessionRequest request)
     {
-        var command = _mapper.Map<CreateTestingSessionCommand>(request);
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value!;
+        var command = _mapper.Map<CreateTestingSessionCommand>((request, userId));
         var result = await _sender.Send(command);
 
         return result.Match(
             id => CreatedAtAction(nameof(Create), new { id }, id),
             _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed."),
-            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Testing not found."));
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Testing not found."),
+            _ => Problem(statusCode: StatusCodes.Status409Conflict, title: "Testing session already exists."));
     }
 
     [HttpGet("{testingSessionId:int}/completed-exercises")]

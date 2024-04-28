@@ -40,6 +40,8 @@ public sealed class TestingSessionConfiguration : IEntityTypeConfiguration<Testi
                 status => status.ToString(),
                 value => (TestingSessionStatus)Enum.Parse(typeof(TestingSessionStatus), value));
 
+        builder.HasIndex(ts => ts.Status);
+
         builder
             .Property(ts => ts.StartDateTime)
             .IsRequired();

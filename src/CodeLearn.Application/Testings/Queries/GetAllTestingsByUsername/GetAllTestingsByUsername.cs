@@ -39,7 +39,8 @@ public class GetAllTestingsByUsernameQueryHandler(
                 testing.StudentGroupId.Value,
                 studentGroupName,
                 testing.DeadlineDate,
-                testing.DurationInMinutes));
+                testing.DurationInMinutes,
+                testing.Status.ToString()));
         }
 
         // TODO: Optimize with Dapper?

@@ -9,7 +9,9 @@ public class TestingSessionMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<TestingSessionRequest, CreateTestingSessionCommand>();
+        config.NewConfig<(TestingSessionRequest Request, string UserId), CreateTestingSessionCommand>()
+            .Map(dest => dest, src => src.Request)
+            .Map(dest => dest.UserId, src => src.UserId);
 
         config.NewConfig<TestingSession, TestingSessionResponse>()
             .Map(dest => dest.Id, src => src.Id.Value)

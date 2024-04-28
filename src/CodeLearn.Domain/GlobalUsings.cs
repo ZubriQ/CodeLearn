@@ -13,6 +13,7 @@ global using CodeLearn.Domain.ExerciseTopics.ValueObjects;
 global using CodeLearn.Domain.QuestionChoices;
 global using CodeLearn.Domain.QuestionChoices.ValueObjects;
 global using CodeLearn.Domain.StudentGroups.ValueObjects;
+global using CodeLearn.Domain.Testings.Enums;
 global using CodeLearn.Domain.Testings.ValueObjects;
 global using CodeLearn.Domain.TestingSessions.Enums;
 global using CodeLearn.Domain.TestingSessions.ValueObjects;

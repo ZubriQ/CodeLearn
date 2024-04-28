@@ -24,7 +24,8 @@ public class GetAllTestingsQueryHandler(IApplicationDbContext _context) : IReque
                 testing.StudentGroupId.Value,
                 studentGroup?.Name,
                 testing.DeadlineDate,
-                testing.DurationInMinutes));
+                testing.DurationInMinutes,
+                testing.Status.ToString()));
         }
 
         // TODO: Optimize with Dapper?

@@ -43,7 +43,7 @@ public class CreateMethodCodingExerciseSubmissionCommandHandler(
             return new ValidationFailed(validationResult.Errors);
         }
 
-        if (testingSession.FinishDateTime.ToUniversalTime() <  DateTimeOffset.UtcNow)
+        if (testingSession.FinishDateTime.ToUniversalTime() < DateTimeOffset.UtcNow)
         {
             testingSession.Finish();
 

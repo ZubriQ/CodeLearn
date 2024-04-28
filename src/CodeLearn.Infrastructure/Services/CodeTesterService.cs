@@ -11,7 +11,7 @@ public class CodeTesterService(ICodeFormatter formatter, ICodeCompiler compiler,
     private readonly ICodeFormatter _formatter = formatter;
     private readonly ICodeCompiler _compiler = compiler;
     private readonly ICodeTester _tester = tester;
-    
+
     public async Task<Result> TestMethodAsync(MethodCodingExercise methodCodingExercise, string studentCode)
     {
         var exercise = ConvertToExercise(methodCodingExercise, studentCode);
