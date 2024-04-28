@@ -28,10 +28,7 @@ public class GetCompletedExerciseIdsByIdQueryHandler(IApplicationDbContext _cont
             .Select(x => x.ExerciseId.Value)
             .ToArrayAsync(cancellationToken);
 
-        var combinedExerciseIds = questionExerciseIds
-            .Concat(methodCodingExerciseIds)
-            .Distinct()
-            .ToArray();
+        var combinedExerciseIds = questionExerciseIds.Concat(methodCodingExerciseIds).Distinct().ToArray();
 
         return combinedExerciseIds;
     }

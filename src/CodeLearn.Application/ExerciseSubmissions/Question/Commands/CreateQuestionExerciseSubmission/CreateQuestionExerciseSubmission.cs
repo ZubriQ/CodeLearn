@@ -1,5 +1,6 @@
 ﻿using CodeLearn.Domain.Exercises.ValueObjects;
 using CodeLearn.Domain.ExerciseSubmissions;
+using CodeLearn.Domain.TestingSessions.Enums;
 using CodeLearn.Domain.TestingSessions.ValueObjects;
 
 namespace CodeLearn.Application.ExerciseSubmissions.Question.Commands.CreateQuestionExerciseSubmission;
@@ -21,12 +22,28 @@ public class CreateQuestionExerciseSubmissionCommandHandler(
             return new ValidationFailed(validationResult.Errors);
         }
 
-        var testingSessionExists = await _context.TestingSessions
-            .AnyAsync(x => x.Id == TestingSessionId.Create(request.TestingSessionId), cancellationToken);
+        var testingSession = await _context.TestingSessions
+            .FirstOrDefaultAsync(x => x.Id == TestingSessionId.Create(request.TestingSessionId), cancellationToken);
 
-        if (!testingSessionExists)
+        if (testingSession is null)
         {
             return new NotFound();
+        }
+
+        if (testingSession.Status is TestingSessionStatus.Finished)
+        {
+            validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure(
+                "Finished", "Testing sessions is finished."));
+            return new ValidationFailed(validationResult.Errors);
+        }
+
+        if (testingSession.FinishDateTime.ToUniversalTime() < DateTimeOffset.UtcNow)
+        {
+            testingSession.Finish();
+
+            validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure(
+                "Finished", "Testing sessions is finished."));
+            return new ValidationFailed(validationResult.Errors);
         }
 
         var exerciseExists = await _context.QuestionExercises

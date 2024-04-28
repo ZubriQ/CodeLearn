@@ -2,6 +2,7 @@
 using CodeLearn.Domain.Exercises.ValueObjects;
 using CodeLearn.Domain.ExerciseSubmissions;
 using CodeLearn.Domain.ExerciseSubmissions.Enums;
+using CodeLearn.Domain.TestingSessions.Enums;
 using CodeLearn.Domain.TestingSessions.ValueObjects;
 
 namespace CodeLearn.Application.ExerciseSubmissions.MethodCoding.Commands.CreateMethodCodingExerciseSubmission;
@@ -33,6 +34,22 @@ public class CreateMethodCodingExerciseSubmissionCommandHandler(
         if (testingSession is null)
         {
             return new NotFound();
+        }
+
+        if (testingSession.Status is TestingSessionStatus.Finished)
+        {
+            validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure(
+                "Finished", "Testing sessions is finished."));
+            return new ValidationFailed(validationResult.Errors);
+        }
+
+        if (testingSession.FinishDateTime.ToUniversalTime() <  DateTimeOffset.UtcNow)
+        {
+            testingSession.Finish();
+
+            validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure(
+                "Finished", "Testing sessions is finished."));
+            return new ValidationFailed(validationResult.Errors);
         }
 
         var exercise = await _context.MethodCodingExercises

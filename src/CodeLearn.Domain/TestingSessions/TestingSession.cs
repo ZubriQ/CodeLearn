@@ -37,5 +37,8 @@ public sealed class TestingSession : BaseAuditableEntity<TestingSessionId>, IAgg
             finishDateTime);
     }
 
-    // TODO: FinishTesting method
+    public void Finish()
+    {
+        Status = TestingSessionStatus.Finished;
+    }
 }
