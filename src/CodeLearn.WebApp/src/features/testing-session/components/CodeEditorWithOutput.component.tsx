@@ -1,4 +1,5 @@
 import { ChevronLeft, ChevronRight, RotateCw } from 'lucide-react';
+import Editor, { DiffEditor, useMonaco, loader } from '@monaco-editor/react';
 import { CodeBracketIcon, CommandLineIcon } from '@heroicons/react/24/outline';
 import { Textarea } from '@/components/ui/textarea.tsx';
 import { Button } from '@/components/ui/button.tsx';
@@ -14,7 +15,7 @@ interface MethodCodingExerciseProps {
   outputTextareaValue: string;
 }
 
-export default function MethodCodingExerciseBlock({
+export default function CodeEditorWithOutput({
   isExerciseCompleted,
   methodSolutionCode,
   onMethodSolutionCodeChange,
@@ -24,20 +25,32 @@ export default function MethodCodingExerciseBlock({
   handleNext,
   outputTextareaValue,
 }: MethodCodingExerciseProps) {
+  function handleEditorChange(value, event) {
+    onMethodSolutionCodeChange(value);
+  }
+
   return (
     <>
-      <div className="mb-4 flex-1 overflow-hidden rounded-xl border bg-white p-4">
-        <div className="-mx-4 -mt-4 flex items-center rounded-t-lg bg-green-600 p-1.5 text-white">
+      <div className="mb-4 flex-1 overflow-hidden rounded-xl border bg-white">
+        <div className="flex items-center rounded-t-lg bg-green-600 p-1.5 text-white">
           <CodeBracketIcon width="20" height="20" className="mx-2 min-w-5" />
           <p className="truncate font-semibold">Solution</p>
         </div>
-        <div className="mt-4 flex h-full flex-col">
-          <Textarea
-            className="mb-9 flex-1 resize-none rounded-sm"
-            value={methodSolutionCode}
-            onChange={(e) => onMethodSolutionCodeChange(e.target.value)}
-          />
-        </div>
+
+        <Editor
+          defaultLanguage="csharp"
+          options={{
+            minimap: {
+              enabled: false,
+            },
+            suggest: {
+              showWords: true,
+              showClasses: true,
+            },
+          }}
+          defaultValue={methodSolutionCode}
+          onChange={handleEditorChange}
+        />
       </div>
 
       <div className="flex-none rounded-xl border bg-white px-4">

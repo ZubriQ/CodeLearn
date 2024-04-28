@@ -16,9 +16,9 @@ import ExerciseDifficultyBadge from '@/features/testing-session/components/Exerc
 import TopicsBadge from '@/features/testing-session/components/TopicsBadge.component.tsx';
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import { setSelectedChoices } from '@/features/testing-session/testing-session-slice.ts';
-import MethodCodingExerciseBlock from '@/features/testing-session/components/MethodCodingExerciseBlock.component.tsx';
 import { MethodCodingExercise } from '@/features/testing-session/models/MethodCodingExercise.ts';
 import { setCompletedExercises } from '@/features/testing-session/completed-exercise-ids-slice.ts';
+import CodeEditorWithOutput from '@/features/testing-session/components/CodeEditorWithOutput.component.tsx';
 
 export default function TestingSessionPage() {
   const { id } = useParams<{ id?: string }>();
@@ -347,7 +347,7 @@ export default function TestingSessionPage() {
         {/* Right panel for the code input/output or questions */}
         <ResizablePanel defaultSize={50} minSize={40} className="flex h-full flex-col">
           {isMethodCodingExercise(currentExercise) ? (
-            <MethodCodingExerciseBlock
+            <CodeEditorWithOutput
               isExerciseCompleted={isCompleted(currentExercise.id)}
               methodSolutionCode={methodSolutionCode}
               onMethodSolutionCodeChange={setMethodSolutionCode}
