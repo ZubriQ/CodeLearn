@@ -47,6 +47,11 @@ export default function CodeEditorWithOutput({
               showWords: true,
               showClasses: true,
             },
+            padding: {
+              top: 6,
+            },
+            wordWrap: 'on',
+            fontSize: 13,
           }}
           defaultValue={methodSolutionCode}
           onChange={handleEditorChange}
