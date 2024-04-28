@@ -1,6 +1,7 @@
 ﻿using CodeLearn.CodeEngine.Errors;
 using CodeLearn.CodeEngine.Interfaces;
 using CodeLearn.CodeEngine.Models;
+using CodeLearn.Domain.Common.Errors;
 using CodeLearn.Domain.Common.Result;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -16,8 +17,6 @@ public class CodeTester : ICodeTester
     private MethodInfo? _method;
 
     public CodeExercise Exercise { get; private set; } = null!;
-    public string ClassName => Exercise.ClassName;
-    public string MethodName => Exercise.MethodToExecute;
 
     private int ParametersLength
     {
@@ -40,7 +39,6 @@ public class CodeTester : ICodeTester
     /// <summary>
     /// Gets the desired method and tests it, then unloads the assembly.
     /// </summary>
-    /// <returns>Returns true if there were no exceptions.</returns>
     [MethodImpl(MethodImplOptions.NoInlining)]
     public Result Test(CodeExercise exercise)
     {
@@ -54,10 +52,13 @@ public class CodeTester : ICodeTester
             UnloadAndFinalize();
             return result;
         }
+        catch (BadImageFormatException)
+        {
+            return Result.Failure(CodeEngineErrors.Compilation.MethodCompilationFailed);
+        }
         catch (Exception ex)
         {
-            return Result.Failure(new Domain.Common.Errors.Error(
-                "CodeEngine.CodeTester.Test", $"Unexpected error: {ex.Message}"));
+            return Result.Failure(new Error("CodeEngine.CodeTester.Test", $"Unexpected exception: {ex.Message}"));
         }
     }
 
@@ -65,15 +66,15 @@ public class CodeTester : ICodeTester
     {
         _assemblyLoader = new HostAssemblyLoadContext(CodeCompiler.AssemblyPath);
         _methodDllAssembly = _assemblyLoader.LoadFromAssemblyPath(CodeCompiler.AssemblyPath);
-        _type = _methodDllAssembly.GetTypes().FirstOrDefault(t => t.Name == ClassName);
+        _type = _methodDllAssembly.GetTypes().FirstOrDefault(t => t.Name == Exercise.ClassName);
 
-        if (_type == null || string.IsNullOrEmpty(MethodName))
+        if (_type == null || string.IsNullOrEmpty(Exercise.MethodToExecute))
         {
             return;
         }
 
         _classInstance = Activator.CreateInstance(_type, null);
-        _method = _type.GetMethod(MethodName, BindingFlags.Public | BindingFlags.Static);
+        _method = _type.GetMethod(Exercise.MethodToExecute, BindingFlags.Public | BindingFlags.Static);
     }
 
     // TODO: optimize
@@ -84,27 +85,25 @@ public class CodeTester : ICodeTester
             return Result.Failure(CodeEngineErrors.CodeTesting.MethodNotFound);
         }
 
-        var parametersArray = new object[ParametersLength];
-
         var methodParameters = Exercise.MethodParameters.ToArray();
+        var testResultType = Type.GetType(Exercise.MethodReturnTypeSystemName);
 
         foreach (var testCase in Exercise.TestCases)
         {
             var testCaseParameters = testCase.TestCaseParameters.ToArray();
+            var parametersArray = new object[methodParameters.Length];
 
-            for (var p = 0; p < methodParameters.Length; p++)
+            for (var i = 0; i < methodParameters.Length; i++)
             {
-                var paramType = Type.GetType(methodParameters[p].SystemName);
-                var convertedType = Convert.ChangeType(testCaseParameters[p].Value, paramType!);
-                parametersArray[p] = convertedType;
+                var paramType = Type.GetType(methodParameters[i].SystemName);
+                var convertedType = Convert.ChangeType(testCaseParameters[i].Value, paramType!);
+                parametersArray[i] = convertedType;
             }
-            dynamic? methodResult = _method.Invoke(_classInstance,
-                ParametersLength == 0 ? null : parametersArray);
 
-            var testResultType = Type.GetType(Exercise.MethodReturnTypeSystemName);
-            dynamic testResult = Convert.ChangeType(testCase.CorrectOutputValue, testResultType!);
+            var methodResult = _method.Invoke(_classInstance, ParametersLength == 0 ? null : parametersArray);
 
-            if (methodResult != testResult)
+            var testResult = Convert.ChangeType(testCase.CorrectOutputValue, testResultType!);
+            if (!Equals(methodResult, testResult))
             {
                 return Result.Failure(CodeEngineErrors.CodeTesting.TestCasesFailed);
             }

@@ -210,7 +210,10 @@ export default function TestingSessionPage() {
     try {
       const response = await agent.ExerciseSubmissions.createMethodCodingSubmission(testingSessionId, requestPayload);
       setOutputTextareaValue(response.testingInfoOutput);
-      dispatch(setCompletedExercises([...completedExercises, currentExercise.id]));
+
+      if (response.isSuccess) {
+        dispatch(setCompletedExercises([...completedExercises, currentExercise.id]));
+      }
     } catch (error) {
       // Handle errors
       toast({
@@ -376,7 +379,7 @@ export default function TestingSessionPage() {
                         disabled={isCompleted(currentExercise.id)}
                         className="size-4 cursor-pointer accent-neutral-900"
                       />
-                      <p>{choice.text}</p>
+                      <p className="text-sm">{choice.text}</p>
                     </div>
                   ))}
                 </div>
