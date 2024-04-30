@@ -209,7 +209,7 @@ public class IdentityService : IIdentityService
         var refreshToken = _tokenService.GenerateRefreshTokenString();
 
         user.RefreshToken = refreshToken;
-        user.RefreshTokenExpiry = DateTimeOffset.UtcNow.AddHours(12);
+        user.RefreshTokenExpiry = DateTimeOffset.UtcNow.AddHours(24);
         await _userManager.UpdateAsync(user);
 
         var tokensDto = new TokensDto(token, refreshToken);
@@ -237,7 +237,7 @@ public class IdentityService : IIdentityService
         var newRefreshToken = _tokenService.GenerateRefreshTokenString();
 
         user.RefreshToken = newRefreshToken;
-        user.RefreshTokenExpiry = DateTimeOffset.UtcNow.AddHours(12);
+        user.RefreshTokenExpiry = DateTimeOffset.UtcNow.AddHours(24);
         await _userManager.UpdateAsync(user);
 
         var tokensDto = new TokensDto(token, newRefreshToken);

@@ -6,4 +6,5 @@ export type Testing = {
   studentGroupName: string;
   deadlineDate: Date;
   durationInMinutes: number;
+  status: string;
 };

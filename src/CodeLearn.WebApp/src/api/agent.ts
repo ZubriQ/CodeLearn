@@ -8,6 +8,8 @@ import { RegisterStudentRequest } from '@/api/users/RegisterStudentRequest.ts';
 import { LoginResponse } from '@/api/users/LoginResponse.ts';
 import { CreateMethodCodingExerciseSubmissionRequest } from '@/api/exercise-submissions/CreateMethodCodingExerciseSubmissionRequest.ts';
 import { CreateQuestionExerciseSubmissionRequest } from '@/api/exercise-submissions/CreateQuestionExerciseSubmissionsRequest.ts';
+import { jwtDecode } from 'jwt-decode';
+import { loginSuccess, logout } from '@/features/users/auth-slice.ts';
 
 axios.defaults.baseURL = 'https://localhost:5001/api/';
 
@@ -23,6 +25,59 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   },
 );
+
+// Check for token expiry and automatically refresh the token
+axios.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      const authToken = store.getState().auth.token;
+      if (isTokenExpired(authToken)) {
+        try {
+          await refreshToken();
+          // Update the original request with the new token
+          originalRequest.headers.Authorization = `Bearer ${store.getState().auth.token}`;
+          // Retry the original request with the new token
+          return axios(originalRequest);
+        } catch (refreshError) {
+          console.error('Logging out');
+          store.dispatch(logout());
+        }
+      }
+    }
+    return Promise.reject(error);
+  },
+);
+
+const isTokenExpired = (token: string): boolean => {
+  const decodedToken = jwtDecode(token);
+  return decodedToken.exp < Date.now() / 1000;
+};
+
+const refreshToken = async (): Promise<void> => {
+  const refreshTokenValue = store.getState().auth.refreshToken;
+  const token = store.getState().auth.token;
+  const username = store.getState().auth.username;
+
+  if (refreshTokenValue) {
+    try {
+      const response = await requests.post('users/refresh-token', { jwtToken: token, refreshToken: refreshTokenValue });
+      const { jwtToken, refreshToken: newRefreshToken } = response;
+
+      store.dispatch(loginSuccess({ jwtToken, refreshToken: newRefreshToken, username }));
+    } catch (error) {
+      // Handle refresh token failure
+      console.error('Failed to refresh token:', error);
+      store.dispatch(logout());
+    }
+  } else {
+    // No refresh token available
+    store.dispatch(logout());
+  }
+};
 
 const responseBody = (response: AxiosResponse) => response.data;
 
@@ -121,14 +176,6 @@ const ExerciseSubmissions = {
     requests.post(`testing-sessions/${testingSessionId}/exercise-submissions/method-coding`, request),
 };
 
-// const TestErrors = {
-//   get400Error: () => requests.get('buggy/bad-request'),
-//   get401Error: () => requests.get('buggy/unauthorised'),
-//   get404Error: () => requests.get('buggy/not-found'),
-//   get500Error: () => requests.get('buggy/server-error'),
-//   getValidationError: () => requests.get('buggy/validation-error'),
-// };
-
 const agent = {
   Auth,
   StudentGroup,
@@ -140,7 +187,6 @@ const agent = {
   Students,
   TestingSessions,
   ExerciseSubmissions,
-  // TestErrors,
 };
 
 export default agent;

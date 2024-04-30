@@ -97,6 +97,7 @@ export default function TestingsPage() {
       studentGroupId: selectedStudentGroup.id,
       deadlineDate: selectedDate,
       durationInMinutes: duration,
+      status: 'Open',
     };
 
     agent.Testings.create(createTestingRequest)

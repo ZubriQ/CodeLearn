@@ -65,7 +65,7 @@ function StudentTestingsPage() {
                 <CardTitle className="mb-2">{testing.testTitle}</CardTitle>
                 <CardDescription>Deadline: {formattedDateTime}</CardDescription>
                 <CardDescription>Duration: {testing.durationInMinutes} minutes</CardDescription>
-                <CardDescription>Status: </CardDescription>
+                <CardDescription>Status: {testing.status}</CardDescription>
               </CardHeader>
               <CardFooter className="flex justify-end">
                 <Button size="icon" className="w-full" onClick={() => handleCardClick(testing.id)}>

@@ -1,4 +1,5 @@
 ﻿using CodeLearn.Application.Testings.Queries.GetAllTestings;
+using CodeLearn.Domain.Testings.Enums;
 
 namespace CodeLearn.Application.Testings.Queries.GetAllMyTestings;
 
@@ -23,7 +24,10 @@ public class GetAllTestingsByUsernameQueryHandler(
 
         var testings = await _context.Testings
             .AsNoTracking()
-            .Where(x => x.StudentGroupId == studentGroup.Id)
+            .Where(x => (x.StudentGroupId == studentGroup.Id
+                         && x.Status == TestingStatus.Open
+                         || x.Status == TestingStatus.Completed) &&
+                         !_context.TestingSessions.Any(es => es.TestingId == x.Id))
             .ToArrayAsync(cancellationToken);
 
         var testingDetails = new List<TestingDto>();

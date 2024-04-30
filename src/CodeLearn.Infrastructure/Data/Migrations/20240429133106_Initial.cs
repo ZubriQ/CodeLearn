@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -40,8 +41,10 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     Patronymic = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WindowsAccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StudentGroupName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EnrolmentYear = table.Column<int>(type: "int", nullable: true),
                     UserCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TemporaryPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RefreshTokenExpiry = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -289,6 +292,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     StudentGroupId = table.Column<int>(type: "int", nullable: false),
                     DeadlineDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     DurationInMinutes = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
@@ -522,7 +526,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ExerciseId = table.Column<int>(type: "int", nullable: false),
                     TestingSessionId = table.Column<int>(type: "int", nullable: false),
-                    SentDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SentDateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     SubmissionType = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
                     StudentCode = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: true),
@@ -708,6 +712,12 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                 schema: "Test",
                 table: "Testing",
                 column: "TestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TestingSession_Status",
+                schema: "Test",
+                table: "TestingSession",
+                column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TestingSession_TestingId",

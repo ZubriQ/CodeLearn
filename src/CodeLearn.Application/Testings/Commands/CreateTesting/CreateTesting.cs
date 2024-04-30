@@ -10,7 +10,7 @@ public record CreateTestingCommand(
     int StudentGroupId,
     DateTimeOffset DeadlineDate,
     int DurationInMinutes,
-    string Status)
+    TestingStatus Status)
     : IRequest<OneOf<int, ValidationFailed, NotFound>>;
 
 public class CreateTestingCommandHandler(
@@ -48,7 +48,7 @@ public class CreateTestingCommandHandler(
             StudentGroupId.Create(request.StudentGroupId),
             request.DeadlineDate,
             request.DurationInMinutes,
-            TestingStatus.Open); // TODO: assign sent status from the request
+            request.Status);
 
         _context.Testings.Add(testing);
 

@@ -26,7 +26,7 @@ public sealed class UsersController(ISender _sender, IMapper _mapper) : ApiContr
     [HttpPost]
     [Route("refresh-token")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
     {
         var command = _mapper.Map<RefreshTokenCommand>(request);
@@ -34,7 +34,7 @@ public sealed class UsersController(ISender _sender, IMapper _mapper) : ApiContr
 
         return result.Match<IActionResult>(
             tokensDto => Ok(_mapper.Map<RefreshTokenResponse>(tokensDto)),
-            _ => Problem(statusCode: StatusCodes.Status401Unauthorized, title: "Invalid token."));
+            _ => Problem(statusCode: StatusCodes.Status403Forbidden, title: "Invalid token."));
     }
 
     [HttpGet("students")]

@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, RotateCw } from 'lucide-react';
-import Editor, { DiffEditor, useMonaco, loader } from '@monaco-editor/react';
+import Editor from '@monaco-editor/react';
 import { CodeBracketIcon, CommandLineIcon } from '@heroicons/react/24/outline';
 import { Textarea } from '@/components/ui/textarea.tsx';
 import { Button } from '@/components/ui/button.tsx';

@@ -3,4 +3,5 @@ export type CreateTestingRequest = {
   studentGroupId: number;
   deadlineDate: Date;
   durationInMinutes: number;
+  status: string;
 };
