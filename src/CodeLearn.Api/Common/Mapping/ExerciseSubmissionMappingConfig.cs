@@ -22,7 +22,7 @@ public class ExerciseSubmissionMappingConfig : IRegister
 
         config.NewConfig<Result, MethodCodingExerciseSubmissionResponse>()
              .Map(dest => dest.TestingInfoOutput, src => string.IsNullOrEmpty(src.Error.Message)
-                 ? "Success"
+                 ? "Exercise solved!"
                  : src.Error.Message);
     }
 }
