@@ -33,7 +33,6 @@ export default function TestingSessionPage() {
   const [currentExerciseType, setCurrentExerciseType] = useState<'question' | 'method'>('question');
 
   const [methodSolutionCode, setMethodSolutionCode] = useState<string>('');
-  const [initialMethodSolutionCode, setInitialMethodSolutionCode] = useState<string>('');
   const [outputTextareaValue, setOutputTextareaValue] = useState<string>('');
 
   const completedExercises = useSelector((state) => state.completedExercises);
@@ -164,13 +163,6 @@ export default function TestingSessionPage() {
     fetchData();
   }, [id]);
 
-  // console.log(testingSession);
-  // console.log(testing);
-  // console.log(test);
-  // console.log(currentExercise);
-  console.log(selectedChoices);
-  console.log(completedExercises);
-
   function isMethodCodingExercise(exercise: QuestionExercise | MethodCodingExercise): exercise is MethodCodingExercise {
     return (exercise as MethodCodingExercise).methodSolutionCode !== undefined;
   }
@@ -193,10 +185,6 @@ export default function TestingSessionPage() {
 
       setInitialMethodSolutionCode(methodCodingExercise.methodSolutionCode);
     } catch (error) {}
-  };
-
-  const handleReset = () => {
-    setMethodSolutionCode(initialMethodSolutionCode);
   };
 
   const handleSendMethodCodingSolution = async () => {
@@ -352,7 +340,6 @@ export default function TestingSessionPage() {
               methodSolutionCode={methodSolutionCode}
               onMethodSolutionCodeChange={setMethodSolutionCode}
               handleBack={handleBack}
-              handleReset={handleReset}
               handleSendMethodCodingSolution={handleSendMethodCodingSolution}
               handleNext={handleNext}
               outputTextareaValue={outputTextareaValue}

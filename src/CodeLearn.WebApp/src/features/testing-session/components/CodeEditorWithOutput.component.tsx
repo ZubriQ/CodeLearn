@@ -3,6 +3,7 @@ import Editor from '@monaco-editor/react';
 import { CodeBracketIcon, CommandLineIcon } from '@heroicons/react/24/outline';
 import { Textarea } from '@/components/ui/textarea.tsx';
 import { Button } from '@/components/ui/button.tsx';
+import { useState } from 'react';
 
 interface MethodCodingExerciseProps {
   isExerciseCompleted: boolean;
@@ -20,19 +21,24 @@ export default function CodeEditorWithOutput({
   methodSolutionCode,
   onMethodSolutionCodeChange,
   handleBack,
-  handleReset,
   handleSendMethodCodingSolution,
   handleNext,
   outputTextareaValue,
 }: MethodCodingExerciseProps) {
+  const [initialMethodSolutionCode, setInitialMethodSolutionCode] = useState<string>(methodSolutionCode);
+
   function handleEditorChange(value, event) {
     onMethodSolutionCodeChange(value);
   }
 
+  const handleReset = () => {
+    onMethodSolutionCodeChange(initialMethodSolutionCode);
+  };
+
   return (
     <>
       <div className="mb-4 flex-1 overflow-hidden rounded-xl border bg-white">
-        <div className="flex items-center rounded-t-lg bg-green-600 p-1.5 text-white">
+        <div className="flex items-center rounded-t-xl bg-green-600 p-1.5 text-white">
           <CodeBracketIcon width="20" height="20" className="mx-2 min-w-5" />
           <p className="truncate font-semibold">Solution</p>
         </div>
@@ -53,13 +59,13 @@ export default function CodeEditorWithOutput({
             wordWrap: 'on',
             fontSize: 13,
           }}
-          defaultValue={methodSolutionCode}
+          value={methodSolutionCode}
           onChange={handleEditorChange}
         />
       </div>
 
       <div className="flex-none rounded-xl border bg-white px-4">
-        <div className="-mx-4 flex items-center rounded-t-lg bg-green-600 p-1.5 text-white">
+        <div className="-mx-4 flex items-center rounded-t-xl bg-green-600 p-1.5 text-white">
           <CommandLineIcon width="20" height="20" className="mx-2 min-w-5" />
           <p className="truncate font-semibold">Output</p>
         </div>
