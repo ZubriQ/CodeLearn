@@ -17,7 +17,7 @@ const Note: React.FC<NoteProps> = ({ decoration, entry }) => {
       className = 'font-bold';
       break;
     case ExerciseNoteDecoration.Bordered:
-      className = 'bg-zinc-200/70 rounded-lg px-2 text-zinc-700';
+      className = 'bg-zinc-200/55 rounded-lg px-2 text-zinc-700';
       break;
   }
 

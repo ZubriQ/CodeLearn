@@ -24,10 +24,16 @@ public sealed class TestingSessionsController(ISender _sender, IMapper _mapper) 
     [HttpGet("my-sessions")]
     [ProducesResponseType(typeof(StudentTestingSessionResponseCollection), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllForStudentCurriculum()
     {
-        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value!;
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
         var query = new GetAllMyTestingSessionsQuery(userId);
         var response = await _sender.Send(query);
 
@@ -44,10 +50,16 @@ public sealed class TestingSessionsController(ISender _sender, IMapper _mapper) 
     [HttpPost]
     [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Create(TestingSessionRequest request)
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value!;
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
         var command = _mapper.Map<CreateTestingSessionCommand>((request, userId));
         var result = await _sender.Send(command);
 

@@ -251,7 +251,7 @@ export default function TestingSessionPage() {
 
   return (
     <div className="flex h-screen flex-col bg-zinc-50 p-4">
-      <div className="mb-4 flex flex-wrap items-center space-x-2">
+      <div className="-mt-2 mb-3 flex flex-wrap items-center space-x-2">
         {/* Row for Questions */}
         <div className="flex flex-wrap items-center space-x-1.5 space-y-1">
           <span className="whitespace-nowrap">Questions:</span>
@@ -315,7 +315,7 @@ export default function TestingSessionPage() {
                   {currentExercise.inputOutputExamples.map((example, index) => (
                     <div key={index}>
                       <h3 className="font-semibold">Example {index + 1}:</h3>
-                      <div className="rounded bg-zinc-200/70 p-2">
+                      <div className="rounded bg-zinc-200/55 p-2">
                         <p className="px-2">
                           <b>Input:</b> {example.input}
                         </p>

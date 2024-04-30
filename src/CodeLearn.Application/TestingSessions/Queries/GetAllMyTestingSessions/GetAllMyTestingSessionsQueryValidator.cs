@@ -4,7 +4,5 @@ public class GetAllMyTestingSessionsQueryValidator : AbstractValidator<GetAllMyT
 {
     public GetAllMyTestingSessionsQueryValidator()
     {
-        RuleFor(x => x.UserId)
-            .NotNull().WithMessage("User ID is required and cannot be null.");
     }
 }

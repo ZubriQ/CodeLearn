@@ -47,6 +47,8 @@ public class CreateMethodCodingExerciseSubmissionCommandHandler(
         {
             testingSession.Finish();
 
+            await _context.SaveChangesAsync(cancellationToken);
+
             validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure(
                 "Finished", "Testing sessions is finished."));
             return new ValidationFailed(validationResult.Errors);
