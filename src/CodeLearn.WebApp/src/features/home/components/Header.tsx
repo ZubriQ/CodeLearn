@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Dialog } from '@headlessui/react';
-import { ArrowLeftStartOnRectangleIcon, Bars2Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars2Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ROLES } from '@/constants/roles.ts';
