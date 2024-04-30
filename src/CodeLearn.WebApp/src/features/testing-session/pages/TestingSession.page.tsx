@@ -19,10 +19,17 @@ import { setSelectedChoices } from '@/features/testing-session/testing-session-s
 import { MethodCodingExercise } from '@/features/testing-session/models/MethodCodingExercise.ts';
 import { setCompletedExercises } from '@/features/testing-session/completed-exercise-ids-slice.ts';
 import CodeEditorWithOutput from '@/features/testing-session/components/CodeEditorWithOutput.component.tsx';
+import { Dialog, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { DialogContent } from '@/components/ui/dialog.tsx';
+import { Label } from '@/components/ui/label.tsx';
+import { Textarea } from '@/components/ui/textarea.tsx';
 
 export default function TestingSessionPage() {
   const { id } = useParams<{ id?: string }>();
   const dispatch = useDispatch();
+
+  const [testingFinishedFeedbackMenu, setTestingFinishedFeedbackMenu] = useState(true);
+  const [feedbackText, setFeedbackText] = useState('');
 
   const [testingSession, setTestingSession] = useState<TestingSession>();
   const [testing, setTesting] = useState();
@@ -233,6 +240,10 @@ export default function TestingSessionPage() {
     }
   };
 
+  const handleFinishTesting = () => {
+    setTestingFinishedFeedbackMenu(false);
+  };
+
   if (currentExercise === undefined) {
     return <Loading />;
   }
@@ -397,6 +408,26 @@ export default function TestingSessionPage() {
           )}
         </ResizablePanel>
       </ResizablePanelGroup>
+
+      <Dialog open={testingFinishedFeedbackMenu}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle className="mb-1">Testing has been finished</DialogTitle>
+            <DialogDescription>
+              Thank you so much for your participation in the testing. Your insights are invaluable to us, and we truly
+              appreciate your feedback. Your contribution helps us improve and deliver a better experience. We look
+              forward to hearing from you.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <Label>Feedback</Label>
+            <Textarea value={feedbackText} maxLength={450} onChange={(e) => setFeedbackText(e.target.value)} />
+          </div>
+          <DialogFooter>
+            <Button onClick={handleFinishTesting}>Finish</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

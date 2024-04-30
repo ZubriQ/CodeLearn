@@ -35,7 +35,7 @@ public class CreateTestingSessionCommandHandler(
 
         var testingSessionExists = await _context.TestingSessions
             .AnyAsync(x => x.TestingId == TestingId.Create(request.TestingId) && x.CreatedBy == request.UserId,
-                      cancellationToken);
+                           cancellationToken);
 
         if (testingSessionExists)
         {

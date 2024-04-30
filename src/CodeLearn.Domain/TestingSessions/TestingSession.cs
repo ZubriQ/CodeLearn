@@ -6,7 +6,9 @@ public sealed class TestingSession : BaseAuditableEntity<TestingSessionId>, IAgg
     public TestingSessionStatus Status { get; private set; }
     public DateTimeOffset StartDateTime { get; private set; }
     public DateTimeOffset FinishDateTime { get; private set; }
-    public int Score { get; private set; }
+    public int CorrectQuestionsCount { get; private set; }
+    public int SolvedExerecisesCount { get; private set; }
+    public string StudentFeedback { get; private set; } = string.Empty;
 
     private TestingSession(
         TestingId testingId,
@@ -19,7 +21,6 @@ public sealed class TestingSession : BaseAuditableEntity<TestingSessionId>, IAgg
         Status = status;
         StartDateTime = startDateTime;
         FinishDateTime = finishDateTime;
-        Score = 0;
     }
 
     /// <summary>
@@ -40,5 +41,17 @@ public sealed class TestingSession : BaseAuditableEntity<TestingSessionId>, IAgg
     public void Finish()
     {
         Status = TestingSessionStatus.Finished;
+    }
+
+    public void FinishTestingSession(string studentFeedback)
+    {
+        Status = TestingSessionStatus.Finished;
+        StudentFeedback = studentFeedback;
+    }
+
+    public void SetSolvedExercises(int correctQuestions, int solvedExercises) // TODO: Result, validation
+    {
+        CorrectQuestionsCount = correctQuestions;
+        SolvedExerecisesCount = solvedExercises;
     }
 }

@@ -28,30 +28,39 @@ public sealed class TestingSessionConfiguration : IEntityTypeConfiguration<Testi
         builder
             .HasOne<Testing>()
             .WithMany()
-            .HasForeignKey(ts => ts.TestingId)
+            .HasForeignKey(x => x.TestingId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
         builder
-            .Property(ts => ts.Status)
+            .Property(x => x.Status)
             .HasMaxLength(10)
             .IsRequired()
             .HasConversion(
                 status => status.ToString(),
                 value => (TestingSessionStatus)Enum.Parse(typeof(TestingSessionStatus), value));
 
-        builder.HasIndex(ts => ts.Status);
+        builder.HasIndex(x => x.Status);
 
         builder
-            .Property(ts => ts.StartDateTime)
+            .Property(x => x.StartDateTime)
             .IsRequired();
 
         builder
-            .Property(ts => ts.FinishDateTime)
+            .Property(x => x.FinishDateTime)
             .IsRequired();
 
         builder
-            .Property(ts => ts.Score)
+            .Property(x => x.CorrectQuestionsCount)
+            .IsRequired();
+
+        builder
+            .Property(x => x.SolvedExerecisesCount)
+            .IsRequired();
+
+        builder
+            .Property(x => x.StudentFeedback)
+            .HasMaxLength(450)
             .IsRequired();
     }
 }

@@ -226,6 +226,9 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CorrectQuestionsCount")
+                        .HasColumnType("int");
+
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("datetimeoffset");
 
@@ -241,7 +244,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Score")
+                    b.Property<int>("SolvedExerecisesCount")
                         .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("StartDateTime")
@@ -251,6 +254,11 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("StudentFeedback")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("TestingId")
                         .HasColumnType("int");

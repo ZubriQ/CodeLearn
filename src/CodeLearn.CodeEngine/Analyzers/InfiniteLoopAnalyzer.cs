@@ -70,12 +70,7 @@ public class InfiniteLoopAnalyzer : CSharpSyntaxWalker
     /// </summary>
     private static bool IsAlwaysTrue(ExpressionSyntax condition)
     {
-        if (condition is LiteralExpressionSyntax literal && literal.Kind() == SyntaxKind.TrueLiteralExpression)
-        {
-            return true;
-        }
-
-        return false;
+        return condition is LiteralExpressionSyntax literal && literal.Kind() == SyntaxKind.TrueLiteralExpression;
     }
 
     /// <summary>

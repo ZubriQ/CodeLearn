@@ -8,24 +8,20 @@ namespace CodeLearn.Infrastructure.Services;
 
 public class CodeTesterService(ICodeFormatter formatter, ICodeCompiler compiler, ICodeTester tester) : ICodeTesterService
 {
-    private readonly ICodeFormatter _formatter = formatter;
-    private readonly ICodeCompiler _compiler = compiler;
-    private readonly ICodeTester _tester = tester;
-
     public async Task<Result> TestMethodAsync(MethodCodingExercise methodCodingExercise, string studentCode)
     {
         var exercise = ConvertToExercise(methodCodingExercise, studentCode);
 
-        var formattedCode = _formatter.Format(exercise.StudentCode, exercise.ClassName);
+        var formattedCode = formatter.Format(exercise.StudentCode, exercise.ClassName);
 
-        var compilationResult = _compiler.Compile(formattedCode!);
+        var compilationResult = compiler.Compile(formattedCode!);
 
         if (compilationResult.IsFailure)
         {
             return compilationResult;
         }
 
-        var testingResult = _tester.Test(exercise);
+        var testingResult = tester.Test(exercise);
 
         return testingResult;
     }

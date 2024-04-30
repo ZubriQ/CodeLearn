@@ -10,6 +10,7 @@ namespace CodeLearn.CodeEngine.Processing;
 
 public class CodeTester : ICodeTester
 {
+    // TODO: Iassemblyloader, IMethodExecuter
     private HostAssemblyLoadContext? _assemblyLoader;
     private Assembly? _methodDllAssembly;
     private Type? _type;

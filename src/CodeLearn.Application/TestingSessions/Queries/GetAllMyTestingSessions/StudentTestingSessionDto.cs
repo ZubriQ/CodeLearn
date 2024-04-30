@@ -18,5 +18,7 @@ public class StudentTestingSessionDto
 
     public DateTimeOffset FinishDateTime { get; set; }
 
-    public int Score { get; set; }
+    public int CorrectQuestionsCount { get; set; }
+
+    public int SolvedExerecisesCount { get; set; }
 }
