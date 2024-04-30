@@ -1,4 +1,5 @@
-﻿using CodeLearn.Domain.Testings.ValueObjects;
+﻿using CodeLearn.Domain.Testings.Enums;
+using CodeLearn.Domain.Testings.ValueObjects;
 using CodeLearn.Domain.TestingSessions;
 
 namespace CodeLearn.Application.TestingSessions.Commands.CreateTestingSession;
@@ -25,6 +26,11 @@ public class CreateTestingSessionCommandHandler(
         if (testing is null)
         {
             return new NotFound();
+        }
+
+        if (testing.Status == TestingStatus.Completed || testing.DeadlineDate < DateTimeOffset.UtcNow)
+        {
+            return new ValidationFailed(ApplicationErrors.TestingSessions.SessionFinishDateTimeInFuture);
         }
 
         var testingSessionExists = await _context.TestingSessions

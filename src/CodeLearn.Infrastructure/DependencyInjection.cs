@@ -6,6 +6,7 @@ using CodeLearn.Domain.StudentGroups.ValueObjects;
 using CodeLearn.Domain.Testings.ValueObjects;
 using CodeLearn.Domain.TestingSessions.ValueObjects;
 using CodeLearn.Domain.Tests.ValueObjects;
+using CodeLearn.Infrastructure.Jobs;
 using CodeLearn.Infrastructure.Services;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Quartz;
 using System.Text;
 
 namespace CodeLearn.Infrastructure;
@@ -25,17 +27,7 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestId>>();
-        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<TestId>>();
-
-        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestingId>>();
-        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<TestingId>>();
-
-        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestingSessionId>>();
-        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<TestingSessionId>>();
-
-        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<StudentGroupId>>();
-        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<StudentGroupId>>();
+        services.AddInterceptorsForAuditing();
 
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
@@ -74,6 +66,25 @@ public static class DependencyInjection
         services.AddScoped<IFileProcessingService, FileProcessingService>();
 
         services.AddCodeTesterService();
+
+        services.AddBackgroundJobs();
+
+        return services;
+    }
+
+    private static IServiceCollection AddInterceptorsForAuditing(this IServiceCollection services)
+    {
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestId>>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<TestId>>();
+
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestingId>>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<TestingId>>();
+
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestingSessionId>>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<TestingSessionId>>();
+
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<StudentGroupId>>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<StudentGroupId>>();
 
         return services;
     }
@@ -117,28 +128,29 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(options =>
-        {
-            options.SaveToken = true;
-            options.TokenValidationParameters = new TokenValidationParameters()
+        services
+            .AddAuthentication(options =>
             {
-                ValidateIssuer = true,
-                ValidIssuer = configuration["JwtSettings:Issuer"],
-                ValidateAudience = true,
-                ValidAudience = configuration["JwtSettings:Audience"],
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!)),
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero,
-            };
-        })
-        .AddNegotiate();
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = configuration["JwtSettings:Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = configuration["JwtSettings:Audience"],
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!)),
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
+                };
+            })
+            .AddNegotiate();
 
         services.AddSingleton<ITokenService, TokenService>();
 
@@ -163,6 +175,17 @@ public static class DependencyInjection
         services.AddScoped<ICodeTester, CodeTester>();
 
         services.AddScoped<ICodeTesterService, CodeTesterService>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddBackgroundJobs(this IServiceCollection services)
+    {
+        services.AddQuartz();
+
+        services.AddQuartzHostedService();
+
+        services.ConfigureOptions<FinishingTestingsAndSessionsBackgroundJobSetup>();
 
         return services;
     }

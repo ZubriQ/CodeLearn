@@ -12,4 +12,13 @@ public record ValidationFailed(IEnumerable<ValidationFailure> Errors)
     {
 
     }
+
+    /// <summary>
+    /// For custom errors.
+    /// </summary>
+    /// <param name="error">Application layer errors.</param>
+    public ValidationFailed(Domain.Common.Errors.Error error) : this([new ValidationFailure(error.Code, error.Message)])
+    {
+
+    }
 }

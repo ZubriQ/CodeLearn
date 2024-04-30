@@ -38,9 +38,7 @@ public class CreateMethodCodingExerciseSubmissionCommandHandler(
 
         if (testingSession.Status is TestingSessionStatus.Finished)
         {
-            validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure(
-                "Finished", "Testing sessions is finished."));
-            return new ValidationFailed(validationResult.Errors);
+            return new ValidationFailed(ApplicationErrors.TestingSessions.SessionAlreadyFinished);
         }
 
         if (testingSession.FinishDateTime.ToUniversalTime() < DateTimeOffset.UtcNow)
@@ -49,9 +47,7 @@ public class CreateMethodCodingExerciseSubmissionCommandHandler(
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure(
-                "Finished", "Testing sessions is finished."));
-            return new ValidationFailed(validationResult.Errors);
+            return new ValidationFailed(ApplicationErrors.TestingSessions.SessionFinishDateTimeInFuture);
         }
 
         var exercise = await _context.MethodCodingExercises
