@@ -167,6 +167,12 @@ const TestingSessions = {
   getById: (id: number) => requests.get(`testing-sessions/${id}`),
   getCompletedExerciseIdsById: (id: number) => requests.get(`testing-sessions/${id}/completed-exercises`),
   listForCurriculum: () => requests.get('testing-sessions/my-sessions').then((response) => response.testingSessions),
+  finishTestingSession: (
+    id: number,
+    request: {
+      studentFeedback: string;
+    },
+  ) => requests.post(`testing-sessions/${id}/finish`, request),
 };
 
 const ExerciseSubmissions = {

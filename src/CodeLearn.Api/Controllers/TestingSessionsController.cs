@@ -1,4 +1,5 @@
 ﻿using CodeLearn.Application.TestingSessions.Commands.CreateTestingSession;
+using CodeLearn.Application.TestingSessions.Commands.FinishTestingSession;
 using CodeLearn.Application.TestingSessions.Queries.GetAllMyTestingSessions;
 using CodeLearn.Application.TestingSessions.Queries.GetCompletedExerciseIdsById;
 using CodeLearn.Application.TestingSessions.Queries.GetTestingSessionById;
@@ -79,6 +80,20 @@ public sealed class TestingSessionsController(ISender _sender, IMapper _mapper) 
 
         return result.Match(
             Ok,
+            _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Testing session not found."));
+    }
+
+    [HttpPost("{testingSessionId:int}/finish")]
+    [ProducesResponseType(typeof(Success), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> FinishTestingSession(int testingSessionId, [FromBody] FinishTestingSessionRequest request)
+    {
+        var result = await _sender.Send(new FinishTestingSessionCommand(testingSessionId, request.StudentFeedback));
+
+        return result.Match(
+            success => Ok(success),
+            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Bad request."),
             _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Testing session not found."));
     }
 }

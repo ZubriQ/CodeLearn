@@ -49,7 +49,7 @@ public sealed class TestingSession : BaseAuditableEntity<TestingSessionId>, IAgg
         StudentFeedback = studentFeedback;
     }
 
-    public void SetSolvedExercises(int correctQuestions, int solvedExercises) // TODO: Result, validation
+    public void SetSolvedExercises(int correctQuestions, int solvedExercises) // TODO: return Result, validation with domain errors
     {
         CorrectQuestionsCount = correctQuestions;
         SolvedExerecisesCount = solvedExercises;

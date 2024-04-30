@@ -13,5 +13,9 @@ public static partial class ApplicationErrors
         public static readonly Domain.Common.Errors.Error SessionFinishDateTimeInFuture = new(
             $"{Prefix}{nameof(SessionFinishDateTimeInFuture)}",
             "The finish date and time for the testing session is in the future.");
+
+        public static readonly Domain.Common.Errors.Error SessionAlreadyHasFeedback = new(
+            $"{Prefix}{nameof(SessionAlreadyHasFeedback)}",
+            "The testing session already has student's feedback.");
     }
 }

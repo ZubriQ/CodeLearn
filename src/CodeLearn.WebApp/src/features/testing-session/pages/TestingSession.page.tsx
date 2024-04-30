@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import agent from '@/api/agent.ts';
@@ -29,7 +29,7 @@ export default function TestingSessionPage() {
   const dispatch = useDispatch();
 
   const [testingFinishedFeedbackMenu, setTestingFinishedFeedbackMenu] = useState(true);
-  const [feedbackText, setFeedbackText] = useState('');
+  const [studentFeedback, setstudentFeedback] = useState('');
 
   const [testingSession, setTestingSession] = useState<TestingSession>();
   const [testing, setTesting] = useState();
@@ -239,9 +239,22 @@ export default function TestingSessionPage() {
       });
     }
   };
-
+  const navigate = useNavigate();
   const handleFinishTesting = () => {
     setTestingFinishedFeedbackMenu(false);
+
+    const testingSessionId = parseInt(id, 10);
+    agent.TestingSessions.finishTestingSession(testingSessionId, { studentFeedback })
+      .then(() => {
+        navigate('/curriculum');
+      })
+      .catch((error) => {
+        toast({
+          title: 'Error finishing testing session',
+          description: error.response?.data?.error || 'An unexpected error occurred.',
+          variant: 'destructive',
+        });
+      });
   };
 
   if (currentExercise === undefined) {
@@ -421,7 +434,7 @@ export default function TestingSessionPage() {
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <Label>Feedback</Label>
-            <Textarea value={feedbackText} maxLength={450} onChange={(e) => setFeedbackText(e.target.value)} />
+            <Textarea value={studentFeedback} maxLength={450} onChange={(e) => setstudentFeedback(e.target.value)} />
           </div>
           <DialogFooter>
             <Button onClick={handleFinishTesting}>Finish</Button>
