@@ -6,6 +6,7 @@ import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import { useNavigate } from 'react-router-dom';
 import { TestingSession } from '@/features/curriculum/models/TestingSession.ts';
+import { Badge } from '@/components/ui/badge.tsx';
 
 function CurriculumTestingSessionsPage() {
   const [, setCurrentPageTitle] = useDashboardPageTitle();
@@ -72,22 +73,28 @@ function CurriculumTestingSessionsPage() {
                 <CardDescription>
                   Date: {formattedStartDateTime} - {formattedFinishDateTime}
                 </CardDescription>
-                <div className="flex justify-between">
-                  <CardDescription>Status: {session.status}</CardDescription>
-                  <CardDescription>Score: {session.score}</CardDescription>
-                </div>
+                <CardDescription>
+                  Status:{' '}
+                  <Badge variant="secondary">{session.status === 'InProgress' ? 'In progress' : session.status}</Badge>
+                </CardDescription>
+                {session.status !== 'InProgress' && (
+                  <>
+                    <CardDescription>Correct questions: {session.correctQuestionsCount}</CardDescription>
+                    <CardDescription>Solved exercises: {session.solvedExercisesCount}</CardDescription>
+                  </>
+                )}
               </CardHeader>
-              <CardFooter className="flex justify-end">
-                {session.status === 'InProgress' ? (
-                  <Button size="icon" className="w-full" onClick={() => handleContinueClick(session.id)}>
+              {session.status === 'InProgress' && (
+                <CardFooter className="flex justify-end">
+                  <Button
+                    size="icon"
+                    className="w-full bg-green-600 hover:bg-green-500"
+                    onClick={() => handleContinueClick(session.id)}
+                  >
                     Continue
                   </Button>
-                ) : (
-                  <Button size="icon" className="w-full" onClick={() => handleSeeResultClick(session.id)}>
-                    See result
-                  </Button>
-                )}
-              </CardFooter>
+                </CardFooter>
+              )}
             </Card>
           </li>
         );

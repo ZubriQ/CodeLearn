@@ -6,6 +6,7 @@ import agent from '@/api/agent.ts';
 import { toast } from '@/components/ui/use-toast.ts';
 import { useNavigate } from 'react-router-dom';
 import { Testing } from '@/features/dashboard/testings/Testing.ts';
+import { Badge } from '@/components/ui/badge.tsx';
 
 function StudentTestingsPage() {
   const [, setCurrentPageTitle] = useDashboardPageTitle();
@@ -65,10 +66,18 @@ function StudentTestingsPage() {
                 <CardTitle className="mb-2">{testing.testTitle}</CardTitle>
                 <CardDescription>Deadline: {formattedDateTime}</CardDescription>
                 <CardDescription>Duration: {testing.durationInMinutes} minutes</CardDescription>
-                <CardDescription>Status: {testing.status}</CardDescription>
+                <CardDescription>
+                  Status:{' '}
+                  <Badge variant="secondary">{testing.status === 'Completed' ? 'Missed' : testing.status}</Badge>
+                </CardDescription>
               </CardHeader>
               <CardFooter className="flex justify-end">
-                <Button size="icon" className="w-full" onClick={() => handleCardClick(testing.id)}>
+                <Button
+                  size="icon"
+                  className="w-full bg-green-600 hover:bg-green-500"
+                  onClick={() => handleCardClick(testing.id)}
+                  disabled={testing.status === 'Completed'}
+                >
                   Start
                 </Button>
               </CardFooter>

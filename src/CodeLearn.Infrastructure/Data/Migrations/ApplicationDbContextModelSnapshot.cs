@@ -244,7 +244,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SolvedExerecisesCount")
+                    b.Property<int>("SolvedExercisesCount")
                         .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("StartDateTime")

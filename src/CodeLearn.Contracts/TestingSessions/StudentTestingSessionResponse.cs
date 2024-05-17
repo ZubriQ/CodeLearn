@@ -8,4 +8,5 @@ public record StudentTestingSessionResponse(
     string Status,
     string StartDateTime,
     string FinishDateTime,
-    int Score);
+    int CorrectQuestionsCount,
+    int SolvedExercisesCount);

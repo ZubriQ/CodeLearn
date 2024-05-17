@@ -28,6 +28,8 @@ public class GetAllTestingsByUsernameQueryHandler(
                          && x.Status == TestingStatus.Open
                          || x.Status == TestingStatus.Completed) &&
                          !_context.TestingSessions.Any(es => es.TestingId == x.Id))
+            .OrderByDescending(x => x.Status)
+            .ThenBy(x => x.DeadlineDate)
             .ToArrayAsync(cancellationToken);
 
         var testingDetails = new List<TestingDto>();

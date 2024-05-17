@@ -47,7 +47,7 @@ public class GetAllMyTestingSessionsQueryHandler(
                       StartDateTime = ts.TestingSession.StartDateTime,
                       FinishDateTime = ts.TestingSession.FinishDateTime,
                       CorrectQuestionsCount = ts.TestingSession.CorrectQuestionsCount,
-                      SolvedExerecisesCount = ts.TestingSession.SolvedExerecisesCount
+                      SolvedExercisesCount = ts.TestingSession.SolvedExercisesCount
                   })
             .OrderByDescending(x => x.FinishDateTime)
             .ToArrayAsync(cancellationToken);

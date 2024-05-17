@@ -246,7 +246,7 @@ export default function TestingSessionPage() {
     const testingSessionId = parseInt(id, 10);
     agent.TestingSessions.finishTestingSession(testingSessionId, { studentFeedback })
       .then(() => {
-        navigate('/curriculum');
+        navigate('/curriculum/testing-sessions');
       })
       .catch((error) => {
         toast({

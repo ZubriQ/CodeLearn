@@ -7,7 +7,7 @@ public sealed class TestingSession : BaseAuditableEntity<TestingSessionId>, IAgg
     public DateTimeOffset StartDateTime { get; private set; }
     public DateTimeOffset FinishDateTime { get; private set; }
     public int CorrectQuestionsCount { get; private set; }
-    public int SolvedExerecisesCount { get; private set; }
+    public int SolvedExercisesCount { get; private set; }
     public string StudentFeedback { get; private set; } = string.Empty;
 
     private TestingSession(
@@ -52,6 +52,6 @@ public sealed class TestingSession : BaseAuditableEntity<TestingSessionId>, IAgg
     public void SetSolvedExercises(int correctQuestions, int solvedExercises) // TODO: return Result, validation with domain errors
     {
         CorrectQuestionsCount = correctQuestions;
-        SolvedExerecisesCount = solvedExercises;
+        SolvedExercisesCount = solvedExercises;
     }
 }

@@ -55,7 +55,7 @@ public sealed class TestingSessionConfiguration : IEntityTypeConfiguration<Testi
             .IsRequired();
 
         builder
-            .Property(x => x.SolvedExerecisesCount)
+            .Property(x => x.SolvedExercisesCount)
             .IsRequired();
 
         builder

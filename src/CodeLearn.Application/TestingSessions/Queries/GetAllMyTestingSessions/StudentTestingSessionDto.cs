@@ -20,5 +20,5 @@ public class StudentTestingSessionDto
 
     public int CorrectQuestionsCount { get; set; }
 
-    public int SolvedExerecisesCount { get; set; }
+    public int SolvedExercisesCount { get; set; }
 }

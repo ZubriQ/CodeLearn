@@ -6,5 +6,6 @@ export type TestingSession = {
   status: string;
   startDateTime: string;
   finishDateTime: string;
-  score: number;
+  correctQuestionsCount: number;
+  solvedExercisesCount: number;
 };
