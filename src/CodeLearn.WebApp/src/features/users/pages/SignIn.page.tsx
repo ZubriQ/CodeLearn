@@ -35,11 +35,7 @@ function SignInPage() {
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Link to="/">
-          <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=600"
-            alt="CodeLearn"
-          />
+          <img className="mx-auto h-10 w-auto" src="/logo.svg" alt="CodeLearn" />
         </Link>
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Welcome back</h2>
         <p className="bg-clip-text text-center text-sm leading-8 text-gray-500">Sign in to your account</p>
