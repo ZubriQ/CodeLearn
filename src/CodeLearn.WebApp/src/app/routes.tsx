@@ -21,6 +21,7 @@ const SingleTestPage = lazy(() => import('@/features/dashboard/tests/pages/Singl
 const StudentGroupsPage = lazy(() => import('@/features/dashboard/student-groups/pages/StudentGroups.page.tsx'));
 const EditStudentGroupPage = lazy(() => import('@/features/dashboard/student-groups/pages/EditStudentGroup.page.tsx'));
 const StudentsPage = lazy(() => import('@/features/dashboard/students/pages/Students.page.tsx'));
+const TeachersPage = lazy(() => import('@/features/dashboard/teachers/pages/Teachers.page.tsx'));
 const TestingSessionsPage = lazy(() => import('@/features/dashboard/testing-sessions/pages/TestingSessions.page.tsx'));
 const TestingsPage = lazy(() => import('@/features/dashboard/testings/pages/Testings.page.tsx'));
 
@@ -140,6 +141,14 @@ export const routes: RouteObject[] = [
         element: (
           <Suspense>
             <StudentsPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'teachers',
+        element: (
+          <Suspense>
+            <TeachersPage />
           </Suspense>
         ),
       },
