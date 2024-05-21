@@ -3,12 +3,17 @@ using CodeLearn.Application.Users.Commands.Login;
 using CodeLearn.Application.Users.Commands.RefreshToken;
 using CodeLearn.Application.Users.Commands.RegisterStudent;
 using CodeLearn.Application.Users.Queries.GetAllStudents;
-using CodeLearn.Contracts.Users;
+using CodeLearn.Application.Users.Queries.GetAllTeachers;
+using CodeLearn.Contracts.Users.Auth;
+using CodeLearn.Contracts.Users.Students;
+using CodeLearn.Contracts.Users.Teachers;
 
 namespace CodeLearn.Api.Controllers;
 
 public sealed class UsersController(ISender _sender, IMapper _mapper) : ApiControllerBase
 {
+    #region Auth
+
     [HttpPost]
     [Route("login")]
     [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
@@ -36,6 +41,10 @@ public sealed class UsersController(ISender _sender, IMapper _mapper) : ApiContr
             tokensDto => Ok(_mapper.Map<RefreshTokenResponse>(tokensDto)),
             _ => Problem(statusCode: StatusCodes.Status403Forbidden, title: "Invalid token."));
     }
+
+    #endregion
+
+    #region Students
 
     [HttpGet("students")]
     [ProducesResponseType(typeof(StudentResponseCollection), StatusCodes.Status200OK)]
@@ -79,6 +88,20 @@ public sealed class UsersController(ISender _sender, IMapper _mapper) : ApiContr
             _ => Problem(statusCode: StatusCodes.Status404NotFound, title: "Student group not found"));
     }
 
+    #endregion
+
+    #region Teachers
+
+    [HttpGet("teachers")]
+    [ProducesResponseType(typeof(TeacherResponseCollection), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAllTeachers()
+    {
+        var queryResult = await _sender.Send(new GetAllTeachersQuery());
+        var responseData = queryResult.Select(_mapper.Map<TeacherResponse>).ToArray();
+
+        return Ok(new TeacherResponseCollection(responseData));
+    }
+
     //[HttpPost]
     //[Route("teachers")]
     //[ProducesResponseType(typeof(string), StatusCodes.Status201Created)]
@@ -92,4 +115,6 @@ public sealed class UsersController(ISender _sender, IMapper _mapper) : ApiContr
     //        id => CreatedAtAction(nameof(CreateTeacher), new { id }, id),
     //        _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed"));
     //}
+
+    #endregion
 }

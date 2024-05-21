@@ -1,4 +1,4 @@
-﻿namespace CodeLearn.Contracts.Users;
+﻿namespace CodeLearn.Contracts.Users.Auth;
 
 public record RefreshTokenResponse(
     string JwtToken,
