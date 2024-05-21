@@ -97,7 +97,7 @@ public class IdentityService : IIdentityService
         return users.Select(u => u.ToDto()).ToArray();
     }
 
-    public async Task<(Result Result, string? userId)> CreateStudentUserAsync(RegisterStudentDto studentDto)
+    public async Task<(Result Result, string? UserId)> CreateStudentUserAsync(RegisterStudentDto studentDto)
     {
         var username = await GenerateUniqueUsername(studentDto.LastName, studentDto.FirstName, studentDto.Patronymic);
 
@@ -249,5 +249,32 @@ public class IdentityService : IIdentityService
         var user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == userName);
 
         return user?.StudentGroupName;
+    }
+
+    public async Task<(Result Result, string? UserId)> CreateTeacherUserAsync(string firstName, string lastName, string patronymic)
+    {
+        var username = await GenerateUniqueUsername(lastName, firstName, patronymic);
+
+        var password = GenerateTemporaryPassword();
+
+        var user = new ApplicationUser
+        {
+            FirstName = firstName,
+            LastName = lastName,
+            Patronymic = patronymic,
+            UserName = username,
+            TemporaryPassword = password,
+        };
+
+        var result = await _userManager.CreateAsync(user, password);
+
+        if (!result.Succeeded)
+        {
+            return (Result.Failure(InfrastructureErrors.Identity.InvalidUserFields), null);
+        }
+
+        await _userManager.AddToRoleAsync(user, Roles.Teacher);
+
+        return (Result.Success(), user.Id);
     }
 }

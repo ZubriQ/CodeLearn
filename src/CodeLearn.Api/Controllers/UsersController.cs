@@ -2,6 +2,7 @@
 using CodeLearn.Application.Users.Commands.Login;
 using CodeLearn.Application.Users.Commands.RefreshToken;
 using CodeLearn.Application.Users.Commands.RegisterStudent;
+using CodeLearn.Application.Users.Commands.RegisterTeacher;
 using CodeLearn.Application.Users.Queries.GetAllStudents;
 using CodeLearn.Application.Users.Queries.GetAllTeachers;
 using CodeLearn.Contracts.Users.Auth;
@@ -102,19 +103,19 @@ public sealed class UsersController(ISender _sender, IMapper _mapper) : ApiContr
         return Ok(new TeacherResponseCollection(responseData));
     }
 
-    //[HttpPost]
-    //[Route("teachers")]
-    //[ProducesResponseType(typeof(string), StatusCodes.Status201Created)]
-    //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-    //public async Task<IActionResult> CreateTeacher([FromBody] RegisterTeacherRequest request)
-    //{
-    //    var command = _mapper.Map<RegisterTeacherCommand>(request);
-    //    var result = await _sender.Send(command);
+    [HttpPost]
+    [Route("teachers")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> CreateTeacher([FromBody] RegisterTeacherRequest request)
+    {
+        var command = _mapper.Map<RegisterTeacherCommand>(request);
+        var result = await _sender.Send(command);
 
-    //    return result.Match<IActionResult>(
-    //        id => CreatedAtAction(nameof(CreateTeacher), new { id }, id),
-    //        _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed"));
-    //}
+        return result.Match<IActionResult>(
+            id => CreatedAtAction(nameof(CreateTeacher), new { id }, id),
+            _ => Problem(statusCode: StatusCodes.Status400BadRequest, title: "Validation failed"));
+    }
 
     #endregion
 }

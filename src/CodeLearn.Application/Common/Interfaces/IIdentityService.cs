@@ -21,7 +21,9 @@ public interface IIdentityService
 
     Task<UserDto[]> GetUsersInRoleAsync(string role);
 
-    Task<(Result Result, string? userId)> CreateStudentUserAsync(RegisterStudentDto studentDto);
+    Task<(Result Result, string? UserId)> CreateStudentUserAsync(RegisterStudentDto studentDto);
+
+    Task<(Result Result, string? UserId)> CreateTeacherUserAsync(string firstName, string lastName, string patronymic);
 
     Task<Result> AddStudentUsersFromDtoAsync(ImportedStudentDto[] students, string studentGroup);
 
