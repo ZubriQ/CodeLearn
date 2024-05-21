@@ -34,7 +34,10 @@ function ExerciseCards(props: ExerciseCardsProps) {
 
         return (
           <li key={exercise.id}>
-            <Card className="cursor-pointer transition-colors duration-500 hover:bg-zinc-100" onClick={handleCardClick}>
+            <Card
+              className="cursor-pointer transition-all duration-200 hover:-m-0.5 hover:shadow-md"
+              onClick={handleCardClick}
+            >
               <CardHeader>
                 <CardTitle>{exercise.title}</CardTitle>
                 <CardDescription>{exercise.description}</CardDescription>
@@ -46,6 +49,7 @@ function ExerciseCards(props: ExerciseCardsProps) {
                       <Button
                         variant="outline"
                         size="icon"
+                        className="-mt-2"
                         onClick={(event) => {
                           event.stopPropagation();
 

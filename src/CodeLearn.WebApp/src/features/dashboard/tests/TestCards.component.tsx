@@ -26,7 +26,10 @@ function TestCards(props: TestCardsProps) {
 
         return (
           <li key={test.id}>
-            <Card className="cursor-pointer transition-colors duration-500 hover:bg-zinc-100" onClick={handleCardClick}>
+            <Card
+              className="cursor-pointer transition-all duration-200 hover:-m-0.5 hover:shadow-md"
+              onClick={handleCardClick}
+            >
               <CardHeader>
                 <CardTitle>{test.title}</CardTitle>
                 <CardDescription>{test.description}</CardDescription>
@@ -38,6 +41,7 @@ function TestCards(props: TestCardsProps) {
                       <Button
                         variant="outline"
                         size="icon"
+                        className="-mt-2"
                         onClick={(event) => {
                           event.stopPropagation();
 
