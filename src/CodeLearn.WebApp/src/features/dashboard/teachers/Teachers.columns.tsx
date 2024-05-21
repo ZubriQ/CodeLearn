@@ -61,7 +61,15 @@ export const columns: ColumnDef<Teacher>[] = [
               <DropdownMenuItem onClick={() => navigator.clipboard.writeText(teacher.fullName)}>
                 Copy full name
               </DropdownMenuItem>
-              <DropdownMenuItem>Reset password</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() =>
+                  navigator.clipboard.writeText(
+                    `Username: ${teacher.userName} Temporary password: ${teacher.temporaryPassword}`,
+                  )
+                }
+              >
+                Copy credentials
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <Link className="h-full w-full" key={teacher.id} to={`/dashboard/teachers/${teacher.id}`}>
@@ -85,6 +93,7 @@ export const columns: ColumnDef<Teacher>[] = [
               >
                 Delete
               </DropdownMenuItem>
+              <DropdownMenuItem>Reset password</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

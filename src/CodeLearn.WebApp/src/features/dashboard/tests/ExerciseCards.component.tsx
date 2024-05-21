@@ -35,7 +35,7 @@ function ExerciseCards(props: ExerciseCardsProps) {
         return (
           <li key={exercise.id}>
             <Card
-              className="cursor-pointer transition-all duration-200 hover:-m-0.5 hover:shadow-md"
+              className="cursor-pointer transition-all duration-300 hover:-m-0.5 hover:shadow-md"
               onClick={handleCardClick}
             >
               <CardHeader>

@@ -10,6 +10,7 @@ import { CreateMethodCodingExerciseSubmissionRequest } from '@/api/exercise-subm
 import { CreateQuestionExerciseSubmissionRequest } from '@/api/exercise-submissions/CreateQuestionExerciseSubmissionsRequest.ts';
 import { jwtDecode } from 'jwt-decode';
 import { loginSuccess, logout } from '@/features/users/auth-slice.ts';
+import { RegisterTeacherRequest } from '@/api/users/RegisterTeacherRequest.ts';
 
 axios.defaults.baseURL = 'https://localhost:5001/api/';
 
@@ -162,6 +163,12 @@ const Students = {
   },
 };
 
+const Teachers = {
+  list: () => requests.get('users/teachers').then((response) => response.teachers),
+  create: (request: RegisterTeacherRequest) => requests.post(`users/teachers`, request),
+  delete: (id: string) => requests.delete(`users/teachers/${id}`),
+};
+
 const TestingSessions = {
   create: (request: { testingId: number }) => requests.post(`testing-sessions`, request),
   getById: (id: number) => requests.get(`testing-sessions/${id}`),
@@ -191,6 +198,7 @@ const agent = {
   DataTypes,
   Testings,
   Students,
+  Teachers,
   TestingSessions,
   ExerciseSubmissions,
 };
