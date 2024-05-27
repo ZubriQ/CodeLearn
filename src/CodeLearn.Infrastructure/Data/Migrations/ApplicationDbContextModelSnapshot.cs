@@ -215,7 +215,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StudentGroup", "Person");
+                    b.ToTable("StudentGroup", "Test");
                 });
 
             modelBuilder.Entity("CodeLearn.Domain.TestingSessions.TestingSession", b =>

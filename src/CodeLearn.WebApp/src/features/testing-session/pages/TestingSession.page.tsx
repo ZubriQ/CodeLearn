@@ -28,7 +28,7 @@ export default function TestingSessionPage() {
   const { id } = useParams<{ id?: string }>();
   const dispatch = useDispatch();
 
-  const [testingFinishedFeedbackMenu, setTestingFinishedFeedbackMenu] = useState(true);
+  const [testingFinishedFeedbackMenu, setTestingFinishedFeedbackMenu] = useState(false);
   const [studentFeedback, setstudentFeedback] = useState('');
 
   const [testingSession, setTestingSession] = useState<TestingSession>();

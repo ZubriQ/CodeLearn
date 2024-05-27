@@ -14,9 +14,6 @@ namespace CodeLearn.Infrastructure.Data.Migrations
             migrationBuilder.EnsureSchema(
                 name: "Test");
 
-            migrationBuilder.EnsureSchema(
-                name: "Person");
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -100,7 +97,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "StudentGroup",
-                schema: "Person",
+                schema: "Test",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -304,7 +301,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     table.ForeignKey(
                         name: "FK_Testing_StudentGroup_StudentGroupId",
                         column: x => x.StudentGroupId,
-                        principalSchema: "Person",
+                        principalSchema: "Test",
                         principalTable: "StudentGroup",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -476,7 +473,9 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     Status = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     StartDateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     FinishDateTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    Score = table.Column<int>(type: "int", nullable: false),
+                    CorrectQuestionsCount = table.Column<int>(type: "int", nullable: false),
+                    SolvedExercisesCount = table.Column<int>(type: "int", nullable: false),
+                    StudentFeedback = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
@@ -808,7 +807,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "StudentGroup",
-                schema: "Person");
+                schema: "Test");
 
             migrationBuilder.DropTable(
                 name: "Test",

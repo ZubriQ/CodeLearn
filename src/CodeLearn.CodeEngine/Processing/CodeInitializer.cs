@@ -5,8 +5,8 @@
 /// </summary>
 public static class CodeInitializer
 {
-    private static readonly string[] DefaultNamespacesCollection = new[]
-    {
+    private static readonly string[] DefaultNamespacesCollection =
+    [
         "System",
         "System.IO",
         "System.Net",
@@ -14,7 +14,7 @@ public static class CodeInitializer
         "System.Text",
         "System.Text.RegularExpressions",
         "System.Collections.Generic"
-    };
+    ];
 
     public static IEnumerable<string> GetDefaultNamespaces()
     {

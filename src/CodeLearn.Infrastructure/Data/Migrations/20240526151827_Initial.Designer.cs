@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeLearn.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240430151649_Add_TestingSessionFields")]
-    partial class Add_TestingSessionFields
+    [Migration("20240526151827_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -218,7 +218,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StudentGroup", "Person");
+                    b.ToTable("StudentGroup", "Test");
                 });
 
             modelBuilder.Entity("CodeLearn.Domain.TestingSessions.TestingSession", b =>
@@ -247,7 +247,7 @@ namespace CodeLearn.Infrastructure.Data.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SolvedExerecisesCount")
+                    b.Property<int>("SolvedExercisesCount")
                         .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("StartDateTime")
