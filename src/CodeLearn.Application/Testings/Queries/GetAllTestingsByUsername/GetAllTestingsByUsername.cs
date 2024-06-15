@@ -27,7 +27,7 @@ public class GetAllTestingsByUsernameQueryHandler(
             .Where(x => (x.StudentGroupId == studentGroup.Id
                          && x.Status == TestingStatus.Open
                          || x.Status == TestingStatus.Completed) &&
-                         !_context.TestingSessions.Any(es => es.TestingId == x.Id))
+                         !_context.TestingSessions.Any(es => es.TestingId == x.Id && es.CreatedBy == request.Username))
             .OrderByDescending(x => x.Status)
             .ThenBy(x => x.DeadlineDate)
             .ToArrayAsync(cancellationToken);
