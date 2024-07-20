@@ -32,11 +32,11 @@ public class FileProcessingService : IFileProcessingService
 
             var userDto = new ImportedStudentDto
             {
-                LastName = lastName,
-                FirstName = firstName,
-                Patronymic = patronymic,
-                StudentGroup = studentGroup,
-                UserCode = userCode,
+                LastName = lastName.Trim(),
+                FirstName = firstName.Trim(),
+                Patronymic = patronymic.Trim(),
+                StudentGroup = studentGroup.Trim(),
+                UserCode = userCode.Trim(),
             };
 
             studentsToCreate.Add(userDto);

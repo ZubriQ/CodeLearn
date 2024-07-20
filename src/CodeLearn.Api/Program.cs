@@ -30,7 +30,7 @@ var app = builder.Build();
         options
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .WithOrigins("http://localhost:4444");
+            .AllowAnyOrigin();
     });
     app.UseHttpsRedirection();
     app.UseAuthentication();
