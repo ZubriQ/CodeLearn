@@ -2,15 +2,9 @@ using CodeLearn.Api;
 using CodeLearn.Application;
 using CodeLearn.Infrastructure;
 using CodeLearn.Infrastructure.Data;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 var builder = WebApplication.CreateBuilder(args);
 {
-    builder.Services.AddControllers(options =>
-    {
-        options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
-    });
-
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
     builder.Services.AddWebServices();

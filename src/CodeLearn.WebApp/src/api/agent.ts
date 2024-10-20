@@ -12,7 +12,8 @@ import { jwtDecode } from 'jwt-decode';
 import { loginSuccess, logout } from '@/features/users/auth-slice.ts';
 import { RegisterTeacherRequest } from '@/api/users/RegisterTeacherRequest.ts';
 
-axios.defaults.baseURL = 'http://localhost:5000/api/';
+// axios.defaults.baseURL = 'http://localhost:5000/api/';
+axios.defaults.baseURL = 'https://localhost:5001/api/';
 
 axios.interceptors.request.use(
   (config) => {

@@ -1,5 +1,6 @@
 ﻿using CodeLearn.Api.Services;
 using CodeLearn.Application.Common.Interfaces;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
@@ -9,6 +10,11 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddWebServices(this IServiceCollection services)
     {
+        services.AddControllers(options =>
+        {
+            options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
+        });
+
         services.AddScoped<IUser, CurrentUser>();
 
         services.AddHttpContextAccessor();

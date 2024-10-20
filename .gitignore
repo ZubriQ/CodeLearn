@@ -386,3 +386,6 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sw?
+
+# Docker
+containers
