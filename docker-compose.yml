@@ -14,16 +14,16 @@ services:
     image: ${DOCKER_REGISTRY-}codelearnapi
     ports:
       - "5000:5000"
-      - "5001:5001" 
-    container_name: Api
+      - "5001:5001"
+    container_name: Backend
     build:
-      context: .
-      dockerfile: src/CodeLearn.Api/Dockerfile
+      context: src/CodeLearn.Api
+      dockerfile: Dockerfile
     restart: always
 
   codelearn.mq:
     image: rabbitmq:3.13.0-management
-    container_name: Queue
+    container_name: MessageBroker
     ports:
         - "5672:5672"
         - "15672:15672"
@@ -34,3 +34,12 @@ services:
     environment:
         RABBITMQ_DEFAULT_USER: guest
         RABBITMQ_DEFAULT_PASS: guest
+
+  codelearn.frontend:
+    build:
+      context: src/CodeLearn.WebApp
+      dockerfile: Dockerfile
+    ports:
+      - "4444:4444"
+    container_name: Frontend
+    image: codelearn-frontend:dev

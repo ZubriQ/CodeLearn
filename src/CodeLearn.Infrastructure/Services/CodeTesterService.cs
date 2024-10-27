@@ -6,7 +6,8 @@ using CodeLearn.Domain.Exercises;
 
 namespace CodeLearn.Infrastructure.Services;
 
-public class CodeTesterService(ICodeFormatter formatter, ICodeCompiler compiler, ICodeTester tester) : ICodeTesterService
+public class CodeTesterService(ICodeFormatter formatter, ICodeCompiler compiler, ICodeTester tester)
+    : ICodeTesterService
 {
     public async Task<Result> TestMethodAsync(MethodCodingExercise methodCodingExercise, string studentCode)
     {

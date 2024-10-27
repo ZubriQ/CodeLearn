@@ -6,7 +6,7 @@
     <DockerPublishLocally>False</DockerPublishLocally>
     <ProjectGuid>f83975f9-9744-43d1-ba25-23480dc4a3fa</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
+    <DockerServiceUrl>http://localhost:4444</DockerServiceUrl>
     <DockerServiceName>codelearn.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

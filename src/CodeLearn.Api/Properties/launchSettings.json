@@ -35,7 +35,7 @@
       "environmentVariables": {
         "ASPNETCORE_HTTPS_PORTS": "5001",
         "ASPNETCORE_HTTP_PORTS": "5000",
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Docker"
       },
       "publishAllPorts": true,
       "useSSL": true

@@ -1,4 +1,4 @@
-﻿//namespace CodeLearn.Infrastructure.Authentication;
+﻿//namespace CodeLearn.Infrastructure.Utilities;
 
 //public class JwtSettings
 //{

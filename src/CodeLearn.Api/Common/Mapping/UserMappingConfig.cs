@@ -21,10 +21,6 @@ public class UserMappingConfig : IRegister
         config.NewConfig<RegisterStudentRequest, RegisterStudentCommand>()
             .Map(dest => dest.Student, src => src);
 
-        //config.NewConfig<RegisterTeacherRequest, RegisterTeacherCommand>()
-        //    .ConstructUsing(src => new RegisterTeacherCommand(
-        //        UserFullName.Create(src.FirstName, src.LastName, src.Patronymic)));
-
         config.NewConfig<LoginRequest, LoginCommand>();
 
         config.NewConfig<TokensDto, LoginResponse>();

@@ -25,10 +25,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        services.AddAuditingInterceptors();
 
-        services.AddInterceptorsForAuditing();
-
+        var connectionString = configuration.GetConnectionString("DockerConnection");
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
@@ -72,7 +71,7 @@ public static class DependencyInjection
         return services;
     }
 
-    private static IServiceCollection AddInterceptorsForAuditing(this IServiceCollection services)
+    private static IServiceCollection AddAuditingInterceptors(this IServiceCollection services)
     {
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor<TestId>>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor<TestId>>();
