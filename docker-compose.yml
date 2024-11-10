@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
   codelearn.db:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -12,13 +10,13 @@ services:
 
   codelearn.api:
     image: ${DOCKER_REGISTRY-}codelearnapi
+    container_name: Backend
     ports:
       - "5000:5000"
       - "5001:5001"
-    container_name: Backend
     build:
-      context: src/CodeLearn.Api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: src/CodeLearn.Api/Dockerfile
     restart: always
 
   codelearn.mq:
@@ -36,10 +34,10 @@ services:
         RABBITMQ_DEFAULT_PASS: guest
 
   codelearn.frontend:
+    image: codelearn-frontend:dev
+    container_name: Frontend
+    ports:
+      - "4444:4444"
     build:
       context: src/CodeLearn.WebApp
       dockerfile: Dockerfile
-    ports:
-      - "4444:4444"
-    container_name: Frontend
-    image: codelearn-frontend:dev

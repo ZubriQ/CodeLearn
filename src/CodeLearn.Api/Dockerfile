@@ -8,7 +8,7 @@ EXPOSE 5000
 EXPOSE 5001
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Debug
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["CodeLearn.Api/CodeLearn.Api.csproj", "CodeLearn.Api/"]
 RUN dotnet restore "./CodeLearn.Api/./CodeLearn.Api.csproj"
@@ -17,7 +17,7 @@ WORKDIR "/src/CodeLearn.Api"
 RUN dotnet build "./CodeLearn.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Debug
+ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./CodeLearn.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
