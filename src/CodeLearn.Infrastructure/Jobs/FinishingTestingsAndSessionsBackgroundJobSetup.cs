@@ -7,13 +7,14 @@ public class FinishingTestingsAndSessionsBackgroundJobSetup : IConfigureOptions<
 {
     public void Configure(QuartzOptions options)
     {
-        var jobKey = nameof(FinishingTestingsAndSessionsBackgroundJob);
+        const string jobKey = nameof(FinishingTestingsAndSessionsBackgroundJob);
+
         options
             .AddJob<FinishingTestingsAndSessionsBackgroundJob>(jobBuilder => jobBuilder.WithIdentity(jobKey))
-            .AddTrigger(trigger =>
-                trigger
-                    .ForJob(jobKey)
-                    .WithSimpleSchedule(schedule =>
-                        schedule.WithIntervalInMinutes(5).RepeatForever()));
+            .AddTrigger(trigger => trigger
+                .ForJob(jobKey)
+                .WithSimpleSchedule(schedule => schedule
+                    .WithIntervalInMinutes(5)
+                    .RepeatForever()));
     }
 }

@@ -26,7 +26,7 @@ public class FinishingTestingsAndSessionsBackgroundJob(
         await FinishTestings();
         await FinishTestingSessions();
     }
-
+    
     private async Task FinishTestingSessions()
     {
         // Testing sessions
@@ -44,6 +44,9 @@ public class FinishingTestingsAndSessionsBackgroundJob(
         }
     }
 
+    /// <summary>
+    ///     Make testings unavailable if deadline is expired
+    /// </summary>
     private async Task FinishTestings()
     {
         // Testings
@@ -51,6 +54,7 @@ public class FinishingTestingsAndSessionsBackgroundJob(
             .Where(x => x.Status != TestingStatus.Completed
                         && x.DeadlineDate < DateTimeOffset.UtcNow)
             .ExecuteUpdateAsync(setters => setters.SetProperty(x => x.Status, TestingStatus.Completed));
+        
         _logger.LogInformation($"Number of Testings completed: {affectedTestingsCount}");
     }
 }

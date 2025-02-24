@@ -1,9 +1,8 @@
 import { ArrowLeftStartOnRectangleIcon } from '@heroicons/react/24/outline';
 import Layout from '@/components/layout';
 import { SideMenuLinkGroup } from '@/components/layout/models/SideMenuLinkGroup.ts';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/store.ts';
 import { ROLES } from '@/constants/roles.ts';
+import useAuthStore from '@/store/auth.ts';
 
 const adminSections: SideMenuLinkGroup[] = [
   {
@@ -70,9 +69,9 @@ const teacherSections: SideMenuLinkGroup[] = [
 ];
 
 function DashboardLayout() {
-  const userRole = useSelector((state: RootState) => state.auth.role);
+  const { role } = useAuthStore.getState();
 
-  if (userRole === ROLES.TEACHER) {
+  if (role === ROLES.TEACHER) {
     return <Layout sections={teacherSections} sectionsTitle="Dashboard" />;
   }
 

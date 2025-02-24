@@ -1,79 +1,57 @@
-import { lazy, Suspense } from 'react';
 import { Navigate, type RouteObject } from 'react-router-dom';
 import RequireRole from '@/components/require-role';
 import { ROLES } from '@/constants/roles.ts';
 
 // For Landing & etc.
-const HomePage = lazy(() => import('@/features/home/pages/Home.page.tsx'));
-const NotFoundPage = lazy(() => import('@/features/errors/pages/404.page.tsx'));
-const SignInPage = lazy(() => import('@/features/users/pages/SignIn.page.tsx'));
-const SignOutPage = lazy(() => import('@/features/users/pages/SignOut.page.tsx'));
-// const TestingSessionPage = lazy(() => import('@/features/testing-sessions/pages/TestingSession.page.tsx'));
+import HomePage from '@/features/home/pages/Home.page.tsx';
+import NotFoundPage from '@/features/errors/pages/404.page.tsx';
+import SignInPage from '@/features/users/pages/SignIn.page.tsx';
+import SignOutPage from '@/features/users/pages/SignOut.page.tsx';
 
 // For Teachers & Administrator
-const DashboardLayout = lazy(() => import('@/features/dashboard/DashboardLayout.tsx'));
-const TeacherTestsPage = lazy(() => import('@/features/dashboard/tests/pages/Tests.page.tsx'));
-const AddMethodCodingExercisePage = lazy(
-  () => import('@/features/dashboard/tests/pages/AddMethodCodingExercise.page.tsx'),
-);
-const AddQuestionExercisePage = lazy(() => import('@/features/dashboard/tests/pages/AddQuestionExercise.page.tsx'));
-const SingleTestPage = lazy(() => import('@/features/dashboard/tests/pages/SingleTest.page.tsx'));
-const StudentGroupsPage = lazy(() => import('@/features/dashboard/student-groups/pages/StudentGroups.page.tsx'));
-const EditStudentGroupPage = lazy(() => import('@/features/dashboard/student-groups/pages/EditStudentGroup.page.tsx'));
-const StudentsPage = lazy(() => import('@/features/dashboard/students/pages/Students.page.tsx'));
-const TeachersPage = lazy(() => import('@/features/dashboard/teachers/pages/Teachers.page.tsx'));
-const TestingSessionsPage = lazy(() => import('@/features/dashboard/testing-sessions/pages/TestingSessions.page.tsx'));
-const TestingsPage = lazy(() => import('@/features/dashboard/testings/pages/Testings.page.tsx'));
+import DashboardLayout from '@/features/dashboard/DashboardLayout.tsx';
+import TeacherTestsPage from '@/features/dashboard/tests/pages/Tests.page.tsx';
+import AddMethodCodingExercisePage from '@/features/dashboard/tests/pages/AddMethodCodingExercise.page.tsx';
+import AddQuestionExercisePage from '@/features/dashboard/tests/pages/AddQuestionExercise.page.tsx';
+import SingleTestPage from '@/features/dashboard/tests/pages/SingleTest.page.tsx';
+import StudentGroupsPage from '@/features/dashboard/student-groups/pages/StudentGroups.page.tsx';
+import EditStudentGroupPage from '@/features/dashboard/student-groups/pages/EditStudentGroup.page.tsx';
+import StudentsPage from '@/features/dashboard/students/pages/Students.page.tsx';
+import TeachersPage from '@/features/dashboard/teachers/pages/Teachers.page.tsx';
+import TestingSessionsPage from '@/features/dashboard/testing-sessions/pages/TestingSessions.page.tsx';
+import TestingsPage from '@/features/dashboard/testings/pages/Testings.page.tsx';
 
 // For Students
-const CurriculumLayout = lazy(() => import('@/features/curriculum/layout'));
-const StudentTestingsPage = lazy(() => import('@/features/curriculum/pages/Testings.page.tsx'));
-const CurriculumTestingSessionsPage = lazy(() => import('@/features/curriculum/pages/TestingSessions.page.tsx'));
+import CurriculumLayout from '@/features/curriculum/layout';
+import StudentTestingsPage from '@/features/curriculum/pages/Testings.page.tsx';
+import CurriculumTestingSessionsPage from '@/features/curriculum/pages/TestingSessions.page.tsx';
 
 // Students are tested on this page
-const TestingSessionPage = lazy(() => import('@/features/testing-session/pages/TestingSession.page.tsx'));
+import TestingSessionPage from '@/features/testing-session/pages/TestingSession.page.tsx';
 
 export const routes: RouteObject[] = [
   {
     index: true,
-    element: (
-      <Suspense>
-        <HomePage />
-      </Suspense>
-    ),
+    element: <HomePage />,
   },
   {
     path: '*',
-    element: (
-      <Suspense>
-        <NotFoundPage />
-      </Suspense>
-    ),
+    element: <NotFoundPage />,
   },
   {
     path: 'sign-in',
-    element: (
-      <Suspense>
-        <SignInPage />
-      </Suspense>
-    ),
+    element: <SignInPage />,
   },
   {
     path: 'sign-out',
-    element: (
-      <Suspense>
-        <SignOutPage />
-      </Suspense>
-    ),
+    element: <SignOutPage />,
   },
   {
     path: 'dashboard',
     element: (
-      <Suspense>
-        <RequireRole allowedRoles={[ROLES.TEACHER, ROLES.ADMIN]}>
-          <DashboardLayout />
-        </RequireRole>
-      </Suspense>
+      <RequireRole allowedRoles={[ROLES.TEACHER, ROLES.ADMIN]}>
+        <DashboardLayout />
+      </RequireRole>
     ),
     children: [
       {
@@ -82,94 +60,52 @@ export const routes: RouteObject[] = [
       },
       {
         path: 'tests',
-        element: (
-          <Suspense>
-            <TeacherTestsPage />
-          </Suspense>
-        ),
+        element: <TeacherTestsPage />,
       },
       {
         path: 'tests/:id',
-        element: (
-          <Suspense>
-            <SingleTestPage />
-          </Suspense>
-        ),
+        element: <SingleTestPage />,
       },
       {
         path: 'tests/:id/add-method-coding-exercise',
-        element: (
-          <Suspense>
-            <AddMethodCodingExercisePage />
-          </Suspense>
-        ),
+        element: <AddMethodCodingExercisePage />,
       },
       {
         path: 'tests/:id/add-question-exercise',
-        element: (
-          <Suspense>
-            <AddQuestionExercisePage />
-          </Suspense>
-        ),
+        element: <AddQuestionExercisePage />,
       },
       {
         path: 'testings',
-        element: (
-          <Suspense>
-            <TestingsPage />
-          </Suspense>
-        ),
+        element: <TestingsPage />,
       },
       {
         path: 'student-groups',
-        element: (
-          <Suspense>
-            <StudentGroupsPage />
-          </Suspense>
-        ),
+        element: <StudentGroupsPage />,
       },
       {
         path: 'student-groups/:id',
-        element: (
-          <Suspense>
-            <EditStudentGroupPage />
-          </Suspense>
-        ),
+        element: <EditStudentGroupPage />,
       },
       {
         path: 'students',
-        element: (
-          <Suspense>
-            <StudentsPage />
-          </Suspense>
-        ),
+        element: <StudentsPage />,
       },
       {
         path: 'teachers',
-        element: (
-          <Suspense>
-            <TeachersPage />
-          </Suspense>
-        ),
+        element: <TeachersPage />,
       },
       {
         path: 'testing-results',
-        element: (
-          <Suspense>
-            <TestingSessionsPage />
-          </Suspense>
-        ),
+        element: <TestingSessionsPage />,
       },
     ],
   },
   {
     path: 'curriculum',
     element: (
-      <Suspense>
-        <RequireRole allowedRoles={[ROLES.STUDENT]}>
-          <CurriculumLayout />
-        </RequireRole>
-      </Suspense>
+      <RequireRole allowedRoles={[ROLES.STUDENT]}>
+        <CurriculumLayout />
+      </RequireRole>
     ),
     children: [
       {
@@ -178,29 +114,17 @@ export const routes: RouteObject[] = [
       },
       {
         path: 'testings',
-        element: (
-          <Suspense>
-            <StudentTestingsPage />
-          </Suspense>
-        ),
+        element: <StudentTestingsPage />,
       },
       {
         path: 'testing-sessions',
-        element: (
-          <Suspense>
-            <CurriculumTestingSessionsPage />
-          </Suspense>
-        ),
+        element: <CurriculumTestingSessionsPage />,
       },
     ],
   },
   {
     path: 'testing-session/:id',
-    element: (
-      <Suspense>
-        <TestingSessionPage />
-      </Suspense>
-    ),
+    element: <TestingSessionPage />,
   },
 ];
 

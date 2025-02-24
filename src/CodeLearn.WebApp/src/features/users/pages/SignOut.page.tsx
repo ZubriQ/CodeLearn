@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '@/features/users/auth-slice.ts';
-import { useAppDispatch } from '@/app/hooks.ts';
+import useAuthStore from '@/store/auth.ts';
 
 export default function SignOutPage() {
-  const dispatch = useAppDispatch();
+  const { logout } = useAuthStore();
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(logout());
+    logout();
 
     setTimeout(() => navigate('/', { replace: true }), 1000);
-  }, [dispatch, navigate]);
+  }, [navigate]);
 
   return (
     <div className="flex min-h-screen items-center justify-center">

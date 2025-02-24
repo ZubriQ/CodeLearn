@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-import { store } from '@/app/store.ts';
 import { LoginRequest } from '@/api/users/LoginRequest.ts';
 import { CreateMethodCodingRequest } from '@/api/exercises/CreateMethodCodingRequest.ts';
 import { CreateQuestionRequest } from '@/api/exercises/CreateQuestionRequest.ts';
@@ -9,15 +8,16 @@ import { LoginResponse } from '@/api/users/LoginResponse.ts';
 import { CreateMethodCodingExerciseSubmissionRequest } from '@/api/exercise-submissions/CreateMethodCodingExerciseSubmissionRequest.ts';
 import { CreateQuestionExerciseSubmissionRequest } from '@/api/exercise-submissions/CreateQuestionExerciseSubmissionsRequest.ts';
 import { jwtDecode } from 'jwt-decode';
-import { loginSuccess, logout } from '@/features/users/auth-slice.ts';
 import { RegisterTeacherRequest } from '@/api/users/RegisterTeacherRequest.ts';
+import useAuthStore from '@/store/auth';
 
 axios.defaults.baseURL = 'http://localhost:5000/api/';
 // axios.defaults.baseURL = 'https://localhost:5001/api/';
 
+// Attaching the token to requests
 axios.interceptors.request.use(
   (config) => {
-    const token = store.getState().auth.token;
+    const { token } = useAuthStore.getState();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -28,56 +28,66 @@ axios.interceptors.request.use(
   },
 );
 
-// Check for token expiry and automatically refresh the token
+// Handling token expiry and refresh
 axios.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+
+    // Check for 401 Unauthorized and retry the request with a new token
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      const authToken = store.getState().auth.token;
-      if (isTokenExpired(authToken)) {
+      const { token } = useAuthStore.getState();
+
+      if (token && isTokenExpired(token)) {
         try {
           await refreshToken();
+
           // Update the original request with the new token
-          originalRequest.headers.Authorization = `Bearer ${store.getState().auth.token}`;
+          const { token: newToken } = useAuthStore.getState();
+          originalRequest.headers.Authorization = `Bearer ${newToken}`;
+
           // Retry the original request with the new token
           return axios(originalRequest);
         } catch (refreshError) {
-          console.error('Logging out');
-          store.dispatch(logout());
+          console.error('Logging out due to token refresh failure');
+          useAuthStore.getState().logout(); // Log out the user
+          return Promise.reject(refreshError);
         }
       }
     }
+
     return Promise.reject(error);
   },
 );
 
 const isTokenExpired = (token: string): boolean => {
   const decodedToken = jwtDecode(token);
+  // @ts-ignore
   return decodedToken.exp < Date.now() / 1000;
 };
 
 const refreshToken = async (): Promise<void> => {
-  const refreshTokenValue = store.getState().auth.refreshToken;
-  const token = store.getState().auth.token;
-  const username = store.getState().auth.username;
+  const { token, refreshToken: refreshTokenValue, username, loginSuccess, logout } = useAuthStore.getState();
 
-  if (refreshTokenValue) {
+  if (refreshTokenValue && username !== undefined) {
     try {
-      const response = await requests.post('users/refresh-token', { jwtToken: token, refreshToken: refreshTokenValue });
-      const { jwtToken, refreshToken: newRefreshToken } = response;
+      // Make a request to refresh the token
+      const response = await axios.post('users/refresh-token', {
+        jwtToken: token,
+        refreshToken: refreshTokenValue,
+      });
 
-      store.dispatch(loginSuccess({ jwtToken, refreshToken: newRefreshToken, username }));
+      const { jwtToken: newToken, refreshToken: newRefreshToken } = response.data;
+
+      loginSuccess({ jwtToken: newToken, refreshToken: newRefreshToken, username });
     } catch (error) {
-      // Handle refresh token failure
       console.error('Failed to refresh token:', error);
-      store.dispatch(logout());
+      logout();
     }
   } else {
-    // No refresh token available
-    store.dispatch(logout());
+    logout(); // Refresh token expired
   }
 };
 

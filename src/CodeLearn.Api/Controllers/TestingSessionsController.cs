@@ -27,7 +27,7 @@ public sealed class TestingSessionsController(ISender _sender, IMapper _mapper) 
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllForStudentCurriculum()
+    public async Task<IActionResult> GetAllForStudentCurriculum() // TODO: for a specific testing sessions*? or in another endpoint
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (userId == null)
@@ -75,7 +75,7 @@ public sealed class TestingSessionsController(ISender _sender, IMapper _mapper) 
     [ProducesResponseType(typeof(int[]), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAnsweredQuestionsById(int testingSessionId)
-    {
+    { // TODO: gets both completed exercises and questions
         var result = await _sender.Send(new GetCompletedExerciseIdsByIdQuery(testingSessionId));
 
         return result.Match(

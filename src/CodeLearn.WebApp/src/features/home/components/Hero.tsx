@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/store.ts';
 import { ROLES } from '@/constants/roles.ts';
+import useAuthStore from '@/store/auth.ts';
 
 export default function Hero() {
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-  const userRole = useSelector((state: RootState) => state.auth.role);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const userRole = useAuthStore((state) => state.role);
 
   return (
     <div className="relative isolate px-6 pt-14 md:px-8">

@@ -27,7 +27,7 @@ public static class DependencyInjection
     {
         services.AddAuditingInterceptors();
 
-        var connectionString = configuration.GetConnectionString("DockerConnection");
+        var connectionString = configuration.GetConnectionString("LocalConnection");
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());

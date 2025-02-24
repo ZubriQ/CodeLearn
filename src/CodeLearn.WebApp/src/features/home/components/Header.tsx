@@ -2,15 +2,13 @@ import { useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import { Bars2Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { ROLES } from '@/constants/roles.ts';
-import { RootState } from '@/app/store.ts';
+import useAuthStore from '@/store/auth.ts';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-  const userRole = useSelector((state: RootState) => state.auth.role);
+  const { isAuthenticated, role } = useAuthStore.getState();
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
@@ -36,7 +34,7 @@ export default function Header() {
             <Link to="sign-in" className="text-sm font-semibold leading-6 text-zinc-900">
               Sign in <span aria-hidden="true">&rarr;</span>
             </Link>
-          ) : userRole === ROLES.STUDENT ? (
+          ) : role === ROLES.STUDENT ? (
             <div className="flex grid-cols-2 items-center space-x-10">
               <Link to="sign-out" className="text-sm font-semibold leading-6 text-zinc-900">
                 Sign out
@@ -85,7 +83,7 @@ export default function Header() {
                   >
                     Sign in
                   </Link>
-                ) : userRole === ROLES.STUDENT ? (
+                ) : role === ROLES.STUDENT ? (
                   <>
                     <Link
                       to="curriculum"

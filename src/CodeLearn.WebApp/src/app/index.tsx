@@ -1,4 +1,4 @@
-import { Outlet, ScrollRestoration } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster.tsx';
 
 function App() {
@@ -6,7 +6,6 @@ function App() {
     <>
       <Outlet />
       <Toaster />
-      <ScrollRestoration />
     </>
   );
 }

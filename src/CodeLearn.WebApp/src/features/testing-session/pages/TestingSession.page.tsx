@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useDispatch, useSelector } from 'react-redux';
 import agent from '@/api/agent.ts';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable.tsx';
 import { Button } from '@/components/ui/button.tsx';
@@ -15,21 +14,36 @@ import Timer from '@/features/testing-session/components/Timer.component.tsx';
 import ExerciseDifficultyBadge from '@/features/testing-session/components/ExerciseDifficultyBadge.component.tsx';
 import TopicsBadge from '@/features/testing-session/components/TopicsBadge.component.tsx';
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
-import { setSelectedChoices } from '@/features/testing-session/testing-session-slice.ts';
 import { MethodCodingExercise } from '@/features/testing-session/models/MethodCodingExercise.ts';
-import { setCompletedExercises } from '@/features/testing-session/completed-exercise-ids-slice.ts';
 import CodeEditorWithOutput from '@/features/testing-session/components/CodeEditorWithOutput.component.tsx';
 import { Dialog, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { DialogContent } from '@/components/ui/dialog.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
+import useTestingSessionStore from '@/store/testingSession.ts';
 
 export default function TestingSessionPage() {
   const { id } = useParams<{ id?: string }>();
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const {
+    exerciseIds,
+    completedExerciseIds,
+    answeredExercises,
+    codingExercises,
+    addExerciseIds,
+    markExerciseComplete,
+    saveQuestionAnswers,
+    saveCodeSolution,
+    resetSession,
+  } = useTestingSessionStore();
+
+  // Update state correctly
+  setSelectedChoices(newChoices);
+  setCompletedExercises((prev) => [...prev, ...newChoices]);
 
   const [testingFinishedFeedbackMenu, setTestingFinishedFeedbackMenu] = useState(false);
-  const [studentFeedback, setstudentFeedback] = useState('');
+  const [studentFeedback, setStudentFeedback] = useState('');
 
   const [testingSession, setTestingSession] = useState<TestingSession>();
   const [testing, setTesting] = useState();
@@ -42,16 +56,19 @@ export default function TestingSessionPage() {
   const [methodSolutionCode, setMethodSolutionCode] = useState<string>('');
   const [outputTextareaValue, setOutputTextareaValue] = useState<string>('');
 
-  const completedExercises = useSelector((state) => state.completedExercises);
+  //const completedExercises = useSelector((state) => state.completedExercises);
+
   const isCompleted = (exerciseId: number) => completedExercises.includes(exerciseId);
 
   // Questions
   const selectedChoices = useSelector((state) =>
     currentExercise ? state.exercise.selectedChoices[currentExercise.id] || [] : [],
   );
+
   const isSelected = (choiceId: number) => {
     return selectedChoices.includes(choiceId);
   };
+
   const toggleCheckbox = (choiceId: number) => {
     if (currentExercise && currentExercise.isMultipleAnswers) {
       // If multiple answers are allowed, toggle the selection of the checkbox
@@ -239,7 +256,7 @@ export default function TestingSessionPage() {
       });
     }
   };
-  const navigate = useNavigate();
+
   const handleFinishTesting = () => {
     setTestingFinishedFeedbackMenu(false);
 
@@ -434,7 +451,7 @@ export default function TestingSessionPage() {
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <Label>Feedback</Label>
-            <Textarea value={studentFeedback} maxLength={450} onChange={(e) => setstudentFeedback(e.target.value)} />
+            <Textarea value={studentFeedback} maxLength={450} onChange={(e) => setStudentFeedback(e.target.value)} />
           </div>
           <DialogFooter>
             <Button onClick={handleFinishTesting}>Finish</Button>

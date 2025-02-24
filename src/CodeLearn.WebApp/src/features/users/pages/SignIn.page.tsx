@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import agent from '@/api/agent.ts';
-import { loginPending, loginSuccess, loginFailure } from '@/features/users/auth-slice.ts';
-import { useAppDispatch } from '@/app/hooks.ts';
 import { getRoleFromToken } from '@/lib/utils.ts';
 import { ROLES } from '@/constants/roles.ts';
+import useAuthStore from '@/store/auth';
 
 function SignInPage() {
-  const dispatch = useAppDispatch();
+  const { loginPending, loginSuccess, loginFailure } = useAuthStore();
+
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
@@ -15,19 +15,23 @@ function SignInPage() {
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    dispatch(loginPending());
+
+    loginPending();
+
     try {
       const { jwtToken, refreshToken } = await agent.Auth.login({ username, password });
-      dispatch(loginSuccess({ jwtToken, refreshToken, username }));
+
+      loginSuccess({ jwtToken, refreshToken, username });
 
       const role = getRoleFromToken(jwtToken);
+
       if (role === ROLES.STUDENT) {
         navigate('/curriculum');
       } else if (role === ROLES.TEACHER || role === ROLES.ADMIN) {
         navigate('/dashboard');
       }
     } catch (error) {
-      dispatch(loginFailure());
+      loginFailure();
     }
   }
 

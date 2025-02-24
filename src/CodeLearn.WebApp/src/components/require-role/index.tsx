@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAppSelector } from '@/app/hooks.ts';
+import useAuthStore from '@/store/auth';
 
 interface RequireRoleProps {
   children: ReactNode;
@@ -8,17 +8,17 @@ interface RequireRoleProps {
 }
 
 function RequireRole({ children, allowedRoles }: RequireRoleProps) {
-  const { role, isAuthenticated } = useAppSelector((state) => state.auth);
+  const role = useAuthStore((state) => state.role);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   const location = useLocation();
 
   if (!isAuthenticated) {
-    // Redirect to sign-in page, but save the current location they were trying to go to
-    return <Navigate to="/sign-in" state={{ from: location }} replace />;
+    return <Navigate to="/sign-in" state={{ from: location }} replace />; // Guest
   }
 
   if (role && !allowedRoles.includes(role)) {
-    // Redirect to the unauthorized or home page if they are not allowed
-    return <Navigate to="/" replace />;
+    return <Navigate to="/" replace />; //
   }
 
   return <>{children}</>;
